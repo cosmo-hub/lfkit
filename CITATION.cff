@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: >
+  If you use LFKit in your research, cite it using the metadata below.
+
+title: "LFKit: Luminosity functions and photometric corrections toolkit"
+
+authors:
+  - family-names: "Šarčević"
+    given-names: "Nikolina"
+    email: "nikolina.sarcevic@gmail.com"
+    orcid: "https://orcid.org/0000-0001-7301-6415"
+
+version: "0.1.0"
+date-released: 2026-03-01
+
+repository-code: "https://github.com/cosmo-hub/lfkit"
+url: "https://github.com/cosmo-hub/lfkit"
+
+license: MIT
+
+abstract: >
+  LFKit is a modular Python toolkit for luminosity function modeling,
+  k-corrections, e-corrections, and photometric response handling,
+  designed for cosmological analyses.
