@@ -26,6 +26,7 @@ viz = [
 docs = [
   "sphinx[doctest]>=7,<9",
   "sphinx-design",
+  "furo",
   "sphinx-multiversion",
   "sphinxawesome-theme",
   "matplotlib>=3.7",
