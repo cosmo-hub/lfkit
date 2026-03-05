@@ -11,47 +11,136 @@ requires-python = ">=3.10"
 
 dependencies = [
   "numpy>=1.23",
+  "scipy>=1.9",
+  "kcorrect",
+  "pyccl>=3.0",
 ]
 
 [project.optional-dependencies]
-corrections = [
-  "scipy>=1.9",
-  "pyccl>=3.0",
-]
 
 viz = [
   "matplotlib>=3.7",
   "cmasher>=1.8",
 ]
 
+docs = [
+  "sphinx[doctest]>=7,<9",
+  "sphinx-design",
+  "sphinx-multiversion",
+  "sphinxawesome-theme",
+  "matplotlib>=3.7",
+]
+
 dev = [
   "pytest>=7",
   "pytest-cov>=4",
   "ruff>=0.5",
+  "tox>=4.22",
 ]
-
-[tool.setuptools.packages.find]
-where = ["src"]
 
 [tool.setuptools]
 include-package-data = true
 
 [tool.setuptools.package-data]
-"lfkit.data.poggianti1997" = ["*.csv"]
-"lfkit.data.kcorrect.grids" = ["*.npz"]
+"lfkit" = [
+  "data/kcorrect/grids/*.npz",
+  "data/kcorrect/responses/*.dat",
+  "data/poggianti1997/*.csv",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.ruff]
 line-length = 88
 target-version = "py310"
-
-# Only lint files under src/
 src = ["src"]
-# Exclude tests and other non-source files
 include = ["src/**/*.py"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-ra -m 'not slow'"
 markers = [
-    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+  "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+]
+
+[tool.tox]
+requires = ["tox>=4.22"]
+envlist = [
+  "py312",
+  "cov",
+  "cov-strict",
+  "docs",
+  "do",
+  "docs-releases",
+]
+
+[tool.tox.env_run_base.setenv]
+PIP_CACHE_DIR = "{tox_root}/.cache/pip"
+
+[tool.tox.env.py312]
+description = "Run unit tests"
+extras = ["dev"]
+commands = [
+  ["pytest", "-q"],
+]
+
+[tool.tox.env.cov]
+description = "Coverage report for dev (does not fail)"
+extras = ["dev"]
+commands = [
+  [
+    "pytest",
+    "-q",
+    "--cov=lfkit",
+    "--cov-branch",
+    "--cov-report=term-missing:skip-covered",
+    "--cov-fail-under=0",
+  ],
+]
+
+[tool.tox.env.cov-strict]
+description = "Coverage gate (fails if below fail_under)"
+extras = ["dev"]
+commands = [
+  [
+    "pytest",
+    "-q",
+    "--cov=lfkit",
+    "--cov-branch",
+    "--cov-report=term-missing:skip-covered",
+  ],
+]
+
+[tool.tox.env.docs]
+description = "Build the HTML docs"
+basepython = ["python"]
+sitepackages = true
+extras = ["docs"]
+commands = [
+  ["sphinx-apidoc", "-o", "{tox_root}/docs/api", "{tox_root}/src/lfkit", "--separate", "-f"],
+  ["sphinx-build", "{tox_root}/docs", "{tox_root}/docs/_build/html", "--fail-on-warning"],
+]
+
+[tool.tox.env.do]
+description = "Run doctests + html build (uses current conda env; does not install deps)"
+basepython = ["python"]
+sitepackages = true
+skip_install = true
+allowlist_externals = ["open"]
+commands = [
+  ["sphinx-apidoc", "-o", "{tox_root}/docs/api", "{tox_root}/src/lfkit", "--separate", "-f"],
+  ["sphinx-build", "-b", "doctest", "{tox_root}/docs", "{tox_root}/docs/_build/doctest", "--fail-on-warning"],
+  ["sphinx-build", "-b", "html", "{tox_root}/docs", "{tox_root}/docs/_build/html", "--fail-on-warning"],
+  ["open", "{tox_root}/docs/_build/html/index.html"],
+]
+
+[tool.tox.env.docs-releases]
+description = "Build the docs for releases (multiversion)"
+extras = ["docs"]
+allowlist_externals = ["cp"]
+commands = [
+  ["sphinx-apidoc", "-o", "{tox_root}/docs/api", "{tox_root}/src/lfkit", "--separate", "-f"],
+  ["sphinx-multiversion", "{tox_root}/docs", "{tox_root}/docs/_build/html", "--fail-on-warning"],
+  ["cp", "{tox_root}/docs/_templates/pages_redirect.html", "{tox_root}/docs/_build/html/index.html"],
 ]

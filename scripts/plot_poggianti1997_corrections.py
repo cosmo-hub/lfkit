@@ -12,7 +12,6 @@ from lfkit.utils.io import (
     available_pairs,
 )
 
-
 output_dir = Path("output") / "plots" / "poggianti1997"
 output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -42,56 +41,54 @@ pairs = available_pairs(ktab)
 method = "pchip"
 extrapolate = True
 
-for band, seds in pairs.items():
-    for sed in seds:
+for band, gal_types in pairs.items():
+    for gal_type in gal_types:
         fig, ax = plt.subplots(figsize=(7, 5))
 
-        corr_original = Corrections.poggianti1997(
+        corr_original = Corrections.poggianti(
             band=band,
-            sed=sed,
+            gal_type=gal_type,
             cosmo=cosmo,
             original_z_for_e=True,
             method=method,
             extrapolate=extrapolate,
+            e_model="poggianti",  # explicit (default anyway)
         )
-        corr_mapped = Corrections.poggianti1997(
+        corr_mapped = Corrections.poggianti(
             band=band,
-            sed=sed,
+            gal_type=gal_type,
             cosmo=cosmo,
             original_z_for_e=False,
             method=method,
             extrapolate=extrapolate,
+            e_model="poggianti",
         )
 
-        K = corr_original.K(z)
-        E_original = corr_original.E(z)
-        E_mapped = corr_mapped.E(z)
+        K = corr_original.k(z)
+        E_original = corr_original.e(z)
+        E_mapped = corr_mapped.e(z)
 
         KE_original = K + E_original
         KE_mapped = K + E_mapped
+        # or: KE_original = corr_original.ke(z); KE_mapped = corr_mapped.ke(z)
 
         # Plot
         lw = 3
-        fs=15
-        ax.plot(z, K, label="$K(z)$", lw=3, color=colors[1])
-        ax.plot(z, E_original, label="$E(z)$ original", lw=lw, ls="--",
-                color=colors[2])
-        ax.plot(z, E_mapped, label="$E(z)$ mapped", lw=lw, ls="-",
-                color=colors[2])
-        ax.plot(z, KE_original, label="$K+E$ original", lw=lw,
-                color=colors[0], ls="--")
-        ax.plot(z, KE_mapped, label="$K+E$ mapped", lw=lw, ls="-",
-                color=colors[0])
+        fs = 15
+        ax.plot(z, K, label=r"$K(z)$", lw=lw, color=colors[1])
+        ax.plot(z, E_original, label=r"$E(z)$ original", lw=lw, ls="--", color=colors[2])
+        ax.plot(z, E_mapped, label=r"$E(z)$ mapped", lw=lw, ls="-", color=colors[2])
+        ax.plot(z, KE_original, label=r"$K+E$ original", lw=lw, color=colors[0], ls="--")
+        ax.plot(z, KE_mapped, label=r"$K+E$ mapped", lw=lw, color=colors[0], ls="-")
 
-        ax.set_xlabel("Redshift $z$", fontsize=fs)
+        ax.set_xlabel(r"Redshift $z$", fontsize=fs)
         ax.set_ylabel("Correction [mag]", fontsize=fs)
-        ax.set_title(f"Poggianti 1997 — band: ${band}$, SED: ${sed}$",
-                     fontsize=fs+2)
-        ax.legend(frameon=True, fontsize=fs-2)
+        ax.set_title(f"Poggianti 1997 — band: {band}, type: {gal_type}", fontsize=fs + 2)
+        ax.legend(frameon=True, fontsize=fs - 2)
 
         plt.tight_layout()
         plt.savefig(
-            output_dir / f"ke_pogg1997_band_{band}_sed_{sed}.pdf",
+            output_dir / f"ke_pogg1997_band_{band}_type_{gal_type}.pdf",
             bbox_inches="tight",
         )
         plt.close(fig)

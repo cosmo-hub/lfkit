@@ -1,0 +1,3 @@
+recursive-include src/lfkit/data/kcorrect/grids *.npz
+recursive-include src/lfkit/data/kcorrect/responses *.dat
+recursive-include src/lfkit/data/poggianti1997 *.csv

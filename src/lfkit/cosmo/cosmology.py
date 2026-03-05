@@ -73,11 +73,6 @@ def lookback_time_gyr(cosmo_obj: ccl.Cosmology, z):
 
     Returns:
         NumPy array of lookback time values in gigayears.
-
-    Notes:
-        Internally converts redshift to scale factor via
-            a = 1 / (1 + z)
-        and calls ``ccl.background.lookback_time``.
     """
     z = np.asarray(z, float)
     a = 1.0 / (1.0 + z)

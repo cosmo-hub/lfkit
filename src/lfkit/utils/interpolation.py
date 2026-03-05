@@ -9,6 +9,7 @@ extrapolation. These utilities are intended for internal use across LFKit
 from __future__ import annotations
 
 from typing import Callable, Literal, Union
+from numpy.typing import ArrayLike
 
 import numpy as np
 from scipy.interpolate import Akima1DInterpolator, PchipInterpolator
@@ -21,6 +22,7 @@ __all__ = (
     "linear_interp_extrap",
     "build_1d_interpolator",
     "prep_strictly_increasing_xy",
+    "as_1d_finite_grid",
 )
 
 
@@ -85,6 +87,7 @@ def build_1d_interpolator(
         method: Interpolation method. Supported values are ``"pchip"``,
             ``"akima"``, and ``"linear"``.
         extrapolate: Whether to allow evaluation outside the tabulated range.
+        extrap_mode: Extrapolation mode.
 
     Returns:
         A callable interpolator. For ``"pchip"`` and ``"akima"``, this is a SciPy
@@ -197,3 +200,10 @@ def prep_strictly_increasing_xy(z: np.ndarray, y: np.ndarray) -> tuple[np.ndarra
         raise ValueError("Need at least 2 points to build an interpolator.")
 
     return z, y
+
+
+def as_1d_finite_grid(z_grid: ArrayLike, *, name: str = "z_grid") -> np.ndarray:
+    z = np.asarray(z_grid, float)
+    if z.ndim != 1 or z.size < 2 or np.any(~np.isfinite(z)):
+        raise ValueError(f"{name} must be a finite 1D array with >=2 points.")
+    return z

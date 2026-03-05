@@ -1,0 +1,142 @@
+:root {
+  --color-brand-primary: #28A8C8;
+  --color-brand-content: #28A8C8;
+  --color-link: #28A8C8;
+  --color-link--hover: #FE5019;
+  --color-link--visited: #28A8C8;
+}
+
+.sidebar-container a:visited {
+  color: #28A8C8 !important;
+}
+
+/* ==========================================================================
+   LFKit — Furo sizing tweaks
+   ========================================================================== */
+
+/* Bigger logo in sidebar + mobile header */
+.sidebar-brand img,
+.mobile-header .brand img {
+  height: 110px !important;
+  width: auto !important;
+  max-height: none !important;
+}
+
+/* Bigger sidebar text */
+.sidebar-container {
+  font-size: 1.02rem !important;
+}
+
+.sidebar-container nav a {
+  font-size: 1.02rem !important;
+  line-height: 1.35 !important;
+}
+
+/* ==========================================================================
+   LFKit — Heading colors
+   ========================================================================== */
+
+/* Main page title */
+h1 {
+  color: #FE5019;
+}
+
+/* Section titles */
+h2, h3, h4 {
+  color: #28A8C8;
+}
+
+h1:hover .headerlink,
+h2:hover .headerlink,
+h3:hover .headerlink {
+  color: #FE5019;
+}
+
+/* ==========================================================================
+   LFKit — Custom title styles
+   ========================================================================== */
+
+.lfkit-title {
+  font-size: 2.6rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.lfkit-blue {
+  color: #28A8C8;
+}
+
+.lfkit-red {
+  color: #FE5019;
+}
+
+/* ==========================================================================
+   LFKit — Sidebar title
+   ========================================================================== */
+
+.lfkit-brand-title {
+  color: #FE5019 !important;   /* red */
+  font-weight: 600;
+  margin-top: 0.35rem;
+}
+
+/* optional hover */
+.lfkit-brand:hover .lfkit-brand-title {
+  color: #28A8C8 !important;   /* blue */
+}
+
+.lfkit-brand-title {
+  letter-spacing: 0.02em;
+}
+
+/* force sidebar title color (covers both stock Furo + custom template) */
+.sidebar-brand,
+.sidebar-brand a,
+.sidebar-brand a:visited,
+.sidebar-brand-text,
+.sidebar-brand-text * {
+  color: #FE5019 !important;   /* red */
+}
+
+/* optional hover */
+.sidebar-brand:hover,
+.sidebar-brand:hover a,
+.sidebar-brand:hover .sidebar-brand-text,
+.sidebar-brand:hover .sidebar-brand-text * {
+  color: #28A8C8 !important;   /* blue */
+}
+
+/* Make sphinx-design cards feel LFKit-branded */
+.sd-card-header, .sd-card-title { color: #28A8C8; }
+.sd-card:hover .sd-card-title { color: #FE5019; }
+
+
+/* ==========================================================================
+   LFKit — Sidebar typography
+   ========================================================================== */
+
+/* Main navigation links */
+.sidebar-tree a {
+  font-size: 1.08rem !important;   /* try 1.08–1.12 */
+  line-height: 1.4;
+}
+
+/* Section headers inside the sidebar */
+.sidebar-tree .caption-text {
+  font-size: 1.05rem !important;
+  font-weight: 600;
+}
+
+/* Search box text */
+.sidebar-search input {
+  font-size: 1.02rem;
+}
+
+/* Optional: increase spacing a bit */
+.sidebar-tree li {
+  margin-bottom: 0.15rem;
+}
+
+.sidebar-tree a {
+  padding: 0.15rem 0;
+}

@@ -41,6 +41,7 @@ __all__ = (
     "poggianti1997_to_accelerating_redshift",
     "make_kcorr_interpolator",
     "make_ecorr_interpolator",
+    "extract_sed_spectrum",
 )
 
 
@@ -151,7 +152,7 @@ def poggianti1997_time_since_bb_gyr(z: np.ndarray | float) -> np.ndarray:
     Notes:
         This uses the decelerating cosmology assumed by Poggianti (1997)
         (q0 = 0.225, H0 = 50 km/s/Mpc). It is intended for lookback-time
-        matching when remapping e-corrections to a different cosmology.
+        matching when remapping e-about to a different cosmology.
     """
     q0 = 0.225
     h0_km_s_mpc = 50.0
@@ -345,3 +346,38 @@ def make_ecorr_interpolator(
     z = np.r_[0.0, z_e]
     y = np.r_[0.0, ecorr]
     return build_1d_interpolator(z, y, method=method, extrapolate=extrapolate)
+
+
+def extract_sed_spectrum(
+    sed_tab: np.ndarray,
+    sed_col: str,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Extract a Poggianti sed.csv column as (wave_A, flux) in rest frame.
+
+    Args:
+        sed_tab: Table returned by lfkit.utils.io.load_vizier_csv for sed.csv.
+        sed_col: Column name in sed.csv, e.g. "logF03".
+
+    Returns:
+        wave_A: Wavelength grid in Å (sorted ascending).
+        flux: Linear flux values (10**logF) on the same grid.
+
+    Raises:
+        ValueError: If required columns are missing or sed_col not present.
+    """
+    cols = list(sed_tab.dtype.names or [])
+    if "Lam" not in cols:
+        raise ValueError(f"sed.csv missing Lam column. cols={cols}")
+    if sed_col not in cols:
+        raise ValueError(f"sed.csv: sed_col={sed_col!r} not present. "
+                         f"Available: {cols[:20]} ...")
+
+    wave_nm = np.asarray(sed_tab["Lam"], float)
+    logf = np.asarray(sed_tab[sed_col], float)
+
+    ok = np.isfinite(wave_nm) & np.isfinite(logf)
+    wave_A = 10.0 * wave_nm[ok]  # nm -> Å
+    flux = 10.0 ** logf[ok]  # log10 -> linear
+
+    order = np.argsort(wave_A)
+    return wave_A[order], flux[order]

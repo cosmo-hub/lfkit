@@ -35,8 +35,8 @@ PKG_DATADIR = Path("src/lfkit/data/poggianti1997")
 def main() -> None:
     """Fetch the Poggianti (1997) catalog and save tables as CSV files.
 
-    The VizieR catalog may contain multiple tables (e.g., k-corrections,
-    e-corrections). Each table is written to the LFKit package data
+    The VizieR catalog may contain multiple tables (e.g., k-about,
+    e-about). Each table is written to the LFKit package data
     directory using its short table name as the filename.
 
     The output directory is created if it does not already exist,

@@ -1,0 +1,18 @@
+{# docs/_templates/sidebar/brand.html #}
+{# Furo override that reliably renders the configured logo. #}
+
+<a href="{{ pathto(master_doc) }}" class="lfkit-brand">
+  {% set _logo = theme_logo_url or logo_url %}
+  {% if _logo %}
+    <img
+      src="{{ _logo }}"
+      alt="{{ project }}"
+      class="lfkit-brand-logo"
+    />
+  {% endif %}
+
+  <div class="lfkit-brand-title">
+    <span class="lfkit-red">LFKit</span>
+    <span class="lfkit-blue">Documentation</span>
+  </div>
+</a>
