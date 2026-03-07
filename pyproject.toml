@@ -29,7 +29,7 @@ docs = [
   "sphinx-design",
   "furo",
   "sphinx-multiversion",
-  "sphinxawesome-theme",
+  #"sphinxawesome-theme",
   "matplotlib>=3.7",
   "tox",
 ]
