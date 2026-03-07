@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    tags:
+      - 'v*.*.*'
 
 jobs:
   publish_docs:
@@ -11,22 +13,23 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.13"
 
-      - name: Install
+      - name: Install dependencies
         run: |
-          pip install -e ".[docs]"
+          pip install -e .[docs]
 
       - name: Build docs
         run: |
-          sphinx-apidoc -o docs/api src/lfkit --separate -f
-          sphinx-build docs docs/_build/html --fail-on-warning
+          tox -e docs-releases
 
-      - name: Deploy to gh-pages
+      - name: Deploy documentation
         uses: peaceiris/actions-gh-pages@v4
         with:
           publish_branch: gh-pages
