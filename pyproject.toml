@@ -10,10 +10,11 @@ readme = "README.md"
 requires-python = ">=3.10"
 
 dependencies = [
+  "astroquery",
   "numpy>=1.23",
   "scipy>=1.9",
   "kcorrect",
-  "pyccl>=3.0",
+  "pyccl<3.3",
 ]
 
 [project.optional-dependencies]
@@ -114,20 +115,32 @@ commands = [
 ]
 
 [tool.tox.env.docs]
-description = "Build the HTML docs"
-basepython = ["python"]
-sitepackages = true
-extras = ["docs"]
+description = "Build docs with Sphinx and doctest"
+extras = ["docs", "viz"]
 commands = [
-  ["sphinx-apidoc", "-o", "{tox_root}/docs/api", "{tox_root}/src/lfkit", "--separate", "-f"],
-  ["sphinx-build", "{tox_root}/docs", "{tox_root}/docs/_build/html", "--fail-on-warning"],
+  [
+    "sphinx-apidoc",
+    "-d", "2",
+    "-o", "{tox_root}/docs/api",
+    "--tocfile", "{tox_root}/docs/api/index", "--no-toc",
+    "{tox_root}/src/lfkit",
+    "--separate",
+    "-f",
+  ],
+  [
+    "sphinx-build",
+    "-c", "{tox_root}/docs",
+    "-b", "{posargs:html}",
+    "{tox_root}/docs",
+    "{tox_root}/docs/_build/{posargs:html}",
+    "--fail-on-warning",
+  ],
 ]
+
 
 [tool.tox.env.do]
 description = "Run doctests + html build (uses current conda env; does not install deps)"
-basepython = ["python"]
-sitepackages = true
-skip_install = true
+extras = ["docs", "viz"]
 allowlist_externals = ["open"]
 commands = [
   ["sphinx-apidoc", "-o", "{tox_root}/docs/api", "{tox_root}/src/lfkit", "--separate", "-f"],
@@ -137,11 +150,29 @@ commands = [
 ]
 
 [tool.tox.env.docs-releases]
-description = "Build the docs for releases (multiversion)"
-extras = ["docs"]
+description = "Build the documentation for lfkit releases using Sphinx"
+extras = ["docs", "viz"]
 allowlist_externals = ["cp"]
 commands = [
-  ["sphinx-apidoc", "-o", "{tox_root}/docs/api", "{tox_root}/src/lfkit", "--separate", "-f"],
-  ["sphinx-multiversion", "{tox_root}/docs", "{tox_root}/docs/_build/html", "--fail-on-warning"],
-  ["cp", "{tox_root}/docs/_templates/pages_redirect.html", "{tox_root}/docs/_build/html/index.html"],
+  [
+    "sphinx-apidoc",
+    "-d", "2",
+    "-o", "{tox_root}/docs/api/index",
+    "--tocfile", "{tox_root}/docs/api", "--no-toc",
+    "{tox_root}/src/lfkit",
+    "--separate",
+    "-f",
+  ],
+  [
+    "sphinx-multiversion",
+    "-c", "{tox_root}/docs",
+    "{tox_root}/docs",
+    "{tox_root}/docs/_build/html",
+    "--fail-on-warning",
+  ],
+  [
+    "cp",
+    "{tox_root}/docs/_templates/pages_redirect.html",
+    "{tox_root}/docs/_build/html/index.html",
+  ],
 ]
