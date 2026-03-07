@@ -25,7 +25,7 @@ viz = [
 ]
 
 docs = [
-  "sphinx[doctest]>=7,<9",
+  "sphinx<9",
   "sphinx-design",
   "furo",
   "sphinx-multiversion",
