@@ -25,11 +25,11 @@ viz = [
 ]
 
 docs = [
-  "sphinx[doctest]>=7,<9",
+  "sphinx<9",
   "sphinx-design",
   "furo",
   "sphinx-multiversion",
-  "sphinxawesome-theme",
+  #"sphinxawesome-theme",
   "matplotlib>=3.7",
   "tox",
 ]
@@ -158,8 +158,8 @@ commands = [
   [
     "sphinx-apidoc",
     "-d", "2",
-    "-o", "{tox_root}/docs/api/index",
-    "--tocfile", "{tox_root}/docs/api", "--no-toc",
+    "-o", "{tox_root}/docs/api/",
+    "--tocfile", "{tox_root}/docs/api/index", "--no-toc",
     "{tox_root}/src/lfkit",
     "--separate",
     "-f",

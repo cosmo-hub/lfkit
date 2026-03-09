@@ -35,6 +35,7 @@ extensions = [
     "sphinx.ext.doctest",
     "matplotlib.sphinxext.plot_directive",
     "sphinx_design",
+    "sphinx_multiversion",
 ]
 
 #templates_path = ["_templates"]  # if uncomment this removes the sidebar logo
@@ -97,3 +98,9 @@ plot_rcparams = {
     "figure.dpi": 150,
     "savefig.dpi": 150,
 }
+
+# -----------------------------------------------------------------------------
+# Sphinx multiversion
+# -----------------------------------------------------------------------------
+smv_tag_whitelist = r"^v\d+\.\d+\.\d+$"
+smv_branch_whitelist = "main"
