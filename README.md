@@ -7,3 +7,5 @@ LFKit provides:
 - Minimal cosmology distance utilities for magnitudes
 
 This package intentionally does **not** include survey selection or dN/dz integrals.
+
+Check out the [documentation](https://cosmo-hub.github.io/lfkit/) for more information.
