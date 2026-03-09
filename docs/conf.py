@@ -33,6 +33,7 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
     "sphinx.ext.doctest",
+    "sphinx.ext.githubpages",
     "matplotlib.sphinxext.plot_directive",
     "sphinx_design",
     "sphinx_multiversion",
