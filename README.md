@@ -8,4 +8,4 @@ LFKit provides:
 
 This package intentionally does **not** include survey selection or dN/dz integrals.
 
-Check out the [documentation](https://cosmo-hub.github.io/lfkit/) for more information.
+Check out the [documentation](https://cosmology-kit.github.io/lfkit/) for more information.
