@@ -14,7 +14,7 @@ dependencies = [
   "numpy>=1.23",
   "scipy>=1.9",
   "kcorrect",
-  "pyccl<3.3",
+  "pyccl",
 ]
 
 [project.optional-dependencies]
@@ -123,9 +123,9 @@ commands = [
     "sphinx-apidoc",
     "-d", "2",
     "-o", "{tox_root}/docs/api",
-    "--tocfile", "{tox_root}/docs/api/index", "--no-toc",
     "{tox_root}/src/lfkit",
     "--separate",
+    "--no-toc",
     "-f",
   ],
   [
@@ -144,7 +144,15 @@ description = "Run doctests + html build (uses current conda env; does not insta
 extras = ["docs", "viz"]
 allowlist_externals = ["open"]
 commands = [
-  ["sphinx-apidoc", "-o", "{tox_root}/docs/api", "{tox_root}/src/lfkit", "--separate", "-f"],
+  [
+    "sphinx-apidoc",
+    "-d", "2",
+    "-o", "{tox_root}/docs/api",
+    "{tox_root}/src/lfkit",
+    "--separate",
+    "--no-toc",
+    "-f",
+  ],
   ["sphinx-build", "-b", "doctest", "{tox_root}/docs", "{tox_root}/docs/_build/doctest", "--fail-on-warning"],
   ["sphinx-build", "-b", "html", "{tox_root}/docs", "{tox_root}/docs/_build/html", "--fail-on-warning"],
   ["open", "{tox_root}/docs/_build/html/index.html"],
@@ -158,10 +166,10 @@ commands = [
   [
     "sphinx-apidoc",
     "-d", "2",
-    "-o", "{tox_root}/docs/api/",
-    "--tocfile", "{tox_root}/docs/api/index", "--no-toc",
+    "-o", "{tox_root}/docs/api",
     "{tox_root}/src/lfkit",
     "--separate",
+    "--no-toc",
     "-f",
   ],
   [
