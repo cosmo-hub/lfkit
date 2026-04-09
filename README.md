@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="logo/lfkit_logo.svg" width="150">
+</p>
+
 # LFKit
 
 [![CI](https://img.shields.io/github/actions/workflow/status/cosmology-kit/lfkit/ci.yml?branch=main&label=CI&color=28A8C8&style=flat-square)](https://github.com/cosmology-kit/lfkit/actions/workflows/ci.yml)
