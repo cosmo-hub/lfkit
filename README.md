@@ -29,6 +29,11 @@ LFKit currently includes tools for:
 The package is intended to stay modular, so components can be used independently or combined
 into larger analysis pipelines.
 
+
+## Documentation
+
+[View the documentation](https://cosmology-kit.github.io/lfkit/main/)
+
 ## Installation
 
 Clone the repository and install it locally:
