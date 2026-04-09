@@ -186,7 +186,6 @@ def available_pairs(tab: np.ndarray, *, min_points: int = 5) -> dict[str, list[s
     return out
 
 
-
 def save_kcorr_package(pkg: dict[str, Any], path: str | Path) -> None:
     """Save the generated package to .npz (portable, fast)."""
     p = Path(path)
@@ -227,7 +226,11 @@ def load_kcorr_package(path: str | Path) -> dict[str, Any]:
             kcorr[t] = np.asarray(data[f"K__{t}"], float)
 
     return dict(
-        meta={k: meta[k] for k in meta if k not in {"responses_in", "responses_out", "responses_map", "types"}},
+        meta={
+            k: meta[k]
+            for k in meta
+            if k not in {"responses_in", "responses_out", "responses_map", "types"}
+        },
         z=z,
         responses_in=list(meta["responses_in"]),
         responses_out=list(meta["responses_out"]),

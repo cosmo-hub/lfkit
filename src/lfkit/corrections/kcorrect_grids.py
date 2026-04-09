@@ -72,14 +72,18 @@ def compute_k_table(
                     if band_shift is None:
                         test = kc.kcorrect(redshift=1e-6, coeffs=c)
                     else:
-                        test = kc.kcorrect(redshift=1e-6, coeffs=c, band_shift=float(band_shift))
+                        test = kc.kcorrect(
+                            redshift=1e-6, coeffs=c, band_shift=float(band_shift)
+                        )
                     nband = int(np.asarray(test, float).size)
                 kcorr = np.zeros(nband, dtype=float)
             else:
                 if band_shift is None:
                     kcorr = kc.kcorrect(redshift=zi, coeffs=c)
                 else:
-                    kcorr = kc.kcorrect(redshift=zi, coeffs=c, band_shift=float(band_shift))
+                    kcorr = kc.kcorrect(
+                        redshift=zi, coeffs=c, band_shift=float(band_shift)
+                    )
                 kcorr = np.asarray(kcorr, float)
                 if nband is None:
                     nband = int(kcorr.size)
@@ -88,8 +92,9 @@ def compute_k_table(
 
         karr = np.vstack(rows)
         if karr.shape[0] != z.size:
-            raise ValueError(f"BUG: built K with Nz={karr.shape[0]} "
-                             f"but z has Nz={z.size}")
+            raise ValueError(
+                f"BUG: built K with Nz={karr.shape[0]} but z has Nz={z.size}"
+            )
 
         if anchor_z0:
             if not np.any(np.isfinite(karr)):

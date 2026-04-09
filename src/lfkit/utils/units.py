@@ -28,6 +28,7 @@ __all__ = (
     "magerr_to_ivar_maggies",
 )
 
+
 def km_per_mpc() -> float:
     """Return the number of kilometers in one megaparsec.
 

@@ -37,6 +37,7 @@ extensions = [
     "matplotlib.sphinxext.plot_directive",
     "sphinx_design",
     "sphinx_multiversion",
+    "sphinx.ext.mathjax",
 ]
 
 #templates_path = ["_templates"]  # if uncomment this removes the sidebar logo

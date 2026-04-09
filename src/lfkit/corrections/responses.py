@@ -177,10 +177,7 @@ def write_kcorrect_response(
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / f"{name}.dat"
 
-    header = (
-        "# kcorrect response file\n"
-        "# wavelength [Angstrom]   throughput\n"
-    )
+    header = "# kcorrect response file\n# wavelength [Angstrom]   throughput\n"
 
     np.savetxt(out_path, np.column_stack([wave_A, thr]), header=header)
     return str(name)

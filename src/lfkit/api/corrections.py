@@ -63,6 +63,7 @@ ArrayLike = object  # anything np.asarray can handle
 # Default mapping: (filterset, band) -> kcorrect response curve name.
 DEFAULT_KCORRECT_RESPONSE_MAP = DEFAULT_RESPONSE_MAP
 
+
 class Corrections:
     """Evaluator for k(z), e(z), and ke(z).
 
@@ -184,8 +185,9 @@ class Corrections:
                 extrapolate=extrapolate,
             )
         else:
-            raise ValueError("e_model must be 'none' or 'poggianti' "
-                             "for Corrections.poggianti().")
+            raise ValueError(
+                "e_model must be 'none' or 'poggianti' for Corrections.poggianti()."
+            )
 
         out = cls(k_func=k_func, e_func=e_func)
         out.meta.update(
@@ -208,6 +210,7 @@ class Corrections:
         color_value: float,
         z_phot: float = 0.0,
         anchor_band: str | None = None,
+        anchor_mag: float = 22.0,
         band_shift: float | None = None,
         response_dir: str | Path | None = None,
         redshift_range: tuple[float, float] = (0.0, 2.0),
@@ -233,6 +236,7 @@ class Corrections:
             color_value: Target color value in magnitudes.
             z_phot: Redshift at which the color constraint is applied.
             anchor_band: Band used to set the arbitrary flux normalization.
+            anchor_mag: Magnitude used to set the arbitrary flux normalization.
             band_shift: Optional kcorrect band shift parameter.
             response_dir: Directory containing custom response curves.
             redshift_range: Internal redshift range used by kcorrect.
@@ -247,8 +251,7 @@ class Corrections:
             Corrections instance evaluating k(z). In this configuration
             e(z) = 0.
         """
-        from lfkit.corrections.kcorrect_from_color import \
-            kcorrect_from_bandcolor
+        from lfkit.corrections.kcorrect_from_color import kcorrect_from_bandcolor
 
         if z_grid is None:
             z_arr = np.linspace(redshift_range[0], redshift_range[1], 4001)
@@ -262,10 +265,10 @@ class Corrections:
             color_value=float(color_value),
             z_phot=float(z_phot),
             anchor_band=None if anchor_band is None else str(anchor_band),
+            anchor_mag=float(anchor_mag),
             band_shift=band_shift,
             response_dir=response_dir,
-            redshift_range=(float(redshift_range[0]),
-                            float(redshift_range[1])),
+            redshift_range=(float(redshift_range[0]), float(redshift_range[1])),
             nredshift=int(nredshift),
             ivar_level=float(ivar_level),
             anchor_z0=bool(anchor_z0),
@@ -287,13 +290,11 @@ class Corrections:
                 "color": (str(color[0]), str(color[1])),
                 "color_value": float(color_value),
                 "z_phot": float(z_phot),
-                "anchor_band": None if anchor_band is None else str(
-                    anchor_band),
+                "anchor_band": None if anchor_band is None else str(anchor_band),
+                "anchor_mag": float(anchor_mag),
                 "band_shift": band_shift,
-                "response_dir": str(
-                    response_dir) if response_dir is not None else None,
-                "redshift_range": (float(redshift_range[0]),
-                                   float(redshift_range[1])),
+                "response_dir": str(response_dir) if response_dir is not None else None,
+                "redshift_range": (float(redshift_range[0]), float(redshift_range[1])),
                 "nredshift": int(nredshift),
                 "ivar_level": float(ivar_level),
                 "anchor_z0": bool(anchor_z0),

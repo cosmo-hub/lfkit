@@ -11,6 +11,7 @@ Submodules
    lfkit.utils.interpolation
    lfkit.utils.io
    lfkit.utils.units
+   lfkit.utils.validators
 
 Module contents
 ---------------

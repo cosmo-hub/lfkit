@@ -1,4 +1,4 @@
-"""Tests for the `lfkit.utils.download_poggianti97_data` module."""
+"""Tests for the ``lfkit.utils.download_poggianti97_data.py``."""
 
 from __future__ import annotations
 

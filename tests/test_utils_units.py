@@ -1,4 +1,4 @@
-"""Unit tests for the `lfkit.utils.units` module."""
+"""Unit tests for the ``lfkit.utils.units.py``"""
 
 from __future__ import annotations
 

@@ -10,7 +10,7 @@ Subpackages
    lfkit.api
    lfkit.corrections
    lfkit.cosmo
-   lfkit.lf
+   lfkit.photometry
    lfkit.utils
 
 Module contents
