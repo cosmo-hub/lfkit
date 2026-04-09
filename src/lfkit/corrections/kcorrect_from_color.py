@@ -39,6 +39,7 @@ def kcorrect_from_bandcolor(
     color_value: float,
     z_phot: float = 0.0,
     anchor_band: str | None = None,
+    anchor_mag: float = _ANCHOR_MAG_DEFAULT,
     band_shift: float | None = None,
     response_dir: str | Path | None = None,
     redshift_range: tuple[float, float] = (0.0, 2.0),
@@ -69,6 +70,7 @@ def kcorrect_from_bandcolor(
         color_value=float(color_value),
         z_phot=float(z_phot),
         anchor_band=anchor_band,
+        anchor_mag=float(anchor_mag),
         responses=None,
         ivar_level=float(ivar_level),
         response_dir=response_dir,
@@ -91,12 +93,16 @@ def kcorrect_from_bandcolor(
         if band_shift is None:
             kval = kc.kcorrect(redshift=float(zi), coeffs=coeffs)
         else:
-            kval = kc.kcorrect(redshift=float(zi), coeffs=coeffs, band_shift=float(band_shift))
+            kval = kc.kcorrect(
+                redshift=float(zi), coeffs=coeffs, band_shift=float(band_shift)
+            )
         K[i] = float(np.asarray(kval, float)[0])
 
     ok = np.isfinite(K)
     if np.count_nonzero(ok) < 2:
-        raise ValueError(f"Too few finite K(z) points for response_out={response_out!r}.")
+        raise ValueError(
+            f"Too few finite K(z) points for response_out={response_out!r}."
+        )
 
     if anchor_z0:
         i0 = int(np.where(ok)[0][0])

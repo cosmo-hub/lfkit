@@ -1,4 +1,4 @@
-"""Unit tests for `lfkit.utils.interpolation` module."""
+"""Unit tests for ``lfkit.utils.interpolation`.py``."""
 
 from __future__ import annotations
 

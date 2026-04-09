@@ -1,4 +1,4 @@
-"""Unit tests for `lfkit.corrections.kcorrect_from_color` module."""
+"""Unit tests for ``lfkit.corrections.kcorrect_from_color.py``."""
 
 from __future__ import annotations
 

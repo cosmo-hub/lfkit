@@ -169,7 +169,6 @@ commands = [
     "-o", "{tox_root}/docs/api",
     "{tox_root}/src/lfkit",
     "--separate",
-    "--no-toc",
     "-f",
   ],
   [

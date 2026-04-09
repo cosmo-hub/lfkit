@@ -56,6 +56,7 @@ def fit_coeffs_from_bandcolor(
     color_value: float,
     z_phot: float = 0.0,
     anchor_band: str | None = None,
+    anchor_mag: float = _ANCHOR_MAG_DEFAULT,
     responses: list[str] | None = None,
     ivar_level: float = 1e10,
     response_dir: str | Path | None = None,
@@ -79,6 +80,7 @@ def fit_coeffs_from_bandcolor(
         z_phot: Redshift at which to fit the coefficients.
         anchor_band: Band used to set the arbitrary flux normalization.
                      If None, defaults to band_b.
+        anchor_mag: Magnitude used to set the arbitrary flux normalization.
         responses: Optional explicit list of responses to use in the fit.
                    If None, uses the minimal set {band_a, band_b, anchor_band}.
         ivar_level: Inverse-variance weight for constrained bands.
@@ -103,7 +105,9 @@ def fit_coeffs_from_bandcolor(
         fit_responses = list(dict.fromkeys([band_a, band_b, str(anchor_band)]))
     else:
         fit_responses = list(map(str, responses))
-        missing = [x for x in (band_a, band_b, str(anchor_band)) if x not in fit_responses]
+        missing = [
+            x for x in (band_a, band_b, str(anchor_band)) if x not in fit_responses
+        ]
         if missing:
             raise ValueError(f"responses is missing required bands: {missing}")
 
@@ -117,7 +121,7 @@ def fit_coeffs_from_bandcolor(
     )
 
     # anchor magnitude -> anchor flux (maggies)
-    f_anchor = float(mag_to_maggies(_ANCHOR_MAG_DEFAULT))
+    f_anchor = float(mag_to_maggies(anchor_mag))
     if (not np.isfinite(f_anchor)) or f_anchor <= 0:
         raise ValueError("anchor_mag must map to positive finite maggies.")
 

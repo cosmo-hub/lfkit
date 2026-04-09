@@ -40,25 +40,21 @@ DEFAULT_RESPONSE_MAP: dict[tuple[str, str], str] = {
     ("sdss", "r"): "sdss_r0",
     ("sdss", "i"): "sdss_i0",
     ("sdss", "z"): "sdss_z0",
-
     ("decam", "u"): "decam_u",
     ("decam", "g"): "decam_g",
     ("decam", "r"): "decam_r",
     ("decam", "i"): "decam_i",
     ("decam", "z"): "decam_z",
     ("decam", "Y"): "decam_Y",
-
     ("hsc", "g"): "subaru_suprimecam_g",
     ("hsc", "r"): "subaru_suprimecam_r",
     ("hsc", "i"): "subaru_suprimecam_i",
     ("hsc", "z"): "subaru_suprimecam_z",
-
     ("bessell", "U"): "bessell_U",
     ("bessell", "B"): "bessell_B",
     ("bessell", "V"): "bessell_V",
     ("bessell", "R"): "bessell_R",
     ("bessell", "I"): "bessell_I",
-
     ("2mass", "J"): "twomass_J",
     ("2mass", "H"): "twomass_H",
     ("2mass", "K"): "twomass_Ks",

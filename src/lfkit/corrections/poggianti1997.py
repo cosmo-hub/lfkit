@@ -182,7 +182,9 @@ def poggianti1997_lookback_time_gyr(z: np.ndarray | float) -> np.ndarray:
     return poggianti1997_time_since_bb_gyr(0.0) - poggianti1997_time_since_bb_gyr(z)
 
 
-def _build_tlb_to_z_grid(cosmo_obj, *, zmax: float, nz: int) -> tuple[np.ndarray, np.ndarray]:
+def _build_tlb_to_z_grid(
+    cosmo_obj, *, zmax: float, nz: int
+) -> tuple[np.ndarray, np.ndarray]:
     """Build a monotonic mapping from lookback time to redshift for a cosmology.
 
     Args:
@@ -369,8 +371,9 @@ def extract_sed_spectrum(
     if "Lam" not in cols:
         raise ValueError(f"sed.csv missing Lam column. cols={cols}")
     if sed_col not in cols:
-        raise ValueError(f"sed.csv: sed_col={sed_col!r} not present. "
-                         f"Available: {cols[:20]} ...")
+        raise ValueError(
+            f"sed.csv: sed_col={sed_col!r} not present. Available: {cols[:20]} ..."
+        )
 
     wave_nm = np.asarray(sed_tab["Lam"], float)
     logf = np.asarray(sed_tab[sed_col], float)

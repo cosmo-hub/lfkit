@@ -16,7 +16,9 @@ from scipy.interpolate import Akima1DInterpolator, PchipInterpolator
 
 InterpMethod = Literal["pchip", "akima", "linear"]
 ExtrapMode = Literal["none", "native", "linear_tail"]
-Interpolator = Union[PchipInterpolator, Akima1DInterpolator, Callable[[np.ndarray], np.ndarray]]
+Interpolator = Union[
+    PchipInterpolator, Akima1DInterpolator, Callable[[np.ndarray], np.ndarray]
+]
 
 __all__ = (
     "linear_interp_extrap",
@@ -107,6 +109,7 @@ def build_1d_interpolator(
         if method == "akima":
             return Akima1DInterpolator(z, y, extrapolate=False)
         if method == "linear":
+
             def f_linear(zz: np.ndarray) -> np.ndarray:
                 return np.interp(np.asarray(zz, float), z, y)
 
@@ -120,6 +123,7 @@ def build_1d_interpolator(
         if method == "akima":
             return Akima1DInterpolator(z, y, extrapolate=True)
         if method == "linear":
+
             def f_linear_extrap(zz: np.ndarray) -> np.ndarray:
                 return linear_interp_extrap(np.asarray(zz, float), z, y)
 
@@ -133,6 +137,7 @@ def build_1d_interpolator(
         elif method == "akima":
             f_in = Akima1DInterpolator(z, y, extrapolate=False)
         elif method == "linear":
+
             def f_in(zz: np.ndarray) -> np.ndarray:
                 return np.interp(np.asarray(zz, float), z, y)
         else:
@@ -166,7 +171,9 @@ def build_1d_interpolator(
     raise ValueError(f"Unknown extrap_mode={extrap_mode!r}.")
 
 
-def prep_strictly_increasing_xy(z: np.ndarray, y: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+def prep_strictly_increasing_xy(
+    z: np.ndarray, y: np.ndarray
+) -> tuple[np.ndarray, np.ndarray]:
     """Prepares tabulated data for 1D interpolation.
 
     Args:

@@ -1,4 +1,4 @@
-"""Unit tests for `lfkit.cosmo.cosmology` module."""
+"""Unit tests for ``lfkit.cosmo.cosmology.py``."""
 
 from __future__ import annotations
 
