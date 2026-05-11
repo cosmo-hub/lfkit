@@ -2,12 +2,9 @@
 
 from __future__ import annotations
 
-from numpy.typing import NDArray
 import numpy as np
-from typing import TypeAlias
 
-FloatArray: TypeAlias = NDArray[np.float64]
-ParameterValue: TypeAlias = float | FloatArray
+from lfkit.utils.types import FloatArray, FloatInput
 
 __all__ = [
     "validate_array",
@@ -16,12 +13,12 @@ __all__ = [
 
 
 def validate_array(
-    x: ParameterValue,
+    x: FloatInput,
     *,
     name: str,
     allow_negative: bool = True,
-) -> NDArray[np.float64]:
-    """Basic validation for numeric arrays."""
+) -> FloatArray:
+    """Return a finite float array."""
     arr = np.asarray(x, dtype=float)
 
     if not np.all(np.isfinite(arr)):
