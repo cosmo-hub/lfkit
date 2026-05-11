@@ -5,7 +5,6 @@ from __future__ import annotations
 from importlib.resources import files
 
 import numpy as np
-import pandas as pd
 import pyccl as ccl
 
 from lfkit.photometry.catalog_completeness import (
@@ -41,7 +40,7 @@ def make_cosmology() -> ccl.Cosmology:
     )
 
 
-def load_fake_catalog() -> pd.DataFrame:
+def load_fake_catalog() -> np.ndarray:
     """Return the packaged fake magnitude-limited catalog."""
     path = (
         files("lfkit")
@@ -49,7 +48,7 @@ def load_fake_catalog() -> pd.DataFrame:
         / "demo_catalogs"
         / "fake_magnitude_limited_catalog.csv"
     )
-    return pd.read_csv(path)
+    return np.genfromtxt(path, delimiter=",", names=True, dtype=None, encoding="utf-8")
 
 
 def test_fake_catalog_is_packaged() -> None:
@@ -57,9 +56,14 @@ def test_fake_catalog_is_packaged() -> None:
     catalog = load_fake_catalog()
 
     assert len(catalog) == 200
-    assert {"galaxy_id", "ra_deg", "dec_deg", "z", "m_app", "band"} <= set(
-        catalog.columns
-    )
+    assert set(catalog.dtype.names) == {
+        "galaxy_id",
+        "ra_deg",
+        "dec_deg",
+        "z",
+        "m_app",
+        "band",
+    }
 
 
 def test_completeness_fraction_on_fake_catalog_redshifts() -> None:
@@ -67,7 +71,7 @@ def test_completeness_fraction_on_fake_catalog_redshifts() -> None:
     catalog = load_fake_catalog()
     cosmo = make_cosmology()
 
-    z = catalog["z"].to_numpy()
+    z = np.asarray(catalog["z"], dtype=float)
 
     completeness = catalog_completeness_fraction(
         cosmo,
@@ -90,7 +94,7 @@ def test_observed_and_missing_fractions_sum_to_one() -> None:
     catalog = load_fake_catalog()
     cosmo = make_cosmology()
 
-    z = catalog["z"].to_numpy()
+    z = np.asarray(catalog["z"], dtype=float)
 
     completeness = catalog_completeness_fraction(
         cosmo,
@@ -124,7 +128,7 @@ def test_deeper_catalog_limit_increases_completeness() -> None:
     catalog = load_fake_catalog()
     cosmo = make_cosmology()
 
-    z = catalog["z"]
+    z = np.asarray(catalog["z"], dtype=float)
 
     shallow = catalog_completeness_fraction(
         cosmo,
@@ -154,7 +158,7 @@ def test_deeper_catalog_limit_decreases_missing_density() -> None:
     catalog = load_fake_catalog()
     cosmo = make_cosmology()
 
-    z = catalog["z"]
+    z = np.asarray(catalog["z"], dtype=float)
 
     shallow = missing_number_density(
         cosmo,
@@ -183,7 +187,7 @@ def test_deeper_catalog_limit_increases_observed_density() -> None:
     catalog = load_fake_catalog()
     cosmo = make_cosmology()
 
-    z = catalog["z"]
+    z = np.asarray(catalog["z"], dtype=float)
 
     shallow = observed_number_density(
         cosmo,
@@ -213,7 +217,7 @@ def test_observed_and_missing_number_densities_sum_to_total_density() -> None:
     catalog = load_fake_catalog()
     cosmo = make_cosmology()
 
-    z = catalog["z"].to_numpy()
+    z = np.asarray(catalog["z"], dtype=float)
 
     total = observed_number_density(
         cosmo,
