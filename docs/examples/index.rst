@@ -30,11 +30,37 @@ Working, executable examples for using LFKit.
 
       **Poggianti (1997) examples**
       ^^^
-      Evaluate :math:`k(z)`, :math:`e(z)`, and :math:`k(z)+e(z)` from the
+      Evaluate :math:`k(z)`, :math:`e(z)`, and :math:`k(z)-e(z)` from the
       Poggianti tabulations; compare galaxy types and bands.
 
       +++
       *Backends:* Poggianti (1997)
+
+   .. grid-item-card::
+      :link: luminosity_function_examples
+      :link-type: doc
+      :shadow: md
+
+      **Luminosity-function examples**
+      ^^^
+      Build standard, evolving, and double Schechter luminosity functions,
+      evaluate :math:`\phi(M, z)`, and compare model behaviour.
+
+      +++
+      *API:* LuminosityFunction
+
+   .. grid-item-card::
+      :link: catalog_completeness_examples
+      :link-type: doc
+      :shadow: md
+
+      **Catalog-completeness examples**
+      ^^^
+      Compute observed and missing number densities for a magnitude-limited
+      catalog and visualize completeness as a function of redshift.
+
+      +++
+      *API:* LuminosityFunction
 
 .. toctree::
    :maxdepth: 1
@@ -42,3 +68,5 @@ Working, executable examples for using LFKit.
 
    kcorrect_examples
    poggianti_examples
+   luminosity_function_examples
+   catalog_completeness_examples

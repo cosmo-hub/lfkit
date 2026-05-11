@@ -37,7 +37,7 @@ Core components
       :link-type: doc
       :shadow: md
 
-      **Luminosity Function Tools**
+      **Photometric Tools**
       ^^^
 
       Utilities for constructing and analyzing galaxy luminosity
