@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 import sys
+import warnings
 
 import matplotlib
 
@@ -13,6 +14,12 @@ matplotlib.use("Agg")
 # Ensure src/ layout imports work
 # -----------------------------------------------------------------------------
 sys.path.insert(0, os.path.abspath("../src"))
+
+warnings.filterwarnings(
+    "ignore",
+    category=SyntaxWarning,
+    module=r"colorspacious\.comparison",
+)
 
 # -----------------------------------------------------------------------------
 # Project information
@@ -38,6 +45,7 @@ extensions = [
     "sphinx_design",
     "sphinx_multiversion",
     "sphinx.ext.mathjax",
+    "sphinx_copybutton",
 ]
 
 #templates_path = ["_templates"]  # if uncomment this removes the sidebar logo
@@ -106,3 +114,11 @@ plot_rcparams = {
 # -----------------------------------------------------------------------------
 smv_tag_whitelist = r"^v\d+\.\d+\.\d+$"
 smv_branch_whitelist = "main"
+
+
+# -----------------------------------------------------------------------------
+# Copybutton configuration
+# -----------------------------------------------------------------------------
+copybutton_prompt_text = r">>> |\.\.\. "
+copybutton_prompt_is_regexp = True
+copybutton_copy_empty_lines = False

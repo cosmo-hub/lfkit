@@ -7,6 +7,7 @@ Submodules
 .. toctree::
    :maxdepth: 2
 
+   lfkit.photometry.catalog_completeness
    lfkit.photometry.lf_parameter_models
    lfkit.photometry.luminosities
    lfkit.photometry.luminosity_function
