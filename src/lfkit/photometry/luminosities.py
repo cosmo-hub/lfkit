@@ -20,9 +20,9 @@ from __future__ import annotations
 
 import numpy as np
 from numpy.random import Generator, default_rng
-from numpy.typing import ArrayLike, NDArray
 from scipy.special import gamma, gammaincc
 
+from lfkit.utils.types import FloatArray, FloatInput
 from lfkit.utils.validators import validate_array
 
 __all__ = (
@@ -40,9 +40,9 @@ __all__ = (
 
 
 def luminosity_ratio(
-    absolute_mag: ArrayLike,
-    m_star: ArrayLike,
-) -> NDArray[np.float64]:
+    absolute_mag: FloatInput,
+    m_star: FloatInput,
+) -> FloatArray:
     r"""Return the luminosity ratio relative to the characteristic luminosity.
 
     For magnitudes,
@@ -69,9 +69,9 @@ def luminosity_ratio(
 
 
 def luminosity_ratio_from_magnitudes(
-    magnitude: ArrayLike,
-    ref_magnitude: ArrayLike,
-) -> NDArray[np.float64]:
+    magnitude: FloatInput,
+    ref_magnitude: FloatInput,
+) -> FloatArray:
     r"""Return luminosity relative to a reference magnitude.
 
     This uses :math:`L / L_{\mathrm{ref}} = 10^{-0.4 (m - m_{\mathrm{ref}})}`.
@@ -93,8 +93,8 @@ def luminosity_ratio_from_magnitudes(
 
 
 def magnitude_difference_from_luminosity_ratio(
-    luminosity_ratio: ArrayLike,
-) -> NDArray[np.float64]:
+    ratio: FloatInput,
+) -> FloatArray:
     r"""Return the magnitude difference corresponding to a luminosity ratio.
 
     This uses
@@ -104,7 +104,7 @@ def magnitude_difference_from_luminosity_ratio(
         m_1 - m_2 = -2.5 \log_{10}(L_1 / L_2).
 
     Args:
-        luminosity_ratio: Luminosity ratio value(s) ``L1 / L2``.
+        ratio: Luminosity ratio value(s) ``L1 / L2``.
 
     Returns:
         NumPy array of magnitude differences ``m1 - m2``.
@@ -112,18 +112,18 @@ def magnitude_difference_from_luminosity_ratio(
     Raises:
         ValueError: If any luminosity ratio is not strictly positive.
     """
-    ratio = validate_array(luminosity_ratio, name="luminosity_ratio")
+    ratio_arr = validate_array(ratio, name="luminosity_ratio")
 
-    if np.any(ratio <= 0):
+    if np.any(ratio_arr <= 0):
         raise ValueError("luminosity_ratio must be strictly positive.")
 
-    return np.asarray(-2.5 * np.log10(ratio), dtype=float)
+    return np.asarray(-2.5 * np.log10(ratio_arr), dtype=float)
 
 
 def luminosity_weight_from_magnitude(
-    magnitude: ArrayLike,
+    magnitude: FloatInput,
     reference_magnitude: float = 0.0,
-) -> NDArray[np.float64]:
+) -> FloatArray:
     r"""Return an unnormalized luminosity weight from a magnitude.
 
     This uses
@@ -147,11 +147,11 @@ def luminosity_weight_from_magnitude(
 
 
 def luminosity_from_magnitude(
-    magnitude: ArrayLike,
+    magnitude: FloatInput,
     *,
     reference_magnitude: float = 0.0,
     reference_luminosity: float = 1.0,
-) -> NDArray[np.float64]:
+) -> FloatArray:
     r"""Return luminosity corresponding to a magnitude relative to a reference.
 
     This uses
@@ -183,12 +183,12 @@ def luminosity_from_magnitude(
 
 
 def schechter_cumulative_number_density_luminosity(
-    luminosity_min: ArrayLike,
+    luminosity_min: FloatInput,
     *,
     phi_star: float,
     l_star: float,
     alpha: float,
-) -> NDArray[np.float64]:
+) -> FloatArray:
     r"""Return cumulative Schechter number density above a luminosity threshold.
 
     This evaluates
@@ -327,7 +327,7 @@ def sample_schechter_luminosity(
     l_star: float,
     alpha: float,
     rng: Generator | None = None,
-) -> NDArray[np.float64]:
+) -> FloatArray:
     r"""Sample luminosities from a normalized Schechter distribution.
 
     This samples from
@@ -375,11 +375,11 @@ def sample_schechter_luminosity(
 
 
 def schechter_selection_function(
-    luminosity_min: ArrayLike,
+    luminosity_min: FloatInput,
     *,
     l_star: float,
     alpha: float,
-) -> NDArray[np.float64]:
+) -> FloatArray:
     r"""Return the Schechter selection fraction above a luminosity threshold.
 
     This evaluates

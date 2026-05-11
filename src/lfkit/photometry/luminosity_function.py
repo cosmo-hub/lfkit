@@ -1,4 +1,4 @@
-r"""Luminosity function utilities for LFKit.
+"""Luminosity function utilities for LFKit.
 
 This module provides simple standalone functions for evaluating
 common galaxy luminosity-function parameterization.
@@ -49,31 +49,16 @@ All returned quantities are NumPy arrays of dtype float.
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import TYPE_CHECKING, Callable
 import warnings
 
 import numpy as np
-from numpy.typing import NDArray
-from typing import TypeAlias
 from scipy.special import gammaincc, gamma
 
-from lfkit.photometry.magnitudes import absolute_magnitude
+from lfkit.photometry.lf_parameter_models import evaluate_lf_parameters
 from lfkit.photometry.luminosities import luminosity_ratio
+from lfkit.photometry.magnitudes import absolute_magnitude
+from lfkit.utils.types import Cosmology, FloatArray, FloatInput, ParameterValue
 from lfkit.utils.validators import validate_array
-from lfkit.photometry.lf_parameter_models import (
-    ParameterValue,
-    evaluate_lf_parameters,
-)
-
-if TYPE_CHECKING:
-    import pyccl as ccl
-
-    Cosmology = ccl.Cosmology
-else:
-    Cosmology = object
-
-ParameterModel = Callable[..., NDArray[np.float64]]
-FloatArray: TypeAlias = NDArray[np.float64]
 
 
 __all__ = [
@@ -89,12 +74,12 @@ __all__ = [
 
 
 def schechter(
-    absolute_mag: FloatArray,
+    absolute_mag: FloatInput,
     *,
     phi_star: ParameterValue,
     m_star: ParameterValue,
     alpha: ParameterValue,
-) -> NDArray[np.float64]:
+) -> FloatArray:
     r"""Return the standard Schechter luminosity function in magnitude space.
 
     This computes
@@ -140,8 +125,8 @@ def schechter(
 
 
 def schechter_evolving(
-    absolute_mag: FloatArray,
-    z: FloatArray,
+    absolute_mag: FloatInput,
+    z: FloatInput,
     *,
     phi_model: str = "linear_p",
     phi_kwargs: Mapping[str, ParameterValue] | None = None,
@@ -149,7 +134,7 @@ def schechter_evolving(
     m_star_kwargs: Mapping[str, ParameterValue] | None = None,
     alpha_model: str = "constant",
     alpha_kwargs: Mapping[str, ParameterValue] | None = None,
-) -> NDArray[np.float64]:
+) -> FloatArray:
     r"""Return an evolving Schechter luminosity function in magnitude space.
 
     This evaluates
@@ -203,14 +188,14 @@ def schechter_evolving(
 
 
 def schechter_double(
-    absolute_mag: FloatArray,
+    absolute_mag: FloatInput,
     *,
     phi_star: ParameterValue,
     m_star: ParameterValue,
     alpha: float,
     beta: float,
     m_transition: ParameterValue,
-) -> NDArray[np.float64]:
+) -> FloatArray:
     r"""Return a double-power-law Schechter luminosity function in magnitude space.
 
     This implements the Loveday/GAMA-style faint-end extension
@@ -292,23 +277,23 @@ def schechter_double(
 
 def schechter_from_m(
     cosmo_obj: Cosmology,
-    z: FloatArray,
-    apparent_mag: FloatArray,
+    z: FloatInput,
+    apparent_mag: FloatInput,
     *,
     phi_star: ParameterValue,
     m_star: ParameterValue,
-    alpha: float,
+    alpha: ParameterValue,
     h: float | None = None,
     k_correction: ParameterValue | None = None,
     e_correction: ParameterValue | None = None,
-) -> NDArray[np.float64]:
+) -> FloatArray:
     r"""Return the standard Schechter luminosity function from apparent magnitudes.
 
     This uses
 
     .. math::
 
-        M = m - \mu - K - E,
+        M = m - \mu - K + E,
 
     followed by
 
@@ -368,8 +353,8 @@ def schechter_from_m(
 
 def schechter_evolving_from_m(
     cosmo_obj: Cosmology,
-    z: FloatArray,
-    apparent_mag: FloatArray,
+    z: FloatInput,
+    apparent_mag: FloatInput,
     *,
     phi_model: str = "linear_p",
     phi_kwargs: Mapping[str, ParameterValue] | None = None,
@@ -380,14 +365,14 @@ def schechter_evolving_from_m(
     h: float | None = None,
     k_correction: ParameterValue | None = None,
     e_correction: ParameterValue | None = None,
-) -> NDArray[np.float64]:
+) -> FloatArray:
     r"""Return an evolving Schechter luminosity function from apparent magnitudes.
 
     This uses
 
     .. math::
 
-        M = m - \mu - K - E,
+        M = m - \mu - K + E,
 
     followed by
 
@@ -468,8 +453,8 @@ def schechter_evolving_from_m(
 
 def schechter_double_from_m(
     cosmo_obj: Cosmology,
-    z: FloatArray,
-    apparent_mag: FloatArray,
+    z: FloatInput,
+    apparent_mag: FloatInput,
     *,
     phi_star: ParameterValue,
     m_star: ParameterValue,
@@ -479,14 +464,14 @@ def schechter_double_from_m(
     h: float | None = None,
     k_correction: ParameterValue | None = None,
     e_correction: ParameterValue | None = None,
-) -> NDArray[np.float64]:
+) -> FloatArray:
     r"""Return a double-power-law Schechter luminosity function from apparent magnitudes.
 
     This uses
 
     .. math::
 
-        M = m - \mu - K - E,
+        M = m - \mu - K + E,
 
     followed by
 
@@ -550,13 +535,13 @@ def schechter_double_from_m(
 
 
 def schechter_cumulative(
-    magnitude_limit: FloatArray,
+    magnitude_limit: FloatInput,
     *,
     phi_star: float,
     m_star: float,
     alpha: float,
     brighter_than: bool = True,
-) -> NDArray[np.float64]:
+) -> FloatArray:
     r"""Return the cumulative number density for a standard Schechter LF.
 
     For a magnitude threshold :math:`M_{\mathrm{lim}}`, define
@@ -627,8 +612,8 @@ def schechter_cumulative(
 
 
 def schechter_cumulative_evolving(
-    magnitude_limit: FloatArray,
-    z: FloatArray,
+    magnitude_limit: FloatInput,
+    z: FloatInput,
     *,
     phi_model: str = "linear_p",
     phi_kwargs: Mapping[str, ParameterValue] | None = None,
@@ -637,7 +622,7 @@ def schechter_cumulative_evolving(
     alpha_model: str = "constant",
     alpha_kwargs: Mapping[str, ParameterValue] | None = None,
     brighter_than: bool = True,
-) -> NDArray[np.float64]:
+) -> FloatArray:
     r"""Return the cumulative number density for an evolving Schechter LF.
 
     For a magnitude threshold :math:`M_{\mathrm{lim}}`, define

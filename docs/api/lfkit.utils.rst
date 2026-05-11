@@ -10,6 +10,7 @@ Submodules
    lfkit.utils.download_poggianti97_data
    lfkit.utils.interpolation
    lfkit.utils.io
+   lfkit.utils.types
    lfkit.utils.units
    lfkit.utils.validators
 

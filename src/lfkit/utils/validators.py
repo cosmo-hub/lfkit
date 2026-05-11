@@ -2,25 +2,23 @@
 
 from __future__ import annotations
 
-from numpy.typing import NDArray
 import numpy as np
-from typing import TypeAlias
 
-FloatArray: TypeAlias = NDArray[np.float64]
-ParameterValue: TypeAlias = float | FloatArray
+from lfkit.utils.types import FloatArray, FloatInput
 
 __all__ = [
     "validate_array",
+    "validate_magnitude_range",
 ]
 
 
 def validate_array(
-    x: ParameterValue,
+    x: FloatInput,
     *,
     name: str,
     allow_negative: bool = True,
-) -> NDArray[np.float64]:
-    """Basic validation for numeric arrays."""
+) -> FloatArray:
+    """Return a finite float array."""
     arr = np.asarray(x, dtype=float)
 
     if not np.all(np.isfinite(arr)):
@@ -30,3 +28,19 @@ def validate_array(
         raise ValueError(f"{name} contains negative values, which are not allowed.")
 
     return np.asarray(arr, dtype=np.float64)
+
+
+def validate_magnitude_range(
+    *,
+    m_bright: float,
+    m_faint: float,
+) -> None:
+    """Validate bright and faint magnitude bounds."""
+    if not np.isfinite(m_bright):
+        raise ValueError("m_bright must be finite.")
+
+    if not np.isfinite(m_faint):
+        raise ValueError("m_faint must be finite.")
+
+    if m_faint <= m_bright:
+        raise ValueError("m_faint must be larger than m_bright.")
