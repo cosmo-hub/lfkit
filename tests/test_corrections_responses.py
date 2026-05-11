@@ -7,7 +7,6 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-# Adjust import path to your package layout
 from lfkit.corrections.responses import write_kcorrect_response
 
 
