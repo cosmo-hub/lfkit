@@ -11,6 +11,7 @@ ParameterValue: TypeAlias = float | FloatArray
 
 __all__ = [
     "validate_array",
+    "validate_magnitude_range",
 ]
 
 
@@ -30,3 +31,19 @@ def validate_array(
         raise ValueError(f"{name} contains negative values, which are not allowed.")
 
     return np.asarray(arr, dtype=np.float64)
+
+
+def validate_magnitude_range(
+    *,
+    m_bright: float,
+    m_faint: float,
+) -> None:
+    """Validate bright and faint magnitude bounds."""
+    if not np.isfinite(m_bright):
+        raise ValueError("m_bright must be finite.")
+
+    if not np.isfinite(m_faint):
+        raise ValueError("m_faint must be finite.")
+
+    if m_faint <= m_bright:
+        raise ValueError("m_faint must be larger than m_bright.")
