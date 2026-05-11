@@ -25,15 +25,15 @@ def test_total_magnitude_correction_k_only_scalar():
 
 
 def test_total_magnitude_correction_e_only_scalar():
-    """Tests that total_magnitude_correction returns only the e-correction for scalar input."""
+    """Tests that total_magnitude_correction returns minus the e-correction for scalar input."""
     out = magnitudes.total_magnitude_correction(e_correction=0.2)
     assert isinstance(out, np.ndarray)
     assert out.dtype == float
-    assert np.allclose(out, 0.2)
+    assert np.allclose(out, -0.2)
 
 
 def test_total_magnitude_correction_adds_array_terms():
-    """Tests that total_magnitude_correction adds k- and e-corrections elementwise."""
+    """Tests that total_magnitude_correction combines k- and e-corrections elementwise."""
     k_corr = np.array([0.1, 0.2, 0.3])
     e_corr = np.array([0.05, 0.10, 0.15])
 
@@ -42,7 +42,7 @@ def test_total_magnitude_correction_adds_array_terms():
         e_correction=e_corr,
     )
 
-    expected = np.array([0.15, 0.30, 0.45])
+    expected = np.array([0.05, 0.10, 0.15])
     assert isinstance(out, np.ndarray)
     assert out.dtype == float
     assert np.allclose(out, expected)
@@ -54,13 +54,14 @@ def test_total_magnitude_correction_broadcasts_scalar_and_array():
         k_correction=0.2,
         e_correction=np.array([0.0, 0.1, 0.2]),
     )
-    expected = np.array([0.2, 0.3, 0.4])
+    expected = np.array([0.2, 0.1, 0.0])
     assert np.allclose(out, expected)
 
 
 def test_absolute_magnitude_without_corrections(monkeypatch: pytest.MonkeyPatch):
     """Tests that absolute_magnitude applies M = m - mu without extra corrections."""
     def mock_distance_modulus(cosmo_obj, z, h=None):
+        _, _, _ = cosmo_obj, z, h
         return np.array([40.0, 41.0], dtype=float)
 
     monkeypatch.setattr(magnitudes, "distance_modulus", mock_distance_modulus)
@@ -78,8 +79,9 @@ def test_absolute_magnitude_without_corrections(monkeypatch: pytest.MonkeyPatch)
 
 
 def test_absolute_magnitude_with_corrections(monkeypatch: pytest.MonkeyPatch):
-    """Tests that absolute_magnitude subtracts distance modulus and total correction."""
+    """Tests that absolute_magnitude applies M = m - mu - K + E."""
     def mock_distance_modulus(cosmo_obj, z, h=None):
+        _, _, _ = cosmo_obj, z, h
         return np.array([40.0, 41.0], dtype=float)
 
     monkeypatch.setattr(magnitudes, "distance_modulus", mock_distance_modulus)
@@ -92,13 +94,19 @@ def test_absolute_magnitude_with_corrections(monkeypatch: pytest.MonkeyPatch):
         e_correction=np.array([0.3, 0.4]),
     )
 
-    expected = np.array([20.0, 21.5]) - np.array([40.0, 41.0]) - np.array([0.4, 0.6])
+    expected = (
+        np.array([20.0, 21.5])
+        - np.array([40.0, 41.0])
+        - np.array([0.1, 0.2])
+        + np.array([0.3, 0.4])
+    )
     assert np.allclose(out, expected)
 
 
 def test_apparent_magnitude_without_corrections(monkeypatch: pytest.MonkeyPatch):
     """Tests that apparent_magnitude applies m = M + mu without extra corrections."""
     def mock_distance_modulus(cosmo_obj, z, h=None):
+        _, _, _ = cosmo_obj, z, h
         return np.array([40.0, 41.0], dtype=float)
 
     monkeypatch.setattr(magnitudes, "distance_modulus", mock_distance_modulus)
@@ -116,8 +124,9 @@ def test_apparent_magnitude_without_corrections(monkeypatch: pytest.MonkeyPatch)
 
 
 def test_apparent_magnitude_with_corrections(monkeypatch: pytest.MonkeyPatch):
-    """Tests that apparent_magnitude adds distance modulus and total correction."""
+    """Tests that apparent_magnitude applies m = M + mu + K - E."""
     def mock_distance_modulus(cosmo_obj, z, h=None):
+        _, _, _ = cosmo_obj, z, h
         return np.array([40.0, 41.0], dtype=float)
 
     monkeypatch.setattr(magnitudes, "distance_modulus", mock_distance_modulus)
@@ -130,7 +139,12 @@ def test_apparent_magnitude_with_corrections(monkeypatch: pytest.MonkeyPatch):
         e_correction=np.array([0.3, 0.4]),
     )
 
-    expected = np.array([-20.0, -19.5]) + np.array([40.0, 41.0]) + np.array([0.4, 0.6])
+    expected = (
+        np.array([-20.0, -19.5])
+        + np.array([40.0, 41.0])
+        + np.array([0.1, 0.2])
+        - np.array([0.3, 0.4])
+    )
     assert np.allclose(out, expected)
 
 
@@ -139,6 +153,7 @@ def test_apparent_and_absolute_are_inverse_without_corrections(
 ):
     """Tests that apparent_magnitude and absolute_magnitude invert each other without corrections."""
     def mock_distance_modulus(cosmo_obj, z, h=None):
+        _, _, _ = cosmo_obj, z, h
         z_arr = np.asarray(z, dtype=float)
         return 40.0 + z_arr
 
@@ -166,6 +181,7 @@ def test_apparent_and_absolute_are_inverse_with_corrections(
 ):
     """Tests that apparent_magnitude and absolute_magnitude invert each other with corrections."""
     def mock_distance_modulus(cosmo_obj, z, h=None):
+        _, _ = cosmo_obj, h
         z_arr = np.asarray(z, dtype=float)
         return 39.5 + 2.0 * z_arr
 
@@ -201,6 +217,7 @@ def test_absolute_magnitude_passes_h_to_distance_modulus(
     captured: dict[str, float | None] = {"h": None}
 
     def mock_distance_modulus(cosmo_obj, z, h=None):
+        _, _ = cosmo_obj, z
         captured["h"] = h
         return np.array([40.0], dtype=float)
 
@@ -223,6 +240,7 @@ def test_apparent_magnitude_passes_h_to_distance_modulus(
     captured: dict[str, float | None] = {"h": None}
 
     def mock_distance_modulus(cosmo_obj, z, h=None):
+        _, _ = cosmo_obj, z
         captured["h"] = h
         return np.array([40.0], dtype=float)
 
@@ -243,6 +261,7 @@ def test_absolute_magnitude_broadcasts_scalar_correction(
 ):
     """Tests that absolute_magnitude broadcasts scalar corrections over array magnitudes."""
     def mock_distance_modulus(cosmo_obj, z, h=None):
+        _, _, _ = cosmo_obj, z, h
         return np.array([40.0, 41.0, 42.0], dtype=float)
 
     monkeypatch.setattr(magnitudes, "distance_modulus", mock_distance_modulus)
@@ -263,6 +282,7 @@ def test_apparent_magnitude_broadcasts_scalar_correction(
 ):
     """Tests that apparent_magnitude broadcasts scalar corrections over array magnitudes."""
     def mock_distance_modulus(cosmo_obj, z, h=None):
+        _, _, _ = cosmo_obj, z, h
         return np.array([40.0, 41.0, 42.0], dtype=float)
 
     monkeypatch.setattr(magnitudes, "distance_modulus", mock_distance_modulus)
@@ -274,5 +294,5 @@ def test_apparent_magnitude_broadcasts_scalar_correction(
         e_correction=0.3,
     )
 
-    expected = np.array([-20.0, -20.0, -20.0]) + np.array([40.0, 41.0, 42.0]) + 0.3
+    expected = np.array([-20.0, -20.0, -20.0]) + np.array([40.0, 41.0, 42.0]) - 0.3
     assert np.allclose(out, expected)

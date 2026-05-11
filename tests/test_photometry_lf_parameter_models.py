@@ -5,7 +5,6 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-# Update this import path to match your actual module location.
 from lfkit.photometry.lf_parameter_models import (
     ALPHA_MODELS,
     M_STAR_MODELS,
@@ -18,6 +17,10 @@ from lfkit.photometry.lf_parameter_models import (
     m_star_linear_q,
     phi_star_constant,
     phi_star_linear_p,
+    available_lf_parameter_models,
+    register_alpha_model,
+    register_m_star_model,
+    register_phi_star_model,
 )
 
 
@@ -273,3 +276,192 @@ def test_scalar_input_returns_numpy_array() -> None:
     assert phi.dtype == np.float64
     assert m_star.dtype == np.float64
     assert alpha.dtype == np.float64
+
+
+def test_available_lf_parameter_models_returns_sorted_builtin_names() -> None:
+    """Tests that available_lf_parameter_models returns sorted built-in model names."""
+    result = available_lf_parameter_models()
+
+    assert result["phi_star"] == ["constant", "linear_p"]
+    assert result["m_star"] == ["constant", "linear_q"]
+    assert result["alpha"] == ["constant", "linear"]
+
+
+def test_register_phi_star_model_adds_custom_model() -> None:
+    """Tests that register_phi_star_model adds a custom phi_star model."""
+    def custom_phi(z: np.ndarray, *, amplitude: float) -> np.ndarray:
+        return np.full_like(z, amplitude, dtype=float)
+
+    register_phi_star_model("custom_phi_test", custom_phi)
+
+    try:
+        z = np.array([0.0, 0.5, 1.0])
+        model = get_parameter_model(
+            "custom_phi_test",
+            PHI_STAR_MODELS,
+            model_kind="phi_model",
+        )
+        result = model(z, amplitude=3.0e-3)
+
+        np.testing.assert_allclose(result, np.array([3.0e-3, 3.0e-3, 3.0e-3]))
+    finally:
+        PHI_STAR_MODELS.pop("custom_phi_test", None)
+
+
+def test_register_m_star_model_adds_custom_model() -> None:
+    """Tests that register_m_star_model adds a custom M_star model."""
+    def custom_m_star(z: np.ndarray, *, base: float, slope: float) -> np.ndarray:
+        return np.asarray(base + slope * z, dtype=float)
+
+    register_m_star_model("custom_m_star_test", custom_m_star)
+
+    try:
+        z = np.array([0.0, 0.5, 1.0])
+        model = get_parameter_model(
+            "custom_m_star_test",
+            M_STAR_MODELS,
+            model_kind="m_star_model",
+        )
+        result = model(z, base=-20.0, slope=-1.0)
+
+        np.testing.assert_allclose(result, np.array([-20.0, -20.5, -21.0]))
+    finally:
+        M_STAR_MODELS.pop("custom_m_star_test", None)
+
+
+def test_register_alpha_model_adds_custom_model() -> None:
+    """Tests that register_alpha_model adds a custom alpha model."""
+    def custom_alpha(z: np.ndarray, *, alpha: float) -> np.ndarray:
+        return np.full_like(z, alpha, dtype=float)
+
+    register_alpha_model("custom_alpha_test", custom_alpha)
+
+    try:
+        z = np.array([0.0, 0.5, 1.0])
+        model = get_parameter_model(
+            "custom_alpha_test",
+            ALPHA_MODELS,
+            model_kind="alpha_model",
+        )
+        result = model(z, alpha=-1.4)
+
+        np.testing.assert_allclose(result, np.array([-1.4, -1.4, -1.4]))
+    finally:
+        ALPHA_MODELS.pop("custom_alpha_test", None)
+
+
+def test_evaluate_lf_parameters_uses_registered_custom_models() -> None:
+    """Tests that evaluate_lf_parameters can use registered custom models."""
+    def custom_phi(z: np.ndarray, *, amplitude: float) -> np.ndarray:
+        return np.full_like(z, amplitude, dtype=float)
+
+    def custom_m_star(z: np.ndarray, *, base: float) -> np.ndarray:
+        return np.asarray(base - z, dtype=float)
+
+    def custom_alpha(z: np.ndarray, *, alpha: float) -> np.ndarray:
+        return np.full_like(z, alpha, dtype=float)
+
+    register_phi_star_model("eval_custom_phi_test", custom_phi)
+    register_m_star_model("eval_custom_m_star_test", custom_m_star)
+    register_alpha_model("eval_custom_alpha_test", custom_alpha)
+
+    try:
+        z = np.array([0.0, 0.5, 1.0])
+
+        phi_star, m_star, alpha = evaluate_lf_parameters(
+            z,
+            phi_model="eval_custom_phi_test",
+            phi_kwargs={"amplitude": 2.0e-3},
+            m_star_model="eval_custom_m_star_test",
+            m_star_kwargs={"base": -20.0},
+            alpha_model="eval_custom_alpha_test",
+            alpha_kwargs={"alpha": -1.2},
+        )
+
+        np.testing.assert_allclose(phi_star, np.array([2.0e-3, 2.0e-3, 2.0e-3]))
+        np.testing.assert_allclose(m_star, np.array([-20.0, -20.5, -21.0]))
+        np.testing.assert_allclose(alpha, np.array([-1.2, -1.2, -1.2]))
+    finally:
+        PHI_STAR_MODELS.pop("eval_custom_phi_test", None)
+        M_STAR_MODELS.pop("eval_custom_m_star_test", None)
+        ALPHA_MODELS.pop("eval_custom_alpha_test", None)
+
+
+def test_register_parameter_model_raises_for_empty_name() -> None:
+    """Tests that registering a model with an empty name raises an error."""
+    def custom_model(z: np.ndarray) -> np.ndarray:
+        return np.asarray(z, dtype=float)
+
+    with pytest.raises(ValueError, match="phi_star model name cannot be empty"):
+        register_phi_star_model("", custom_model)
+
+
+def test_register_parameter_model_raises_for_non_callable_model() -> None:
+    """Tests that registering a non-callable model raises an error."""
+    with pytest.raises(TypeError, match="phi_star model must be callable"):
+        register_phi_star_model("not_callable_test", 3.0)  # type: ignore[arg-type]
+
+
+def test_register_parameter_model_raises_for_duplicate_without_overwrite() -> None:
+    """Tests that registering a duplicate model without overwrite raises an error."""
+    def custom_model(z: np.ndarray) -> np.ndarray:
+        return np.asarray(z, dtype=float)
+
+    register_phi_star_model("duplicate_phi_test", custom_model)
+
+    try:
+        with pytest.raises(ValueError, match="already registered"):
+            register_phi_star_model("duplicate_phi_test", custom_model)
+    finally:
+        PHI_STAR_MODELS.pop("duplicate_phi_test", None)
+
+
+def test_register_parameter_model_allows_duplicate_with_overwrite() -> None:
+    """Tests that registering a duplicate model with overwrite replaces the model."""
+    def first_model(z: np.ndarray) -> np.ndarray:
+        return np.full_like(z, 1.0, dtype=float)
+
+    def second_model(z: np.ndarray) -> np.ndarray:
+        return np.full_like(z, 2.0, dtype=float)
+
+    register_phi_star_model("overwrite_phi_test", first_model)
+
+    try:
+        register_phi_star_model("overwrite_phi_test", second_model, overwrite=True)
+
+        z = np.array([0.0, 0.5])
+        result = PHI_STAR_MODELS["overwrite_phi_test"](z)
+
+        np.testing.assert_allclose(result, np.array([2.0, 2.0]))
+    finally:
+        PHI_STAR_MODELS.pop("overwrite_phi_test", None)
+
+
+def test_parameter_models_raise_for_non_finite_redshift() -> None:
+    """Tests that parameter models reject non-finite redshift values."""
+    z = np.array([0.0, np.nan, 1.0])
+
+    with pytest.raises(ValueError, match="z contains NaN or infinite values"):
+        phi_star_constant(z, phi_star=1.0e-3)
+
+    with pytest.raises(ValueError, match="z contains NaN or infinite values"):
+        m_star_constant(z, m_star=-20.0)
+
+    with pytest.raises(ValueError, match="z contains NaN or infinite values"):
+        alpha_constant(z, alpha=-1.0)
+
+
+def test_evaluate_lf_parameters_rejects_non_finite_redshift() -> None:
+    """Tests that evaluate_lf_parameters rejects non-finite redshift values."""
+    z = np.array([0.0, np.inf])
+
+    with pytest.raises(ValueError, match="z contains NaN or infinite values"):
+        evaluate_lf_parameters(
+            z,
+            phi_model="constant",
+            phi_kwargs={"phi_star": 1.0e-3},
+            m_star_model="constant",
+            m_star_kwargs={"m_star": -20.0},
+            alpha_model="constant",
+            alpha_kwargs={"alpha": -1.0},
+        )

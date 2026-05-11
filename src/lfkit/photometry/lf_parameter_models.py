@@ -14,30 +14,14 @@ commonly used in the literature.
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import TYPE_CHECKING, Callable
 
 import numpy as np
-from numpy.typing import NDArray
-from typing import TypeAlias
 
+from lfkit.utils.types import FloatArray, ParameterModel, ParameterValue
 from lfkit.utils.validators import validate_array
-
-if TYPE_CHECKING:
-    import pyccl as ccl
-
-    Cosmology = ccl.Cosmology
-else:
-    Cosmology = object
-
-ParameterModel = Callable[..., NDArray[np.float64]]
-FloatArray: TypeAlias = NDArray[np.float64]
-ParameterValue: TypeAlias = float | FloatArray
 
 
 __all__ = [
-    "ParameterModel",
-    "FloatArray",
-    "ParameterValue",
     "phi_star_constant",
     "phi_star_linear_p",
     "m_star_constant",
@@ -47,6 +31,10 @@ __all__ = [
     "PHI_STAR_MODELS",
     "M_STAR_MODELS",
     "ALPHA_MODELS",
+    "available_lf_parameter_models",
+    "register_phi_star_model",
+    "register_m_star_model",
+    "register_alpha_model",
     "get_parameter_model",
     "evaluate_lf_parameters",
 ]
@@ -56,7 +44,7 @@ def phi_star_constant(
     z: FloatArray,
     *,
     phi_star: float,
-) -> NDArray[np.float64]:
+) -> FloatArray:
     r"""Return a constant Schechter normalization over redshift.
 
     This uses
@@ -82,7 +70,7 @@ def phi_star_linear_p(
     *,
     phi_0_star: float,
     p: float,
-) -> NDArray[np.float64]:
+) -> FloatArray:
     r"""Return a Schechter normalization with density evolution.
 
     This uses the common density-evolution form
@@ -105,7 +93,7 @@ def m_star_constant(
     z: FloatArray,
     *,
     m_star: float,
-) -> NDArray[np.float64]:
+) -> FloatArray:
     r"""Return a constant characteristic magnitude over redshift
 
     This uses
@@ -132,7 +120,7 @@ def m_star_linear_q(
     m_0_star: float,
     q: float,
     z_ref: float = 0.1,
-) -> NDArray[np.float64]:
+) -> FloatArray:
     r"""Return a characteristic magnitude with luminosity evolution.
 
     This uses the common luminosity-evolution form
@@ -158,7 +146,7 @@ def alpha_constant(
     z: FloatArray,
     *,
     alpha: float,
-) -> NDArray[np.float64]:
+) -> FloatArray:
     r"""Return a constant faint-end slope over redshift.
 
     This uses
@@ -185,7 +173,7 @@ def alpha_linear(
     alpha_0: float,
     alpha_1: float,
     z_ref: float = 0.1,
-) -> NDArray[np.float64]:
+) -> FloatArray:
     r"""Return a faint-end slope that varies linearly with redshift.
 
     This uses
@@ -236,6 +224,87 @@ def get_parameter_model(
         ) from exc
 
 
+def available_lf_parameter_models() -> dict[str, list[str]]:
+    """Return available luminosity-function parameter evolution models."""
+    return {
+        "phi_star": sorted(PHI_STAR_MODELS),
+        "m_star": sorted(M_STAR_MODELS),
+        "alpha": sorted(ALPHA_MODELS),
+    }
+
+
+def _register_parameter_model(
+    name: str,
+    model: ParameterModel,
+    registry: dict[str, ParameterModel],
+    *,
+    model_kind: str,
+    overwrite: bool = False,
+) -> None:
+    """Register a luminosity-function parameter evolution model."""
+    if not name:
+        raise ValueError(f"{model_kind} model name cannot be empty.")
+
+    if not callable(model):
+        raise TypeError(f"{model_kind} model must be callable.")
+
+    if name in registry and not overwrite:
+        raise ValueError(
+            f"{model_kind} model '{name}' is already registered. "
+            "Use overwrite=True to replace it."
+        )
+
+    registry[name] = model
+
+
+def register_phi_star_model(
+    name: str,
+    model: ParameterModel,
+    *,
+    overwrite: bool = False,
+) -> None:
+    """Register a phi_star evolution model."""
+    _register_parameter_model(
+        name,
+        model,
+        PHI_STAR_MODELS,
+        model_kind="phi_star",
+        overwrite=overwrite,
+    )
+
+
+def register_m_star_model(
+    name: str,
+    model: ParameterModel,
+    *,
+    overwrite: bool = False,
+) -> None:
+    """Register an M_star evolution model."""
+    _register_parameter_model(
+        name,
+        model,
+        M_STAR_MODELS,
+        model_kind="m_star",
+        overwrite=overwrite,
+    )
+
+
+def register_alpha_model(
+    name: str,
+    model: ParameterModel,
+    *,
+    overwrite: bool = False,
+) -> None:
+    """Register an alpha evolution model."""
+    _register_parameter_model(
+        name,
+        model,
+        ALPHA_MODELS,
+        model_kind="alpha",
+        overwrite=overwrite,
+    )
+
+
 def evaluate_lf_parameters(
     z: FloatArray,
     *,
@@ -245,7 +314,7 @@ def evaluate_lf_parameters(
     m_star_kwargs: Mapping[str, ParameterValue] | None = None,
     alpha_model: str = "constant",
     alpha_kwargs: Mapping[str, ParameterValue] | None = None,
-) -> tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]]:
+) -> tuple[FloatArray, FloatArray, FloatArray]:
     r"""Evaluate evolving luminosity-function parameters at redshift ``z``.
 
     Args:

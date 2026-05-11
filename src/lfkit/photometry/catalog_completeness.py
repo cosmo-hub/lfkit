@@ -20,30 +20,19 @@ luminosity-function parameterization.
 
 from __future__ import annotations
 
-from collections.abc import Callable
-from typing import TYPE_CHECKING, TypeAlias
-
 import numpy as np
-from numpy.typing import ArrayLike, NDArray
 
-from lfkit.photometry.lf_parameter_models import ParameterValue
 from lfkit.photometry.magnitudes import absolute_magnitude
+from lfkit.utils.types import (
+    Cosmology,
+    FloatArray,
+    FloatInput,
+    LuminosityFunction,
+)
 from lfkit.utils.validators import validate_array, validate_magnitude_range
-
-if TYPE_CHECKING:
-    import pyccl as ccl
-
-    Cosmology = ccl.Cosmology
-else:
-    Cosmology = object
-
-
-FloatArray: TypeAlias = NDArray[np.float64]
-LuminosityFunction: TypeAlias = Callable[[FloatArray, FloatArray], FloatArray]
 
 
 __all__ = [
-    "LuminosityFunction",
     "absolute_magnitude_limit",
     "integrated_number_density",
     "observed_number_density",
@@ -55,13 +44,13 @@ __all__ = [
 
 def absolute_magnitude_limit(
     cosmo_obj: Cosmology,
-    z: ArrayLike,
+    z: FloatInput,
     *,
     m_lim: float,
     h: float | None = None,
-    k_correction: ParameterValue | None = None,
-    e_correction: ParameterValue | None = None,
-) -> NDArray[np.float64]:
+    k_correction: FloatInput | None = None,
+    e_correction: FloatInput | None = None,
+) -> FloatArray:
     r"""Return the absolute-magnitude limit of an apparent-magnitude catalog cut.
 
     This converts an apparent magnitude limit into the corresponding limiting
@@ -69,7 +58,7 @@ def absolute_magnitude_limit(
 
     .. math::
 
-        M_{\mathrm{lim}}(z) = m_{\mathrm{lim}} - \mu(z) - K(z) - E(z).
+        M_{\mathrm{lim}}(z) = m_{\mathrm{lim}} - \mu(z) - K(z) + E(z).
 
     Args:
         cosmo_obj: A PyCCL cosmology object.
@@ -102,13 +91,13 @@ def absolute_magnitude_limit(
 
 
 def integrated_number_density(
-    z: ArrayLike,
+    z: FloatInput,
     lf: LuminosityFunction,
     *,
-    m_bright: ArrayLike,
-    m_faint: ArrayLike,
+    m_bright: FloatInput,
+    m_faint: FloatInput,
     n_m: int = 512,
-) -> NDArray[np.float64]:
+) -> FloatArray:
     r"""Return finite-range number density from a luminosity function.
 
     This computes
@@ -141,7 +130,7 @@ def integrated_number_density(
 
 def observed_number_density(
     cosmo_obj: Cosmology,
-    z: ArrayLike,
+    z: FloatInput,
     lf: LuminosityFunction,
     *,
     m_lim: float,
@@ -149,9 +138,9 @@ def observed_number_density(
     m_faint: float,
     n_m: int = 512,
     h: float | None = None,
-    k_correction: ParameterValue | None = None,
-    e_correction: ParameterValue | None = None,
-) -> NDArray[np.float64]:
+    k_correction: FloatInput | None = None,
+    e_correction: FloatInput | None = None,
+) -> FloatArray:
     r"""Return number density observable in a magnitude-limited catalog.
 
     This integrates the luminosity function over galaxies brighter than the
@@ -204,7 +193,7 @@ def observed_number_density(
 
 def missing_number_density(
     cosmo_obj: Cosmology,
-    z: ArrayLike,
+    z: FloatInput,
     lf: LuminosityFunction,
     *,
     m_lim: float,
@@ -212,9 +201,9 @@ def missing_number_density(
     m_faint: float,
     n_m: int = 512,
     h: float | None = None,
-    k_correction: ParameterValue | None = None,
-    e_correction: ParameterValue | None = None,
-) -> NDArray[np.float64]:
+    k_correction: FloatInput | None = None,
+    e_correction: FloatInput | None = None,
+) -> FloatArray:
     r"""Return number density missing from a magnitude-limited catalog.
 
     This integrates the luminosity function over galaxies fainter than the
@@ -267,7 +256,7 @@ def missing_number_density(
 
 def catalog_completeness_fraction(
     cosmo_obj: Cosmology,
-    z: ArrayLike,
+    z: FloatInput,
     lf: LuminosityFunction,
     *,
     m_lim: float,
@@ -275,9 +264,9 @@ def catalog_completeness_fraction(
     m_faint: float,
     n_m: int = 512,
     h: float | None = None,
-    k_correction: ParameterValue | None = None,
-    e_correction: ParameterValue | None = None,
-) -> NDArray[np.float64]:
+    k_correction: FloatInput | None = None,
+    e_correction: FloatInput | None = None,
+) -> FloatArray:
     r"""Return the LF fraction observable in a magnitude-limited catalog.
 
     This returns
@@ -335,7 +324,7 @@ def catalog_completeness_fraction(
 
 def out_of_catalog_fraction(
     cosmo_obj: Cosmology,
-    z: ArrayLike,
+    z: FloatInput,
     lf: LuminosityFunction,
     *,
     m_lim: float,
@@ -343,9 +332,9 @@ def out_of_catalog_fraction(
     m_faint: float,
     n_m: int = 512,
     h: float | None = None,
-    k_correction: ParameterValue | None = None,
-    e_correction: ParameterValue | None = None,
-) -> NDArray[np.float64]:
+    k_correction: FloatInput | None = None,
+    e_correction: FloatInput | None = None,
+) -> FloatArray:
     r"""Return the LF fraction missing from a magnitude-limited catalog.
 
     This returns
@@ -387,13 +376,13 @@ def out_of_catalog_fraction(
 
 
 def _integrated_number_density_between_bounds(
-    z: ArrayLike,
+    z: FloatInput,
     lf: LuminosityFunction,
     *,
-    m_lower: ArrayLike,
-    m_upper: ArrayLike,
+    m_lower: FloatInput,
+    m_upper: FloatInput,
     n_m: int,
-) -> NDArray[np.float64]:
+) -> FloatArray:
     r"""Return finite-range number density between magnitude bounds."""
     z_arr = validate_array(z, name="z")
     m_lower_arr = validate_array(m_lower, name="m_lower")
@@ -436,7 +425,7 @@ def _magnitude_grid(
     m_lower: FloatArray,
     m_upper: FloatArray,
     n_m: int,
-) -> NDArray[np.float64]:
+) -> FloatArray:
     r"""Return a magnitude grid for column-wise finite-range integration."""
     t = np.linspace(0.0, 1.0, int(n_m), dtype=float)
     return np.asarray(
@@ -450,7 +439,7 @@ def _evaluate_lf_on_grid(
     *,
     m_grid: FloatArray,
     z_grid: FloatArray,
-) -> NDArray[np.float64]:
+) -> FloatArray:
     r"""Return LF values evaluated on a magnitude-redshift grid."""
     phi = np.asarray(lf(m_grid, z_grid), dtype=float)
 
@@ -496,7 +485,7 @@ def _validate_integration_inputs(
 def _fraction(
     numerator: FloatArray,
     denominator: FloatArray,
-) -> NDArray[np.float64]:
+) -> FloatArray:
     r"""Return a clipped fraction with safe zero-denominator handling."""
     with np.errstate(divide="ignore", invalid="ignore"):
         result = np.divide(
