@@ -28,8 +28,10 @@ from astroquery.vizier import Vizier
 
 CATALOG = "J/A+AS/122/399"
 
-# Package data directory where CSVs are stored
-PKG_DATADIR = Path("src/lfkit/data/poggianti1997")
+# Package data directory where CSVs are stored.
+# Resolve relative to this file so running tests/scripts from repo root
+# cannot accidentally write into the current working directory.
+PKG_DATADIR = Path(__file__).resolve().parents[1] / "data" / "poggianti1997"
 
 
 def main() -> None:
