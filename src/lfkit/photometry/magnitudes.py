@@ -20,12 +20,15 @@ import numpy as np
 
 from lfkit.cosmo.cosmology import distance_modulus
 from lfkit.utils.types import Cosmology, FloatArray, FloatInput
+from lfkit.utils.validators import validate_luminosity_distance
 
-__all__ = (
+__all__ = [
     "total_magnitude_correction",
     "absolute_magnitude",
+    "absolute_magnitude_from_luminosity_distance",
     "apparent_magnitude",
-)
+    "apparent_magnitude_from_luminosity_distance",
+]
 
 
 def total_magnitude_correction(
@@ -127,6 +130,82 @@ def apparent_magnitude(
     """
     M = np.asarray(absolute_mag, dtype=float)
     mu = distance_modulus(cosmo_obj, z, h=h)
+    correction = total_magnitude_correction(
+        k_correction=k_correction,
+        e_correction=e_correction,
+    )
+
+    return np.asarray(M + mu + correction, dtype=np.float64)
+
+
+def absolute_magnitude_from_luminosity_distance(
+    apparent_mag: FloatInput,
+    luminosity_distance_mpc: FloatInput,
+    *,
+    k_correction: FloatInput | None = None,
+    e_correction: FloatInput | None = None,
+) -> FloatArray:
+    """Convert apparent magnitude to absolute magnitude from luminosity distance.
+
+    The convention used is
+
+    ``M = m - mu - K + E``,
+
+    with
+
+    ``mu = 5 log10(d_L / Mpc) + 25``.
+
+    Args:
+        apparent_mag: Apparent magnitude value(s).
+        luminosity_distance_mpc: Luminosity distance value(s) in Mpc.
+        k_correction: Optional k-correction term(s).
+        e_correction: Optional evolution-correction term(s).
+
+    Returns:
+        NumPy array of absolute magnitudes.
+    """
+    m = np.asarray(apparent_mag, dtype=float)
+    d_l = validate_luminosity_distance(luminosity_distance_mpc)
+
+    mu = 5.0 * np.log10(d_l) + 25.0
+    correction = total_magnitude_correction(
+        k_correction=k_correction,
+        e_correction=e_correction,
+    )
+
+    return np.asarray(m - mu - correction, dtype=np.float64)
+
+
+def apparent_magnitude_from_luminosity_distance(
+    absolute_mag: FloatInput,
+    luminosity_distance_mpc: FloatInput,
+    *,
+    k_correction: FloatInput | None = None,
+    e_correction: FloatInput | None = None,
+) -> FloatArray:
+    """Convert absolute magnitude to apparent magnitude from luminosity distance.
+
+    The convention used is
+
+    ``m = M + mu + K - E``,
+
+    with
+
+    ``mu = 5 log10(d_L / Mpc) + 25``.
+
+    Args:
+        absolute_mag: Absolute magnitude value(s).
+        luminosity_distance_mpc: Luminosity distance value(s) in Mpc.
+        k_correction: Optional k-correction term(s).
+        e_correction: Optional evolution-correction term(s).
+
+    Returns:
+        NumPy array of apparent magnitudes.
+    """
+    M = np.asarray(absolute_mag, dtype=float)
+    d_l = validate_luminosity_distance(luminosity_distance_mpc)
+
+    mu = 5.0 * np.log10(d_l) + 25.0
     correction = total_magnitude_correction(
         k_correction=k_correction,
         e_correction=e_correction,

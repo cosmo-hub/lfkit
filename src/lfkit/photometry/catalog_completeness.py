@@ -6,8 +6,8 @@ for applications that need an out-of-catalog correction, such as galaxy-catalog
 priors for gravitational-wave cosmology.
 
 The utilities convert an apparent magnitude limit into an absolute-magnitude
-limit, integrate a luminosity function over finite absolute-magnitude ranges,
-and return number densities or fractions.
+limit and call the generic LF integration helpers to return number densities
+or fractions.
 
 The core API accepts a luminosity-function callable with signature
 
@@ -22,6 +22,9 @@ from __future__ import annotations
 
 import numpy as np
 
+from lfkit.photometry.lf_integrals import (
+    integrated_number_density as _integrated_number_density,
+)
 from lfkit.photometry.magnitudes import absolute_magnitude
 from lfkit.utils.types import (
     Cosmology,
@@ -34,7 +37,6 @@ from lfkit.utils.validators import validate_array, validate_magnitude_range
 
 __all__ = [
     "absolute_magnitude_limit",
-    "integrated_number_density",
     "observed_number_density",
     "missing_number_density",
     "catalog_completeness_fraction",
@@ -65,7 +67,8 @@ def absolute_magnitude_limit(
         z: Redshift value or array-like of redshift values.
         m_lim: Apparent magnitude limit of the catalog.
         h: Optional dimensionless Hubble parameter used in the
-            distance-modulus convention.
+            distance-modulus convention. If not provided, this is read from
+            ``cosmo_obj["h"]``.
         k_correction: Optional k-correction term(s).
         e_correction: Optional evolution-correction term(s).
 
@@ -80,51 +83,15 @@ def absolute_magnitude_limit(
     if not np.isfinite(m_lim):
         raise ValueError("m_lim must be finite.")
 
+    h_resolved = _resolve_h(cosmo_obj, h)
+
     return absolute_magnitude(
         cosmo_obj,
         z_arr,
         m_lim,
-        h=h,
+        h=h_resolved,
         k_correction=k_correction,
         e_correction=e_correction,
-    )
-
-
-def integrated_number_density(
-    z: FloatInput,
-    lf: LuminosityFunction,
-    *,
-    m_bright: FloatInput,
-    m_faint: FloatInput,
-    n_m: int = 512,
-) -> FloatArray:
-    r"""Return finite-range number density from a luminosity function.
-
-    This computes
-
-    .. math::
-
-        n(z) = \int_{M_{\mathrm{bright}}(z)}^{M_{\mathrm{faint}}(z)}
-               \phi(M, z) \, dM.
-
-    Magnitudes are ordered so that more negative values are brighter.
-
-    Args:
-        z: Redshift value or array-like of redshift values.
-        lf: Luminosity-function callable with signature ``lf(M, z)``.
-        m_bright: Bright absolute-magnitude bound. May be scalar or array-like.
-        m_faint: Faint absolute-magnitude bound. May be scalar or array-like.
-        n_m: Number of magnitude-grid points used for the integral.
-
-    Returns:
-        NumPy array of number densities evaluated at ``z``.
-    """
-    return _integrated_number_density_between_bounds(
-        z,
-        lf,
-        m_lower=m_bright,
-        m_upper=m_faint,
-        n_m=n_m,
     )
 
 
@@ -182,11 +149,11 @@ def observed_number_density(
 
     observed_upper = np.minimum(m_abs_lim, m_faint)
 
-    return _integrated_number_density_between_bounds(
+    return _integrated_number_density(
         z_arr,
         lf,
-        m_lower=m_bright,
-        m_upper=observed_upper,
+        m_bright=m_bright,
+        m_faint=observed_upper,
         n_m=n_m,
     )
 
@@ -245,11 +212,11 @@ def missing_number_density(
 
     missing_lower = np.maximum(m_abs_lim, m_bright)
 
-    return _integrated_number_density_between_bounds(
+    return _integrated_number_density(
         z_arr,
         lf,
-        m_lower=missing_lower,
-        m_upper=m_faint,
+        m_bright=missing_lower,
+        m_faint=m_faint,
         n_m=n_m,
     )
 
@@ -375,111 +342,27 @@ def out_of_catalog_fraction(
     return np.asarray(1.0 - completeness, dtype=float)
 
 
-def _integrated_number_density_between_bounds(
-    z: FloatInput,
-    lf: LuminosityFunction,
-    *,
-    m_lower: FloatInput,
-    m_upper: FloatInput,
-    n_m: int,
-) -> FloatArray:
-    r"""Return finite-range number density between magnitude bounds."""
-    z_arr = validate_array(z, name="z")
-    m_lower_arr = validate_array(m_lower, name="m_lower")
-    m_upper_arr = validate_array(m_upper, name="m_upper")
+def _resolve_h(
+    cosmo_obj: Cosmology,
+    h: float | None,
+) -> float:
+    """Return explicit h or read it from a PyCCL-style cosmology object."""
+    if h is not None:
+        if not np.isfinite(h):
+            raise ValueError("h must be finite.")
+        return float(h)
 
-    _validate_integration_inputs(
-        z=z_arr,
-        m_lower=m_lower_arr,
-        m_upper=m_upper_arr,
-        n_m=n_m,
-    )
+    try:
+        h_from_cosmo = cosmo_obj["h"]
+    except (KeyError, TypeError, AttributeError) as exc:
+        raise ValueError(
+            "h was not provided and could not be read from cosmo_obj['h']."
+        ) from exc
 
-    z_b, m_lower_b, m_upper_b = np.broadcast_arrays(
-        z_arr,
-        m_lower_arr,
-        m_upper_arr,
-    )
+    if not np.isfinite(h_from_cosmo):
+        raise ValueError("cosmo_obj['h'] must be finite.")
 
-    density = np.zeros_like(z_b, dtype=float)
-    valid = m_upper_b > m_lower_b
-
-    if not np.any(valid):
-        return density
-
-    m_grid = _magnitude_grid(
-        m_lower=m_lower_b[valid],
-        m_upper=m_upper_b[valid],
-        n_m=n_m,
-    )
-    z_grid = np.broadcast_to(z_b[valid][None, :], m_grid.shape)
-    phi = _evaluate_lf_on_grid(lf, m_grid=m_grid, z_grid=z_grid)
-
-    density[valid] = np.trapezoid(phi, x=m_grid, axis=0)
-
-    return np.asarray(density, dtype=float)
-
-
-def _magnitude_grid(
-    *,
-    m_lower: FloatArray,
-    m_upper: FloatArray,
-    n_m: int,
-) -> FloatArray:
-    r"""Return a magnitude grid for column-wise finite-range integration."""
-    t = np.linspace(0.0, 1.0, int(n_m), dtype=float)
-    return np.asarray(
-        m_lower[None, :] + t[:, None] * (m_upper[None, :] - m_lower[None, :]),
-        dtype=float,
-    )
-
-
-def _evaluate_lf_on_grid(
-    lf: LuminosityFunction,
-    *,
-    m_grid: FloatArray,
-    z_grid: FloatArray,
-) -> FloatArray:
-    r"""Return LF values evaluated on a magnitude-redshift grid."""
-    phi = np.asarray(lf(m_grid, z_grid), dtype=float)
-
-    if phi.shape != m_grid.shape:
-        try:
-            phi = np.broadcast_to(phi, m_grid.shape)
-        except ValueError as exc:
-            raise ValueError(
-                "lf(M, z) must return values broadcastable to the shape "
-                "of the magnitude-redshift integration grid."
-            ) from exc
-
-    if np.any(~np.isfinite(phi)):
-        raise ValueError("lf(M, z) returned non-finite values.")
-
-    if np.any(phi < 0):
-        raise ValueError("lf(M, z) must be non-negative.")
-
-    return np.asarray(phi, dtype=float)
-
-
-def _validate_integration_inputs(
-    *,
-    z: FloatArray,
-    m_lower: FloatArray,
-    m_upper: FloatArray,
-    n_m: int,
-) -> None:
-    r"""Validate inputs for finite-range LF integration."""
-    if np.any(z < 0):
-        raise ValueError("Redshift z must be >= 0.")
-
-    if np.any(~np.isfinite(m_lower)):
-        raise ValueError("m_lower must contain only finite values.")
-
-    if np.any(~np.isfinite(m_upper)):
-        raise ValueError("m_upper must contain only finite values.")
-
-    if n_m < 2:
-        raise ValueError("n_m must be at least 2.")
+    return float(h_from_cosmo)
 
 
 def _fraction(

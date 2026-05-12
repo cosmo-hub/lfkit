@@ -3,7 +3,11 @@
 import numpy as np
 import pytest
 
-from lfkit.utils.validators import validate_array, validate_magnitude_range
+from lfkit.utils.validators import (
+    validate_array,
+    validate_luminosity_distance,
+    validate_magnitude_range,
+)
 
 
 def test_validate_array_accepts_scalar() -> None:
@@ -105,3 +109,76 @@ def test_validate_magnitude_range_rejects_reversed_bounds() -> None:
     """Tests that reversed magnitude bounds are rejected."""
     with pytest.raises(ValueError, match="m_faint must be larger than m_bright"):
         validate_magnitude_range(m_bright=-18.0, m_faint=-24.0)
+
+
+def test_validate_luminosity_distance_accepts_scalar() -> None:
+    """Tests that a finite positive scalar distance is accepted."""
+    result = validate_luminosity_distance(100.0)
+
+    assert isinstance(result, np.ndarray)
+    assert result.dtype == np.float64
+    assert result.shape == ()
+    assert result == pytest.approx(100.0)
+
+
+def test_validate_luminosity_distance_accepts_list() -> None:
+    """Tests that finite positive distance values are accepted."""
+    result = validate_luminosity_distance([10.0, 100.0, 1000.0])
+
+    np.testing.assert_allclose(result, np.array([10.0, 100.0, 1000.0]))
+    assert result.dtype == np.float64
+
+
+def test_validate_luminosity_distance_accepts_numpy_array() -> None:
+    """Tests that a finite positive numpy array is accepted."""
+    distance = np.array([10, 100, 1000])
+
+    result = validate_luminosity_distance(distance)
+
+    np.testing.assert_allclose(result, np.array([10.0, 100.0, 1000.0]))
+    assert result.dtype == np.float64
+
+
+def test_validate_luminosity_distance_rejects_zero() -> None:
+    """Tests that zero luminosity distance is rejected."""
+    with pytest.raises(
+        ValueError,
+        match="luminosity_distance_mpc must contain positive values",
+    ):
+        validate_luminosity_distance([0.0, 10.0])
+
+
+def test_validate_luminosity_distance_rejects_negative_values() -> None:
+    """Tests that negative luminosity distances are rejected."""
+    with pytest.raises(
+        ValueError,
+        match="luminosity_distance_mpc contains negative values",
+    ):
+        validate_luminosity_distance([-1.0, 10.0])
+
+
+def test_validate_luminosity_distance_rejects_nan() -> None:
+    """Tests that NaN luminosity distances are rejected."""
+    with pytest.raises(
+        ValueError,
+        match="luminosity_distance_mpc contains NaN or infinite values",
+    ):
+        validate_luminosity_distance([10.0, np.nan])
+
+
+def test_validate_luminosity_distance_rejects_positive_infinity() -> None:
+    """Tests that infinite luminosity distances are rejected."""
+    with pytest.raises(
+        ValueError,
+        match="luminosity_distance_mpc contains NaN or infinite values",
+    ):
+        validate_luminosity_distance([10.0, np.inf])
+
+
+def test_validate_luminosity_distance_rejects_negative_infinity() -> None:
+    """Tests that negative infinite luminosity distances are rejected."""
+    with pytest.raises(
+        ValueError,
+        match="luminosity_distance_mpc contains NaN or infinite values",
+    ):
+        validate_luminosity_distance([10.0, -np.inf])

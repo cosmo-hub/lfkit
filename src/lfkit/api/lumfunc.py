@@ -16,7 +16,7 @@ into this API as scalars, arrays, or correction objects.
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Callable, Mapping
 from typing import TYPE_CHECKING
 
 import numpy as np
@@ -31,7 +31,17 @@ from lfkit.photometry.luminosity_function import (
 )
 from lfkit.photometry.magnitudes import (
     absolute_magnitude,
+    absolute_magnitude_from_luminosity_distance,
     apparent_magnitude,
+    apparent_magnitude_from_luminosity_distance,
+)
+from lfkit.photometry.lf_integrals import (
+    cumulative_number_density,
+    integrated_luminosity_density,
+    integrated_number_density,
+    lf_weighted_integral,
+    mean_luminosity,
+    selection_weighted_number_density,
 )
 from lfkit.photometry.lf_parameter_models import (
     available_lf_parameter_models,
@@ -40,13 +50,16 @@ from lfkit.photometry.lf_parameter_models import (
     register_m_star_model,
     register_phi_star_model,
 )
+from lfkit.photometry.lf_redshift_density import (
+    lf_integrated_number_density,
+    lf_weighted_redshift_density,
+)
 from lfkit.photometry.catalog_completeness import (
     absolute_magnitude_limit,
     catalog_completeness_fraction,
     out_of_catalog_fraction,
     observed_number_density,
     missing_number_density,
-    integrated_number_density,
 )
 from lfkit.utils.types import (
     Cosmology,
@@ -150,6 +163,153 @@ class LuminosityFunction:
             h=h,
             k_correction=k_corr,
             e_correction=e_corr,
+        )
+
+    def absolute_magnitude_from_luminosity_distance(
+        self,
+        apparent_mag: FloatInput,
+        luminosity_distance_mpc: FloatInput,
+        *,
+        z: FloatInput,
+        corrections: Corrections | None = None,
+    ) -> FloatArray:
+        """Convert apparent magnitude to absolute magnitude from luminosity distance.
+
+        Args:
+            apparent_mag: Apparent magnitude values.
+            luminosity_distance_mpc: Luminosity distance values in Mpc.
+            corrections: Optional object providing k-correction and e-correction values.
+            z: Redshift values where corrections are evaluated.
+
+        Returns:
+            Absolute magnitudes using ``M = m - mu - K + E``.
+        """
+        k_corr, e_corr = self._correction_values(corrections, z)
+
+        return absolute_magnitude_from_luminosity_distance(
+            apparent_mag,
+            luminosity_distance_mpc,
+            k_correction=k_corr,
+            e_correction=e_corr,
+        )
+
+    def apparent_magnitude_from_luminosity_distance(
+        self,
+        absolute_mag: FloatInput,
+        luminosity_distance_mpc: FloatInput,
+        *,
+        z: FloatInput,
+        corrections: Corrections | None = None,
+    ) -> FloatArray:
+        """Convert absolute magnitude to apparent magnitude from luminosity distance.
+
+        Args:
+            absolute_mag: Absolute magnitude values.
+            luminosity_distance_mpc: Luminosity distance values in Mpc.
+            z: Redshift values where corrections are evaluated.
+            corrections: Optional object providing k-correction and e-correction values.
+
+        Returns:
+            Apparent magnitudes using ``m = M + mu + K - E``.
+        """
+        k_corr, e_corr = self._correction_values(corrections, z)
+
+        return apparent_magnitude_from_luminosity_distance(
+            absolute_mag,
+            luminosity_distance_mpc,
+            k_correction=k_corr,
+            e_correction=e_corr,
+        )
+
+    def lf_integrated_number_density(
+        self,
+        z: FloatInput,
+        *,
+        m_lim: float,
+        m_bright: float,
+        n_m: int = 512,
+        luminosity_distance_mpc_fn: Callable[[FloatArray], FloatArray],
+        corrections: Corrections | None = None,
+    ) -> FloatArray:
+        """Return LF-integrated number density for an apparent-magnitude limit.
+
+        This integrates the luminosity function from ``m_bright`` to the
+        absolute-magnitude limit implied by ``m_lim`` and the supplied
+        luminosity-distance callable.
+
+        Args:
+            z: Redshift values.
+            m_lim: Apparent-magnitude limit of the catalog.
+            m_bright: Bright absolute-magnitude integration bound.
+            n_m: Number of magnitude-grid points used in the integration.
+            luminosity_distance_mpc_fn: Callable returning luminosity distance
+                in Mpc as a function of redshift.
+            corrections: Optional object providing k-correction and
+                e-correction values.
+
+        Returns:
+            LF-integrated number density evaluated at redshift.
+        """
+        k_corr, e_corr = self._correction_values(corrections, z)
+
+        return lf_integrated_number_density(
+            z,
+            self._as_callable(),
+            m_lim=m_lim,
+            m_bright=m_bright,
+            n_m=n_m,
+            luminosity_distance_mpc_fn=luminosity_distance_mpc_fn,
+            k_correction=k_corr,
+            evolution_correction=e_corr,
+        )
+
+    def lf_weighted_redshift_density(
+        self,
+        z: FloatInput,
+        *,
+        m_lim: float,
+        m_bright: float,
+        n_m: int = 512,
+        luminosity_distance_mpc_fn: Callable[[FloatArray], FloatArray],
+        volume_weight_fn: Callable[[FloatArray], FloatArray],
+        corrections: Corrections | None = None,
+        normalize: bool = True,
+    ) -> FloatArray:
+        """Return an LF-weighted redshift-density curve.
+
+        This computes an LF-selected redshift distribution by integrating the
+        luminosity function up to the apparent-magnitude limit and multiplying
+        by a supplied redshift or volume weight.
+
+        Args:
+            z: Redshift values.
+            m_lim: Apparent-magnitude limit of the catalog.
+            m_bright: Bright absolute-magnitude integration bound.
+            n_m: Number of magnitude-grid points used in the integration.
+            luminosity_distance_mpc_fn: Callable returning luminosity distance
+                in Mpc as a function of redshift.
+            volume_weight_fn: Callable returning the redshift or volume weight.
+            corrections: Optional object providing k-correction and
+                e-correction values.
+            normalize: If True, normalize the returned curve to integrate to
+                one over redshift.
+
+        Returns:
+            LF-weighted redshift-density curve.
+        """
+        k_corr, e_corr = self._correction_values(corrections, z)
+
+        return lf_weighted_redshift_density(
+            z,
+            self._as_callable(),
+            m_lim=m_lim,
+            m_bright=m_bright,
+            n_m=n_m,
+            luminosity_distance_mpc_fn=luminosity_distance_mpc_fn,
+            volume_weight_fn=volume_weight_fn,
+            k_correction=k_corr,
+            evolution_correction=e_corr,
+            normalize=normalize,
         )
 
     @classmethod
@@ -460,6 +620,103 @@ class LuminosityFunction:
             self._as_callable(),
             m_bright=m_bright,
             m_faint=m_faint,
+            n_m=n_m,
+        )
+
+    def lf_weighted_integral(
+        self,
+        z: FloatInput,
+        *,
+        m_bright: ParameterValue,
+        m_faint: ParameterValue,
+        weight_fn: Callable[[FloatArray, FloatArray], FloatArray],
+        n_m: int = 512,
+    ) -> FloatArray:
+        """Integrate the LF with a user-supplied magnitude-redshift weight."""
+        return lf_weighted_integral(
+            z,
+            self._as_callable(),
+            m_bright=m_bright,
+            m_faint=m_faint,
+            weight_fn=weight_fn,
+            n_m=n_m,
+        )
+
+    def selection_weighted_number_density(
+        self,
+        z: FloatInput,
+        *,
+        m_bright: ParameterValue,
+        m_faint: ParameterValue,
+        selection_fn: Callable[[FloatArray, FloatArray], FloatArray],
+        n_m: int = 512,
+    ) -> FloatArray:
+        """Return LF number density weighted by a selection function."""
+        return selection_weighted_number_density(
+            z,
+            self._as_callable(),
+            m_bright=m_bright,
+            m_faint=m_faint,
+            selection_fn=selection_fn,
+            n_m=n_m,
+        )
+
+    def integrated_luminosity_density(
+        self,
+        z: FloatInput,
+        *,
+        m_bright: ParameterValue,
+        m_faint: ParameterValue,
+        m_reference: float = 0.0,
+        n_m: int = 512,
+    ) -> FloatArray:
+        """Return luminosity density over an absolute-magnitude range."""
+        return integrated_luminosity_density(
+            z,
+            self._as_callable(),
+            m_bright=m_bright,
+            m_faint=m_faint,
+            m_reference=m_reference,
+            n_m=n_m,
+        )
+
+    def mean_luminosity(
+        self,
+        z: FloatInput,
+        *,
+        m_bright: ParameterValue,
+        m_faint: ParameterValue,
+        m_reference: float = 0.0,
+        n_m: int = 512,
+    ) -> FloatArray:
+        """Return mean luminosity over an absolute-magnitude range."""
+        return mean_luminosity(
+            z,
+            self._as_callable(),
+            m_bright=m_bright,
+            m_faint=m_faint,
+            m_reference=m_reference,
+            n_m=n_m,
+        )
+
+    def cumulative_number_density(
+        self,
+        z: FloatInput,
+        *,
+        m_threshold: ParameterValue,
+        m_bright: ParameterValue,
+        m_faint: ParameterValue,
+        brighter_than: bool = True,
+        n_m: int = 512,
+    ) -> FloatArray:
+        """Return cumulative LF number density around a magnitude threshold."""
+        return cumulative_number_density(
+            z,
+            self._as_callable(),
+            m_threshold=m_threshold,
+            m_bright=m_bright,
+            m_faint=m_faint,
+            brighter_than=brighter_than,
             n_m=n_m,
         )
 

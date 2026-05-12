@@ -5,7 +5,7 @@
 |lfkitlogo| Luminosity Functions
 ================================
 
-LFKit provides a public luminosity-function interface through
+LFKit provides a public luminosity function interface through
 :class:`~lfkit.api.lumfunc.LuminosityFunction`.
 
 For most users, the recommended import is:
@@ -14,14 +14,14 @@ For most users, the recommended import is:
 
    from lfkit import LuminosityFunction
 
-The ``LuminosityFunction`` object defines and evaluates luminosity-function
+The ``LuminosityFunction`` object defines and evaluates luminosity function
 models in rest-frame absolute-magnitude space. It can also evaluate luminosity
 functions from apparent magnitudes, convert between apparent and absolute
 magnitudes, and compute number-density quantities for magnitude-limited catalog
 selections.
 
 File reading is intentionally not handled by this API. Catalog-derived
-luminosity-function parameters, magnitude limits, or correction models should
+luminosity function parameters, magnitude limits, or correction models should
 be loaded elsewhere and passed in as scalars, arrays, or correction objects.
 
 
@@ -139,7 +139,7 @@ the standard Schechter form.
 Built-in parameter evolution models
 -----------------------------------
 
-Redshift-dependent luminosity-function parameters are handled by parameter
+Redshift-dependent luminosity function parameters are handled by parameter
 evolution models.
 
 The built-in options are:
@@ -176,7 +176,7 @@ To inspect the available models:
 
    models = LuminosityFunction.available_parameter_models()
 
-Custom parameter-evolution models can be registered through:
+Custom parameter evolution models can be registered through:
 
 .. code-block:: python
 
@@ -191,7 +191,7 @@ return NumPy-compatible parameter values.
 Evaluating from apparent magnitudes
 -----------------------------------
 
-The luminosity-function object can evaluate from apparent magnitudes.
+The luminosity function object can evaluate from apparent magnitudes.
 
 In this case, LFKit first converts apparent magnitude :math:`m` into absolute
 magnitude :math:`M` using
@@ -279,6 +279,54 @@ integrate the luminosity function over an absolute-magnitude range.
 
 This computes the number density inside the requested absolute-magnitude
 interval.
+
+
+LF-weighted redshift density
+----------------------------
+
+Use :meth:`~lfkit.api.lumfunc.LuminosityFunction.lf_redshift_density` to build
+an LF-weighted redshift trend for a magnitude-limited sample.
+
+This computes the magnitude-integrated luminosity function as a function of
+redshift. Optionally, it can also include a redshift-dependent volume weight
+and normalize the result over the supplied redshift grid.
+
+.. code-block:: python
+
+   density = lf.lf_redshift_density(
+       cosmo,
+       z,
+       m_lim=24.5,
+       m_bright=-24.0,
+       corrections=corr,
+       normalize=True,
+   )
+
+This is useful for constructing LF-dependent redshift trends.
+Without a volume weight, the result is the luminosity-function
+selection factor only, not a full survey redshift distribution.
+
+A volume-weighted trend can be computed by passing a callable:
+
+.. code-block:: python
+
+   import pyccl as ccl
+
+   def volume_weight_fn(z):
+       a = 1.0 / (1.0 + z)
+       chi = ccl.comoving_radial_distance(cosmo, a)
+       h_over_h0 = ccl.h_over_h0(cosmo, a)
+       return chi**2 / h_over_h0
+
+   density = lf.lf_redshift_density(
+       cosmo,
+       z,
+       m_lim=24.5,
+       m_bright=-24.0,
+       corrections=corr,
+       volume_weight_fn=volume_weight_fn,
+       normalize=True,
+   )
 
 
 Magnitude-limited catalog completeness
@@ -398,7 +446,7 @@ There are two different places where luminosity evolution can enter an
 analysis:
 
 1. the apparent-to-absolute magnitude conversion through :math:`E(z)`,
-2. the luminosity-function model through redshift evolution of :math:`M_\star(z)`.
+2. the luminosity function model through redshift evolution of :math:`M_\star(z)`.
 
 For this reason, be careful when using an evolving Schechter model with
 non-zero ``linear_q`` evolution together with an explicit evolution correction.
@@ -410,14 +458,14 @@ separated.
 Typical workflow
 ----------------
 
-A typical luminosity-function workflow is:
+A typical luminosity function workflow is:
 
 1. define a cosmology,
-2. define a luminosity-function model,
+2. define a luminosity function model,
 3. evaluate :math:`\phi(M, z)` directly or :math:`\phi(m, z)` from apparent
    magnitudes,
-4. compute integrated, observed, or missing number densities if using a
-   magnitude-limited catalog.
+4. compute integrated number densities, LF-weighted redshift densities, or
+   observed/missing number densities for magnitude-limited selections.
 
 For example:
 
@@ -455,6 +503,15 @@ For example:
        corrections=corr,
    )
 
+   density = lf.lf_redshift_density(
+       cosmo,
+       z,
+       m_lim=24.5,
+       m_bright=-24.0,
+       corrections=corr,
+       normalize=True,
+   )
+
 
 Lower-level functions
 ---------------------
@@ -465,8 +522,8 @@ downstream package interfaces.
 The lower-level functions in ``lfkit.photometry`` are useful when:
 
 - testing individual mathematical pieces,
-- adding new luminosity-function models,
-- adding new parameter-evolution models,
+- adding new luminosity function models,
+- adding new parameter evolution models,
 - debugging the magnitude convention,
 - building new public API objects,
 - integrating LFKit into specialized workflows.
