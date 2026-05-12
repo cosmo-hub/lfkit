@@ -1,0 +1,1329 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Catalog completeness examples" href="catalog_completeness_examples.html"><link rel="prev" title="Poggianti (1997) examples" href="poggianti_examples.html">
+        <link rel="prefetch" href="../_static/logos/lfkit_logo-icon.png" as="image">
+        <link rel="prefetch" href="../_static/logos/lfkit_logo-icon.png" as="image">
+
+    <link rel="shortcut icon" href="../_static/lfkit_logo-icon.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
+        <title>Luminosity function examples - LFKit Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=dfcaa7d2" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #28A8C8;
+  --color-brand-content: #28A8C8;
+  --color-link: #28A8C8;
+  --color-link--hover: #FE5019;
+  --color-link--visited: #28A8C8;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #28A8C8;
+  --color-brand-content: #28A8C8;
+  --color-link: #28A8C8;
+  --color-link--hover: #FE5019;
+  --color-link--visited: #28A8C8;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #28A8C8;
+  --color-brand-content: #28A8C8;
+  --color-link: #28A8C8;
+  --color-link--hover: #FE5019;
+  --color-link--visited: #28A8C8;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">LFKit Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../_static/logos/lfkit_logo-icon.png" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../_static/logos/lfkit_logo-icon.png" alt="Dark Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">LFKit Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../about/index.html"> About LFKit</a><input aria-label="Toggle navigation of  About LFKit" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../about/corr_overview.html"> Photometric Corrections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/lf_overview.html"> Luminosity Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html"> Examples</a><input aria-label="Toggle navigation of  Examples" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="kcorrect_examples.html">kcorrect examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="poggianti_examples.html">Poggianti (1997) examples</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#"> Luminosity function examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="catalog_completeness_examples.html"> Catalog completeness examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/lfkit.html">lfkit package</a><input aria-label="Toggle navigation of lfkit package" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.api.html">lfkit.api package</a><input aria-label="Toggle navigation of lfkit.api package" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.api.corrections.html">lfkit.api.corrections module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.api.lumfunc.html">lfkit.api.lumfunc module</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.corrections.html">lfkit.corrections package</a><input aria-label="Toggle navigation of lfkit.corrections package" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.color_anchors.html">lfkit.corrections.color_anchors module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.filters.html">lfkit.corrections.filters module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.kcorrect_backend.html">lfkit.corrections.kcorrect_backend module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.kcorrect_from_color.html">lfkit.corrections.kcorrect_from_color module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.kcorrect_grids.html">lfkit.corrections.kcorrect_grids module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.poggianti1997.html">lfkit.corrections.poggianti1997 module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.responses.html">lfkit.corrections.responses module</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.cosmo.html">lfkit.cosmo package</a><input aria-label="Toggle navigation of lfkit.cosmo package" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.cosmo.cosmology.html">lfkit.cosmo.cosmology module</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.photometry.html">lfkit.photometry package</a><input aria-label="Toggle navigation of lfkit.photometry package" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.catalog_completeness.html">lfkit.photometry.catalog_completeness module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.lf_integrals.html">lfkit.photometry.lf_integrals module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.lf_parameter_models.html">lfkit.photometry.lf_parameter_models module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.lf_redshift_density.html">lfkit.photometry.lf_redshift_density module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.luminosities.html">lfkit.photometry.luminosities module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.luminosity_function.html">lfkit.photometry.luminosity_function module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.magnitudes.html">lfkit.photometry.magnitudes module</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.utils.html">lfkit.utils package</a><input aria-label="Toggle navigation of lfkit.utils package" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.download_poggianti97_data.html">lfkit.utils.download_poggianti97_data module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.evaluators.html">lfkit.utils.evaluators module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.interpolation.html">lfkit.utils.interpolation module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.io.html">lfkit.utils.io module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.types.html">lfkit.utils.types module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.units.html">lfkit.utils.units module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.validators.html">lfkit.utils.validators module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/examples/luminosity_function_examples.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="lfkitlogo-luminosity-function-examples">
+<h1><a class="reference internal" href="../_images/lfkit_logo-icon.png"><img alt="LFKit logo" src="../_images/lfkit_logo-icon.png" style="width: 50px;" /></a> Luminosity function examples<a class="headerlink" href="#lfkitlogo-luminosity-function-examples" title="Link to this heading"><span>#</span></a></h1>
+<p>This page provides executable examples showing how to use
+<a class="reference internal" href="../api/lfkit.html#lfkit.LuminosityFunction" title="lfkit.LuminosityFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.LuminosityFunction</span></code></a> to construct, evaluate, and compare
+luminosity function models.</p>
+<p>Luminosity functions describe how common galaxies are as a function of their
+absolute magnitude. In these examples, brighter galaxies appear on the left
+because astronomical magnitudes decrease for brighter objects.</p>
+<p>The luminosity function normalization sets the units. For example, if
+<span class="math notranslate nohighlight">\(\phi_\star\)</span> is supplied in comoving <span class="math notranslate nohighlight">\({\rm Mpc}^{-3}\,{\rm mag}^{-1}\)</span>,
+then <span class="math notranslate nohighlight">\(\phi(M, z)\)</span> has units of
+<span class="math notranslate nohighlight">\({\rm Mpc}^{-3}\,{\rm mag}^{-1}\)</span>, and magnitude-integrated number
+densities have units of <span class="math notranslate nohighlight">\({\rm Mpc}^{-3}\)</span>.</p>
+<p>The examples that connect apparent and absolute magnitude use
+<code class="docutils literal notranslate"><span class="pre">corrections=None</span></code>. This means that no <span class="math notranslate nohighlight">\(K\)</span>-correction or evolution
+correction is applied. Users can pass their own correction model through the
+<code class="docutils literal notranslate"><span class="pre">corrections</span></code> argument, for example a <a class="reference internal" href="../api/lfkit.html#lfkit.Corrections" title="lfkit.Corrections"><code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.Corrections</span></code></a> object or any
+compatible correction callable used by the LFKit magnitude-conversion methods.</p>
+<p>All examples below are executable via <code class="docutils literal notranslate"><span class="pre">..</span> <span class="pre">plot::</span></code>.</p>
+<section id="standard-schechter-luminosity-function">
+<h2>Standard Schechter luminosity function<a class="headerlink" href="#standard-schechter-luminosity-function" title="Link to this heading"><span>#</span></a></h2>
+<p>A standard Schechter luminosity function has fixed parameters
+<span class="math notranslate nohighlight">\(\phi_\star\)</span>, <span class="math notranslate nohighlight">\(M_\star\)</span>, and <span class="math notranslate nohighlight">\(\alpha\)</span>.</p>
+<p>This plot shows the basic shape of a Schechter luminosity function as a
+function of absolute magnitude. The function decreases rapidly at the bright end
+and rises toward the faint end, reflecting the usual picture that very luminous
+galaxies are rare while faint galaxies are more common.</p>
+<p>The y-axis is shown on a logarithmic scale because luminosity functions often
+span several orders of magnitude. This makes both the bright-end cutoff and the
+faint-end behaviour visible in the same figure.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">LuminosityFunction</span>
+
+<span class="n">LABEL_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">TICK_SIZE</span> <span class="o">=</span> <span class="mi">13</span>
+<span class="n">TITLE_SIZE</span> <span class="o">=</span> <span class="mi">17</span>
+<span class="n">LEGEND_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
+
+<span class="n">colors_blue</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.72</span><span class="p">,</span> <span class="mf">0.96</span><span class="p">))</span>
+
+<span class="n">absolute_mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">24.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">14.0</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+
+<span class="n">lf</span> <span class="o">=</span> <span class="n">LuminosityFunction</span><span class="o">.</span><span class="n">schechter</span><span class="p">(</span>
+    <span class="n">phi_star</span><span class="o">=</span><span class="mf">1.0e-3</span><span class="p">,</span>
+    <span class="n">m_star</span><span class="o">=-</span><span class="mf">20.5</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=-</span><span class="mf">1.1</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">phi</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">phi</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors_blue</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">invert_xaxis</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Absolute magnitude $M$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\phi(M)$ [$\mathrm</span><span class="si">{Mpc}</span><span class="s2">^{-3}\,\mathrm</span><span class="si">{mag}</span><span class="s2">^{-1}$]&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Standard Schechter luminosity function&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">TITLE_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="n">TICK_SIZE</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>(<a class="reference download internal" download="" href="../_downloads/b06006e81631a9dfe05bb1061ec33264/luminosity_function_examples-1.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<figure class="align-default">
+<a class="plot-directive reference internal image-reference" href="../_images/luminosity_function_examples-1.png"><img alt="../_images/luminosity_function_examples-1.png" class="plot-directive" src="../_images/luminosity_function_examples-1.png" style="width: 520px;" />
+</a>
+</figure>
+</section>
+<section id="comparing-schechter-slopes">
+<h2>Comparing Schechter slopes<a class="headerlink" href="#comparing-schechter-slopes" title="Link to this heading"><span>#</span></a></h2>
+<p>Changing <span class="math notranslate nohighlight">\(\alpha\)</span> modifies the faint-end behaviour of the luminosity
+function.</p>
+<p>This comparison shows how the faint-end slope changes the abundance of faint
+galaxies while keeping the other Schechter parameters fixed. More negative
+values of <span class="math notranslate nohighlight">\(\alpha\)</span> produce a steeper rise toward faint magnitudes.</p>
+<p>This is useful because the faint-end slope often controls how strongly low
+luminosity galaxies contribute to integrated quantities, such as number density
+or luminosity density. Even if the bright end is almost unchanged, the total
+abundance can change noticeably when the faint end is modified.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">LuminosityFunction</span>
+
+<span class="n">LABEL_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">TICK_SIZE</span> <span class="o">=</span> <span class="mi">13</span>
+<span class="n">TITLE_SIZE</span> <span class="o">=</span> <span class="mi">17</span>
+<span class="n">LEGEND_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
+
+<span class="n">colors_red</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.26</span><span class="p">))</span>
+
+<span class="n">absolute_mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">24.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">14.0</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="n">alphas</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.8</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.1</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.4</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">alphas</span><span class="p">,</span> <span class="n">colors_red</span><span class="p">):</span>
+    <span class="n">lf</span> <span class="o">=</span> <span class="n">LuminosityFunction</span><span class="o">.</span><span class="n">schechter</span><span class="p">(</span>
+        <span class="n">phi_star</span><span class="o">=</span><span class="mf">1.0e-3</span><span class="p">,</span>
+        <span class="n">m_star</span><span class="o">=-</span><span class="mf">20.5</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">phi</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$\alpha=</span><span class="si">{</span><span class="n">alpha</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">invert_xaxis</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Absolute magnitude $M$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\phi(M)$ [$\mathrm</span><span class="si">{Mpc}</span><span class="s2">^{-3}\,\mathrm</span><span class="si">{mag}</span><span class="s2">^{-1}$]&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Effect of the faint-end slope&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">TITLE_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="n">TICK_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LEGEND_SIZE</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>(<a class="reference download internal" download="" href="../_downloads/ebe8eabc1fd16550e2c18ada891b10d3/luminosity_function_examples-2.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<figure class="align-default">
+<a class="plot-directive reference internal image-reference" href="../_images/luminosity_function_examples-2.png"><img alt="../_images/luminosity_function_examples-2.png" class="plot-directive" src="../_images/luminosity_function_examples-2.png" style="width: 520px;" />
+</a>
+</figure>
+</section>
+<section id="evolving-schechter-luminosity-function">
+<h2>Evolving Schechter luminosity function<a class="headerlink" href="#evolving-schechter-luminosity-function" title="Link to this heading"><span>#</span></a></h2>
+<p>An evolving Schechter model allows the luminosity function parameters to vary
+with redshift.</p>
+<p>This plot compares the luminosity function at several redshifts. Instead of
+using one fixed curve for all epochs, the evolving model allows the amplitude
+and characteristic magnitude to change with redshift.</p>
+<p>This kind of plot is useful for visualizing galaxy evolution in a compact way.
+Changes in normalization alter the overall abundance, while shifts in
+<span class="math notranslate nohighlight">\(M_\star\)</span> move the turnover of the luminosity function toward brighter or
+fainter magnitudes.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">LuminosityFunction</span>
+
+<span class="n">LABEL_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">TICK_SIZE</span> <span class="o">=</span> <span class="mi">13</span>
+<span class="n">TITLE_SIZE</span> <span class="o">=</span> <span class="mi">17</span>
+<span class="n">LEGEND_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
+
+<span class="n">colors_blue</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.72</span><span class="p">,</span> <span class="mf">0.96</span><span class="p">))</span>
+
+<span class="n">absolute_mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">24.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">14.0</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+
+<span class="n">lf</span> <span class="o">=</span> <span class="n">LuminosityFunction</span><span class="o">.</span><span class="n">evolving_schechter</span><span class="p">(</span>
+    <span class="n">phi_model</span><span class="o">=</span><span class="s2">&quot;linear_p&quot;</span><span class="p">,</span>
+    <span class="n">phi_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;phi_0_star&quot;</span><span class="p">:</span> <span class="mf">1.0e-3</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">},</span>
+    <span class="n">m_star_model</span><span class="o">=</span><span class="s2">&quot;linear_q&quot;</span><span class="p">,</span>
+    <span class="n">m_star_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;m_0_star&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">20.5</span><span class="p">,</span> <span class="s2">&quot;q&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;z_ref&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">},</span>
+    <span class="n">alpha_model</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">,</span>
+    <span class="n">alpha_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.1</span><span class="p">},</span>
+<span class="p">)</span>
+
+<span class="n">redshifts</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">z_value</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">redshifts</span><span class="p">,</span> <span class="n">colors_blue</span><span class="p">):</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">z_value</span><span class="p">)</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">phi</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$z=</span><span class="si">{</span><span class="n">z_value</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">invert_xaxis</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Absolute magnitude $M$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\phi(M, z)$ [$\mathrm</span><span class="si">{Mpc}</span><span class="s2">^{-3}\,\mathrm</span><span class="si">{mag}</span><span class="s2">^{-1}$]&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Evolving Schechter luminosity function&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">TITLE_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="n">TICK_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LEGEND_SIZE</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>(<a class="reference download internal" download="" href="../_downloads/91636da5ad0e30bbf4a672797b9f4fc5/luminosity_function_examples-3.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<figure class="align-default">
+<a class="plot-directive reference internal image-reference" href="../_images/luminosity_function_examples-3.png"><img alt="../_images/luminosity_function_examples-3.png" class="plot-directive" src="../_images/luminosity_function_examples-3.png" style="width: 520px;" />
+</a>
+</figure>
+</section>
+<section id="inspecting-evolving-parameters">
+<h2>Inspecting evolving parameters<a class="headerlink" href="#inspecting-evolving-parameters" title="Link to this heading"><span>#</span></a></h2>
+<p>The evolving luminosity function parameters can also be evaluated directly.</p>
+<p>This plot shows the redshift evolution of the parameters that define the
+luminosity function. Instead of plotting <span class="math notranslate nohighlight">\(\phi(M, z)\)</span> itself, it shows how
+<span class="math notranslate nohighlight">\(\phi_\star\)</span>, <span class="math notranslate nohighlight">\(M_\star\)</span>, and <span class="math notranslate nohighlight">\(\alpha\)</span> change with redshift.</p>
+<p>This is useful when checking whether an evolving model behaves as expected
+before using it in a larger calculation. For example, it can help verify that
+the normalization evolves smoothly, that <span class="math notranslate nohighlight">\(M_\star\)</span> shifts in the intended
+direction, and that the faint-end slope remains in a sensible range.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">LuminosityFunction</span>
+
+<span class="n">LABEL_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">TICK_SIZE</span> <span class="o">=</span> <span class="mi">13</span>
+<span class="n">TITLE_SIZE</span> <span class="o">=</span> <span class="mi">17</span>
+<span class="n">LEGEND_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
+
+<span class="n">colors_blue</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.72</span><span class="p">,</span> <span class="mf">0.96</span><span class="p">))</span>
+<span class="n">colors_red</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.26</span><span class="p">))</span>
+
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+
+<span class="n">lf</span> <span class="o">=</span> <span class="n">LuminosityFunction</span><span class="o">.</span><span class="n">evolving_schechter</span><span class="p">(</span>
+    <span class="n">phi_model</span><span class="o">=</span><span class="s2">&quot;linear_p&quot;</span><span class="p">,</span>
+    <span class="n">phi_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;phi_0_star&quot;</span><span class="p">:</span> <span class="mf">1.0e-3</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">},</span>
+    <span class="n">m_star_model</span><span class="o">=</span><span class="s2">&quot;linear_q&quot;</span><span class="p">,</span>
+    <span class="n">m_star_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;m_0_star&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">20.5</span><span class="p">,</span> <span class="s2">&quot;q&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;z_ref&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">},</span>
+    <span class="n">alpha_model</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span>
+    <span class="n">alpha_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha_0&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.1</span><span class="p">,</span> <span class="s2">&quot;alpha_1&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="s2">&quot;z_ref&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">},</span>
+<span class="p">)</span>
+
+<span class="n">phi_star</span><span class="p">,</span> <span class="n">m_star</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">parameters</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+    <span class="mi">3</span><span class="p">,</span>
+    <span class="mi">1</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">7.2</span><span class="p">),</span>
+    <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">phi_star</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors_blue</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\phi_\star$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ticklabel_format</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;sci&quot;</span><span class="p">,</span> <span class="n">scilimits</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Evolving LF parameters&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">TITLE_SIZE</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">m_star</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors_red</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$M_\star$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors_blue</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Redshift $z$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\alpha$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="n">TICK_SIZE</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>(<a class="reference download internal" download="" href="../_downloads/3cf4eb21619011afa0c9fa7a5401851a/luminosity_function_examples-4.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<figure class="align-default">
+<a class="plot-directive reference internal image-reference" href="../_images/luminosity_function_examples-4.png"><img alt="../_images/luminosity_function_examples-4.png" class="plot-directive" src="../_images/luminosity_function_examples-4.png" style="width: 620px;" />
+</a>
+</figure>
+</section>
+<section id="double-schechter-luminosity-function">
+<h2>Double Schechter luminosity function<a class="headerlink" href="#double-schechter-luminosity-function" title="Link to this heading"><span>#</span></a></h2>
+<p>A double Schechter-style model can be used when the luminosity function needs
+additional structure beyond the standard Schechter form.</p>
+<p>This plot compares a standard Schechter model with a double-Schechter-style
+model. The double model adds extra flexibility around the faint end, where a
+single power-law slope may not describe the full galaxy population well.</p>
+<p>This type of comparison is useful when testing whether a simple one-component
+model is sufficient. If the two curves differ strongly at faint magnitudes,
+integrated quantities that depend on faint galaxies may also differ.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">LuminosityFunction</span>
+
+<span class="n">LABEL_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">TICK_SIZE</span> <span class="o">=</span> <span class="mi">13</span>
+<span class="n">TITLE_SIZE</span> <span class="o">=</span> <span class="mi">17</span>
+<span class="n">LEGEND_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
+
+<span class="n">colors_blue</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.72</span><span class="p">,</span> <span class="mf">0.96</span><span class="p">))</span>
+<span class="n">colors_red</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.26</span><span class="p">))</span>
+
+<span class="n">absolute_mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">24.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">14.0</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+
+<span class="n">standard</span> <span class="o">=</span> <span class="n">LuminosityFunction</span><span class="o">.</span><span class="n">schechter</span><span class="p">(</span>
+    <span class="n">phi_star</span><span class="o">=</span><span class="mf">1.0e-3</span><span class="p">,</span>
+    <span class="n">m_star</span><span class="o">=-</span><span class="mf">20.5</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=-</span><span class="mf">1.1</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">double</span> <span class="o">=</span> <span class="n">LuminosityFunction</span><span class="o">.</span><span class="n">double_schechter</span><span class="p">(</span>
+    <span class="n">phi_star</span><span class="o">=</span><span class="mf">1.0e-3</span><span class="p">,</span>
+    <span class="n">m_star</span><span class="o">=-</span><span class="mf">20.5</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">beta</span><span class="o">=-</span><span class="mf">1.5</span><span class="p">,</span>
+    <span class="n">m_transition</span><span class="o">=-</span><span class="mf">18.0</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">absolute_mag</span><span class="p">,</span>
+    <span class="n">standard</span><span class="o">.</span><span class="n">phi</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">),</span>
+    <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">colors_blue</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Standard Schechter&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">absolute_mag</span><span class="p">,</span>
+    <span class="n">double</span><span class="o">.</span><span class="n">phi</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">),</span>
+    <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">colors_red</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Double Schechter&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">invert_xaxis</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Absolute magnitude $M$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\phi(M)$ [$\mathrm</span><span class="si">{Mpc}</span><span class="s2">^{-3}\,\mathrm</span><span class="si">{mag}</span><span class="s2">^{-1}$]&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Standard and double Schechter models&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">TITLE_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="n">TICK_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LEGEND_SIZE</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>(<a class="reference download internal" download="" href="../_downloads/80a51651e7334db297687cb63032c2ce/luminosity_function_examples-5.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<figure class="align-default">
+<a class="plot-directive reference internal image-reference" href="../_images/luminosity_function_examples-5.png"><img alt="../_images/luminosity_function_examples-5.png" class="plot-directive" src="../_images/luminosity_function_examples-5.png" style="width: 520px;" />
+</a>
+</figure>
+</section>
+<section id="integrated-number-density">
+<h2>Integrated number density<a class="headerlink" href="#integrated-number-density" title="Link to this heading"><span>#</span></a></h2>
+<p>A luminosity function can be integrated over magnitude to estimate the number
+density of galaxies brighter than a chosen absolute-magnitude limit.</p>
+<p>This plot shows how the cumulative number density changes as progressively
+fainter galaxies are included. At very bright limits, only rare luminous
+galaxies contribute. As the magnitude limit becomes fainter, more galaxies are
+included and the integrated number density increases.</p>
+<p>This is one of the most common ways a luminosity function enters survey
+calculations. Instead of using the value of <span class="math notranslate nohighlight">\(\phi(M)\)</span> at one magnitude,
+the model is integrated over the part of the galaxy population that the sample
+selects.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">LuminosityFunction</span>
+
+<span class="n">LABEL_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">TICK_SIZE</span> <span class="o">=</span> <span class="mi">13</span>
+<span class="n">TITLE_SIZE</span> <span class="o">=</span> <span class="mi">17</span>
+<span class="n">LEGEND_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
+
+<span class="n">colors_blue</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.72</span><span class="p">,</span> <span class="mf">0.96</span><span class="p">))</span>
+
+<span class="n">lf</span> <span class="o">=</span> <span class="n">LuminosityFunction</span><span class="o">.</span><span class="n">schechter</span><span class="p">(</span>
+    <span class="n">phi_star</span><span class="o">=</span><span class="mf">1.0e-3</span><span class="p">,</span>
+    <span class="n">m_star</span><span class="o">=-</span><span class="mf">20.5</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=-</span><span class="mf">1.1</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">magnitude_limits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">23.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">15.0</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
+
+<span class="n">number_density</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">integrated_number_density</span><span class="p">(</span>
+    <span class="n">z</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">m_bright</span><span class="o">=-</span><span class="mf">25.0</span><span class="p">,</span>
+    <span class="n">m_faint</span><span class="o">=</span><span class="n">magnitude_limits</span><span class="p">,</span>
+    <span class="n">n_m</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">magnitude_limits</span><span class="p">,</span> <span class="n">number_density</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors_blue</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">invert_xaxis</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Faint absolute-magnitude limit $M_{\rm lim}$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$n(M &lt; M_{\rm lim})$ [$\mathrm</span><span class="si">{Mpc}</span><span class="s2">^{-3}$]&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Integrated number density&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">TITLE_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="n">TICK_SIZE</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>(<a class="reference download internal" download="" href="../_downloads/d3640a8958550e60d1676225e408bf02/luminosity_function_examples-6.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<figure class="align-default">
+<a class="plot-directive reference internal image-reference" href="../_images/luminosity_function_examples-6.png"><img alt="../_images/luminosity_function_examples-6.png" class="plot-directive" src="../_images/luminosity_function_examples-6.png" style="width: 520px;" />
+</a>
+</figure>
+</section>
+<section id="magnitude-redshift-luminosity-function-surface">
+<h2>Magnitude-redshift luminosity function surface<a class="headerlink" href="#magnitude-redshift-luminosity-function-surface" title="Link to this heading"><span>#</span></a></h2>
+<p>For an evolving luminosity function, the abundance depends on both absolute
+magnitude and redshift.</p>
+<p>This plot shows the luminosity function amplitude across the
+magnitude-redshift plane. The horizontal direction shows which galaxies are
+bright or faint, while the vertical direction shows how the model changes with
+redshift.</p>
+<p>The filled colour scale shows <span class="math notranslate nohighlight">\(\log_{10}\phi(M, z)\)</span>. The white contours
+mark constant <span class="math notranslate nohighlight">\(\log_{10}\phi(M, z)\)</span> levels at -5, -4, -3, and -2. These
+contours make it easier to see where equal-abundance regions sit in the
+magnitude-redshift plane.</p>
+<p>This view is helpful for checking the full two-dimensional behaviour of an
+evolving model. It makes it easier to see whether the bright end, faint end, and
+redshift evolution combine smoothly across the range of interest.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">LuminosityFunction</span>
+
+<span class="n">LABEL_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">TICK_SIZE</span> <span class="o">=</span> <span class="mi">13</span>
+<span class="n">TITLE_SIZE</span> <span class="o">=</span> <span class="mi">17</span>
+<span class="n">LEGEND_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
+
+<span class="n">absolute_mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">24.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">18.0</span><span class="p">,</span> <span class="mi">220</span><span class="p">)</span>
+<span class="n">redshift</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span>
+
+<span class="n">mag_grid</span><span class="p">,</span> <span class="n">z_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">redshift</span><span class="p">)</span>
+
+<span class="n">lf</span> <span class="o">=</span> <span class="n">LuminosityFunction</span><span class="o">.</span><span class="n">evolving_schechter</span><span class="p">(</span>
+    <span class="n">phi_model</span><span class="o">=</span><span class="s2">&quot;linear_p&quot;</span><span class="p">,</span>
+    <span class="n">phi_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;phi_0_star&quot;</span><span class="p">:</span> <span class="mf">1.0e-3</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">},</span>
+    <span class="n">m_star_model</span><span class="o">=</span><span class="s2">&quot;linear_q&quot;</span><span class="p">,</span>
+    <span class="n">m_star_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;m_0_star&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">20.5</span><span class="p">,</span> <span class="s2">&quot;q&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;z_ref&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">},</span>
+    <span class="n">alpha_model</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">,</span>
+    <span class="n">alpha_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.1</span><span class="p">},</span>
+<span class="p">)</span>
+
+<span class="n">phi</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">phi</span><span class="p">(</span><span class="n">mag_grid</span><span class="p">,</span> <span class="n">z_grid</span><span class="p">)</span>
+<span class="n">log_phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.2</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">))</span>
+
+<span class="n">mesh</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span>
+    <span class="n">absolute_mag</span><span class="p">,</span>
+    <span class="n">redshift</span><span class="p">,</span>
+    <span class="n">log_phi</span><span class="p">,</span>
+    <span class="n">shading</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">contour_levels</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">5.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">]</span>
+<span class="n">contours</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span>
+    <span class="n">absolute_mag</span><span class="p">,</span>
+    <span class="n">redshift</span><span class="p">,</span>
+    <span class="n">log_phi</span><span class="p">,</span>
+    <span class="n">levels</span><span class="o">=</span><span class="n">contour_levels</span><span class="p">,</span>
+    <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
+    <span class="n">linewidths</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">contours</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">TICK_SIZE</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$10^{</span><span class="si">%.0f</span><span class="s2">}$&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">invert_xaxis</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Absolute magnitude $M$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Redshift $z$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Evolving luminosity function&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">TITLE_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="n">TICK_SIZE</span><span class="p">)</span>
+
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span>
+    <span class="sa">r</span><span class="s2">&quot;$\log_</span><span class="si">{10}</span><span class="s2">\phi(M, z)$ [$\log_</span><span class="si">{10}</span><span class="s2">(\mathrm</span><span class="si">{Mpc}</span><span class="s2">^{-3}\,\mathrm</span><span class="si">{mag}</span><span class="s2">^{-1})$]&quot;</span><span class="p">,</span>
+    <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="n">TICK_SIZE</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>(<a class="reference download internal" download="" href="../_downloads/cc6b626576be6c714ea47b0777d6305a/luminosity_function_examples-7.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<figure class="align-default">
+<a class="plot-directive reference internal image-reference" href="../_images/luminosity_function_examples-7.png"><img alt="../_images/luminosity_function_examples-7.png" class="plot-directive" src="../_images/luminosity_function_examples-7.png" style="width: 560px;" />
+</a>
+</figure>
+</section>
+<section id="magnitude-limited-lf-weighted-redshift-trend">
+<h2>Magnitude-limited LF-weighted redshift trend<a class="headerlink" href="#magnitude-limited-lf-weighted-redshift-trend" title="Link to this heading"><span>#</span></a></h2>
+<p>A survey magnitude limit selects different parts of the luminosity function at
+different redshifts.</p>
+<p>This example shows LF-weighted redshift trends for several fixed
+apparent-magnitude limits. The absolute-magnitude limit is computed from the
+cosmology-dependent distance modulus. At lower redshift, a flux-limited sample
+can include relatively faint galaxies. At higher redshift, the same
+apparent-magnitude limit corresponds to a brighter absolute-magnitude cut, so
+only intrinsically brighter galaxies remain in the selected sample.</p>
+<p>The result is not intended to be a full survey <span class="math notranslate nohighlight">\(n(z)\)</span>, because it does not
+include the survey volume element. Instead, it shows the luminosity function
+selection factor that later enters magnitude-limited redshift-distribution
+calculations.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pyccl</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ccl</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">LuminosityFunction</span>
+
+<span class="n">LABEL_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">TICK_SIZE</span> <span class="o">=</span> <span class="mi">13</span>
+<span class="n">TITLE_SIZE</span> <span class="o">=</span> <span class="mi">17</span>
+<span class="n">LEGEND_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
+
+<span class="n">colors_blue</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.72</span><span class="p">,</span> <span class="mf">0.96</span><span class="p">))</span>
+
+<span class="n">cosmo</span> <span class="o">=</span> <span class="n">ccl</span><span class="o">.</span><span class="n">Cosmology</span><span class="p">(</span>
+    <span class="n">Omega_c</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+    <span class="n">Omega_b</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+    <span class="n">h</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+    <span class="n">sigma8</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+    <span class="n">n_s</span><span class="o">=</span><span class="mf">0.96</span><span class="p">,</span>
+    <span class="n">transfer_function</span><span class="o">=</span><span class="s2">&quot;bbks&quot;</span><span class="p">,</span>
+    <span class="n">matter_power_spectrum</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">lf</span> <span class="o">=</span> <span class="n">LuminosityFunction</span><span class="o">.</span><span class="n">evolving_schechter</span><span class="p">(</span>
+    <span class="n">phi_model</span><span class="o">=</span><span class="s2">&quot;linear_p&quot;</span><span class="p">,</span>
+    <span class="n">phi_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;phi_0_star&quot;</span><span class="p">:</span> <span class="mf">1.0e-3</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="mf">0.6</span><span class="p">},</span>
+    <span class="n">m_star_model</span><span class="o">=</span><span class="s2">&quot;linear_q&quot;</span><span class="p">,</span>
+    <span class="n">m_star_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;m_0_star&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">20.5</span><span class="p">,</span> <span class="s2">&quot;q&quot;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span> <span class="s2">&quot;z_ref&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">},</span>
+    <span class="n">alpha_model</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">,</span>
+    <span class="n">alpha_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.1</span><span class="p">},</span>
+<span class="p">)</span>
+
+<span class="n">redshift</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">160</span><span class="p">)</span>
+<span class="n">apparent_limits</span> <span class="o">=</span> <span class="p">[</span><span class="mf">23.5</span><span class="p">,</span> <span class="mf">24.5</span><span class="p">,</span> <span class="mf">25.5</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">m_lim</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">apparent_limits</span><span class="p">,</span> <span class="n">colors_blue</span><span class="p">):</span>
+    <span class="n">m_limit</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">absolute_magnitude_limit</span><span class="p">(</span>
+        <span class="n">cosmo</span><span class="p">,</span>
+        <span class="n">redshift</span><span class="p">,</span>
+        <span class="n">m_lim</span><span class="o">=</span><span class="n">m_lim</span><span class="p">,</span>
+        <span class="n">corrections</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">lf_selection</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">integrated_number_density</span><span class="p">(</span>
+        <span class="n">z</span><span class="o">=</span><span class="n">redshift</span><span class="p">,</span>
+        <span class="n">m_bright</span><span class="o">=-</span><span class="mf">25.0</span><span class="p">,</span>
+        <span class="n">m_faint</span><span class="o">=</span><span class="n">m_limit</span><span class="p">,</span>
+        <span class="n">n_m</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">lf_selection</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapezoid</span><span class="p">(</span><span class="n">lf_selection</span><span class="p">,</span> <span class="n">redshift</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+        <span class="n">redshift</span><span class="p">,</span>
+        <span class="n">lf_selection</span><span class="p">,</span>
+        <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$m_</span><span class="se">{{</span><span class="s2">\rm lim</span><span class="se">}}</span><span class="s2">=</span><span class="si">{</span><span class="n">m_lim</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Redshift $z$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;LF selection&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Magnitude-limited LF selection&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">TITLE_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="n">TICK_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LEGEND_SIZE</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>(<a class="reference download internal" download="" href="../_downloads/fbf7c76d218c48ac1210ffe08003f9b9/luminosity_function_examples-8.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<figure class="align-default">
+<a class="plot-directive reference internal image-reference" href="../_images/luminosity_function_examples-8.png"><img alt="../_images/luminosity_function_examples-8.png" class="plot-directive" src="../_images/luminosity_function_examples-8.png" style="width: 620px;" />
+</a>
+</figure>
+</section>
+<section id="cosmology-dependence-of-the-absolute-magnitude-limit">
+<h2>Cosmology dependence of the absolute-magnitude limit<a class="headerlink" href="#cosmology-dependence-of-the-absolute-magnitude-limit" title="Link to this heading"><span>#</span></a></h2>
+<p>The apparent-to-absolute magnitude conversion depends on cosmology through the
+luminosity distance and distance modulus.</p>
+<p>This plot compares the absolute-magnitude limit implied by the same apparent
+magnitude cut in several cosmologies. The luminosity function is not used in
+this plot; the comparison isolates the selection boundary itself.</p>
+<p>Users can replace the entries in the <code class="docutils literal notranslate"><span class="pre">cosmologies</span></code> dictionary with any
+<code class="xref py py-class docutils literal notranslate"><span class="pre">pyccl.Cosmology</span></code> objects relevant to their own analysis.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pyccl</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ccl</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">LuminosityFunction</span>
+
+<span class="n">LABEL_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">TICK_SIZE</span> <span class="o">=</span> <span class="mi">13</span>
+<span class="n">TITLE_SIZE</span> <span class="o">=</span> <span class="mi">17</span>
+<span class="n">LEGEND_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
+
+<span class="n">colors_red</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.26</span><span class="p">))</span>
+
+<span class="n">cosmologies</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="sa">r</span><span class="s2">&quot;$\Omega_{\rm m}=0.25,\ h=0.70$&quot;</span><span class="p">:</span> <span class="n">ccl</span><span class="o">.</span><span class="n">Cosmology</span><span class="p">(</span>
+        <span class="n">Omega_c</span><span class="o">=</span><span class="mf">0.20</span><span class="p">,</span>
+        <span class="n">Omega_b</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+        <span class="n">h</span><span class="o">=</span><span class="mf">0.70</span><span class="p">,</span>
+        <span class="n">sigma8</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">n_s</span><span class="o">=</span><span class="mf">0.96</span><span class="p">,</span>
+        <span class="n">transfer_function</span><span class="o">=</span><span class="s2">&quot;bbks&quot;</span><span class="p">,</span>
+        <span class="n">matter_power_spectrum</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="sa">r</span><span class="s2">&quot;$\Omega_{\rm m}=0.30,\ h=0.70$&quot;</span><span class="p">:</span> <span class="n">ccl</span><span class="o">.</span><span class="n">Cosmology</span><span class="p">(</span>
+        <span class="n">Omega_c</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+        <span class="n">Omega_b</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+        <span class="n">h</span><span class="o">=</span><span class="mf">0.70</span><span class="p">,</span>
+        <span class="n">sigma8</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">n_s</span><span class="o">=</span><span class="mf">0.96</span><span class="p">,</span>
+        <span class="n">transfer_function</span><span class="o">=</span><span class="s2">&quot;bbks&quot;</span><span class="p">,</span>
+        <span class="n">matter_power_spectrum</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="sa">r</span><span class="s2">&quot;$\Omega_{\rm m}=0.35,\ h=0.70$&quot;</span><span class="p">:</span> <span class="n">ccl</span><span class="o">.</span><span class="n">Cosmology</span><span class="p">(</span>
+        <span class="n">Omega_c</span><span class="o">=</span><span class="mf">0.30</span><span class="p">,</span>
+        <span class="n">Omega_b</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+        <span class="n">h</span><span class="o">=</span><span class="mf">0.70</span><span class="p">,</span>
+        <span class="n">sigma8</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">n_s</span><span class="o">=</span><span class="mf">0.96</span><span class="p">,</span>
+        <span class="n">transfer_function</span><span class="o">=</span><span class="s2">&quot;bbks&quot;</span><span class="p">,</span>
+        <span class="n">matter_power_spectrum</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+<span class="p">}</span>
+
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">250</span><span class="p">)</span>
+
+<span class="n">lf</span> <span class="o">=</span> <span class="n">LuminosityFunction</span><span class="o">.</span><span class="n">schechter</span><span class="p">(</span>
+    <span class="n">phi_star</span><span class="o">=</span><span class="mf">1.0e-3</span><span class="p">,</span>
+    <span class="n">m_star</span><span class="o">=-</span><span class="mf">20.5</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=-</span><span class="mf">1.1</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">m_limits</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">cosmo</span> <span class="ow">in</span> <span class="n">cosmologies</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">m_limits</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">absolute_magnitude_limit</span><span class="p">(</span>
+        <span class="n">cosmo</span><span class="p">,</span>
+        <span class="n">z</span><span class="p">,</span>
+        <span class="n">m_lim</span><span class="o">=</span><span class="mf">24.5</span><span class="p">,</span>
+        <span class="n">corrections</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<span class="n">reference_label</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;$\Omega_{\rm m}=0.30,\ h=0.70$&quot;</span>
+<span class="n">reference</span> <span class="o">=</span> <span class="n">m_limits</span><span class="p">[</span><span class="n">reference_label</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax_top</span><span class="p">,</span> <span class="n">ax_bottom</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span>
+    <span class="mi">1</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">6.2</span><span class="p">),</span>
+    <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">gridspec_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;height_ratios&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]},</span>
+    <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">m_limit</span><span class="p">),</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">m_limits</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">colors_red</span><span class="p">):</span>
+    <span class="n">ax_top</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">m_limit</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+    <span class="n">ax_bottom</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">m_limit</span> <span class="o">-</span> <span class="n">reference</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+
+<span class="n">ax_top</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+<span class="n">ax_top</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$M_{\rm lim}(z)$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+<span class="n">ax_top</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Cosmology dependence of $M_{\rm lim}(z)$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">TITLE_SIZE</span><span class="p">)</span>
+<span class="n">ax_top</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LEGEND_SIZE</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+
+<span class="n">ax_bottom</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;0.3&quot;</span><span class="p">)</span>
+<span class="n">ax_bottom</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Redshift $z$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+<span class="n">ax_bottom</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\Delta M_{\rm lim}$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ax_top</span><span class="p">,</span> <span class="n">ax_bottom</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="n">TICK_SIZE</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>(<a class="reference download internal" download="" href="../_downloads/d2ad92d8ed3522ddd545b5a87be72d15/luminosity_function_examples-9.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<figure class="align-default">
+<a class="plot-directive reference internal image-reference" href="../_images/luminosity_function_examples-9.png"><img alt="../_images/luminosity_function_examples-9.png" class="plot-directive" src="../_images/luminosity_function_examples-9.png" style="width: 620px;" />
+</a>
+</figure>
+</section>
+<section id="cosmology-dependence-of-lf-selection">
+<h2>Cosmology dependence of LF selection<a class="headerlink" href="#cosmology-dependence-of-lf-selection" title="Link to this heading"><span>#</span></a></h2>
+<p>The LF-weighted selection factor also depends on cosmology because the same
+apparent-magnitude cut maps to a different absolute-magnitude limit.</p>
+<p>This example keeps the luminosity function and apparent-magnitude limit fixed,
+then changes only the cosmology. The curves are normalized to unit integral over
+redshift, so the comparison emphasizes changes in shape rather than absolute
+normalization.</p>
+<p>The lower panel shows the residual relative to the reference cosmology,
+<span class="math notranslate nohighlight">\(\Omega_{\rm m}=0.30,\ h=0.70\)</span>.</p>
+<p>This is still not a full survey <span class="math notranslate nohighlight">\(n(z)\)</span>, because it does not include the
+cosmological volume element. It is the luminosity function selection factor
+alone.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pyccl</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ccl</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">LuminosityFunction</span>
+
+<span class="n">LABEL_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">TICK_SIZE</span> <span class="o">=</span> <span class="mi">13</span>
+<span class="n">TITLE_SIZE</span> <span class="o">=</span> <span class="mi">17</span>
+<span class="n">LEGEND_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
+
+<span class="n">colors_red</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.26</span><span class="p">))</span>
+
+<span class="n">cosmologies</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="sa">r</span><span class="s2">&quot;$\Omega_{\rm m}=0.25,\ h=0.70$&quot;</span><span class="p">:</span> <span class="n">ccl</span><span class="o">.</span><span class="n">Cosmology</span><span class="p">(</span>
+        <span class="n">Omega_c</span><span class="o">=</span><span class="mf">0.20</span><span class="p">,</span>
+        <span class="n">Omega_b</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+        <span class="n">h</span><span class="o">=</span><span class="mf">0.70</span><span class="p">,</span>
+        <span class="n">sigma8</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">n_s</span><span class="o">=</span><span class="mf">0.96</span><span class="p">,</span>
+        <span class="n">transfer_function</span><span class="o">=</span><span class="s2">&quot;bbks&quot;</span><span class="p">,</span>
+        <span class="n">matter_power_spectrum</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="sa">r</span><span class="s2">&quot;$\Omega_{\rm m}=0.30,\ h=0.70$&quot;</span><span class="p">:</span> <span class="n">ccl</span><span class="o">.</span><span class="n">Cosmology</span><span class="p">(</span>
+        <span class="n">Omega_c</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+        <span class="n">Omega_b</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+        <span class="n">h</span><span class="o">=</span><span class="mf">0.70</span><span class="p">,</span>
+        <span class="n">sigma8</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">n_s</span><span class="o">=</span><span class="mf">0.96</span><span class="p">,</span>
+        <span class="n">transfer_function</span><span class="o">=</span><span class="s2">&quot;bbks&quot;</span><span class="p">,</span>
+        <span class="n">matter_power_spectrum</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="sa">r</span><span class="s2">&quot;$\Omega_{\rm m}=0.35,\ h=0.70$&quot;</span><span class="p">:</span> <span class="n">ccl</span><span class="o">.</span><span class="n">Cosmology</span><span class="p">(</span>
+        <span class="n">Omega_c</span><span class="o">=</span><span class="mf">0.30</span><span class="p">,</span>
+        <span class="n">Omega_b</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+        <span class="n">h</span><span class="o">=</span><span class="mf">0.70</span><span class="p">,</span>
+        <span class="n">sigma8</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">n_s</span><span class="o">=</span><span class="mf">0.96</span><span class="p">,</span>
+        <span class="n">transfer_function</span><span class="o">=</span><span class="s2">&quot;bbks&quot;</span><span class="p">,</span>
+        <span class="n">matter_power_spectrum</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+<span class="p">}</span>
+
+<span class="n">redshift</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">160</span><span class="p">)</span>
+
+<span class="n">lf</span> <span class="o">=</span> <span class="n">LuminosityFunction</span><span class="o">.</span><span class="n">evolving_schechter</span><span class="p">(</span>
+    <span class="n">phi_model</span><span class="o">=</span><span class="s2">&quot;linear_p&quot;</span><span class="p">,</span>
+    <span class="n">phi_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;phi_0_star&quot;</span><span class="p">:</span> <span class="mf">1.0e-3</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="mf">0.6</span><span class="p">},</span>
+    <span class="n">m_star_model</span><span class="o">=</span><span class="s2">&quot;linear_q&quot;</span><span class="p">,</span>
+    <span class="n">m_star_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;m_0_star&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">20.5</span><span class="p">,</span> <span class="s2">&quot;q&quot;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span> <span class="s2">&quot;z_ref&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">},</span>
+    <span class="n">alpha_model</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">,</span>
+    <span class="n">alpha_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.1</span><span class="p">},</span>
+<span class="p">)</span>
+
+<span class="n">selections</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">cosmo</span> <span class="ow">in</span> <span class="n">cosmologies</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">m_limit</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">absolute_magnitude_limit</span><span class="p">(</span>
+        <span class="n">cosmo</span><span class="p">,</span>
+        <span class="n">redshift</span><span class="p">,</span>
+        <span class="n">m_lim</span><span class="o">=</span><span class="mf">24.5</span><span class="p">,</span>
+        <span class="n">corrections</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">lf_selection</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">integrated_number_density</span><span class="p">(</span>
+        <span class="n">z</span><span class="o">=</span><span class="n">redshift</span><span class="p">,</span>
+        <span class="n">m_bright</span><span class="o">=-</span><span class="mf">25.0</span><span class="p">,</span>
+        <span class="n">m_faint</span><span class="o">=</span><span class="n">m_limit</span><span class="p">,</span>
+        <span class="n">n_m</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">lf_selection</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapezoid</span><span class="p">(</span><span class="n">lf_selection</span><span class="p">,</span> <span class="n">redshift</span><span class="p">)</span>
+
+    <span class="n">selections</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="n">lf_selection</span>
+
+<span class="n">reference_label</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;$\Omega_{\rm m}=0.30,\ h=0.70$&quot;</span>
+<span class="n">reference</span> <span class="o">=</span> <span class="n">selections</span><span class="p">[</span><span class="n">reference_label</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax_top</span><span class="p">,</span> <span class="n">ax_bottom</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span>
+    <span class="mi">1</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">6.2</span><span class="p">),</span>
+    <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">gridspec_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;height_ratios&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]},</span>
+    <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">lf_selection</span><span class="p">),</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">selections</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">colors_red</span><span class="p">):</span>
+    <span class="n">ax_top</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">redshift</span><span class="p">,</span> <span class="n">lf_selection</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+    <span class="n">ax_bottom</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">redshift</span><span class="p">,</span> <span class="n">lf_selection</span> <span class="o">-</span> <span class="n">reference</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+
+<span class="n">ax_top</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;LF selection&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+<span class="n">ax_top</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Cosmology dependence of LF selection&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">TITLE_SIZE</span><span class="p">)</span>
+<span class="n">ax_top</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LEGEND_SIZE</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+
+<span class="n">ax_bottom</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;0.3&quot;</span><span class="p">)</span>
+<span class="n">ax_bottom</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Redshift $z$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+<span class="n">ax_bottom</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\Delta$ selection&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ax_top</span><span class="p">,</span> <span class="n">ax_bottom</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="n">TICK_SIZE</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>(<a class="reference download internal" download="" href="../_downloads/cc90af180e71a36810acd62afecee656/luminosity_function_examples-10.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<figure class="align-default">
+<a class="plot-directive reference internal image-reference" href="../_images/luminosity_function_examples-10.png"><img alt="../_images/luminosity_function_examples-10.png" class="plot-directive" src="../_images/luminosity_function_examples-10.png" style="width: 620px;" />
+</a>
+</figure>
+</section>
+<section id="cosmology-and-volume-weighted-lf-redshift-trend">
+<h2>Cosmology and volume-weighted LF redshift trend<a class="headerlink" href="#cosmology-and-volume-weighted-lf-redshift-trend" title="Link to this heading"><span>#</span></a></h2>
+<p>A full LF-based redshift trend for a magnitude-limited sample should include
+both the luminosity function selection and the cosmological volume element.</p>
+<p>This example multiplies the magnitude-integrated luminosity function by a
+simple comoving-volume weight per steradian, <span class="math notranslate nohighlight">\(\chi^2(z) / H(z)\)</span>, up to an
+overall constant. The result is closer to the ingredient used in LF-dependent
+<span class="math notranslate nohighlight">\(n(z)\)</span> construction.</p>
+<p>The curves are normalized to unit integral over redshift, so the comparison
+shows how cosmology changes the shape of the redshift trend. The lower panel
+shows the residual relative to the reference cosmology,
+<span class="math notranslate nohighlight">\(\Omega_{\rm m}=0.30,\ h=0.70\)</span>.</p>
+<p>The absolute normalization depends on survey area, LF normalization, and the
+exact volume convention used by the calling analysis.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pyccl</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ccl</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">LuminosityFunction</span>
+
+<span class="n">LABEL_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">TICK_SIZE</span> <span class="o">=</span> <span class="mi">13</span>
+<span class="n">TITLE_SIZE</span> <span class="o">=</span> <span class="mi">17</span>
+<span class="n">LEGEND_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
+
+<span class="n">colors_red</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.26</span><span class="p">))</span>
+
+<span class="n">cosmologies</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="sa">r</span><span class="s2">&quot;$\Omega_{\rm m}=0.25,\ h=0.70$&quot;</span><span class="p">:</span> <span class="n">ccl</span><span class="o">.</span><span class="n">Cosmology</span><span class="p">(</span>
+        <span class="n">Omega_c</span><span class="o">=</span><span class="mf">0.20</span><span class="p">,</span>
+        <span class="n">Omega_b</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+        <span class="n">h</span><span class="o">=</span><span class="mf">0.70</span><span class="p">,</span>
+        <span class="n">sigma8</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">n_s</span><span class="o">=</span><span class="mf">0.96</span><span class="p">,</span>
+        <span class="n">transfer_function</span><span class="o">=</span><span class="s2">&quot;bbks&quot;</span><span class="p">,</span>
+        <span class="n">matter_power_spectrum</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="sa">r</span><span class="s2">&quot;$\Omega_{\rm m}=0.30,\ h=0.70$&quot;</span><span class="p">:</span> <span class="n">ccl</span><span class="o">.</span><span class="n">Cosmology</span><span class="p">(</span>
+        <span class="n">Omega_c</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+        <span class="n">Omega_b</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+        <span class="n">h</span><span class="o">=</span><span class="mf">0.70</span><span class="p">,</span>
+        <span class="n">sigma8</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">n_s</span><span class="o">=</span><span class="mf">0.96</span><span class="p">,</span>
+        <span class="n">transfer_function</span><span class="o">=</span><span class="s2">&quot;bbks&quot;</span><span class="p">,</span>
+        <span class="n">matter_power_spectrum</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="sa">r</span><span class="s2">&quot;$\Omega_{\rm m}=0.35,\ h=0.70$&quot;</span><span class="p">:</span> <span class="n">ccl</span><span class="o">.</span><span class="n">Cosmology</span><span class="p">(</span>
+        <span class="n">Omega_c</span><span class="o">=</span><span class="mf">0.30</span><span class="p">,</span>
+        <span class="n">Omega_b</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+        <span class="n">h</span><span class="o">=</span><span class="mf">0.70</span><span class="p">,</span>
+        <span class="n">sigma8</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+        <span class="n">n_s</span><span class="o">=</span><span class="mf">0.96</span><span class="p">,</span>
+        <span class="n">transfer_function</span><span class="o">=</span><span class="s2">&quot;bbks&quot;</span><span class="p">,</span>
+        <span class="n">matter_power_spectrum</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
+<span class="p">}</span>
+
+<span class="n">redshift</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">160</span><span class="p">)</span>
+
+<span class="n">lf</span> <span class="o">=</span> <span class="n">LuminosityFunction</span><span class="o">.</span><span class="n">evolving_schechter</span><span class="p">(</span>
+    <span class="n">phi_model</span><span class="o">=</span><span class="s2">&quot;linear_p&quot;</span><span class="p">,</span>
+    <span class="n">phi_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;phi_0_star&quot;</span><span class="p">:</span> <span class="mf">1.0e-3</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="mf">0.6</span><span class="p">},</span>
+    <span class="n">m_star_model</span><span class="o">=</span><span class="s2">&quot;linear_q&quot;</span><span class="p">,</span>
+    <span class="n">m_star_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;m_0_star&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">20.5</span><span class="p">,</span> <span class="s2">&quot;q&quot;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span> <span class="s2">&quot;z_ref&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">},</span>
+    <span class="n">alpha_model</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">,</span>
+    <span class="n">alpha_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.1</span><span class="p">},</span>
+<span class="p">)</span>
+
+<span class="n">trends</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">cosmo</span> <span class="ow">in</span> <span class="n">cosmologies</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">scale_factor</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">redshift</span><span class="p">)</span>
+
+    <span class="n">chi</span> <span class="o">=</span> <span class="n">ccl</span><span class="o">.</span><span class="n">comoving_radial_distance</span><span class="p">(</span><span class="n">cosmo</span><span class="p">,</span> <span class="n">scale_factor</span><span class="p">)</span>
+    <span class="n">h_over_h0</span> <span class="o">=</span> <span class="n">ccl</span><span class="o">.</span><span class="n">h_over_h0</span><span class="p">(</span><span class="n">cosmo</span><span class="p">,</span> <span class="n">scale_factor</span><span class="p">)</span>
+
+    <span class="n">volume_weight</span> <span class="o">=</span> <span class="n">chi</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">h_over_h0</span>
+
+    <span class="n">m_limit</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">absolute_magnitude_limit</span><span class="p">(</span>
+        <span class="n">cosmo</span><span class="p">,</span>
+        <span class="n">redshift</span><span class="p">,</span>
+        <span class="n">m_lim</span><span class="o">=</span><span class="mf">24.5</span><span class="p">,</span>
+        <span class="n">corrections</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">lf_selection</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">integrated_number_density</span><span class="p">(</span>
+        <span class="n">z</span><span class="o">=</span><span class="n">redshift</span><span class="p">,</span>
+        <span class="n">m_bright</span><span class="o">=-</span><span class="mf">25.0</span><span class="p">,</span>
+        <span class="n">m_faint</span><span class="o">=</span><span class="n">m_limit</span><span class="p">,</span>
+        <span class="n">n_m</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">weighted_trend</span> <span class="o">=</span> <span class="n">volume_weight</span> <span class="o">*</span> <span class="n">lf_selection</span>
+    <span class="n">weighted_trend</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapezoid</span><span class="p">(</span><span class="n">weighted_trend</span><span class="p">,</span> <span class="n">redshift</span><span class="p">)</span>
+
+    <span class="n">trends</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="n">weighted_trend</span>
+
+<span class="n">reference_label</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;$\Omega_{\rm m}=0.30,\ h=0.70$&quot;</span>
+<span class="n">reference</span> <span class="o">=</span> <span class="n">trends</span><span class="p">[</span><span class="n">reference_label</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax_top</span><span class="p">,</span> <span class="n">ax_bottom</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+    <span class="mi">2</span><span class="p">,</span>
+    <span class="mi">1</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">6.2</span><span class="p">),</span>
+    <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">gridspec_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;height_ratios&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]},</span>
+    <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">weighted_trend</span><span class="p">),</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">trends</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">colors_red</span><span class="p">):</span>
+    <span class="n">ax_top</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">redshift</span><span class="p">,</span> <span class="n">weighted_trend</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+    <span class="n">ax_bottom</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">redshift</span><span class="p">,</span> <span class="n">weighted_trend</span> <span class="o">-</span> <span class="n">reference</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+
+<span class="n">ax_top</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Volume-weighted LF trend&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+<span class="n">ax_top</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Cosmology dependence with volume weighting&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">TITLE_SIZE</span><span class="p">)</span>
+<span class="n">ax_top</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LEGEND_SIZE</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+
+<span class="n">ax_bottom</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;0.3&quot;</span><span class="p">)</span>
+<span class="n">ax_bottom</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Redshift $z$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+<span class="n">ax_bottom</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\Delta$ trend&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ax_top</span><span class="p">,</span> <span class="n">ax_bottom</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="n">TICK_SIZE</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>(<a class="reference download internal" download="" href="../_downloads/78a02b4896f458fdf2974d0f5aa63402/luminosity_function_examples-11.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<figure class="align-default">
+<a class="plot-directive reference internal image-reference" href="../_images/luminosity_function_examples-11.png"><img alt="../_images/luminosity_function_examples-11.png" class="plot-directive" src="../_images/luminosity_function_examples-11.png" style="width: 620px;" />
+</a>
+</figure>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="catalog_completeness_examples.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"> Catalog completeness examples</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="poggianti_examples.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Poggianti (1997) examples</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026, Nikolina Šarčević
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#"> Luminosity function examples</a><ul>
+<li><a class="reference internal" href="#standard-schechter-luminosity-function">Standard Schechter luminosity function</a></li>
+<li><a class="reference internal" href="#comparing-schechter-slopes">Comparing Schechter slopes</a></li>
+<li><a class="reference internal" href="#evolving-schechter-luminosity-function">Evolving Schechter luminosity function</a></li>
+<li><a class="reference internal" href="#inspecting-evolving-parameters">Inspecting evolving parameters</a></li>
+<li><a class="reference internal" href="#double-schechter-luminosity-function">Double Schechter luminosity function</a></li>
+<li><a class="reference internal" href="#integrated-number-density">Integrated number density</a></li>
+<li><a class="reference internal" href="#magnitude-redshift-luminosity-function-surface">Magnitude-redshift luminosity function surface</a></li>
+<li><a class="reference internal" href="#magnitude-limited-lf-weighted-redshift-trend">Magnitude-limited LF-weighted redshift trend</a></li>
+<li><a class="reference internal" href="#cosmology-dependence-of-the-absolute-magnitude-limit">Cosmology dependence of the absolute-magnitude limit</a></li>
+<li><a class="reference internal" href="#cosmology-dependence-of-lf-selection">Cosmology dependence of LF selection</a></li>
+<li><a class="reference internal" href="#cosmology-and-volume-weighted-lf-redshift-trend">Cosmology and volume-weighted LF redshift trend</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f16c4c56"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>
