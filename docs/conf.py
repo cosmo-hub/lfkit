@@ -64,6 +64,8 @@ napoleon_numpy_docstring = False
 # -----------------------------------------------------------------------------
 # HTML output
 # -----------------------------------------------------------------------------
+html_baseurl = "https://cosmology-kit.github.io/lfkit/"
+
 html_theme = "furo"
 html_permalinks_icon = "<span>#</span>"
 
@@ -113,8 +115,11 @@ plot_rcparams = {
 # Sphinx multiversion
 # -----------------------------------------------------------------------------
 smv_tag_whitelist = r"^v\d+\.\d+\.\d+$"
-smv_branch_whitelist = "main"
-
+smv_branch_whitelist = r"^main$"
+smv_remote_whitelist = r"^origin$"
+smv_released_pattern = r"^refs/tags/v\d+\.\d+\.\d+$"
+smv_outputdir_format = "{ref.name}"
+smv_site_url = "https://cosmology-kit.github.io/lfkit/"
 
 # -----------------------------------------------------------------------------
 # Copybutton configuration

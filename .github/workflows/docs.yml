@@ -28,6 +28,7 @@ jobs:
       - name: Build docs
         run: |
           tox -e docs-releases
+          find docs/_build/html -maxdepth 2 -name index.html -print
 
       - name: Deploy documentation
         uses: peaceiris/actions-gh-pages@v4
@@ -35,4 +36,3 @@ jobs:
           publish_branch: gh-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: docs/_build/html
-          force_orphan: true
