@@ -29,6 +29,14 @@ from lfkit.photometry.luminosity_function import (
     schechter_evolving_from_m,
     schechter_double_from_m,
 )
+from lfkit.photometry.conditional_lf_models import (
+    central_lognormal_conditional_lf,
+    central_satellite_conditional_lf,
+    conditional_schechter,
+    conditional_schechter_double,
+    conditional_schechter_evolving,
+    satellite_modified_schechter_conditional_lf,
+)
 from lfkit.photometry.magnitudes import (
     absolute_magnitude,
     absolute_magnitude_from_luminosity_distance,
@@ -67,6 +75,7 @@ from lfkit.utils.types import (
     FloatInput,
     ParameterModel,
     ParameterValue,
+    ConditionalParameter,
 )
 
 if TYPE_CHECKING:
@@ -417,7 +426,7 @@ class LuminosityFunction:
 
         Args:
             absolute_mag: Absolute magnitude values where the LF is evaluated.
-            z: Redshift values. Required for evolving Schechter models.
+            z: Redshift values. Required for evolving and conditional models.
 
         Returns:
             Luminosity-function values evaluated at the input magnitudes.
@@ -441,6 +450,66 @@ class LuminosityFunction:
         if self.model == "double_schechter":
             return schechter_double(
                 np.asarray(absolute_mag, dtype=float),
+                **self.parameters_dict,
+            )
+
+        if self.model == "conditional_schechter":
+            if z is None:
+                raise ValueError("z is required for a conditional luminosity function.")
+
+            return conditional_schechter(
+                np.asarray(absolute_mag, dtype=float),
+                np.asarray(z, dtype=float),
+                **self.parameters_dict,
+            )
+
+        if self.model == "conditional_evolving_schechter":
+            if z is None:
+                raise ValueError("z is required for a conditional luminosity function.")
+
+            return conditional_schechter_evolving(
+                np.asarray(absolute_mag, dtype=float),
+                np.asarray(z, dtype=float),
+                **self.parameters_dict,
+            )
+
+        if self.model == "conditional_double_schechter":
+            if z is None:
+                raise ValueError("z is required for a conditional luminosity function.")
+
+            return conditional_schechter_double(
+                np.asarray(absolute_mag, dtype=float),
+                np.asarray(z, dtype=float),
+                **self.parameters_dict,
+            )
+
+        if self.model == "central_lognormal_conditional":
+            if z is None:
+                raise ValueError("z is required for a conditional luminosity function.")
+
+            return central_lognormal_conditional_lf(
+                np.asarray(absolute_mag, dtype=float),
+                np.asarray(z, dtype=float),
+                **self.parameters_dict,
+            )
+
+        if self.model == "satellite_modified_schechter_conditional":
+            if z is None:
+                raise ValueError("z is required for a conditional luminosity function.")
+
+            return satellite_modified_schechter_conditional_lf(
+                np.asarray(absolute_mag, dtype=float),
+                np.asarray(z, dtype=float),
+                **self.parameters_dict,
+            )
+
+        if self.model == "central_satellite_conditional":
+            if z is None:
+                raise ValueError("z is required for a conditional luminosity function.")
+
+            return central_satellite_conditional_lf(
+                np.asarray(absolute_mag, dtype=float),
+                np.asarray(z, dtype=float),
                 **self.parameters_dict,
             )
 
@@ -559,6 +628,132 @@ class LuminosityFunction:
             h=h,
             k_correction=k_corr,
             e_correction=e_corr,
+        )
+
+    @classmethod
+    def conditional_schechter(
+        cls,
+        *,
+        phi_star: ConditionalParameter,
+        m_star: ConditionalParameter,
+        alpha: ConditionalParameter,
+    ) -> "LuminosityFunction":
+        """Create a conditional Schechter luminosity function."""
+        return cls(
+            model="conditional_schechter",
+            parameters={
+                "phi_star": phi_star,
+                "m_star": m_star,
+                "alpha": alpha,
+            },
+        )
+
+    @classmethod
+    def conditional_evolving_schechter(
+        cls,
+        *,
+        phi_model: str = "linear_p",
+        phi_kwargs: Mapping[str, ParameterValue] | None = None,
+        m_star_model: str = "linear_q",
+        m_star_kwargs: Mapping[str, ParameterValue] | None = None,
+        alpha_model: str = "constant",
+        alpha_kwargs: Mapping[str, ParameterValue] | None = None,
+    ) -> "LuminosityFunction":
+        """Create a conditional Schechter LF using LF parameter models."""
+        return cls(
+            model="conditional_evolving_schechter",
+            parameters={
+                "phi_model": phi_model,
+                "phi_kwargs": {} if phi_kwargs is None else dict(phi_kwargs),
+                "m_star_model": m_star_model,
+                "m_star_kwargs": {} if m_star_kwargs is None else dict(m_star_kwargs),
+                "alpha_model": alpha_model,
+                "alpha_kwargs": {} if alpha_kwargs is None else dict(alpha_kwargs),
+            },
+        )
+
+    @classmethod
+    def conditional_double_schechter(
+        cls,
+        *,
+        phi_star: ConditionalParameter,
+        m_star: ConditionalParameter,
+        alpha: float,
+        beta: float,
+        m_transition: ConditionalParameter,
+    ) -> "LuminosityFunction":
+        """Create a conditional double-power-law Schechter LF."""
+        return cls(
+            model="conditional_double_schechter",
+            parameters={
+                "phi_star": phi_star,
+                "m_star": m_star,
+                "alpha": alpha,
+                "beta": beta,
+                "m_transition": m_transition,
+            },
+        )
+
+    @classmethod
+    def central_lognormal_conditional(
+        cls,
+        *,
+        mean_absolute_mag: ConditionalParameter,
+        sigma_log_luminosity: ConditionalParameter,
+        amplitude: ConditionalParameter = 1.0,
+    ) -> "LuminosityFunction":
+        """Create a central-galaxy lognormal conditional LF."""
+        return cls(
+            model="central_lognormal_conditional",
+            parameters={
+                "mean_absolute_mag": mean_absolute_mag,
+                "sigma_log_luminosity": sigma_log_luminosity,
+                "amplitude": amplitude,
+            },
+        )
+
+    @classmethod
+    def satellite_modified_schechter_conditional(
+        cls,
+        *,
+        phi_star: ConditionalParameter,
+        m_star: ConditionalParameter,
+        alpha: ConditionalParameter,
+    ) -> "LuminosityFunction":
+        """Create a satellite modified-Schechter conditional LF."""
+        return cls(
+            model="satellite_modified_schechter_conditional",
+            parameters={
+                "phi_star": phi_star,
+                "m_star": m_star,
+                "alpha": alpha,
+            },
+        )
+
+    @classmethod
+    def central_satellite_conditional(
+        cls,
+        *,
+        central_mean_absolute_mag: ConditionalParameter,
+        central_sigma_log_luminosity: ConditionalParameter,
+        satellite_phi_star: ConditionalParameter,
+        satellite_alpha: ConditionalParameter,
+        central_amplitude: ConditionalParameter = 1.0,
+        satellite_m_star: ConditionalParameter | None = None,
+        satellite_luminosity_fraction: ConditionalParameter = 0.562,
+    ) -> "LuminosityFunction":
+        """Create a central-plus-satellite conditional LF."""
+        return cls(
+            model="central_satellite_conditional",
+            parameters={
+                "central_mean_absolute_mag": central_mean_absolute_mag,
+                "central_sigma_log_luminosity": central_sigma_log_luminosity,
+                "satellite_phi_star": satellite_phi_star,
+                "satellite_alpha": satellite_alpha,
+                "central_amplitude": central_amplitude,
+                "satellite_m_star": satellite_m_star,
+                "satellite_luminosity_fraction": satellite_luminosity_fraction,
+            },
         )
 
     @staticmethod
