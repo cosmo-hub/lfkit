@@ -3,7 +3,7 @@ requires = ["setuptools>=80", "setuptools-scm>=8"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "lfkit"
+name = "py-lfkit"
 dynamic = ["version"]
 description = "Luminosity functions and photometric corrections toolkit."
 readme = "README.md"
