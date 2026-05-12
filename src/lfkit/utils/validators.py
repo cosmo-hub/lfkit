@@ -8,6 +8,7 @@ from lfkit.utils.types import FloatArray, FloatInput
 
 __all__ = [
     "validate_array",
+    "validate_luminosity_distance",
     "validate_magnitude_range",
 ]
 
@@ -28,6 +29,22 @@ def validate_array(
         raise ValueError(f"{name} contains negative values, which are not allowed.")
 
     return np.asarray(arr, dtype=np.float64)
+
+
+def validate_luminosity_distance(
+    luminosity_distance_mpc: FloatInput,
+) -> FloatArray:
+    """Return finite positive luminosity distances in Mpc."""
+    distance = validate_array(
+        luminosity_distance_mpc,
+        name="luminosity_distance_mpc",
+        allow_negative=False,
+    )
+
+    if np.any(distance <= 0.0):
+        raise ValueError("luminosity_distance_mpc must contain positive values.")
+
+    return distance
 
 
 def validate_magnitude_range(

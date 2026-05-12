@@ -8,6 +8,7 @@ Submodules
    :maxdepth: 2
 
    lfkit.utils.download_poggianti97_data
+   lfkit.utils.evaluators
    lfkit.utils.interpolation
    lfkit.utils.io
    lfkit.utils.types
