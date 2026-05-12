@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools>=61"]
+requires = ["setuptools>=80", "setuptools-scm>=8"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "lfkit"
-version = "0.1.2"
+dynamic = ["version"]
 description = "Luminosity functions and photometric corrections toolkit."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -41,6 +41,9 @@ dev = [
   "ruff>=0.5",
   "tox>=4.22",
 ]
+
+[tool.setuptools_scm]
+version_file = "src/lfkit/_version.py"
 
 [tool.setuptools]
 include-package-data = true
