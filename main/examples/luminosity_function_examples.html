@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Catalog completeness examples" href="catalog_completeness_examples.html"><link rel="prev" title="Poggianti (1997) examples" href="poggianti_examples.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Conditional luminosity functions" href="conditional_luminosity_function_examples.html"><link rel="prev" title="Poggianti (1997) examples" href="poggianti_examples.html">
         <link rel="canonical" href="https://cosmology-kit.github.io/lfkit/examples/luminosity_function_examples.html">
         <link rel="prefetch" href="../_static/logos/lfkit_logo-icon.png" as="image">
         <link rel="prefetch" href="../_static/logos/lfkit_logo-icon.png" as="image">
@@ -227,7 +227,8 @@
 <li class="toctree-l2"><a class="reference internal" href="kcorrect_examples.html">kcorrect examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="poggianti_examples.html">Poggianti (1997) examples</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#"> Luminosity function examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="catalog_completeness_examples.html"> Catalog completeness examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conditional_luminosity_function_examples.html"> Conditional luminosity functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="catalog_completeness_examples.html"> Catalog completeness</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -253,6 +254,8 @@
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.photometry.html">lfkit.photometry package</a><input aria-label="Toggle navigation of lfkit.photometry package" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.catalog_completeness.html">lfkit.photometry.catalog_completeness module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.conditional_lf_integrals.html">lfkit.photometry.conditional_lf_integrals module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.conditional_lf_models.html">lfkit.photometry.conditional_lf_models module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.lf_integrals.html">lfkit.photometry.lf_integrals module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.lf_parameter_models.html">lfkit.photometry.lf_parameter_models module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.lf_redshift_density.html">lfkit.photometry.lf_redshift_density module</a></li>
@@ -377,7 +380,7 @@ faint-end behaviour visible in the same figure.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/506ed2e07f9eeb9b2237ae250d5c059e/luminosity_function_examples-1.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/48c3d6ea553caeb1cc8317b495ca77b9/luminosity_function_examples-1.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/luminosity_function_examples-1.png"><img alt="../_images/luminosity_function_examples-1.png" class="plot-directive" src="../_images/luminosity_function_examples-1.png" style="width: 520px;" />
 </a>
@@ -431,7 +434,7 @@ abundance can change noticeably when the faint end is modified.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/e1a9bbd3c11735e5156499fe7711a576/luminosity_function_examples-2.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/fc9b52732d87adda54e33773b2b397c3/luminosity_function_examples-2.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/luminosity_function_examples-2.png"><img alt="../_images/luminosity_function_examples-2.png" class="plot-directive" src="../_images/luminosity_function_examples-2.png" style="width: 520px;" />
 </a>
@@ -491,7 +494,7 @@ fainter magnitudes.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/e570ce0288b0c69522c17f1029e4d8e9/luminosity_function_examples-3.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/10785f51d1998efb4e76eefe23fdb04c/luminosity_function_examples-3.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/luminosity_function_examples-3.png"><img alt="../_images/luminosity_function_examples-3.png" class="plot-directive" src="../_images/luminosity_function_examples-3.png" style="width: 520px;" />
 </a>
@@ -560,7 +563,7 @@ direction, and that the faint-end slope remains in a sensible range.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/069714bfa6b70dfd5f3dcfb870b22ca7/luminosity_function_examples-4.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/d0169b3db4a0a6f806da2fd71d3127f0/luminosity_function_examples-4.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/luminosity_function_examples-4.png"><img alt="../_images/luminosity_function_examples-4.png" class="plot-directive" src="../_images/luminosity_function_examples-4.png" style="width: 620px;" />
 </a>
@@ -633,7 +636,7 @@ integrated quantities that depend on faint galaxies may also differ.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/e718be3f4ec14f9c7c5ab0b08f7c16aa/luminosity_function_examples-5.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/aa48f115a9e52c12d124605c501c794b/luminosity_function_examples-5.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/luminosity_function_examples-5.png"><img alt="../_images/luminosity_function_examples-5.png" class="plot-directive" src="../_images/luminosity_function_examples-5.png" style="width: 520px;" />
 </a>
@@ -690,7 +693,7 @@ selects.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/e939887fd01c02928a836318e4d7f6e8/luminosity_function_examples-6.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/97fa70e1a081056dd75cc0ec0bdba5d5/luminosity_function_examples-6.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/luminosity_function_examples-6.png"><img alt="../_images/luminosity_function_examples-6.png" class="plot-directive" src="../_images/luminosity_function_examples-6.png" style="width: 520px;" />
 </a>
@@ -776,7 +779,7 @@ redshift evolution combine smoothly across the range of interest.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/d4e4ce3f0f14a7961fa3cd959c8be578/luminosity_function_examples-7.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/4bb35b3f41a40e4fd7d182a667085545/luminosity_function_examples-7.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/luminosity_function_examples-7.png"><img alt="../_images/luminosity_function_examples-7.png" class="plot-directive" src="../_images/luminosity_function_examples-7.png" style="width: 560px;" />
 </a>
@@ -866,7 +869,7 @@ calculations.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/2327c12c68fd5841b72a42773a82511a/luminosity_function_examples-8.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/985715839179a0caadc5d33cffc3c05a/luminosity_function_examples-8.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/luminosity_function_examples-8.png"><img alt="../_images/luminosity_function_examples-8.png" class="plot-directive" src="../_images/luminosity_function_examples-8.png" style="width: 620px;" />
 </a>
@@ -974,7 +977,7 @@ this plot; the comparison isolates the selection boundary itself.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/124ffc0b5a7de0ea3d76f99077bb9cb3/luminosity_function_examples-9.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/338f4270524aee61de756f1531516fba/luminosity_function_examples-9.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/luminosity_function_examples-9.png"><img alt="../_images/luminosity_function_examples-9.png" class="plot-directive" src="../_images/luminosity_function_examples-9.png" style="width: 620px;" />
 </a>
@@ -1098,7 +1101,7 @@ alone.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/717304765ac09e04a8fd611b01e7bc6c/luminosity_function_examples-10.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/12aafd7c6bf560d203eaa3e2ff5a4b3a/luminosity_function_examples-10.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/luminosity_function_examples-10.png"><img alt="../_images/luminosity_function_examples-10.png" class="plot-directive" src="../_images/luminosity_function_examples-10.png" style="width: 620px;" />
 </a>
@@ -1232,7 +1235,7 @@ exact volume convention used by the calling analysis.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/075623008c57e0237f3fe1ca04d40cdd/luminosity_function_examples-11.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/0a6e08036f1c31d72bdabc15f19b9c86/luminosity_function_examples-11.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/luminosity_function_examples-11.png"><img alt="../_images/luminosity_function_examples-11.png" class="plot-directive" src="../_images/luminosity_function_examples-11.png" style="width: 620px;" />
 </a>
@@ -1245,12 +1248,12 @@ exact volume convention used by the calling analysis.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="catalog_completeness_examples.html">
+          <a class="next-page" href="conditional_luminosity_function_examples.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"> Catalog completeness examples</div>
+                <div class="title"> Conditional luminosity functions</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>

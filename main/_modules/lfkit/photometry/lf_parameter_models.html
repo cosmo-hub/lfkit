@@ -226,7 +226,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../examples/kcorrect_examples.html">kcorrect examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../examples/poggianti_examples.html">Poggianti (1997) examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../examples/luminosity_function_examples.html"> Luminosity function examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../examples/catalog_completeness_examples.html"> Catalog completeness examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/conditional_luminosity_function_examples.html"> Conditional luminosity functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/catalog_completeness_examples.html"> Catalog completeness</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -252,6 +253,8 @@
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/lfkit.photometry.html">lfkit.photometry package</a><input aria-label="Toggle navigation of lfkit.photometry package" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.catalog_completeness.html">lfkit.photometry.catalog_completeness module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.conditional_lf_integrals.html">lfkit.photometry.conditional_lf_integrals module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.conditional_lf_models.html">lfkit.photometry.conditional_lf_models module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.lf_integrals.html">lfkit.photometry.lf_integrals module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.lf_parameter_models.html">lfkit.photometry.lf_parameter_models module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.lf_redshift_density.html">lfkit.photometry.lf_redshift_density module</a></li>
@@ -310,10 +313,10 @@
 <span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Luminosity-function parameter evolution models for LFKit.</span>
 
 <span class="sd">This module provides helper functions for evaluating redshift-dependent</span>
-<span class="sd">luminosity-function parameters such as ``phi_star(z)``, ``M_star(z)``,</span>
+<span class="sd">luminosity function parameters such as ``phi_star(z)``, ``M_star(z)``,</span>
 <span class="sd">and ``alpha(z)``.</span>
 
-<span class="sd">These helpers are used by the main luminosity-function evaluators but do</span>
+<span class="sd">These helpers are used by the main luminosity function evaluators but do</span>
 <span class="sd">not evaluate the luminosity function themselves.</span>
 
 <span class="sd">Built-in options include constant evolution and simple linearized forms</span>
@@ -530,7 +533,7 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">model_kind</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParameterModel</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return a registered luminosity-function parameter model.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return a registered luminosity function parameter model.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        model_name: Name of the requested model.</span>
@@ -557,7 +560,7 @@
 <div class="viewcode-block" id="available_lf_parameter_models">
 <a class="viewcode-back" href="../../../api/lfkit.photometry.lf_parameter_models.html#lfkit.photometry.lf_parameter_models.available_lf_parameter_models">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">available_lf_parameter_models</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return available luminosity-function parameter evolution models.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return available luminosity function parameter evolution models.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">{</span>
         <span class="s2">&quot;phi_star&quot;</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">PHI_STAR_MODELS</span><span class="p">),</span>
         <span class="s2">&quot;m_star&quot;</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">M_STAR_MODELS</span><span class="p">),</span>
@@ -574,7 +577,7 @@
     <span class="n">model_kind</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Register a luminosity-function parameter evolution model.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Register a luminosity function parameter evolution model.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model_kind</span><span class="si">}</span><span class="s2"> model name cannot be empty.&quot;</span><span class="p">)</span>
 
@@ -659,7 +662,7 @@
     <span class="n">alpha_model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;constant&quot;</span><span class="p">,</span>
     <span class="n">alpha_kwargs</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ParameterValue</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">FloatArray</span><span class="p">,</span> <span class="n">FloatArray</span><span class="p">,</span> <span class="n">FloatArray</span><span class="p">]:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Evaluate evolving luminosity-function parameters at redshift ``z``.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Evaluate evolving luminosity function parameters at redshift ``z``.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        z: Redshift value or array-like of redshift values.</span>

@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="lfkit.photometry.lf_parameter_models module" href="lfkit.photometry.lf_parameter_models.html"><link rel="prev" title="lfkit.photometry.catalog_completeness module" href="lfkit.photometry.catalog_completeness.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="lfkit.photometry.lf_parameter_models module" href="lfkit.photometry.lf_parameter_models.html"><link rel="prev" title="lfkit.photometry.conditional_lf_models module" href="lfkit.photometry.conditional_lf_models.html">
         <link rel="canonical" href="https://cosmology-kit.github.io/lfkit/api/lfkit.photometry.lf_integrals.html">
         <link rel="prefetch" href="../_static/logos/lfkit_logo-icon.png" as="image">
         <link rel="prefetch" href="../_static/logos/lfkit_logo-icon.png" as="image">
@@ -227,7 +227,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../examples/kcorrect_examples.html">kcorrect examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/poggianti_examples.html">Poggianti (1997) examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/luminosity_function_examples.html"> Luminosity function examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples/catalog_completeness_examples.html"> Catalog completeness examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/conditional_luminosity_function_examples.html"> Conditional luminosity functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/catalog_completeness_examples.html"> Catalog completeness</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
@@ -253,6 +254,8 @@
 </li>
 <li class="toctree-l3 current has-children"><a class="reference internal" href="lfkit.photometry.html">lfkit.photometry package</a><input aria-label="Toggle navigation of lfkit.photometry package" checked="" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.catalog_completeness.html">lfkit.photometry.catalog_completeness module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.conditional_lf_integrals.html">lfkit.photometry.conditional_lf_integrals module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.conditional_lf_models.html">lfkit.photometry.conditional_lf_models module</a></li>
 <li class="toctree-l4 current current-page"><a class="current reference internal" href="#">lfkit.photometry.lf_integrals module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.lf_parameter_models.html">lfkit.photometry.lf_parameter_models module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.lf_redshift_density.html">lfkit.photometry.lf_redshift_density module</a></li>
@@ -316,15 +319,15 @@
           <section id="module-lfkit.photometry.lf_integrals">
 <span id="lfkit-photometry-lf-integrals-module"></span><h1>lfkit.photometry.lf_integrals module<a class="headerlink" href="#module-lfkit.photometry.lf_integrals" title="Link to this heading"><span>#</span></a></h1>
 <p>Luminosity-function integration utilities.</p>
-<p>This module provides generic numerical integrals of luminosity-function
+<p>This module provides generic numerical integrals of luminosity function
 callables over finite absolute-magnitude ranges.</p>
-<p>The core API accepts a luminosity-function callable with signature</p>
+<p>The core API accepts a luminosity function callable with signature</p>
 <blockquote>
 <div><p>lf(absolute_mag, z)</p>
 </div></blockquote>
 <p>where <code class="docutils literal notranslate"><span class="pre">absolute_mag</span></code> and <code class="docutils literal notranslate"><span class="pre">z</span></code> are NumPy arrays that can be broadcast
 together. This keeps the integration machinery independent of any specific
-luminosity-function parameterization, catalog selection, or cosmology backend.</p>
+luminosity function parameterization, catalog selection, or cosmology backend.</p>
 <p>These helpers are intentionally generic. Catalog completeness, LF-dependent
 redshift densities, luminosity-density calculations, and selection-weighted
 integrals can all call this module instead of duplicating magnitude-grid logic.</p>
@@ -439,7 +442,7 @@ luminosity.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="lfkit.photometry.lf_integrals.lf_weighted_integral">
 <span class="sig-prename descclassname"><span class="pre">lfkit.photometry.lf_integrals.</span></span><span class="sig-name descname"><span class="pre">lf_weighted_integral</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lf</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_bright</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_faint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">512</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/photometry/lf_integrals.html#lf_weighted_integral"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.photometry.lf_integrals.lf_weighted_integral" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>Return a weighted luminosity-function integral.</p>
+<dd><p>Return a weighted luminosity function integral.</p>
 <p>This computes</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
@@ -550,14 +553,14 @@ only requires finite non-negative values.</p></li>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="lfkit.photometry.catalog_completeness.html">
+          <a class="prev-page" href="lfkit.photometry.conditional_lf_models.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">lfkit.photometry.catalog_completeness module</div>
+                <div class="title">lfkit.photometry.conditional_lf_models module</div>
                 
               </div>
             </a>

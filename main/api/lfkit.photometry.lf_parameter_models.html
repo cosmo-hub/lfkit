@@ -227,7 +227,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../examples/kcorrect_examples.html">kcorrect examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/poggianti_examples.html">Poggianti (1997) examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/luminosity_function_examples.html"> Luminosity function examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples/catalog_completeness_examples.html"> Catalog completeness examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/conditional_luminosity_function_examples.html"> Conditional luminosity functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/catalog_completeness_examples.html"> Catalog completeness</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
@@ -253,6 +254,8 @@
 </li>
 <li class="toctree-l3 current has-children"><a class="reference internal" href="lfkit.photometry.html">lfkit.photometry package</a><input aria-label="Toggle navigation of lfkit.photometry package" checked="" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.catalog_completeness.html">lfkit.photometry.catalog_completeness module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.conditional_lf_integrals.html">lfkit.photometry.conditional_lf_integrals module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.conditional_lf_models.html">lfkit.photometry.conditional_lf_models module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.lf_integrals.html">lfkit.photometry.lf_integrals module</a></li>
 <li class="toctree-l4 current current-page"><a class="current reference internal" href="#">lfkit.photometry.lf_parameter_models module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.lf_redshift_density.html">lfkit.photometry.lf_redshift_density module</a></li>
@@ -317,9 +320,9 @@
 <span id="lfkit-photometry-lf-parameter-models-module"></span><h1>lfkit.photometry.lf_parameter_models module<a class="headerlink" href="#module-lfkit.photometry.lf_parameter_models" title="Link to this heading"><span>#</span></a></h1>
 <p>Luminosity-function parameter evolution models for LFKit.</p>
 <p>This module provides helper functions for evaluating redshift-dependent
-luminosity-function parameters such as <code class="docutils literal notranslate"><span class="pre">phi_star(z)</span></code>, <code class="docutils literal notranslate"><span class="pre">M_star(z)</span></code>,
+luminosity function parameters such as <code class="docutils literal notranslate"><span class="pre">phi_star(z)</span></code>, <code class="docutils literal notranslate"><span class="pre">M_star(z)</span></code>,
 and <code class="docutils literal notranslate"><span class="pre">alpha(z)</span></code>.</p>
-<p>These helpers are used by the main luminosity-function evaluators but do
+<p>These helpers are used by the main luminosity function evaluators but do
 not evaluate the luminosity function themselves.</p>
 <p>Built-in options include constant evolution and simple linearized forms
 commonly used in the literature.</p>
@@ -379,7 +382,7 @@ broadcast shape as <code class="docutils literal notranslate"><span class="pre">
 <dl class="py function">
 <dt class="sig sig-object py" id="lfkit.photometry.lf_parameter_models.available_lf_parameter_models">
 <span class="sig-prename descclassname"><span class="pre">lfkit.photometry.lf_parameter_models.</span></span><span class="sig-name descname"><span class="pre">available_lf_parameter_models</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/photometry/lf_parameter_models.html#available_lf_parameter_models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.photometry.lf_parameter_models.available_lf_parameter_models" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>Return available luminosity-function parameter evolution models.</p>
+<dd><p>Return available luminosity function parameter evolution models.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict[str, list[str]]</p>
@@ -390,7 +393,7 @@ broadcast shape as <code class="docutils literal notranslate"><span class="pre">
 <dl class="py function">
 <dt class="sig sig-object py" id="lfkit.photometry.lf_parameter_models.evaluate_lf_parameters">
 <span class="sig-prename descclassname"><span class="pre">lfkit.photometry.lf_parameter_models.</span></span><span class="sig-name descname"><span class="pre">evaluate_lf_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear_p'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_star_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear_q'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_star_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'constant'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/photometry/lf_parameter_models.html#evaluate_lf_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.photometry.lf_parameter_models.evaluate_lf_parameters" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>Evaluate evolving luminosity-function parameters at redshift <code class="docutils literal notranslate"><span class="pre">z</span></code>.</p>
+<dd><p>Evaluate evolving luminosity function parameters at redshift <code class="docutils literal notranslate"><span class="pre">z</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -421,7 +424,7 @@ broadcast shape as <code class="docutils literal notranslate"><span class="pre">
 <dl class="py function">
 <dt class="sig sig-object py" id="lfkit.photometry.lf_parameter_models.get_parameter_model">
 <span class="sig-prename descclassname"><span class="pre">lfkit.photometry.lf_parameter_models.</span></span><span class="sig-name descname"><span class="pre">get_parameter_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registry</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_kind</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/photometry/lf_parameter_models.html#get_parameter_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.photometry.lf_parameter_models.get_parameter_model" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>Return a registered luminosity-function parameter model.</p>
+<dd><p>Return a registered luminosity function parameter model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">

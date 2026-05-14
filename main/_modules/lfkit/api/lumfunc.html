@@ -226,7 +226,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../examples/kcorrect_examples.html">kcorrect examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../examples/poggianti_examples.html">Poggianti (1997) examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../examples/luminosity_function_examples.html"> Luminosity function examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../examples/catalog_completeness_examples.html"> Catalog completeness examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/conditional_luminosity_function_examples.html"> Conditional luminosity functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/catalog_completeness_examples.html"> Catalog completeness</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -252,6 +253,8 @@
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/lfkit.photometry.html">lfkit.photometry package</a><input aria-label="Toggle navigation of lfkit.photometry package" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.catalog_completeness.html">lfkit.photometry.catalog_completeness module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.conditional_lf_integrals.html">lfkit.photometry.conditional_lf_integrals module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.conditional_lf_models.html">lfkit.photometry.conditional_lf_models module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.lf_integrals.html">lfkit.photometry.lf_integrals module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.lf_parameter_models.html">lfkit.photometry.lf_parameter_models module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.lf_redshift_density.html">lfkit.photometry.lf_redshift_density module</a></li>
@@ -307,7 +310,7 @@
         </div>
         <article role="main" id="furo-main-content">
           <h1>Source code for lfkit.api.lumfunc</h1><div class="highlight"><pre>
-<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Public luminosity-function interface.</span>
+<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Public luminosity function interface.</span>
 
 <span class="sd">This module provides the user-facing :class:`LuminosityFunction` API for</span>
 <span class="sd">evaluating luminosity functions in absolute- or apparent-magnitude space.</span>
@@ -337,6 +340,14 @@
     <span class="n">schechter_from_m</span><span class="p">,</span>
     <span class="n">schechter_evolving_from_m</span><span class="p">,</span>
     <span class="n">schechter_double_from_m</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">lfkit.photometry.conditional_lf_models</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">conditional_schechter</span><span class="p">,</span>
+    <span class="n">conditional_schechter_double</span><span class="p">,</span>
+    <span class="n">conditional_schechter_evolving</span><span class="p">,</span>
+    <span class="n">lognormal_conditional_lf</span><span class="p">,</span>
+    <span class="n">modified_schechter_conditional_lf</span><span class="p">,</span>
+    <span class="n">two_component_conditional_lf</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">lfkit.photometry.magnitudes</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">absolute_magnitude</span><span class="p">,</span>
@@ -376,6 +387,7 @@
     <span class="n">FloatInput</span><span class="p">,</span>
     <span class="n">ParameterModel</span><span class="p">,</span>
     <span class="n">ParameterValue</span><span class="p">,</span>
+    <span class="n">ConditionalParameter</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
@@ -390,7 +402,7 @@
 <div class="viewcode-block" id="LuminosityFunction">
 <a class="viewcode-back" href="../../../api/lfkit.api.lumfunc.html#lfkit.LuminosityFunction">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">LuminosityFunction</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;User-facing wrapper for luminosity-function evaluation.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;User-facing wrapper for luminosity function evaluation.&quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -399,10 +411,10 @@
         <span class="n">parameters</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">object</span><span class="p">],</span>
         <span class="n">meta</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">object</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Store a luminosity-function model and its parameters.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Store a luminosity function model and its parameters.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            model: Name of the luminosity-function model.</span>
+<span class="sd">            model: Name of the luminosity function model.</span>
 <span class="sd">            parameters: Model parameters passed to the underlying LF function.</span>
 <span class="sd">            meta: Optional metadata describing the LF source or calibration.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -757,7 +769,7 @@
 
 <span class="sd">        Args:</span>
 <span class="sd">            absolute_mag: Absolute magnitude values where the LF is evaluated.</span>
-<span class="sd">            z: Redshift values. Required for evolving Schechter models.</span>
+<span class="sd">            z: Redshift values. Required for evolving and conditional models.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            Luminosity-function values evaluated at the input magnitudes.</span>
@@ -784,7 +796,67 @@
                 <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters_dict</span><span class="p">,</span>
             <span class="p">)</span>
 
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported luminosity-function model &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;conditional_schechter&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">z</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;z is required for a conditional luminosity function.&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">conditional_schechter</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span>
+                <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters_dict</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;conditional_evolving_schechter&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">z</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;z is required for a conditional luminosity function.&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">conditional_schechter_evolving</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span>
+                <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters_dict</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;conditional_double_schechter&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">z</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;z is required for a conditional luminosity function.&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">conditional_schechter_double</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span>
+                <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters_dict</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;central_lognormal_conditional&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">z</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;z is required for a conditional luminosity function.&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">lognormal_conditional_lf</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span>
+                <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters_dict</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;satellite_modified_schechter_conditional&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">z</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;z is required for a conditional luminosity function.&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">modified_schechter_conditional_lf</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span>
+                <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters_dict</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">==</span> <span class="s2">&quot;central_satellite_conditional&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">z</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;z is required for a conditional luminosity function.&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">two_component_conditional_lf</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span>
+                <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters_dict</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported luminosity function model &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="LuminosityFunction.phi_from_m">
@@ -849,7 +921,7 @@
                 <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters_dict</span><span class="p">,</span>
             <span class="p">)</span>
 
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported luminosity-function model &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported luminosity function model &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="LuminosityFunction.parameters">
@@ -908,6 +980,150 @@
             <span class="n">h</span><span class="o">=</span><span class="n">h</span><span class="p">,</span>
             <span class="n">k_correction</span><span class="o">=</span><span class="n">k_corr</span><span class="p">,</span>
             <span class="n">e_correction</span><span class="o">=</span><span class="n">e_corr</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LuminosityFunction.conditional_schechter">
+<a class="viewcode-back" href="../../../api/lfkit.api.lumfunc.html#lfkit.LuminosityFunction.conditional_schechter">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">conditional_schechter</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">phi_star</span><span class="p">:</span> <span class="n">ConditionalParameter</span><span class="p">,</span>
+        <span class="n">m_star</span><span class="p">:</span> <span class="n">ConditionalParameter</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="p">:</span> <span class="n">ConditionalParameter</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;LuminosityFunction&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a conditional Schechter luminosity function.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">model</span><span class="o">=</span><span class="s2">&quot;conditional_schechter&quot;</span><span class="p">,</span>
+            <span class="n">parameters</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;phi_star&quot;</span><span class="p">:</span> <span class="n">phi_star</span><span class="p">,</span>
+                <span class="s2">&quot;m_star&quot;</span><span class="p">:</span> <span class="n">m_star</span><span class="p">,</span>
+                <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="n">alpha</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LuminosityFunction.conditional_evolving_schechter">
+<a class="viewcode-back" href="../../../api/lfkit.api.lumfunc.html#lfkit.LuminosityFunction.conditional_evolving_schechter">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">conditional_evolving_schechter</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">phi_model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;linear_p&quot;</span><span class="p">,</span>
+        <span class="n">phi_kwargs</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ParameterValue</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">m_star_model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;linear_q&quot;</span><span class="p">,</span>
+        <span class="n">m_star_kwargs</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ParameterValue</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">alpha_model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;constant&quot;</span><span class="p">,</span>
+        <span class="n">alpha_kwargs</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ParameterValue</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;LuminosityFunction&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a conditional Schechter LF using LF parameter models.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">model</span><span class="o">=</span><span class="s2">&quot;conditional_evolving_schechter&quot;</span><span class="p">,</span>
+            <span class="n">parameters</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;phi_model&quot;</span><span class="p">:</span> <span class="n">phi_model</span><span class="p">,</span>
+                <span class="s2">&quot;phi_kwargs&quot;</span><span class="p">:</span> <span class="p">{}</span> <span class="k">if</span> <span class="n">phi_kwargs</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">dict</span><span class="p">(</span><span class="n">phi_kwargs</span><span class="p">),</span>
+                <span class="s2">&quot;m_star_model&quot;</span><span class="p">:</span> <span class="n">m_star_model</span><span class="p">,</span>
+                <span class="s2">&quot;m_star_kwargs&quot;</span><span class="p">:</span> <span class="p">{}</span> <span class="k">if</span> <span class="n">m_star_kwargs</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">dict</span><span class="p">(</span><span class="n">m_star_kwargs</span><span class="p">),</span>
+                <span class="s2">&quot;alpha_model&quot;</span><span class="p">:</span> <span class="n">alpha_model</span><span class="p">,</span>
+                <span class="s2">&quot;alpha_kwargs&quot;</span><span class="p">:</span> <span class="p">{}</span> <span class="k">if</span> <span class="n">alpha_kwargs</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">dict</span><span class="p">(</span><span class="n">alpha_kwargs</span><span class="p">),</span>
+            <span class="p">},</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LuminosityFunction.conditional_double_schechter">
+<a class="viewcode-back" href="../../../api/lfkit.api.lumfunc.html#lfkit.LuminosityFunction.conditional_double_schechter">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">conditional_double_schechter</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">phi_star</span><span class="p">:</span> <span class="n">ConditionalParameter</span><span class="p">,</span>
+        <span class="n">m_star</span><span class="p">:</span> <span class="n">ConditionalParameter</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">beta</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">m_transition</span><span class="p">:</span> <span class="n">ConditionalParameter</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;LuminosityFunction&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a conditional double-power-law Schechter LF.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">model</span><span class="o">=</span><span class="s2">&quot;conditional_double_schechter&quot;</span><span class="p">,</span>
+            <span class="n">parameters</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;phi_star&quot;</span><span class="p">:</span> <span class="n">phi_star</span><span class="p">,</span>
+                <span class="s2">&quot;m_star&quot;</span><span class="p">:</span> <span class="n">m_star</span><span class="p">,</span>
+                <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="n">alpha</span><span class="p">,</span>
+                <span class="s2">&quot;beta&quot;</span><span class="p">:</span> <span class="n">beta</span><span class="p">,</span>
+                <span class="s2">&quot;m_transition&quot;</span><span class="p">:</span> <span class="n">m_transition</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LuminosityFunction.central_lognormal_conditional">
+<a class="viewcode-back" href="../../../api/lfkit.api.lumfunc.html#lfkit.LuminosityFunction.central_lognormal_conditional">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">central_lognormal_conditional</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">mean_absolute_mag</span><span class="p">:</span> <span class="n">ConditionalParameter</span><span class="p">,</span>
+        <span class="n">sigma_log_luminosity</span><span class="p">:</span> <span class="n">ConditionalParameter</span><span class="p">,</span>
+        <span class="n">amplitude</span><span class="p">:</span> <span class="n">ConditionalParameter</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;LuminosityFunction&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a central-galaxy lognormal conditional LF.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">model</span><span class="o">=</span><span class="s2">&quot;central_lognormal_conditional&quot;</span><span class="p">,</span>
+            <span class="n">parameters</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;mean_absolute_mag&quot;</span><span class="p">:</span> <span class="n">mean_absolute_mag</span><span class="p">,</span>
+                <span class="s2">&quot;sigma_log_luminosity&quot;</span><span class="p">:</span> <span class="n">sigma_log_luminosity</span><span class="p">,</span>
+                <span class="s2">&quot;amplitude&quot;</span><span class="p">:</span> <span class="n">amplitude</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LuminosityFunction.satellite_modified_schechter_conditional">
+<a class="viewcode-back" href="../../../api/lfkit.api.lumfunc.html#lfkit.LuminosityFunction.satellite_modified_schechter_conditional">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">satellite_modified_schechter_conditional</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">phi_star</span><span class="p">:</span> <span class="n">ConditionalParameter</span><span class="p">,</span>
+        <span class="n">m_star</span><span class="p">:</span> <span class="n">ConditionalParameter</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="p">:</span> <span class="n">ConditionalParameter</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;LuminosityFunction&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a satellite modified-Schechter conditional LF.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">model</span><span class="o">=</span><span class="s2">&quot;satellite_modified_schechter_conditional&quot;</span><span class="p">,</span>
+            <span class="n">parameters</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;phi_star&quot;</span><span class="p">:</span> <span class="n">phi_star</span><span class="p">,</span>
+                <span class="s2">&quot;m_star&quot;</span><span class="p">:</span> <span class="n">m_star</span><span class="p">,</span>
+                <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="n">alpha</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LuminosityFunction.central_satellite_conditional">
+<a class="viewcode-back" href="../../../api/lfkit.api.lumfunc.html#lfkit.LuminosityFunction.central_satellite_conditional">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">central_satellite_conditional</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">central_mean_absolute_mag</span><span class="p">:</span> <span class="n">ConditionalParameter</span><span class="p">,</span>
+        <span class="n">central_sigma_log_luminosity</span><span class="p">:</span> <span class="n">ConditionalParameter</span><span class="p">,</span>
+        <span class="n">satellite_phi_star</span><span class="p">:</span> <span class="n">ConditionalParameter</span><span class="p">,</span>
+        <span class="n">satellite_alpha</span><span class="p">:</span> <span class="n">ConditionalParameter</span><span class="p">,</span>
+        <span class="n">central_amplitude</span><span class="p">:</span> <span class="n">ConditionalParameter</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+        <span class="n">satellite_m_star</span><span class="p">:</span> <span class="n">ConditionalParameter</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">satellite_luminosity_fraction</span><span class="p">:</span> <span class="n">ConditionalParameter</span> <span class="o">=</span> <span class="mf">0.562</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;LuminosityFunction&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a central-plus-satellite conditional LF.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">model</span><span class="o">=</span><span class="s2">&quot;central_satellite_conditional&quot;</span><span class="p">,</span>
+            <span class="n">parameters</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;lognormal_mean_absolute_mag&quot;</span><span class="p">:</span> <span class="n">central_mean_absolute_mag</span><span class="p">,</span>
+                <span class="s2">&quot;lognormal_sigma_log_luminosity&quot;</span><span class="p">:</span> <span class="n">central_sigma_log_luminosity</span><span class="p">,</span>
+                <span class="s2">&quot;lognormal_amplitude&quot;</span><span class="p">:</span> <span class="n">central_amplitude</span><span class="p">,</span>
+                <span class="s2">&quot;modified_phi_star&quot;</span><span class="p">:</span> <span class="n">satellite_phi_star</span><span class="p">,</span>
+                <span class="s2">&quot;modified_alpha&quot;</span><span class="p">:</span> <span class="n">satellite_alpha</span><span class="p">,</span>
+                <span class="s2">&quot;modified_m_star&quot;</span><span class="p">:</span> <span class="n">satellite_m_star</span><span class="p">,</span>
+                <span class="s2">&quot;modified_luminosity_fraction&quot;</span><span class="p">:</span> <span class="n">satellite_luminosity_fraction</span><span class="p">,</span>
+            <span class="p">},</span>
         <span class="p">)</span></div>
 
 

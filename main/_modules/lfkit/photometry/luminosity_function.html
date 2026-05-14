@@ -226,7 +226,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../examples/kcorrect_examples.html">kcorrect examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../examples/poggianti_examples.html">Poggianti (1997) examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../examples/luminosity_function_examples.html"> Luminosity function examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../examples/catalog_completeness_examples.html"> Catalog completeness examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/conditional_luminosity_function_examples.html"> Conditional luminosity functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/catalog_completeness_examples.html"> Catalog completeness</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -252,6 +253,8 @@
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/lfkit.photometry.html">lfkit.photometry package</a><input aria-label="Toggle navigation of lfkit.photometry package" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.catalog_completeness.html">lfkit.photometry.catalog_completeness module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.conditional_lf_integrals.html">lfkit.photometry.conditional_lf_integrals module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.conditional_lf_models.html">lfkit.photometry.conditional_lf_models module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.lf_integrals.html">lfkit.photometry.lf_integrals module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.lf_parameter_models.html">lfkit.photometry.lf_parameter_models module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.lf_redshift_density.html">lfkit.photometry.lf_redshift_density module</a></li>
@@ -310,7 +313,7 @@
 <span></span><span class="sd">&quot;&quot;&quot;Luminosity function utilities for LFKit.</span>
 
 <span class="sd">This module provides simple standalone functions for evaluating</span>
-<span class="sd">common galaxy luminosity-function parameterization.</span>
+<span class="sd">common galaxy luminosity function parameterization.</span>
 
 <span class="sd">All luminosity functions in this module are defined in rest-frame absolute</span>
 <span class="sd">magnitude space. Functions with names ending in ``_from_m`` are convenience</span>
@@ -412,7 +415,7 @@
 <span class="sd">        alpha: Faint-end slope. Can be a scalar or array-like.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        NumPy array of luminosity-function values evaluated at</span>
+<span class="sd">        NumPy array of luminosity function values evaluated at</span>
 <span class="sd">        ``absolute_mag``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">luminosity_ratio</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">m_star</span><span class="p">)</span>
@@ -477,7 +480,7 @@
 <span class="sd">            ``alpha`` evolution model.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        NumPy array of luminosity-function values evaluated at</span>
+<span class="sd">        NumPy array of luminosity function values evaluated at</span>
 <span class="sd">        ``absolute_mag`` and ``z``.</span>
 
 <span class="sd">    Raises:</span>
@@ -554,7 +557,7 @@
 <span class="sd">        m_transition: Transition magnitude M_t corresponding to L_t.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        NumPy array of luminosity-function values evaluated at</span>
+<span class="sd">        NumPy array of luminosity function values evaluated at</span>
 <span class="sd">        ``absolute_mag``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">absolute_mag</span> <span class="o">=</span> <span class="n">validate_array</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;absolute_mag&quot;</span><span class="p">)</span>
@@ -644,7 +647,7 @@
 <span class="sd">        e_correction: Optional evolution-correction term(s).</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        NumPy array of luminosity-function values corresponding to the</span>
+<span class="sd">        NumPy array of luminosity function values corresponding to the</span>
 <span class="sd">        supplied apparent magnitudes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">z</span> <span class="o">=</span> <span class="n">validate_array</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>
@@ -728,7 +731,7 @@
 <span class="sd">        e_correction: Optional evolution-correction term(s).</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        NumPy array of luminosity-function values corresponding to the</span>
+<span class="sd">        NumPy array of luminosity function values corresponding to the</span>
 <span class="sd">        supplied apparent magnitudes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">z</span> <span class="o">=</span> <span class="n">validate_array</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>
@@ -831,7 +834,7 @@
 <span class="sd">        e_correction: Optional evolution-correction term(s).</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        NumPy array of luminosity-function values corresponding to the</span>
+<span class="sd">        NumPy array of luminosity function values corresponding to the</span>
 <span class="sd">        supplied apparent magnitudes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">z</span> <span class="o">=</span> <span class="n">validate_array</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>

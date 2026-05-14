@@ -12,10 +12,10 @@ It provides a clean interface for building theoretical luminosity functions,
 including redshift-dependent parameter models, and for connecting apparent
 magnitude limits to observable and missing galaxy number densities.
 
-LFKit is designed to be science-use-case agnostic: the same luminosity-function
+LFKit is designed to be science-use-case agnostic: the same luminosity function
 machinery can be used in photometric-redshift modelling, intrinsic-alignment
 modelling, cluster science, GW-cosmology catalog completeness, or any other
-analysis that needs luminosity-function-based number densities.
+analysis that needs luminosity function-based number densities.
 
 Getting started
 ---------------

@@ -3,13 +3,13 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="API Reference" href="../api/index.html"><link rel="prev" title="Luminosity function examples" href="luminosity_function_examples.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="API Reference" href="../api/index.html"><link rel="prev" title="Conditional luminosity functions" href="conditional_luminosity_function_examples.html">
         <link rel="canonical" href="https://cosmology-kit.github.io/lfkit/examples/catalog_completeness_examples.html">
         <link rel="prefetch" href="../_static/logos/lfkit_logo-icon.png" as="image">
         <link rel="prefetch" href="../_static/logos/lfkit_logo-icon.png" as="image">
 
     <link rel="shortcut icon" href="../_static/lfkit_logo-icon.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
-        <title>Catalog completeness examples - LFKit Documentation</title>
+        <title>Catalog completeness - LFKit Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
@@ -227,7 +227,8 @@
 <li class="toctree-l2"><a class="reference internal" href="kcorrect_examples.html">kcorrect examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="poggianti_examples.html">Poggianti (1997) examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="luminosity_function_examples.html"> Luminosity function examples</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#"> Catalog completeness examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conditional_luminosity_function_examples.html"> Conditional luminosity functions</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#"> Catalog completeness</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -253,6 +254,8 @@
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.photometry.html">lfkit.photometry package</a><input aria-label="Toggle navigation of lfkit.photometry package" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.catalog_completeness.html">lfkit.photometry.catalog_completeness module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.conditional_lf_integrals.html">lfkit.photometry.conditional_lf_integrals module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.conditional_lf_models.html">lfkit.photometry.conditional_lf_models module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.lf_integrals.html">lfkit.photometry.lf_integrals module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.lf_parameter_models.html">lfkit.photometry.lf_parameter_models module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.lf_redshift_density.html">lfkit.photometry.lf_redshift_density module</a></li>
@@ -313,8 +316,8 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="lfkitlogo-catalog-completeness-examples">
-<h1><a class="reference internal" href="../_images/lfkit_logo-icon.png"><img alt="LFKit logo" src="../_images/lfkit_logo-icon.png" style="width: 50px;" /></a> Catalog completeness examples<a class="headerlink" href="#lfkitlogo-catalog-completeness-examples" title="Link to this heading"><span>#</span></a></h1>
+          <section id="lfkitlogo-catalog-completeness">
+<h1><a class="reference internal" href="../_images/lfkit_logo-icon.png"><img alt="LFKit logo" src="../_images/lfkit_logo-icon.png" style="width: 50px;" /></a> Catalog completeness<a class="headerlink" href="#lfkitlogo-catalog-completeness" title="Link to this heading"><span>#</span></a></h1>
 <p>This page shows how to use <a class="reference internal" href="../api/lfkit.html#lfkit.LuminosityFunction" title="lfkit.LuminosityFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.LuminosityFunction</span></code></a> to compute
 observed and missing galaxy number densities for a magnitude-limited catalog.</p>
 <p>Catalog completeness connects an apparent magnitude limit to the part of the
@@ -394,7 +397,7 @@ higher on the plot.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/bf5afd28879f30dc3854399d9171a0e7/catalog_completeness_examples-1.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/07ba390987e4cd4d6695a483ef15f0be/catalog_completeness_examples-1.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/catalog_completeness_examples-1.png"><img alt="../_images/catalog_completeness_examples-1.png" class="plot-directive" src="../_images/catalog_completeness_examples-1.png" style="width: 520px;" />
 </a>
@@ -489,7 +492,7 @@ population described by the luminosity function, or only the bright tail of it.<
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/97a00a5f6ecb5bbc3a3dcafb3d324aaa/catalog_completeness_examples-2.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/60268445841cf22b06aec2152be06c85/catalog_completeness_examples-2.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/catalog_completeness_examples-2.png"><img alt="../_images/catalog_completeness_examples-2.png" class="plot-directive" src="../_images/catalog_completeness_examples-2.png" style="width: 520px;" />
 </a>
@@ -575,7 +578,7 @@ catalog contains only a small fraction of the intrinsic galaxy population.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/06075384dbac095dc8f814f59ea3374f/catalog_completeness_examples-3.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/bbdb7f910c27498cc022daed17fdfcbc/catalog_completeness_examples-3.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/catalog_completeness_examples-3.png"><img alt="../_images/catalog_completeness_examples-3.png" class="plot-directive" src="../_images/catalog_completeness_examples-3.png" style="width: 520px;" />
 </a>
@@ -651,7 +654,7 @@ incomplete.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/de3a6f7c8f3350b888906019f6f24135/catalog_completeness_examples-4.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/8d269e0dc26658d1bdf01456c2581771/catalog_completeness_examples-4.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/catalog_completeness_examples-4.png"><img alt="../_images/catalog_completeness_examples-4.png" class="plot-directive" src="../_images/catalog_completeness_examples-4.png" style="width: 520px;" />
 </a>
@@ -726,7 +729,7 @@ boundary.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/02e7374842039abaa982fa420199dcfe/catalog_completeness_examples-5.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/a9e2110df881773bf7f1fbc549980654/catalog_completeness_examples-5.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/catalog_completeness_examples-5.png"><img alt="../_images/catalog_completeness_examples-5.png" class="plot-directive" src="../_images/catalog_completeness_examples-5.png" style="width: 520px;" />
 </a>
@@ -808,7 +811,7 @@ about a much fainter underlying population.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/7fa006197b39ce18183e3f8babe37919/catalog_completeness_examples-6.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/b3b335b54b908ab804a56a5dce306b1a/catalog_completeness_examples-6.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/catalog_completeness_examples-6.png"><img alt="../_images/catalog_completeness_examples-6.png" class="plot-directive" src="../_images/catalog_completeness_examples-6.png" style="width: 520px;" />
 </a>
@@ -918,7 +921,7 @@ redshift range is safe for a magnitude-limited sample.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/28df5525c09794aa7da93f1a5600f464/catalog_completeness_examples-7.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/b2b03a89a189f8b6fadfe2895cfbb2c6/catalog_completeness_examples-7.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/catalog_completeness_examples-7.png"><img alt="../_images/catalog_completeness_examples-7.png" class="plot-directive" src="../_images/catalog_completeness_examples-7.png" style="width: 560px;" />
 </a>
@@ -1032,7 +1035,7 @@ conversion. Users can replace the dictionary entries with any
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/e929a4d9166aba2a2940eddac414db84/catalog_completeness_examples-8.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/94c2c5c6fcc2c53831d9bcd7abf18e9a/catalog_completeness_examples-8.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/catalog_completeness_examples-8.png"><img alt="../_images/catalog_completeness_examples-8.png" class="plot-directive" src="../_images/catalog_completeness_examples-8.png" style="width: 620px;" />
 </a>
@@ -1146,7 +1149,7 @@ to the assumed distance-redshift relation.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/c04d83baa7d96e9305f68fbe2888ece1/catalog_completeness_examples-9.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/404d71c34bfcf79600cdc72accd4521b/catalog_completeness_examples-9.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/catalog_completeness_examples-9.png"><img alt="../_images/catalog_completeness_examples-9.png" class="plot-directive" src="../_images/catalog_completeness_examples-9.png" style="width: 620px;" />
 </a>
@@ -1168,14 +1171,14 @@ to the assumed distance-redshift relation.</p>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="luminosity_function_examples.html">
+          <a class="prev-page" href="conditional_luminosity_function_examples.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"> Luminosity function examples</div>
+                <div class="title"> Conditional luminosity functions</div>
                 
               </div>
             </a>
@@ -1209,7 +1212,7 @@ to the assumed distance-redshift relation.</p>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#"> Catalog completeness examples</a><ul>
+<li><a class="reference internal" href="#"> Catalog completeness</a><ul>
 <li><a class="reference internal" href="#setup">Setup</a></li>
 <li><a class="reference internal" href="#observed-and-missing-number-densities">Observed and missing number densities</a></li>
 <li><a class="reference internal" href="#completeness-fraction">Completeness fraction</a></li>
