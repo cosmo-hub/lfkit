@@ -7,6 +7,8 @@ luminosity function parametrization.
 They are intentionally written as reference/benchmark tests rather than normal
 unit tests. They check that LFKit preserves the expected central lognormal,
 satellite modified-Schechter, and central-plus-satellite behaviour.
+
+For more information, see https://arxiv.org/abs/1207.0503.
 """
 
 import numpy as np

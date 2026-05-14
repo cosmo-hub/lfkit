@@ -5,6 +5,8 @@ luminosity functions against LFKit's magnitude-space conditional luminosity
 function helpers. The goal is to check that integrating the central and
 satellite CLFs over a luminosity window gives the same halo occupation numbers
 when expressed through LFKit.
+
+For more information, see https://arxiv.org/abs/1207.0503.
 """
 
 from __future__ import annotations
