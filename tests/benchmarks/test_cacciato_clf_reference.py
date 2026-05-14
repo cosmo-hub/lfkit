@@ -1,8 +1,8 @@
 """Reference benchmarks for Cacciato-style conditional luminosity functions.
 
-These tests compare LFKit's Cacciato-style CLF helpers against explicit
-reference formulae from the Cacciato et al. conditional luminosity-function
-parametrization.
+These tests compare LFKit's generic conditional luminosity function helpers
+against explicit reference formulae from the Cacciato et al. conditional
+luminosity function parametrization.
 
 They are intentionally written as reference/benchmark tests rather than normal
 unit tests. They check that LFKit preserves the expected central lognormal,
@@ -13,9 +13,9 @@ import numpy as np
 import pytest
 
 from lfkit.photometry.conditional_lf_models import (
-    central_lognormal_conditional_lf,
-    central_satellite_conditional_lf,
-    satellite_modified_schechter_conditional_lf,
+    lognormal_conditional_lf,
+    modified_schechter_conditional_lf,
+    two_component_conditional_lf,
 )
 from lfkit.photometry.luminosities import magnitude_difference_from_luminosity_ratio
 
@@ -104,7 +104,7 @@ def test_cacciato_central_lognormal_matches_reference_formula() -> None:
         gamma2=0.245,
     )
 
-    result = central_lognormal_conditional_lf(
+    result = lognormal_conditional_lf(
         absolute_mag=absolute_mag,
         condition=log_halo_mass,
         mean_absolute_mag=mean_absolute_mag,
@@ -144,7 +144,7 @@ def test_cacciato_satellite_modified_schechter_matches_reference_formula() -> No
         b2=-0.217,
     )
 
-    result = satellite_modified_schechter_conditional_lf(
+    result = modified_schechter_conditional_lf(
         absolute_mag=absolute_mag,
         condition=log_halo_mass,
         phi_star=phi_star,
@@ -182,16 +182,16 @@ def test_cacciato_central_satellite_matches_sum_of_components() -> None:
         b2=-0.217,
     )
 
-    result = central_satellite_conditional_lf(
+    result = two_component_conditional_lf(
         absolute_mag=absolute_mag,
         condition=log_halo_mass,
-        central_mean_absolute_mag=central_mag,
-        central_sigma_log_luminosity=0.157,
-        satellite_phi_star=phi_star,
-        satellite_alpha=-1.18,
-        central_amplitude=1.0,
-        satellite_m_star=None,
-        satellite_luminosity_fraction=0.562,
+        lognormal_mean_absolute_mag=central_mag,
+        lognormal_sigma_log_luminosity=0.157,
+        modified_phi_star=phi_star,
+        modified_alpha=-1.18,
+        lognormal_amplitude=1.0,
+        modified_m_star=None,
+        modified_luminosity_fraction=0.562,
     )
 
     satellite_m_star = central_mag + magnitude_difference_from_luminosity_ratio(0.562)

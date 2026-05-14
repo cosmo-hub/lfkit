@@ -4,12 +4,12 @@ import numpy as np
 import pytest
 
 from lfkit.photometry.conditional_lf_models import (
-    central_lognormal_conditional_lf,
-    central_satellite_conditional_lf,
     conditional_schechter,
     conditional_schechter_double,
     conditional_schechter_evolving,
-    satellite_modified_schechter_conditional_lf,
+    lognormal_conditional_lf,
+    modified_schechter_conditional_lf,
+    two_component_conditional_lf,
 )
 from lfkit.photometry.luminosities import (
     luminosity_ratio,
@@ -196,8 +196,8 @@ def test_conditional_schechter_double_accepts_callable_parameters() -> None:
     assert result.dtype == np.float64
 
 
-def test_central_lognormal_conditional_lf_matches_expected_formula() -> None:
-    """Tests the central lognormal conditional LF formula."""
+def test_lognormal_conditional_lf_matches_expected_formula() -> None:
+    """Tests the lognormal conditional LF formula."""
 
     absolute_mag = np.array([-22.0, -21.0, -20.0])
     condition = np.array([0.0, 1.0, 2.0])
@@ -205,7 +205,7 @@ def test_central_lognormal_conditional_lf_matches_expected_formula() -> None:
     sigma_log_luminosity = np.array([0.2, 0.2, 0.2])
     amplitude = np.array([1.0, 2.0, 3.0])
 
-    result = central_lognormal_conditional_lf(
+    result = lognormal_conditional_lf(
         absolute_mag=absolute_mag,
         condition=condition,
         mean_absolute_mag=mean_absolute_mag,
@@ -225,13 +225,13 @@ def test_central_lognormal_conditional_lf_matches_expected_formula() -> None:
     assert result.dtype == np.float64
 
 
-def test_central_lognormal_conditional_lf_accepts_callable_parameters() -> None:
-    """Tests callable parameters for the central lognormal conditional LF."""
+def test_lognormal_conditional_lf_accepts_callable_parameters() -> None:
+    """Tests callable parameters for the lognormal conditional LF."""
 
     absolute_mag = np.array([-22.0, -21.0, -20.0])
     condition = np.array([0.0, 1.0, 2.0])
 
-    result = central_lognormal_conditional_lf(
+    result = lognormal_conditional_lf(
         absolute_mag=absolute_mag,
         condition=condition,
         mean_absolute_mag=lambda x: -21.0 - 0.1 * x,
@@ -255,11 +255,11 @@ def test_central_lognormal_conditional_lf_accepts_callable_parameters() -> None:
     assert result.dtype == np.float64
 
 
-def test_central_lognormal_conditional_lf_rejects_zero_sigma() -> None:
-    """Tests that zero central scatter is rejected."""
+def test_lognormal_conditional_lf_rejects_zero_sigma() -> None:
+    """Tests that zero lognormal scatter is rejected."""
 
     with pytest.raises(ValueError, match="sigma_log_luminosity must be positive."):
-        central_lognormal_conditional_lf(
+        lognormal_conditional_lf(
             absolute_mag=[-22.0, -21.0, -20.0],
             condition=[0.0, 1.0, 2.0],
             mean_absolute_mag=-21.0,
@@ -268,11 +268,11 @@ def test_central_lognormal_conditional_lf_rejects_zero_sigma() -> None:
         )
 
 
-def test_central_lognormal_conditional_lf_rejects_negative_sigma() -> None:
-    """Tests that negative central scatter is rejected."""
+def test_lognormal_conditional_lf_rejects_negative_sigma() -> None:
+    """Tests that negative lognormal scatter is rejected."""
 
     with pytest.raises(ValueError, match="sigma_log_luminosity must be positive."):
-        central_lognormal_conditional_lf(
+        lognormal_conditional_lf(
             absolute_mag=[-22.0, -21.0, -20.0],
             condition=[0.0, 1.0, 2.0],
             mean_absolute_mag=-21.0,
@@ -281,11 +281,11 @@ def test_central_lognormal_conditional_lf_rejects_negative_sigma() -> None:
         )
 
 
-def test_central_lognormal_conditional_lf_rejects_negative_amplitude() -> None:
-    """Tests that negative central amplitude is rejected."""
+def test_lognormal_conditional_lf_rejects_negative_amplitude() -> None:
+    """Tests that negative lognormal amplitude is rejected."""
 
     with pytest.raises(ValueError, match="amplitude must be non-negative."):
-        central_lognormal_conditional_lf(
+        lognormal_conditional_lf(
             absolute_mag=[-22.0, -21.0, -20.0],
             condition=[0.0, 1.0, 2.0],
             mean_absolute_mag=-21.0,
@@ -294,8 +294,8 @@ def test_central_lognormal_conditional_lf_rejects_negative_amplitude() -> None:
         )
 
 
-def test_satellite_modified_schechter_conditional_lf_matches_expected_formula() -> None:
-    """Tests the satellite modified-Schechter conditional LF formula."""
+def test_modified_schechter_conditional_lf_matches_expected_formula() -> None:
+    """Tests the modified-Schechter conditional LF formula."""
 
     absolute_mag = np.array([-22.0, -21.0, -20.0])
     condition = np.array([0.0, 1.0, 2.0])
@@ -303,7 +303,7 @@ def test_satellite_modified_schechter_conditional_lf_matches_expected_formula() 
     m_star = np.array([-21.0, -21.1, -21.2])
     alpha = np.array([-1.0, -1.1, -1.2])
 
-    result = satellite_modified_schechter_conditional_lf(
+    result = modified_schechter_conditional_lf(
         absolute_mag=absolute_mag,
         condition=condition,
         phi_star=phi_star,
@@ -312,19 +312,21 @@ def test_satellite_modified_schechter_conditional_lf_matches_expected_formula() 
     )
 
     x = luminosity_ratio(absolute_mag, m_star)
-    expected = 0.4 * np.log(10.0) * phi_star * x ** (alpha + 1.0) * np.exp(-(x**2.0))
+    expected = 0.4 * np.log(10.0) * phi_star * x ** (alpha + 1.0) * np.exp(
+        -(x**2.0)
+    )
 
     np.testing.assert_allclose(result, expected)
     assert result.dtype == np.float64
 
 
-def test_satellite_modified_schechter_conditional_lf_accepts_callable_parameters() -> None:
-    """Tests callable parameters for the satellite modified-Schechter LF."""
+def test_modified_schechter_conditional_lf_accepts_callable_parameters() -> None:
+    """Tests callable parameters for the modified-Schechter conditional LF."""
 
     absolute_mag = np.array([-22.0, -21.0, -20.0])
     condition = np.array([0.0, 1.0, 2.0])
 
-    result = satellite_modified_schechter_conditional_lf(
+    result = modified_schechter_conditional_lf(
         absolute_mag=absolute_mag,
         condition=condition,
         phi_star=lambda x: 1.0e-3 * (1.0 + x),
@@ -337,17 +339,19 @@ def test_satellite_modified_schechter_conditional_lf_accepts_callable_parameters
     alpha = np.array([-1.0, -1.05, -1.1])
 
     x = luminosity_ratio(absolute_mag, m_star)
-    expected = 0.4 * np.log(10.0) * phi_star * x ** (alpha + 1.0) * np.exp(-(x**2.0))
+    expected = 0.4 * np.log(10.0) * phi_star * x ** (alpha + 1.0) * np.exp(
+        -(x**2.0)
+    )
 
     np.testing.assert_allclose(result, expected)
     assert result.dtype == np.float64
 
 
-def test_satellite_modified_schechter_conditional_lf_rejects_negative_phi_star() -> None:
-    """Tests that negative satellite normalization is rejected."""
+def test_modified_schechter_conditional_lf_rejects_negative_phi_star() -> None:
+    """Tests that negative modified-Schechter normalization is rejected."""
 
     with pytest.raises(ValueError, match="phi_star must be non-negative."):
-        satellite_modified_schechter_conditional_lf(
+        modified_schechter_conditional_lf(
             absolute_mag=[-22.0, -21.0, -20.0],
             condition=[0.0, 1.0, 2.0],
             phi_star=-1.0e-3,
@@ -356,154 +360,154 @@ def test_satellite_modified_schechter_conditional_lf_rejects_negative_phi_star()
         )
 
 
-def test_central_satellite_conditional_lf_equals_sum_with_explicit_satellite_m_star() -> None:
-    """Tests that the total conditional LF equals central plus satellite parts."""
+def test_two_component_conditional_lf_equals_sum_with_explicit_modified_m_star() -> None:
+    """Tests that the two-component LF equals lognormal plus modified parts."""
 
     absolute_mag = np.array([-22.0, -21.0, -20.0])
     condition = np.array([0.0, 1.0, 2.0])
 
-    result = central_satellite_conditional_lf(
+    result = two_component_conditional_lf(
         absolute_mag=absolute_mag,
         condition=condition,
-        central_mean_absolute_mag=-21.0,
-        central_sigma_log_luminosity=0.2,
-        satellite_phi_star=1.0e-3,
-        satellite_alpha=-1.1,
-        central_amplitude=1.0,
-        satellite_m_star=-20.5,
+        lognormal_mean_absolute_mag=-21.0,
+        lognormal_sigma_log_luminosity=0.2,
+        modified_phi_star=1.0e-3,
+        modified_alpha=-1.1,
+        lognormal_amplitude=1.0,
+        modified_m_star=-20.5,
     )
 
-    central = central_lognormal_conditional_lf(
+    lognormal = lognormal_conditional_lf(
         absolute_mag=absolute_mag,
         condition=condition,
         mean_absolute_mag=-21.0,
         sigma_log_luminosity=0.2,
         amplitude=1.0,
     )
-    satellite = satellite_modified_schechter_conditional_lf(
+    modified = modified_schechter_conditional_lf(
         absolute_mag=absolute_mag,
         condition=condition,
         phi_star=1.0e-3,
         m_star=-20.5,
         alpha=-1.1,
     )
-    expected = central + satellite
+    expected = lognormal + modified
 
     np.testing.assert_allclose(result, expected)
     assert result.dtype == np.float64
 
 
-def test_central_satellite_conditional_lf_derives_satellite_m_star() -> None:
-    """Tests that satellite M-star is derived from the luminosity fraction."""
+def test_two_component_conditional_lf_derives_modified_m_star() -> None:
+    """Tests that modified M-star is derived from the luminosity fraction."""
 
     absolute_mag = np.array([-22.0, -21.0, -20.0])
     condition = np.array([0.0, 1.0, 2.0])
-    central_mean_absolute_mag = np.array([-21.0, -21.1, -21.2])
-    satellite_luminosity_fraction = np.array([0.5, 0.6, 0.7])
+    lognormal_mean_absolute_mag = np.array([-21.0, -21.1, -21.2])
+    modified_luminosity_fraction = np.array([0.5, 0.6, 0.7])
 
-    result = central_satellite_conditional_lf(
+    result = two_component_conditional_lf(
         absolute_mag=absolute_mag,
         condition=condition,
-        central_mean_absolute_mag=central_mean_absolute_mag,
-        central_sigma_log_luminosity=0.2,
-        satellite_phi_star=1.0e-3,
-        satellite_alpha=-1.1,
-        central_amplitude=1.0,
-        satellite_m_star=None,
-        satellite_luminosity_fraction=satellite_luminosity_fraction,
+        lognormal_mean_absolute_mag=lognormal_mean_absolute_mag,
+        lognormal_sigma_log_luminosity=0.2,
+        modified_phi_star=1.0e-3,
+        modified_alpha=-1.1,
+        lognormal_amplitude=1.0,
+        modified_m_star=None,
+        modified_luminosity_fraction=modified_luminosity_fraction,
     )
 
-    satellite_m_star = central_mean_absolute_mag + (
-        magnitude_difference_from_luminosity_ratio(satellite_luminosity_fraction)
+    modified_m_star = lognormal_mean_absolute_mag + (
+        magnitude_difference_from_luminosity_ratio(modified_luminosity_fraction)
     )
 
-    central = central_lognormal_conditional_lf(
+    lognormal = lognormal_conditional_lf(
         absolute_mag=absolute_mag,
         condition=condition,
-        mean_absolute_mag=central_mean_absolute_mag,
+        mean_absolute_mag=lognormal_mean_absolute_mag,
         sigma_log_luminosity=0.2,
         amplitude=1.0,
     )
-    satellite = satellite_modified_schechter_conditional_lf(
+    modified = modified_schechter_conditional_lf(
         absolute_mag=absolute_mag,
         condition=condition,
         phi_star=1.0e-3,
-        m_star=satellite_m_star,
+        m_star=modified_m_star,
         alpha=-1.1,
     )
-    expected = central + satellite
+    expected = lognormal + modified
 
     np.testing.assert_allclose(result, expected)
     assert result.dtype == np.float64
 
 
-def test_central_satellite_conditional_lf_rejects_zero_luminosity_fraction() -> None:
-    """Tests that zero satellite luminosity fraction is rejected."""
+def test_two_component_conditional_lf_rejects_zero_luminosity_fraction() -> None:
+    """Tests that zero modified luminosity fraction is rejected."""
 
     with pytest.raises(
         ValueError,
-        match="satellite_luminosity_fraction must be positive.",
+        match="modified_luminosity_fraction must be positive.",
     ):
-        central_satellite_conditional_lf(
+        two_component_conditional_lf(
             absolute_mag=[-22.0, -21.0, -20.0],
             condition=[0.0, 1.0, 2.0],
-            central_mean_absolute_mag=-21.0,
-            central_sigma_log_luminosity=0.2,
-            satellite_phi_star=1.0e-3,
-            satellite_alpha=-1.1,
-            central_amplitude=1.0,
-            satellite_m_star=None,
-            satellite_luminosity_fraction=0.0,
+            lognormal_mean_absolute_mag=-21.0,
+            lognormal_sigma_log_luminosity=0.2,
+            modified_phi_star=1.0e-3,
+            modified_alpha=-1.1,
+            lognormal_amplitude=1.0,
+            modified_m_star=None,
+            modified_luminosity_fraction=0.0,
         )
 
 
-def test_central_satellite_conditional_lf_rejects_negative_luminosity_fraction() -> None:
-    """Tests that negative satellite luminosity fraction is rejected."""
+def test_two_component_conditional_lf_rejects_negative_luminosity_fraction() -> None:
+    """Tests that negative modified luminosity fraction is rejected."""
 
     with pytest.raises(
         ValueError,
-        match="satellite_luminosity_fraction must be positive.",
+        match="modified_luminosity_fraction must be positive.",
     ):
-        central_satellite_conditional_lf(
+        two_component_conditional_lf(
             absolute_mag=[-22.0, -21.0, -20.0],
             condition=[0.0, 1.0, 2.0],
-            central_mean_absolute_mag=-21.0,
-            central_sigma_log_luminosity=0.2,
-            satellite_phi_star=1.0e-3,
-            satellite_alpha=-1.1,
-            central_amplitude=1.0,
-            satellite_m_star=None,
-            satellite_luminosity_fraction=-0.5,
+            lognormal_mean_absolute_mag=-21.0,
+            lognormal_sigma_log_luminosity=0.2,
+            modified_phi_star=1.0e-3,
+            modified_alpha=-1.1,
+            lognormal_amplitude=1.0,
+            modified_m_star=None,
+            modified_luminosity_fraction=-0.5,
         )
 
 
-def test_central_satellite_conditional_lf_propagates_invalid_central_component() -> None:
-    """Tests that invalid central-component parameters are propagated."""
+def test_two_component_conditional_lf_propagates_invalid_lognormal_component() -> None:
+    """Tests that invalid lognormal-component parameters are propagated."""
 
-    with pytest.raises(ValueError, match="central_sigma_log_luminosity must be positive.|sigma_log_luminosity must be positive."):
-        central_satellite_conditional_lf(
+    with pytest.raises(ValueError, match="sigma_log_luminosity must be positive."):
+        two_component_conditional_lf(
             absolute_mag=[-22.0, -21.0, -20.0],
             condition=[0.0, 1.0, 2.0],
-            central_mean_absolute_mag=-21.0,
-            central_sigma_log_luminosity=0.0,
-            satellite_phi_star=1.0e-3,
-            satellite_alpha=-1.1,
-            central_amplitude=1.0,
-            satellite_m_star=-20.5,
+            lognormal_mean_absolute_mag=-21.0,
+            lognormal_sigma_log_luminosity=0.0,
+            modified_phi_star=1.0e-3,
+            modified_alpha=-1.1,
+            lognormal_amplitude=1.0,
+            modified_m_star=-20.5,
         )
 
 
-def test_central_satellite_conditional_lf_propagates_invalid_satellite_component() -> None:
-    """Tests that invalid satellite-component parameters are propagated."""
+def test_two_component_conditional_lf_propagates_invalid_modified_component() -> None:
+    """Tests that invalid modified-component parameters are propagated."""
 
     with pytest.raises(ValueError, match="phi_star must be non-negative."):
-        central_satellite_conditional_lf(
+        two_component_conditional_lf(
             absolute_mag=[-22.0, -21.0, -20.0],
             condition=[0.0, 1.0, 2.0],
-            central_mean_absolute_mag=-21.0,
-            central_sigma_log_luminosity=0.2,
-            satellite_phi_star=-1.0e-3,
-            satellite_alpha=-1.1,
-            central_amplitude=1.0,
-            satellite_m_star=-20.5,
+            lognormal_mean_absolute_mag=-21.0,
+            lognormal_sigma_log_luminosity=0.2,
+            modified_phi_star=-1.0e-3,
+            modified_alpha=-1.1,
+            lognormal_amplitude=1.0,
+            modified_m_star=-20.5,
         )

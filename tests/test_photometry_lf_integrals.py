@@ -93,7 +93,7 @@ def test_integrated_number_density_accepts_scalar_redshift() -> None:
 
 
 def test_integrated_number_density_accepts_broadcastable_scalar_lf_output() -> None:
-    """Tests that scalar luminosity-function outputs are broadcast."""
+    """Tests that scalar luminosity function outputs are broadcast."""
 
     def scalar_lf(m_abs: np.ndarray, z: np.ndarray) -> float:
         """Return a scalar LF value."""
@@ -156,7 +156,7 @@ def test_integrated_number_density_rejects_nonfinite_magnitude_upper_bound() -> 
 
 
 def test_integrated_number_density_rejects_nonfinite_lf_values() -> None:
-    """Tests that non-finite luminosity-function values are rejected."""
+    """Tests that non-finite luminosity function values are rejected."""
 
     def bad_lf(m_abs: np.ndarray, z: np.ndarray) -> np.ndarray:
         """Return non-finite LF values."""
@@ -172,7 +172,7 @@ def test_integrated_number_density_rejects_nonfinite_lf_values() -> None:
 
 
 def test_integrated_number_density_rejects_negative_lf_values() -> None:
-    """Tests that negative luminosity-function values are rejected."""
+    """Tests that negative luminosity function values are rejected."""
 
     def bad_lf(m_abs: np.ndarray, z: np.ndarray) -> np.ndarray:
         """Return negative LF values."""
@@ -188,7 +188,7 @@ def test_integrated_number_density_rejects_negative_lf_values() -> None:
 
 
 def test_integrated_number_density_rejects_unbroadcastable_lf_values() -> None:
-    """Tests that unbroadcastable luminosity-function outputs are rejected."""
+    """Tests that unbroadcastable luminosity function outputs are rejected."""
 
     def bad_lf(m_abs: np.ndarray, z: np.ndarray) -> np.ndarray:
         """Return LF values with an invalid shape."""
