@@ -490,24 +490,117 @@ def test_cumulative_number_density_rejects_negative_redshift() -> None:
         )
 
 
-def test_private_magnitude_grid_has_expected_shape_and_edges() -> None:
-    """Tests that the private magnitude-grid helper builds column-wise grids."""
-    result = li._magnitude_grid(
-        m_lower=np.array([-24.0, -23.0]),
-        m_upper=np.array([-18.0, -20.0]),
-        n_m=4,
+def test_magnitude_window_number_density_uses_absolute_bounds() -> None:
+    """Tests magnitude-window density with direct absolute-magnitude bounds."""
+    result = li.magnitude_window_number_density(
+        [0.1, 0.2],
+        constant_lf,
+        m_bright=-24.0,
+        m_faint=-18.0,
+        n_m=64,
     )
 
-    assert result.shape == (4, 2)
-    np.testing.assert_allclose(result[0], np.array([-24.0, -23.0]))
-    np.testing.assert_allclose(result[-1], np.array([-18.0, -20.0]))
+    np.testing.assert_allclose(result, np.array([6.0, 6.0]))
 
 
-def test_private_safe_divide_returns_zero_for_zero_denominator() -> None:
-    """Tests that the private safe-division helper handles zero denominators."""
-    result = li._safe_divide(
-        np.array([1.0, 2.0, 3.0]),
-        np.array([1.0, 0.0, 2.0]),
+def test_magnitude_window_density_supports_mixed_bounds() -> None:
+    """Tests magnitude-window density with one apparent and one absolute bound."""
+
+    def luminosity_distance_mpc_fn(z: np.ndarray) -> np.ndarray:
+        """Return a constant luminosity distance."""
+        return 10.0 * np.ones_like(z, dtype=float)
+
+    result = li.magnitude_window_number_density(
+        [0.1, 0.2],
+        constant_lf,
+        m_bright=-24.0,
+        apparent_m_faint=12.0,
+        luminosity_distance_mpc_fn=luminosity_distance_mpc_fn,
+        n_m=64,
     )
 
-    np.testing.assert_allclose(result, np.array([1.0, 0.0, 1.5]))
+    np.testing.assert_allclose(result, np.array([6.0, 6.0]))
+
+
+def test_magnitude_window_number_density_rejects_missing_bright_bound() -> None:
+    """Tests that magnitude-window density requires a bright bound."""
+    with pytest.raises(
+        ValueError,
+        match="Must provide either m_bright or apparent_m_bright",
+    ):
+        li.magnitude_window_number_density(
+            0.1,
+            constant_lf,
+            m_faint=-18.0,
+        )
+
+
+def test_magnitude_window_number_density_rejects_missing_faint_bound() -> None:
+    """Tests that magnitude-window density requires a faint bound."""
+    with pytest.raises(
+        ValueError,
+        match="Must provide either m_faint or apparent_m_faint",
+    ):
+        li.magnitude_window_number_density(
+            0.1,
+            constant_lf,
+            m_bright=-24.0,
+        )
+
+
+def test_magnitude_window_number_density_rejects_duplicate_bright_bounds() -> None:
+    """Tests that absolute and apparent bright bounds cannot both be supplied."""
+    with pytest.raises(
+        ValueError,
+        match="Provide only one of m_bright or apparent_m_bright",
+    ):
+        li.magnitude_window_number_density(
+            0.1,
+            constant_lf,
+            m_bright=-24.0,
+            apparent_m_bright=18.0,
+            m_faint=-18.0,
+        )
+
+
+def test_magnitude_window_density_requires_distance_for_apparent_bounds() -> None:
+    """Tests that apparent-magnitude bounds require a distance callable."""
+    with pytest.raises(
+        ValueError,
+        match="luminosity_distance_mpc_fn is required",
+    ):
+        li.magnitude_window_number_density(
+            0.1,
+            constant_lf,
+            apparent_m_bright=18.0,
+            m_faint=-18.0,
+        )
+
+
+def test_magnitude_window_number_density_applies_k_and_e_corrections() -> None:
+    """Tests apparent-magnitude conversion with K- and E-corrections."""
+
+    def luminosity_distance_mpc_fn(z: np.ndarray) -> np.ndarray:
+        """Return a constant luminosity distance."""
+        return 10.0 * np.ones_like(z, dtype=float)
+
+    def k_correction_fn(z: np.ndarray) -> np.ndarray:
+        """Return a constant K-correction."""
+        return 1.0 * np.ones_like(z, dtype=float)
+
+    def e_correction_fn(z: np.ndarray) -> np.ndarray:
+        """Return a constant E-correction."""
+        return 0.5 * np.ones_like(z, dtype=float)
+
+    result = li.magnitude_window_number_density(
+        [0.1, 0.2],
+        constant_lf,
+        m_bright=-24.0,
+        apparent_m_faint=12.0,
+        luminosity_distance_mpc_fn=luminosity_distance_mpc_fn,
+        k_correction_fn=k_correction_fn,
+        e_correction_fn=e_correction_fn,
+        n_m=64,
+    )
+
+    np.testing.assert_allclose(result, np.array([5.5, 5.5]))

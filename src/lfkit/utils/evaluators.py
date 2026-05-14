@@ -6,13 +6,15 @@ from collections.abc import Callable
 
 import numpy as np
 
-from lfkit.utils.types import FloatArray
+from lfkit.utils.types import FloatArray, LuminosityFunction
 
 
 __all__ = [
     "evaluate_non_negative_redshift_callable",
     "evaluate_optional_redshift_callable",
     "evaluate_positive_redshift_callable",
+    "evaluate_weight_on_grid",
+    "evaluate_lf_on_grid",
 ]
 
 
@@ -84,6 +86,60 @@ def evaluate_non_negative_redshift_callable(
         raise ValueError(f"{name}(z) must return non-negative values.")
 
     return values
+
+
+def evaluate_weight_on_grid(
+    weight_fn: Callable[[FloatArray, FloatArray], FloatArray],
+    *,
+    m_grid: FloatArray,
+    z_grid: FloatArray,
+) -> FloatArray:
+    r"""Return finite non-negative weight values on a magnitude-redshift grid."""
+    weight = np.asarray(weight_fn(m_grid, z_grid), dtype=float)
+
+    if weight.shape != m_grid.shape:
+        try:
+            weight = np.broadcast_to(weight, m_grid.shape)
+        except ValueError as exc:
+            raise ValueError(
+                "weight_fn(M, z) must return values broadcastable to the shape "
+                "of the magnitude-redshift integration grid."
+            ) from exc
+
+    if np.any(~np.isfinite(weight)):
+        raise ValueError("weight_fn(M, z) returned non-finite values.")
+
+    if np.any(weight < 0.0):
+        raise ValueError("weight_fn(M, z) must be non-negative.")
+
+    return np.asarray(weight, dtype=float)
+
+
+def evaluate_lf_on_grid(
+    lf: LuminosityFunction,
+    *,
+    m_grid: FloatArray,
+    z_grid: FloatArray,
+) -> FloatArray:
+    r"""Return LF values evaluated on a magnitude-redshift grid."""
+    phi = np.asarray(lf(m_grid, z_grid), dtype=float)
+
+    if phi.shape != m_grid.shape:
+        try:
+            phi = np.broadcast_to(phi, m_grid.shape)
+        except ValueError as exc:
+            raise ValueError(
+                "lf(M, z) must return values broadcastable to the shape "
+                "of the magnitude-redshift integration grid."
+            ) from exc
+
+    if np.any(~np.isfinite(phi)):
+        raise ValueError("lf(M, z) returned non-finite values.")
+
+    if np.any(phi < 0.0):
+        raise ValueError("lf(M, z) must be non-negative.")
+
+    return np.asarray(phi, dtype=float)
 
 
 def _evaluate_redshift_callable(

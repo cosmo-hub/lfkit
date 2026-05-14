@@ -6,9 +6,11 @@ import numpy as np
 import pytest
 
 from lfkit.utils.evaluators import (
+    evaluate_lf_on_grid,
     evaluate_non_negative_redshift_callable,
     evaluate_optional_redshift_callable,
     evaluate_positive_redshift_callable,
+    evaluate_weight_on_grid,
 )
 
 
@@ -395,3 +397,278 @@ def test_evaluate_positive_redshift_callable_preserves_input_shape() -> None:
     assert result.shape == z.shape
     assert result.dtype == np.float64
     np.testing.assert_allclose(result, expected)
+
+
+def test_evaluate_lf_on_grid_accepts_matching_shape() -> None:
+    """Tests that LF grid evaluation accepts values with matching shape."""
+    m_grid = np.array(
+        [
+            [-24.0, -23.0],
+            [-22.0, -21.0],
+        ],
+        dtype=float,
+    )
+    z_grid = np.array(
+        [
+            [0.1, 0.2],
+            [0.1, 0.2],
+        ],
+        dtype=float,
+    )
+
+    def lf(m_abs: np.ndarray, z: np.ndarray) -> np.ndarray:
+        """Return LF values with the same shape as the input grid."""
+        return np.ones_like(np.broadcast_arrays(m_abs, z)[0], dtype=float)
+
+    result = evaluate_lf_on_grid(
+        lf,
+        m_grid=m_grid,
+        z_grid=z_grid,
+    )
+
+    np.testing.assert_allclose(result, np.ones_like(m_grid))
+
+
+def test_evaluate_lf_on_grid_broadcasts_scalar_output() -> None:
+    """Tests that scalar LF output is broadcast to the grid shape."""
+    m_grid = np.ones((3, 2), dtype=float)
+    z_grid = np.ones((3, 2), dtype=float)
+
+    def lf(m_abs: np.ndarray, z: np.ndarray) -> float:
+        """Return a scalar LF value."""
+        _ = m_abs
+        _ = z
+        return 2.0
+
+    result = evaluate_lf_on_grid(
+        lf,
+        m_grid=m_grid,
+        z_grid=z_grid,
+    )
+
+    np.testing.assert_allclose(result, 2.0 * np.ones_like(m_grid))
+
+
+def test_evaluate_lf_on_grid_broadcasts_column_output() -> None:
+    """Tests that broadcastable LF output is expanded to the grid shape."""
+    m_grid = np.ones((3, 2), dtype=float)
+    z_grid = np.ones((3, 2), dtype=float)
+
+    def lf(m_abs: np.ndarray, z: np.ndarray) -> np.ndarray:
+        """Return one LF value per redshift column."""
+        _ = m_abs
+        _ = z
+        return np.array([[1.0, 2.0]], dtype=float)
+
+    result = evaluate_lf_on_grid(
+        lf,
+        m_grid=m_grid,
+        z_grid=z_grid,
+    )
+
+    expected = np.array(
+        [
+            [1.0, 2.0],
+            [1.0, 2.0],
+            [1.0, 2.0],
+        ],
+        dtype=float,
+    )
+    np.testing.assert_allclose(result, expected)
+
+
+def test_evaluate_lf_on_grid_rejects_unbroadcastable_output() -> None:
+    """Tests that LF grid output must be broadcastable to the grid shape."""
+    m_grid = np.ones((3, 2), dtype=float)
+    z_grid = np.ones((3, 2), dtype=float)
+
+    def lf(m_abs: np.ndarray, z: np.ndarray) -> np.ndarray:
+        """Return LF values with an invalid shape."""
+        _ = m_abs
+        _ = z
+        return np.ones((4, 4), dtype=float)
+
+    with pytest.raises(
+        ValueError,
+        match="lf\\(M, z\\) must return values broadcastable",
+    ):
+        evaluate_lf_on_grid(
+            lf,
+            m_grid=m_grid,
+            z_grid=z_grid,
+        )
+
+
+def test_evaluate_lf_on_grid_rejects_nonfinite_values() -> None:
+    """Tests that LF grid values must be finite."""
+    m_grid = np.ones((3, 2), dtype=float)
+    z_grid = np.ones((3, 2), dtype=float)
+
+    def lf(m_abs: np.ndarray, z: np.ndarray) -> np.ndarray:
+        """Return LF values containing NaN."""
+        _ = z
+        return np.full_like(m_abs, np.nan, dtype=float)
+
+    with pytest.raises(ValueError, match="lf\\(M, z\\) returned non-finite values"):
+        evaluate_lf_on_grid(
+            lf,
+            m_grid=m_grid,
+            z_grid=z_grid,
+        )
+
+
+def test_evaluate_lf_on_grid_rejects_negative_values() -> None:
+    """Tests that LF grid values must be non-negative."""
+    m_grid = np.ones((3, 2), dtype=float)
+    z_grid = np.ones((3, 2), dtype=float)
+
+    def lf(m_abs: np.ndarray, z: np.ndarray) -> np.ndarray:
+        """Return negative LF values."""
+        _ = z
+        return -np.ones_like(m_abs, dtype=float)
+
+    with pytest.raises(ValueError, match="lf\\(M, z\\) must be non-negative"):
+        evaluate_lf_on_grid(
+            lf,
+            m_grid=m_grid,
+            z_grid=z_grid,
+        )
+
+
+def test_evaluate_weight_on_grid_accepts_matching_shape() -> None:
+    """Tests that weight grid evaluation accepts values with matching shape."""
+    m_grid = np.array(
+        [
+            [-24.0, -23.0],
+            [-22.0, -21.0],
+        ],
+        dtype=float,
+    )
+    z_grid = np.array(
+        [
+            [0.1, 0.2],
+            [0.1, 0.2],
+        ],
+        dtype=float,
+    )
+
+    def weight_fn(m_abs: np.ndarray, z: np.ndarray) -> np.ndarray:
+        """Return weights with the same shape as the input grid."""
+        return np.ones_like(np.broadcast_arrays(m_abs, z)[0], dtype=float)
+
+    result = evaluate_weight_on_grid(
+        weight_fn,
+        m_grid=m_grid,
+        z_grid=z_grid,
+    )
+
+    np.testing.assert_allclose(result, np.ones_like(m_grid))
+
+
+def test_evaluate_weight_on_grid_broadcasts_scalar_output() -> None:
+    """Tests that scalar weight output is broadcast to the grid shape."""
+    m_grid = np.ones((3, 2), dtype=float)
+    z_grid = np.ones((3, 2), dtype=float)
+
+    def weight_fn(m_abs: np.ndarray, z: np.ndarray) -> float:
+        """Return a scalar weight value."""
+        _ = m_abs
+        _ = z
+        return 0.5
+
+    result = evaluate_weight_on_grid(
+        weight_fn,
+        m_grid=m_grid,
+        z_grid=z_grid,
+    )
+
+    np.testing.assert_allclose(result, 0.5 * np.ones_like(m_grid))
+
+
+def test_evaluate_weight_on_grid_broadcasts_column_output() -> None:
+    """Tests that broadcastable weight output is expanded to the grid shape."""
+    m_grid = np.ones((3, 2), dtype=float)
+    z_grid = np.ones((3, 2), dtype=float)
+
+    def weight_fn(m_abs: np.ndarray, z: np.ndarray) -> np.ndarray:
+        """Return one weight value per redshift column."""
+        _ = m_abs
+        _ = z
+        return np.array([[0.25, 0.75]], dtype=float)
+
+    result = evaluate_weight_on_grid(
+        weight_fn,
+        m_grid=m_grid,
+        z_grid=z_grid,
+    )
+
+    expected = np.array(
+        [
+            [0.25, 0.75],
+            [0.25, 0.75],
+            [0.25, 0.75],
+        ],
+        dtype=float,
+    )
+    np.testing.assert_allclose(result, expected)
+
+
+def test_evaluate_weight_on_grid_rejects_unbroadcastable_output() -> None:
+    """Tests that weight output must be broadcastable to the grid shape."""
+    m_grid = np.ones((3, 2), dtype=float)
+    z_grid = np.ones((3, 2), dtype=float)
+
+    def weight_fn(m_abs: np.ndarray, z: np.ndarray) -> np.ndarray:
+        """Return weights with an invalid shape."""
+        _ = m_abs
+        _ = z
+        return np.ones((4, 4), dtype=float)
+
+    with pytest.raises(
+        ValueError,
+        match="weight_fn\\(M, z\\) must return values broadcastable",
+    ):
+        evaluate_weight_on_grid(
+            weight_fn,
+            m_grid=m_grid,
+            z_grid=z_grid,
+        )
+
+
+def test_evaluate_weight_on_grid_rejects_nonfinite_values() -> None:
+    """Tests that weight grid values must be finite."""
+    m_grid = np.ones((3, 2), dtype=float)
+    z_grid = np.ones((3, 2), dtype=float)
+
+    def weight_fn(m_abs: np.ndarray, z: np.ndarray) -> np.ndarray:
+        """Return weights containing infinity."""
+        _ = z
+        return np.full_like(m_abs, np.inf, dtype=float)
+
+    with pytest.raises(
+        ValueError,
+        match="weight_fn\\(M, z\\) returned non-finite values",
+    ):
+        evaluate_weight_on_grid(
+            weight_fn,
+            m_grid=m_grid,
+            z_grid=z_grid,
+        )
+
+
+def test_evaluate_weight_on_grid_rejects_negative_values() -> None:
+    """Tests that weight grid values must be non-negative."""
+    m_grid = np.ones((3, 2), dtype=float)
+    z_grid = np.ones((3, 2), dtype=float)
+
+    def weight_fn(m_abs: np.ndarray, z: np.ndarray) -> np.ndarray:
+        """Return negative weights."""
+        _ = z
+        return -np.ones_like(m_abs, dtype=float)
+
+    with pytest.raises(ValueError, match="weight_fn\\(M, z\\) must be non-negative"):
+        evaluate_weight_on_grid(
+            weight_fn,
+            m_grid=m_grid,
+            z_grid=z_grid,
+        )
