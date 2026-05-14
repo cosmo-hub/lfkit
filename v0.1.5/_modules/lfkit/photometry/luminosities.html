@@ -1,0 +1,809 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html"><link rel="search" title="Search" href="../../../search.html">
+        <link rel="canonical" href="https://cosmology-kit.github.io/lfkit/_modules/lfkit/photometry/luminosities.html">
+        <link rel="prefetch" href="../../../_static/logos/lfkit_logo-icon.png" as="image">
+        <link rel="prefetch" href="../../../_static/logos/lfkit_logo-icon.png" as="image">
+
+    <link rel="shortcut icon" href="../../../_static/lfkit_logo-icon.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
+        <title>lfkit.photometry.luminosities - LFKit Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=dfcaa7d2" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #28A8C8;
+  --color-brand-content: #28A8C8;
+  --color-link: #28A8C8;
+  --color-link--hover: #FE5019;
+  --color-link--visited: #28A8C8;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #28A8C8;
+  --color-brand-content: #28A8C8;
+  --color-link: #28A8C8;
+  --color-link--hover: #FE5019;
+  --color-link--visited: #28A8C8;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #28A8C8;
+  --color-brand-content: #28A8C8;
+  --color-link: #28A8C8;
+  --color-link--hover: #FE5019;
+  --color-link--visited: #28A8C8;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../index.html"><div class="brand">LFKit Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo only-light" src="../../../_static/logos/lfkit_logo-icon.png" alt="Light Logo"/>
+    <img class="sidebar-logo only-dark" src="../../../_static/logos/lfkit_logo-icon.png" alt="Dark Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">LFKit Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../about/index.html"> About LFKit</a><input aria-label="Toggle navigation of  About LFKit" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/corr_overview.html"> Photometric Corrections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../about/lf_overview.html"> Luminosity Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../examples/index.html"> Examples</a><input aria-label="Toggle navigation of  Examples" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/kcorrect_examples.html">kcorrect examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/poggianti_examples.html">Poggianti (1997) examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/luminosity_function_examples.html"> Luminosity function examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/conditional_luminosity_function_examples.html"> Conditional luminosity functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/catalog_completeness_examples.html"> Catalog completeness</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../api/lfkit.html">lfkit package</a><input aria-label="Toggle navigation of lfkit package" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/lfkit.api.html">lfkit.api package</a><input aria-label="Toggle navigation of lfkit.api package" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.api.corrections.html">lfkit.api.corrections module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.api.lumfunc.html">lfkit.api.lumfunc module</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/lfkit.corrections.html">lfkit.corrections package</a><input aria-label="Toggle navigation of lfkit.corrections package" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.corrections.color_anchors.html">lfkit.corrections.color_anchors module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.corrections.filters.html">lfkit.corrections.filters module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.corrections.kcorrect_backend.html">lfkit.corrections.kcorrect_backend module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.corrections.kcorrect_from_color.html">lfkit.corrections.kcorrect_from_color module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.corrections.kcorrect_grids.html">lfkit.corrections.kcorrect_grids module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.corrections.poggianti1997.html">lfkit.corrections.poggianti1997 module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.corrections.responses.html">lfkit.corrections.responses module</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/lfkit.cosmo.html">lfkit.cosmo package</a><input aria-label="Toggle navigation of lfkit.cosmo package" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.cosmo.cosmology.html">lfkit.cosmo.cosmology module</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/lfkit.photometry.html">lfkit.photometry package</a><input aria-label="Toggle navigation of lfkit.photometry package" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.catalog_completeness.html">lfkit.photometry.catalog_completeness module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.conditional_lf_integrals.html">lfkit.photometry.conditional_lf_integrals module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.conditional_lf_models.html">lfkit.photometry.conditional_lf_models module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.lf_integrals.html">lfkit.photometry.lf_integrals module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.lf_parameter_models.html">lfkit.photometry.lf_parameter_models module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.lf_redshift_density.html">lfkit.photometry.lf_redshift_density module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.luminosities.html">lfkit.photometry.luminosities module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.luminosity_function.html">lfkit.photometry.luminosity_function module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.photometry.magnitudes.html">lfkit.photometry.magnitudes module</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/lfkit.utils.html">lfkit.utils package</a><input aria-label="Toggle navigation of lfkit.utils package" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.utils.download_poggianti97_data.html">lfkit.utils.download_poggianti97_data module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.utils.evaluators.html">lfkit.utils.evaluators module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.utils.interpolation.html">lfkit.utils.interpolation module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.utils.io.html">lfkit.utils.io module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.utils.types.html">lfkit.utils.types module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.utils.units.html">lfkit.utils.units module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.utils.validators.html">lfkit.utils.validators module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <h1>Source code for lfkit.photometry.luminosities</h1><div class="highlight"><pre>
+<span></span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Luminosity and magnitude conversion utilities for LFKit.</span>
+
+<span class="sd">This module provides lightweight helpers for converting between</span>
+<span class="sd">magnitude differences and luminosity ratios, as well as common</span>
+<span class="sd">Schechter-function quantities expressed in luminosity space.</span>
+
+<span class="sd">The core convention is</span>
+
+<span class="sd">.. math::</span>
+
+<span class="sd">    L_1 / L_2 = 10^{-0.4 (M_1 - M_2)},</span>
+
+<span class="sd">where ``M1`` and ``M2`` may be absolute or apparent magnitudes,</span>
+<span class="sd">as long as they are defined in the same photometric system.</span>
+
+<span class="sd">All returned quantities are NumPy arrays of dtype float.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy.random</span><span class="w"> </span><span class="kn">import</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">default_rng</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.special</span><span class="w"> </span><span class="kn">import</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">gammaincc</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">lfkit.utils.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">FloatArray</span><span class="p">,</span> <span class="n">FloatInput</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">lfkit.utils.validators</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_array</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;luminosity_ratio&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;luminosity_ratio_from_magnitudes&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;magnitude_difference_from_luminosity_ratio&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;luminosity_weight_from_magnitude&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;luminosity_from_magnitude&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;schechter_cumulative_number_density_luminosity&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;schechter_luminosity_density&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;schechter_mean_luminosity&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sample_schechter_luminosity&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;schechter_selection_function&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="luminosity_ratio">
+<a class="viewcode-back" href="../../../api/lfkit.photometry.luminosities.html#lfkit.photometry.luminosities.luminosity_ratio">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">luminosity_ratio</span><span class="p">(</span>
+    <span class="n">absolute_mag</span><span class="p">:</span> <span class="n">FloatInput</span><span class="p">,</span>
+    <span class="n">m_star</span><span class="p">:</span> <span class="n">FloatInput</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FloatArray</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return the luminosity ratio relative to the characteristic luminosity.</span>
+
+<span class="sd">    For magnitudes,</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \frac{L}{L_\star} = 10^{-0.4 (M - M_\star)}.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        absolute_mag: Absolute magnitude value(s).</span>
+<span class="sd">        m_star: Characteristic magnitude value(s).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        NumPy array of luminosity ratios ``L / L_star``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">m_arr</span> <span class="o">=</span> <span class="n">validate_array</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;absolute magnitude&quot;</span><span class="p">)</span>
+    <span class="n">m_star_arr</span> <span class="o">=</span> <span class="n">validate_array</span><span class="p">(</span><span class="n">m_star</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;m_star&quot;</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.4</span> <span class="o">*</span> <span class="p">(</span><span class="n">m_arr</span> <span class="o">-</span> <span class="n">m_star_arr</span><span class="p">))</span>
+
+    <span class="c1"># Clip extreme values to avoid overflow in exp later.</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mf">1e-300</span><span class="p">,</span> <span class="mf">1e300</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="luminosity_ratio_from_magnitudes">
+<a class="viewcode-back" href="../../../api/lfkit.photometry.luminosities.html#lfkit.photometry.luminosities.luminosity_ratio_from_magnitudes">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">luminosity_ratio_from_magnitudes</span><span class="p">(</span>
+    <span class="n">magnitude</span><span class="p">:</span> <span class="n">FloatInput</span><span class="p">,</span>
+    <span class="n">ref_magnitude</span><span class="p">:</span> <span class="n">FloatInput</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FloatArray</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return luminosity relative to a reference magnitude.</span>
+
+<span class="sd">    This uses :math:`L / L_{\mathrm{ref}} = 10^{-0.4 (m - m_{\mathrm{ref}})}`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        magnitude: Magnitude value(s).</span>
+<span class="sd">        ref_magnitude: Reference magnitude value(s).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        NumPy array of luminosity ratios :math:`L / L_{\mathrm{ref}}`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mag_1</span> <span class="o">=</span> <span class="n">validate_array</span><span class="p">(</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;magnitude&quot;</span><span class="p">)</span>
+    <span class="n">mag_2</span> <span class="o">=</span> <span class="n">validate_array</span><span class="p">(</span><span class="n">ref_magnitude</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;ref_magnitude&quot;</span><span class="p">)</span>
+
+    <span class="n">ratio</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.4</span> <span class="o">*</span> <span class="p">(</span><span class="n">mag_1</span> <span class="o">-</span> <span class="n">mag_2</span><span class="p">))</span>
+    <span class="n">ratio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="mf">1e-300</span><span class="p">,</span> <span class="mf">1e300</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="magnitude_difference_from_luminosity_ratio">
+<a class="viewcode-back" href="../../../api/lfkit.photometry.luminosities.html#lfkit.photometry.luminosities.magnitude_difference_from_luminosity_ratio">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">magnitude_difference_from_luminosity_ratio</span><span class="p">(</span>
+    <span class="n">ratio</span><span class="p">:</span> <span class="n">FloatInput</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FloatArray</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return the magnitude difference corresponding to a luminosity ratio.</span>
+
+<span class="sd">    This uses</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        m_1 - m_2 = -2.5 \log_{10}(L_1 / L_2).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        ratio: Luminosity ratio value(s) ``L1 / L2``.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        NumPy array of magnitude differences ``m1 - m2``.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If any luminosity ratio is not strictly positive.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ratio_arr</span> <span class="o">=</span> <span class="n">validate_array</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;luminosity_ratio&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">ratio_arr</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;luminosity_ratio must be strictly positive.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="o">-</span><span class="mf">2.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">ratio_arr</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="luminosity_weight_from_magnitude">
+<a class="viewcode-back" href="../../../api/lfkit.photometry.luminosities.html#lfkit.photometry.luminosities.luminosity_weight_from_magnitude">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">luminosity_weight_from_magnitude</span><span class="p">(</span>
+    <span class="n">magnitude</span><span class="p">:</span> <span class="n">FloatInput</span><span class="p">,</span>
+    <span class="n">reference_magnitude</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FloatArray</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return an unnormalized luminosity weight from a magnitude.</span>
+
+<span class="sd">    This uses</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        L \propto 10^{-0.4 M}.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        magnitude: Magnitude value(s).</span>
+<span class="sd">        reference_magnitude: Reference zero-point magnitude for the</span>
+<span class="sd">            proportionality constant.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        NumPy array proportional to luminosity.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mag</span> <span class="o">=</span> <span class="n">validate_array</span><span class="p">(</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;magnitude&quot;</span><span class="p">)</span>
+    <span class="n">weight</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.4</span> <span class="o">*</span> <span class="p">(</span><span class="n">mag</span> <span class="o">-</span> <span class="n">reference_magnitude</span><span class="p">))</span>
+    <span class="n">weight</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="mf">1e-300</span><span class="p">,</span> <span class="mf">1e300</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="luminosity_from_magnitude">
+<a class="viewcode-back" href="../../../api/lfkit.photometry.luminosities.html#lfkit.photometry.luminosities.luminosity_from_magnitude">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">luminosity_from_magnitude</span><span class="p">(</span>
+    <span class="n">magnitude</span><span class="p">:</span> <span class="n">FloatInput</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">reference_magnitude</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">reference_luminosity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FloatArray</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return luminosity corresponding to a magnitude relative to a reference.</span>
+
+<span class="sd">    This uses</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        L = L_{\mathrm{ref}} \, 10^{-0.4 (m - m_{\mathrm{ref}})}.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        magnitude: Magnitude value(s).</span>
+<span class="sd">        reference_magnitude: Reference magnitude ``m_ref``.</span>
+<span class="sd">        reference_luminosity: Reference luminosity ``L_ref``.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        NumPy array of luminosities in the same units as</span>
+<span class="sd">        ``reference_luminosity``.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If ``reference_luminosity`` is not strictly positive.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">reference_luminosity</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;reference_luminosity must be strictly positive.&quot;</span><span class="p">)</span>
+
+    <span class="n">ratio</span> <span class="o">=</span> <span class="n">luminosity_ratio_from_magnitudes</span><span class="p">(</span>
+        <span class="n">magnitude</span><span class="p">,</span>
+        <span class="n">reference_magnitude</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">reference_luminosity</span> <span class="o">*</span> <span class="n">ratio</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="schechter_cumulative_number_density_luminosity">
+<a class="viewcode-back" href="../../../api/lfkit.photometry.luminosities.html#lfkit.photometry.luminosities.schechter_cumulative_number_density_luminosity">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">schechter_cumulative_number_density_luminosity</span><span class="p">(</span>
+    <span class="n">luminosity_min</span><span class="p">:</span> <span class="n">FloatInput</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">phi_star</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">l_star</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FloatArray</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return cumulative Schechter number density above a luminosity threshold.</span>
+
+<span class="sd">    This evaluates</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        n(L &gt; L_{\min}) = \phi_* \, \Gamma(\alpha + 1, L_{\min} / L_*),</span>
+
+<span class="sd">    where ``Gamma`` is the upper incomplete gamma function.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        luminosity_min: Lower luminosity threshold(s).</span>
+<span class="sd">        phi_star: Schechter normalization.</span>
+<span class="sd">        l_star: Characteristic luminosity ``L_star``.</span>
+<span class="sd">        alpha: Faint-end slope.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        NumPy array of cumulative number densities above ``luminosity_min``.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If ``phi_star`` is negative, ``l_star`` is not strictly</span>
+<span class="sd">            positive, or ``alpha &lt;= -1``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">l_min</span> <span class="o">=</span> <span class="n">validate_array</span><span class="p">(</span><span class="n">luminosity_min</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;luminosity_min&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">l_min</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;luminosity_min must be non-negative.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">phi_star</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;phi_star must be non-negative.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">l_star</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;l_star must be strictly positive.&quot;</span><span class="p">)</span>
+
+    <span class="n">s</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">+</span> <span class="mf">1.0</span>
+    <span class="k">if</span> <span class="n">s</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Cumulative number density is undefined for alpha &lt;= -1 &quot;</span>
+            <span class="s2">&quot;because the integral diverges.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">x_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">l_min</span> <span class="o">/</span> <span class="n">l_star</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1e300</span><span class="p">)</span>
+    <span class="n">n_gt</span> <span class="o">=</span> <span class="n">phi_star</span> <span class="o">*</span> <span class="n">gamma</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">*</span> <span class="n">gammaincc</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">x_min</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">n_gt</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="schechter_luminosity_density">
+<a class="viewcode-back" href="../../../api/lfkit.photometry.luminosities.html#lfkit.photometry.luminosities.schechter_luminosity_density">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">schechter_luminosity_density</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">phi_star</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">l_star</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return total luminosity density for a Schechter luminosity function.</span>
+
+<span class="sd">    This evaluates</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \rho_L = \phi_* \, L_* \, \Gamma(\alpha + 2).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        phi_star: Schechter normalization.</span>
+<span class="sd">        l_star: Characteristic luminosity ``L_star``.</span>
+<span class="sd">        alpha: Faint-end slope.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Total luminosity density.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If ``phi_star`` is negative, ``l_star`` is not strictly</span>
+<span class="sd">            positive, or ``alpha &lt;= -2``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">phi_star</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;phi_star must be non-negative.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">l_star</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;l_star must be strictly positive.&quot;</span><span class="p">)</span>
+
+    <span class="n">s</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">+</span> <span class="mf">2.0</span>
+    <span class="k">if</span> <span class="n">s</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Luminosity density is undefined for alpha &lt;= -2 &quot;</span>
+            <span class="s2">&quot;because the integral diverges.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">phi_star</span> <span class="o">*</span> <span class="n">l_star</span> <span class="o">*</span> <span class="n">gamma</span><span class="p">(</span><span class="n">s</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="schechter_mean_luminosity">
+<a class="viewcode-back" href="../../../api/lfkit.photometry.luminosities.html#lfkit.photometry.luminosities.schechter_mean_luminosity">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">schechter_mean_luminosity</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">l_star</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return the mean luminosity of a normalized Schechter distribution.</span>
+
+<span class="sd">    This evaluates</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \langle L \rangle = L_* \, \Gamma(\alpha + 2) / \Gamma(\alpha + 1).</span>
+
+<span class="sd">    For finite values this simplifies to</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \langle L \rangle = L_* (\alpha + 1),</span>
+
+<span class="sd">    provided ``alpha &gt; -1``.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        l_star: Characteristic luminosity ``L_star``.</span>
+<span class="sd">        alpha: Faint-end slope.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Mean luminosity.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If ``l_star`` is not strictly positive or ``alpha &lt;= -1``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">l_star</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;l_star must be strictly positive.&quot;</span><span class="p">)</span>
+
+    <span class="n">s</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">+</span> <span class="mf">1.0</span>
+    <span class="k">if</span> <span class="n">s</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Mean luminosity is undefined for alpha &lt;= -1 &quot;</span>
+            <span class="s2">&quot;because the number-density integral diverges.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">l_star</span> <span class="o">*</span> <span class="n">gamma</span><span class="p">(</span><span class="n">alpha</span> <span class="o">+</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">/</span> <span class="n">gamma</span><span class="p">(</span><span class="n">alpha</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="sample_schechter_luminosity">
+<a class="viewcode-back" href="../../../api/lfkit.photometry.luminosities.html#lfkit.photometry.luminosities.sample_schechter_luminosity">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">sample_schechter_luminosity</span><span class="p">(</span>
+    <span class="n">size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">l_star</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">rng</span><span class="p">:</span> <span class="n">Generator</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FloatArray</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Sample luminosities from a normalized Schechter distribution.</span>
+
+<span class="sd">    This samples from</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        p(L) \propto (L / L_*)^{\alpha} \exp(-L / L_*),</span>
+
+<span class="sd">    which is equivalent to a Gamma distribution in</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        x = L / L_*,</span>
+
+<span class="sd">    with shape parameter</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        k = \alpha + 1.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        size: Number or shape of samples to draw.</span>
+<span class="sd">        l_star: Characteristic luminosity ``L_star``.</span>
+<span class="sd">        alpha: Faint-end slope.</span>
+<span class="sd">        rng: Optional NumPy random number generator.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        NumPy array of sampled luminosities.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If ``l_star`` is not strictly positive or ``alpha &lt;= -1``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">l_star</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;l_star must be strictly positive.&quot;</span><span class="p">)</span>
+
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">+</span> <span class="mf">1.0</span>
+    <span class="k">if</span> <span class="n">shape</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Sampling from the normalized Schechter distribution requires alpha &gt; -1.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">generator</span> <span class="o">=</span> <span class="n">default_rng</span><span class="p">()</span> <span class="k">if</span> <span class="n">rng</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">rng</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">gamma</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">l_star</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="schechter_selection_function">
+<a class="viewcode-back" href="../../../api/lfkit.photometry.luminosities.html#lfkit.photometry.luminosities.schechter_selection_function">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">schechter_selection_function</span><span class="p">(</span>
+    <span class="n">luminosity_min</span><span class="p">:</span> <span class="n">FloatInput</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">l_star</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FloatArray</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return the Schechter selection fraction above a luminosity threshold.</span>
+
+<span class="sd">    This evaluates</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        S(L_{\min}) = n(L &gt; L_{\min}) / n_{\mathrm{tot}}</span>
+<span class="sd">                     = \Gamma(\alpha + 1, L_{\min} / L_*) / \Gamma(\alpha + 1),</span>
+
+<span class="sd">    which is equivalently</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        S(L_{\min}) = \mathrm{gammaincc}(\alpha + 1, L_{\min} / L_*).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        luminosity_min: Lower luminosity threshold(s).</span>
+<span class="sd">        l_star: Characteristic luminosity ``L_star``.</span>
+<span class="sd">        alpha: Faint-end slope.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        NumPy array of selection fractions between 0 and 1.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If ``l_star`` is not strictly positive, any luminosity</span>
+<span class="sd">            threshold is negative, or ``alpha &lt;= -1``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">l_min</span> <span class="o">=</span> <span class="n">validate_array</span><span class="p">(</span><span class="n">luminosity_min</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;luminosity_min&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">l_min</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;luminosity_min must be non-negative.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">l_star</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;l_star must be strictly positive.&quot;</span><span class="p">)</span>
+
+    <span class="n">s</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">+</span> <span class="mf">1.0</span>
+    <span class="k">if</span> <span class="n">s</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Selection function is undefined for alpha &lt;= -1 &quot;</span>
+            <span class="s2">&quot;because the total number-density integral diverges.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">x_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">l_min</span> <span class="o">/</span> <span class="n">l_star</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1e300</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">gammaincc</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">x_min</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span></div>
+
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026, Nikolina Šarčević
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f16c4c56"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    </body>
+</html>
