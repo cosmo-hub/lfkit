@@ -1,4 +1,4 @@
-r"""Public luminosity-function interface.
+r"""Public luminosity function interface.
 
 This module provides the user-facing :class:`LuminosityFunction` API for
 evaluating luminosity functions in absolute- or apparent-magnitude space.
@@ -30,12 +30,12 @@ from lfkit.photometry.luminosity_function import (
     schechter_double_from_m,
 )
 from lfkit.photometry.conditional_lf_models import (
-    central_lognormal_conditional_lf,
-    central_satellite_conditional_lf,
     conditional_schechter,
     conditional_schechter_double,
     conditional_schechter_evolving,
-    satellite_modified_schechter_conditional_lf,
+    lognormal_conditional_lf,
+    modified_schechter_conditional_lf,
+    two_component_conditional_lf,
 )
 from lfkit.photometry.magnitudes import (
     absolute_magnitude,
@@ -88,7 +88,7 @@ __all__ = ["LuminosityFunction"]
 
 
 class LuminosityFunction:
-    """User-facing wrapper for luminosity-function evaluation."""
+    """User-facing wrapper for luminosity function evaluation."""
 
     def __init__(
         self,
@@ -97,10 +97,10 @@ class LuminosityFunction:
         parameters: Mapping[str, object],
         meta: Mapping[str, object] | None = None,
     ) -> None:
-        """Store a luminosity-function model and its parameters.
+        """Store a luminosity function model and its parameters.
 
         Args:
-            model: Name of the luminosity-function model.
+            model: Name of the luminosity function model.
             parameters: Model parameters passed to the underlying LF function.
             meta: Optional metadata describing the LF source or calibration.
         """
@@ -487,7 +487,7 @@ class LuminosityFunction:
             if z is None:
                 raise ValueError("z is required for a conditional luminosity function.")
 
-            return central_lognormal_conditional_lf(
+            return lognormal_conditional_lf(
                 np.asarray(absolute_mag, dtype=float),
                 np.asarray(z, dtype=float),
                 **self.parameters_dict,
@@ -497,7 +497,7 @@ class LuminosityFunction:
             if z is None:
                 raise ValueError("z is required for a conditional luminosity function.")
 
-            return satellite_modified_schechter_conditional_lf(
+            return modified_schechter_conditional_lf(
                 np.asarray(absolute_mag, dtype=float),
                 np.asarray(z, dtype=float),
                 **self.parameters_dict,
@@ -507,13 +507,13 @@ class LuminosityFunction:
             if z is None:
                 raise ValueError("z is required for a conditional luminosity function.")
 
-            return central_satellite_conditional_lf(
+            return two_component_conditional_lf(
                 np.asarray(absolute_mag, dtype=float),
                 np.asarray(z, dtype=float),
                 **self.parameters_dict,
             )
 
-        raise ValueError(f"Unsupported luminosity-function model '{self.model}'.")
+        raise ValueError(f"Unsupported luminosity function model '{self.model}'.")
 
     def phi_from_m(
         self,
@@ -575,7 +575,7 @@ class LuminosityFunction:
                 **self.parameters_dict,
             )
 
-        raise ValueError(f"Unsupported luminosity-function model '{self.model}'.")
+        raise ValueError(f"Unsupported luminosity function model '{self.model}'.")
 
     def parameters(
         self,
@@ -746,13 +746,13 @@ class LuminosityFunction:
         return cls(
             model="central_satellite_conditional",
             parameters={
-                "central_mean_absolute_mag": central_mean_absolute_mag,
-                "central_sigma_log_luminosity": central_sigma_log_luminosity,
-                "satellite_phi_star": satellite_phi_star,
-                "satellite_alpha": satellite_alpha,
-                "central_amplitude": central_amplitude,
-                "satellite_m_star": satellite_m_star,
-                "satellite_luminosity_fraction": satellite_luminosity_fraction,
+                "lognormal_mean_absolute_mag": central_mean_absolute_mag,
+                "lognormal_sigma_log_luminosity": central_sigma_log_luminosity,
+                "lognormal_amplitude": central_amplitude,
+                "modified_phi_star": satellite_phi_star,
+                "modified_alpha": satellite_alpha,
+                "modified_m_star": satellite_m_star,
+                "modified_luminosity_fraction": satellite_luminosity_fraction,
             },
         )
 

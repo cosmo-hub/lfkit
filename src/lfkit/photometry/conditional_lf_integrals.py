@@ -1,8 +1,8 @@
 """Conditional luminosity function integration utilities.
 
-This module provides small numerical helpers for conditional luminosity
-functions of the form ``Phi(M | x)``, where ``M`` is absolute magnitude and
-``x`` is an external conditioning variable.
+This module provides numerical helpers for conditional luminosity functions of
+the form ``Phi(M | x)``, where ``M`` is absolute magnitude and ``x`` is an
+external conditioning variable.
 
 The conditioning variable is intentionally generic. It may represent halo mass,
 environment, galaxy type, richness, stellar mass, or any other quantity. This
@@ -22,13 +22,13 @@ from lfkit.utils.types import FloatArray, FloatInput
 from lfkit.utils.validators import validate_array
 
 __all__ = [
-    "evaluate_conditional_lf",
-    "integrate_conditional_lf",
-    "integrate_weighted_conditional_lf",
+    "evaluate_conditional_luminosity_function",
+    "integrate_conditional_luminosity_function",
+    "integrate_weighted_conditional_luminosity_function",
 ]
 
 
-def evaluate_conditional_lf(
+def evaluate_conditional_luminosity_function(
     absolute_mag: FloatInput,
     condition: FloatInput,
     conditional_lf: Callable[[FloatArray, FloatArray], FloatArray],
@@ -38,17 +38,17 @@ def evaluate_conditional_lf(
     Args:
         absolute_mag: Absolute magnitude values.
         condition: Values of the conditioning variable.
-        conditional_lf: Callable returning ``Phi(M | x)``. The callable must
-            accept absolute magnitude and condition arrays.
+        conditional_lf: Callable returning ``Phi(M | x)`` for absolute
+            magnitude ``M`` and condition ``x``.
 
     Returns:
-        Conditional luminosity function evaluated at the requested absolute
-        magnitude and condition values.
+        Conditional luminosity function values evaluated at the requested
+        absolute magnitudes and conditioning values.
 
     Raises:
-        ValueError: If the inputs or evaluated conditional luminosity function
-            contain non-finite values, or if the evaluated conditional
-            luminosity function contains negative values.
+        ValueError: If the inputs contain non-finite values, or if the
+            evaluated conditional luminosity function contains non-finite or
+            negative values.
     """
     absolute_mag_arr = validate_array(absolute_mag, name="absolute_mag")
     condition_arr = validate_array(condition, name="condition")
@@ -66,7 +66,7 @@ def evaluate_conditional_lf(
     return np.asarray(phi, dtype=np.float64)
 
 
-def integrate_conditional_lf(
+def integrate_conditional_luminosity_function(
     absolute_mag: FloatInput,
     condition: FloatInput,
     conditional_lf: Callable[[FloatArray, FloatArray], FloatArray],
@@ -75,25 +75,23 @@ def integrate_conditional_lf(
 ) -> FloatArray:
     """Integrate a conditional luminosity function over absolute magnitude.
 
-    This computes ``integral Phi(M | x) dM``, where ``x`` is the conditioning
-    variable.
-
     Args:
         absolute_mag: Absolute magnitude grid.
         condition: Values of the conditioning variable.
-        conditional_lf: Callable returning ``Phi(M | x)``.
+        conditional_lf: Callable returning ``Phi(M | x)`` for absolute
+            magnitude ``M`` and condition ``x``.
         axis: Axis corresponding to the absolute magnitude grid.
 
     Returns:
         Conditional luminosity function integrated over absolute magnitude.
 
     Raises:
-        ValueError: If the inputs or evaluated conditional luminosity function
-            contain invalid values.
+        ValueError: If the inputs contain invalid values, or if the evaluated
+            conditional luminosity function contains invalid values.
     """
     absolute_mag_arr = validate_array(absolute_mag, name="absolute_mag")
 
-    phi = evaluate_conditional_lf(
+    phi = evaluate_conditional_luminosity_function(
         absolute_mag=absolute_mag_arr,
         condition=condition,
         conditional_lf=conditional_lf,
@@ -105,7 +103,7 @@ def integrate_conditional_lf(
     )
 
 
-def integrate_weighted_conditional_lf(
+def integrate_weighted_conditional_luminosity_function(
     absolute_mag: FloatInput,
     condition: FloatInput,
     conditional_lf: Callable[[FloatArray, FloatArray], FloatArray],
@@ -115,14 +113,13 @@ def integrate_weighted_conditional_lf(
 ) -> FloatArray:
     """Integrate a weighted conditional luminosity function.
 
-    This computes ``integral w(M, x) Phi(M | x) dM``, where ``x`` is the
-    conditioning variable.
-
     Args:
         absolute_mag: Absolute magnitude grid.
         condition: Values of the conditioning variable.
-        conditional_lf: Callable returning ``Phi(M | x)``.
-        weight: Callable returning weights ``w(M, x)``.
+        conditional_lf: Callable returning ``Phi(M | x)`` for absolute
+            magnitude ``M`` and condition ``x``.
+        weight: Callable returning weights ``w(M, x)`` for absolute magnitude
+            ``M`` and condition ``x``.
         axis: Axis corresponding to the absolute magnitude grid.
 
     Returns:
@@ -130,13 +127,13 @@ def integrate_weighted_conditional_lf(
         magnitude.
 
     Raises:
-        ValueError: If the inputs, evaluated conditional luminosity function,
-            or weights contain invalid values.
+        ValueError: If the inputs contain invalid values, or if the evaluated
+            conditional luminosity function or weights contain invalid values.
     """
     absolute_mag_arr = validate_array(absolute_mag, name="absolute_mag")
     condition_arr = validate_array(condition, name="condition")
 
-    phi = evaluate_conditional_lf(
+    phi = evaluate_conditional_luminosity_function(
         absolute_mag=absolute_mag_arr,
         condition=condition_arr,
         conditional_lf=conditional_lf,

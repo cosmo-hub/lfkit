@@ -1,4 +1,4 @@
-"""Conditional luminosity-function model utilities.
+"""Conditional luminosity function model utilities.
 
 This module provides conditional wrappers around existing LFKit luminosity
 function models.
@@ -38,9 +38,9 @@ __all__ = [
     "conditional_schechter",
     "conditional_schechter_evolving",
     "conditional_schechter_double",
-    "central_lognormal_conditional_lf",
-    "satellite_modified_schechter_conditional_lf",
-    "central_satellite_conditional_lf",
+    "lognormal_conditional_lf",
+    "modified_schechter_conditional_lf",
+    "two_component_conditional_lf",
 ]
 
 
@@ -65,7 +65,7 @@ def conditional_schechter(
             ``condition``.
 
     Returns:
-        Conditional Schechter luminosity-function values.
+        Conditional Schechter luminosity function values.
     """
     condition_arr = validate_array(condition, name="condition")
 
@@ -102,7 +102,7 @@ def conditional_schechter_evolving(
 ) -> FloatArray:
     """Evaluate a conditional Schechter LF using LFKit parameter models.
 
-    This is the conditional-LF analogue of ``schechter_evolving``. The
+    This is the conditional LF analogue of ``schechter_evolving``. The
     conditioning variable is passed to LFKit's registered parameter models.
 
     Args:
@@ -116,7 +116,7 @@ def conditional_schechter_evolving(
         alpha_kwargs: Keyword arguments passed to the selected ``alpha`` model.
 
     Returns:
-        Conditional Schechter luminosity-function values.
+        Conditional Schechter luminosity function values.
 
     Raises:
         ValueError: If an unsupported parameter model is requested.
@@ -166,7 +166,7 @@ def conditional_schechter_double(
             callable of ``condition``.
 
     Returns:
-        Conditional double-power-law Schechter luminosity-function values.
+        Conditional double-power-law Schechter luminosity function values.
     """
     condition_arr = validate_array(condition, name="condition")
 
@@ -192,7 +192,7 @@ def conditional_schechter_double(
     )
 
 
-def central_lognormal_conditional_lf(
+def lognormal_conditional_lf(
     absolute_mag: FloatInput,
     condition: FloatInput,
     *,
@@ -200,20 +200,20 @@ def central_lognormal_conditional_lf(
     sigma_log_luminosity: ConditionalParameter,
     amplitude: ConditionalParameter = 1.0,
 ) -> FloatArray:
-    """Evaluate a central-galaxy lognormal conditional LF in magnitudes.
+    """Evaluate a lognormal conditional luminosity function in magnitudes.
 
     Args:
         absolute_mag: Absolute magnitude value(s).
         condition: Values of the conditioning variable.
-        mean_absolute_mag: Mean central-galaxy absolute magnitude. May be
-            scalar, array-like, or callable of ``condition``.
-        sigma_log_luminosity: Scatter in ``log10(L)`` at fixed condition. May
-            be scalar, array-like, or callable of ``condition``.
-        amplitude: Non-negative amplitude of the central component. May be
-            scalar, array-like, or callable of ``condition``.
+        mean_absolute_mag: Mean absolute magnitude.
+            May be scalar, array-like, or callable of ``condition``.
+        sigma_log_luminosity: Scatter in ``log10(L)`` at fixed condition.
+            May be scalar, array-like, or callable of ``condition``.
+        amplitude: Non-negative amplitude of the component.
+            May be scalar, array-like, or callable of ``condition``.
 
     Returns:
-        Central-galaxy conditional luminosity-function values.
+        Lognormal conditional luminosity function values.
     """
     absolute_mag_arr = validate_array(absolute_mag, name="absolute_mag")
     condition_arr = validate_array(condition, name="condition")
@@ -249,10 +249,10 @@ def central_lognormal_conditional_lf(
         * np.exp(-0.5 * (delta_log_luminosity / sigma_log_luminosity_arr) ** 2.0)
     )
 
-    return _validate_lf_output(phi, name="central_lognormal_conditional_lf")
+    return _validate_lf_output(phi, name="lognormal_conditional_lf")
 
 
-def satellite_modified_schechter_conditional_lf(
+def modified_schechter_conditional_lf(
     absolute_mag: FloatInput,
     condition: FloatInput,
     *,
@@ -260,23 +260,20 @@ def satellite_modified_schechter_conditional_lf(
     m_star: ConditionalParameter,
     alpha: ConditionalParameter,
 ) -> FloatArray:
-    """Evaluate a satellite modified-Schechter conditional LF.
+    """Evaluate a modified Schechter conditional luminosity function.
 
-    This is the Cacciato-style satellite form with ``exp[-(L/L_star)^2]``
-    instead of the standard Schechter ``exp[-L/L_star]``.
+    This uses a squared exponential cutoff in luminosity ratio instead of the
+    standard Schechter exponential cutoff.
 
     Args:
         absolute_mag: Absolute magnitude value(s).
         condition: Values of the conditioning variable.
-        phi_star: Satellite normalization. May be scalar, array-like, or
-            callable of ``condition``.
-        m_star: Satellite characteristic absolute magnitude. May be scalar,
-            array-like, or callable of ``condition``.
-        alpha: Satellite faint-end slope. May be scalar, array-like, or
-            callable of ``condition``.
+        phi_star: Component normalization.
+        m_star: Characteristic absolute magnitude.
+        alpha: Faint-end slope.
 
     Returns:
-        Satellite conditional luminosity-function values.
+        Modified Schechter conditional luminosity function values.
     """
     absolute_mag_arr = validate_array(absolute_mag, name="absolute_mag")
     condition_arr = validate_array(condition, name="condition")
@@ -306,95 +303,95 @@ def satellite_modified_schechter_conditional_lf(
 
     return _validate_lf_output(
         phi,
-        name="satellite_modified_schechter_conditional_lf",
+        name="modified_schechter_conditional_lf",
     )
 
 
-def central_satellite_conditional_lf(
+def two_component_conditional_lf(
     absolute_mag: FloatInput,
     condition: FloatInput,
     *,
-    central_mean_absolute_mag: ConditionalParameter,
-    central_sigma_log_luminosity: ConditionalParameter,
-    satellite_phi_star: ConditionalParameter,
-    satellite_alpha: ConditionalParameter,
-    central_amplitude: ConditionalParameter = 1.0,
-    satellite_m_star: ConditionalParameter | None = None,
-    satellite_luminosity_fraction: ConditionalParameter = 0.562,
+    lognormal_mean_absolute_mag: ConditionalParameter,
+    lognormal_sigma_log_luminosity: ConditionalParameter,
+    modified_phi_star: ConditionalParameter,
+    modified_alpha: ConditionalParameter,
+    lognormal_amplitude: ConditionalParameter = 1.0,
+    modified_m_star: ConditionalParameter | None = None,
+    modified_luminosity_fraction: ConditionalParameter = 0.562,
 ) -> FloatArray:
-    """Evaluate the sum of central and satellite conditional LF components.
+    """Evaluate the sum of lognormal and modified Schechter components.
 
     Args:
         absolute_mag: Absolute magnitude value(s).
         condition: Values of the conditioning variable.
-        central_mean_absolute_mag: Mean central-galaxy absolute magnitude. May
-            be scalar, array-like, or callable of ``condition``.
-        central_sigma_log_luminosity: Scatter in ``log10(L)`` for the central
+        lognormal_mean_absolute_mag: Mean absolute magnitude of the lognormal
             component. May be scalar, array-like, or callable of ``condition``.
-        satellite_phi_star: Satellite normalization. May be scalar, array-like,
-            or callable of ``condition``.
-        satellite_alpha: Satellite faint-end slope. May be scalar, array-like,
-            or callable of ``condition``.
-        central_amplitude: Non-negative amplitude of the central component. May
-            be scalar, array-like, or callable of ``condition``.
-        satellite_m_star: Satellite characteristic absolute magnitude. If
-            omitted, it is derived from ``central_mean_absolute_mag`` and
-            ``satellite_luminosity_fraction``.
-        satellite_luminosity_fraction: Ratio ``L_sat_star / L_c`` used only
-            when ``satellite_m_star`` is omitted.
+        lognormal_sigma_log_luminosity: Scatter in ``log10(L)`` for the
+            lognormal component. May be scalar, array-like, or callable of
+            ``condition``.
+        modified_phi_star: Normalization of the modified Schechter component.
+            May be scalar, array-like, or callable of ``condition``.
+        modified_alpha: Faint-end slope of the modified Schechter component.
+            May be scalar, array-like, or callable of ``condition``.
+        lognormal_amplitude: Non-negative amplitude of the lognormal component.
+            May be scalar, array-like, or callable of ``condition``.
+        modified_m_star: Characteristic absolute magnitude of the modified
+            Schechter component. If omitted, it is derived from
+            ``lognormal_mean_absolute_mag`` and ``modified_luminosity_fraction``.
+        modified_luminosity_fraction: Ratio used to derive the modified
+            Schechter characteristic luminosity from the lognormal mean
+            luminosity when ``modified_m_star`` is omitted.
 
     Returns:
-        Total central-plus-satellite conditional luminosity-function values.
+        Combined conditional luminosity function values.
     """
     condition_arr = validate_array(condition, name="condition")
 
-    central_mean_absolute_mag_arr = _evaluate_conditional_parameter(
-        central_mean_absolute_mag,
+    lognormal_mean_absolute_mag_arr = _evaluate_conditional_parameter(
+        lognormal_mean_absolute_mag,
         condition_arr,
-        name="central_mean_absolute_mag",
+        name="lognormal_mean_absolute_mag",
     )
 
-    central_phi = central_lognormal_conditional_lf(
+    lognormal_phi = lognormal_conditional_lf(
         absolute_mag=absolute_mag,
         condition=condition_arr,
-        mean_absolute_mag=central_mean_absolute_mag_arr,
-        sigma_log_luminosity=central_sigma_log_luminosity,
-        amplitude=central_amplitude,
+        mean_absolute_mag=lognormal_mean_absolute_mag_arr,
+        sigma_log_luminosity=lognormal_sigma_log_luminosity,
+        amplitude=lognormal_amplitude,
     )
 
-    if satellite_m_star is None:
-        satellite_luminosity_fraction_arr = _evaluate_conditional_parameter(
-            satellite_luminosity_fraction,
+    if modified_m_star is None:
+        modified_luminosity_fraction_arr = _evaluate_conditional_parameter(
+            modified_luminosity_fraction,
             condition_arr,
-            name="satellite_luminosity_fraction",
+            name="modified_luminosity_fraction",
         )
 
-        if np.any(satellite_luminosity_fraction_arr <= 0.0):
-            raise ValueError("satellite_luminosity_fraction must be positive.")
+        if np.any(modified_luminosity_fraction_arr <= 0.0):
+            raise ValueError("modified_luminosity_fraction must be positive.")
 
-        satellite_m_star_arr = central_mean_absolute_mag_arr + (
-            magnitude_difference_from_luminosity_ratio(
-                satellite_luminosity_fraction_arr
-            )
+        modified_m_star_arr = lognormal_mean_absolute_mag_arr + (
+            magnitude_difference_from_luminosity_ratio(modified_luminosity_fraction_arr)
         )
     else:
-        satellite_m_star_arr = _evaluate_conditional_parameter(
-            satellite_m_star,
+        modified_m_star_arr = _evaluate_conditional_parameter(
+            modified_m_star,
             condition_arr,
-            name="satellite_m_star",
+            name="modified_m_star",
         )
 
-    satellite_phi = satellite_modified_schechter_conditional_lf(
+    modified_phi = modified_schechter_conditional_lf(
         absolute_mag=absolute_mag,
         condition=condition_arr,
-        phi_star=satellite_phi_star,
-        m_star=satellite_m_star_arr,
-        alpha=satellite_alpha,
+        phi_star=modified_phi_star,
+        m_star=modified_m_star_arr,
+        alpha=modified_alpha,
     )
 
     return _validate_lf_output(
-        central_phi + satellite_phi,
-        name="central_satellite_conditional_lf",
+        lognormal_phi + modified_phi,
+        name="two_component_conditional_lf",
     )
 
 
@@ -418,7 +415,7 @@ def _validate_lf_output(
     *,
     name: str,
 ) -> FloatArray:
-    """Validate luminosity-function model output."""
+    """Validate luminosity function model output."""
     phi_arr = validate_array(phi, name=name)
 
     if np.any(phi_arr < 0.0):

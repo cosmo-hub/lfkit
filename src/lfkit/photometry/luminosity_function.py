@@ -1,7 +1,7 @@
 """Luminosity function utilities for LFKit.
 
 This module provides simple standalone functions for evaluating
-common galaxy luminosity-function parameterization.
+common galaxy luminosity function parameterization.
 
 All luminosity functions in this module are defined in rest-frame absolute
 magnitude space. Functions with names ending in ``_from_m`` are convenience
@@ -101,7 +101,7 @@ def schechter(
         alpha: Faint-end slope. Can be a scalar or array-like.
 
     Returns:
-        NumPy array of luminosity-function values evaluated at
+        NumPy array of luminosity function values evaluated at
         ``absolute_mag``.
     """
     x = luminosity_ratio(absolute_mag, m_star)
@@ -163,7 +163,7 @@ def schechter_evolving(
             ``alpha`` evolution model.
 
     Returns:
-        NumPy array of luminosity-function values evaluated at
+        NumPy array of luminosity function values evaluated at
         ``absolute_mag`` and ``z``.
 
     Raises:
@@ -237,7 +237,7 @@ def schechter_double(
         m_transition: Transition magnitude M_t corresponding to L_t.
 
     Returns:
-        NumPy array of luminosity-function values evaluated at
+        NumPy array of luminosity function values evaluated at
         ``absolute_mag``.
     """
     absolute_mag = validate_array(absolute_mag, name="absolute_mag")
@@ -324,7 +324,7 @@ def schechter_from_m(
         e_correction: Optional evolution-correction term(s).
 
     Returns:
-        NumPy array of luminosity-function values corresponding to the
+        NumPy array of luminosity function values corresponding to the
         supplied apparent magnitudes.
     """
     z = validate_array(z, name="z")
@@ -405,7 +405,7 @@ def schechter_evolving_from_m(
         e_correction: Optional evolution-correction term(s).
 
     Returns:
-        NumPy array of luminosity-function values corresponding to the
+        NumPy array of luminosity function values corresponding to the
         supplied apparent magnitudes.
     """
     z = validate_array(z, name="z")
@@ -505,7 +505,7 @@ def schechter_double_from_m(
         e_correction: Optional evolution-correction term(s).
 
     Returns:
-        NumPy array of luminosity-function values corresponding to the
+        NumPy array of luminosity function values corresponding to the
         supplied apparent magnitudes.
     """
     z = validate_array(z, name="z")
