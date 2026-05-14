@@ -2,47 +2,46 @@
    :alt: LFKit logo
    :width: 50px
 
-|lfkitlogo| Conditional luminosity-function examples
-====================================================
+|lfkitlogo| Conditional luminosity functions
+============================================
 
-This page shows how to use :class:`lfkit.LuminosityFunction` to construct and
-evaluate conditional luminosity functions.
+This page shows how to evaluate conditional luminosity functions with LFKit.
 
 A conditional luminosity function has the form :math:`\Phi(M \mid x)`, where
 :math:`M` is absolute magnitude and :math:`x` is an external conditioning
-variable. In these examples, the public :class:`lfkit.LuminosityFunction`
-interface uses redshift as the conditioning variable through ``phi(M, z)``.
+variable. The conditioning variable is generic: it can represent redshift, halo
+mass, environment, galaxy type, richness, stellar mass, or another quantity.
 
-Conditional luminosity functions are useful when the luminosity function
-parameters depend on another quantity, such as redshift, halo mass, galaxy
-type, environment, richness, or stellar mass. The examples below focus on
-redshift-dependent behaviour because it fits naturally into the main LFKit API.
+The examples below use redshift as the conditioning variable because it is a
+natural choice for luminosity function evolution. The same functions can be
+used with any other conditioning variable by replacing ``z`` with the desired
+quantity.
 
-The examples include conditional Schechter models and central/satellite
-components. The central component is represented by a narrow lognormal term,
-while the satellite component is represented by a modified Schechter-like term.
+The examples include:
 
-All examples below are executable via ``.. plot::``.
+* a conditional Schechter luminosity function,
+* a conditional Schechter model using LFKit parameter models,
+* a lognormal component,
+* a modified Schechter-like component,
+* a two-component lognormal plus modified-Schechter model,
+* integrated number densities and component fractions.
 
-The number-density units follow the normalization of the luminosity function.
-For example, if the amplitudes are supplied in comoving
-:math:`{\rm Mpc}^{-3}\,{\rm mag}^{-1}`, then :math:`\Phi(M \mid z)` has units of
-:math:`{\rm Mpc}^{-3}\,{\rm mag}^{-1}`.
+The number-density units follow the normalization supplied to the luminosity
+function. For example, if the amplitudes are supplied in
+:math:`{\rm Mpc}^{-3}\,{\rm mag}^{-1}`, then :math:`\Phi(M \mid z)` has units
+of :math:`{\rm Mpc}^{-3}\,{\rm mag}^{-1}`.
 
 
 Conditional Schechter luminosity function
 -----------------------------------------
 
-A conditional Schechter luminosity function allows one or more Schechter
-parameters to depend on the conditioning variable.
+A conditional Schechter luminosity function allows the Schechter parameters to
+depend on an external variable.
 
 This example makes the normalization and characteristic magnitude depend on
-redshift. The faint-end slope is kept fixed. The result is still a Schechter
-luminosity function at each redshift, but the curve changes as the conditioning
-variable changes.
-
-This is useful when a single fixed luminosity function is too restrictive but a
-full tabulated model is not needed.
+redshift. The faint-end slope is kept fixed. At each redshift, the model is
+still a Schechter luminosity function, but the curve evolves smoothly with the
+conditioning variable.
 
 .. plot::
    :include-source: True
@@ -52,29 +51,32 @@ full tabulated model is not needed.
    import matplotlib.pyplot as plt
    import cmasher as cmr
 
-   from lfkit import LuminosityFunction
+   from lfkit.photometry.conditional_lf_models import (
+       conditional_schechter,
+   )
 
    LABEL_SIZE = 15
    TICK_SIZE = 13
    TITLE_SIZE = 17
    LEGEND_SIZE = 15
 
-   colors_blue = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.72, 0.96))
+   colors = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.72, 0.96))
 
    absolute_mag = np.linspace(-24.0, -14.0, 500)
    redshifts = [0.1, 0.6, 1.1]
 
-   lf = LuminosityFunction.conditional_schechter(
-       phi_star=lambda z: 1.0e-3 * (1.0 + z) ** 0.8,
-       m_star=lambda z: -20.5 - 0.7 * (z - 0.1),
-       alpha=-1.1,
-   )
-
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
-   for z_value, color in zip(redshifts, colors_blue):
+   for z_value, color in zip(redshifts, colors):
        z = np.full_like(absolute_mag, z_value)
-       phi = lf.phi(absolute_mag, z)
+
+       phi = conditional_schechter(
+           absolute_mag,
+           z,
+           phi_star=lambda z: 1.0e-3 * (1.0 + z) ** 0.8,
+           m_star=lambda z: -20.5 - 0.7 * (z - 0.1),
+           alpha=-1.1,
+       )
 
        ax.plot(
            absolute_mag,
@@ -87,7 +89,10 @@ full tabulated model is not needed.
    ax.set_yscale("log")
    ax.invert_xaxis()
    ax.set_xlabel("Absolute magnitude $M$", fontsize=LABEL_SIZE)
-   ax.set_ylabel(r"$\Phi(M \mid z)$ [$\mathrm{Mpc}^{-3}\,\mathrm{mag}^{-1}$]", fontsize=LABEL_SIZE)
+   ax.set_ylabel(
+       r"$\Phi(M \mid z)$ [$\mathrm{Mpc}^{-3}\,\mathrm{mag}^{-1}$]",
+       fontsize=LABEL_SIZE,
+   )
    ax.set_title("Conditional Schechter luminosity function", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
    ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="best")
@@ -97,16 +102,11 @@ full tabulated model is not needed.
 Conditional Schechter surface
 -----------------------------
 
-The same conditional Schechter model can be visualized across the full
-magnitude-redshift plane.
+The same model can be shown across the full magnitude-redshift plane.
 
-The filled colour scale shows :math:`\log_{10}\Phi(M \mid z)`. The white
-contours mark constant :math:`\log_{10}\Phi(M \mid z)` levels at -5, -4, -3,
-and -2. These contours make it easier to see where equal-abundance regions sit
-as both magnitude and redshift change.
-
-This plot is useful for checking that the conditional model varies smoothly
-across the range where it will be used.
+The filled colour scale shows :math:`\log_{10}\Phi(M \mid z)`. The contours
+mark constant abundance levels. This is a useful diagnostic for checking that
+the conditional model behaves smoothly across the region where it will be used.
 
 .. plot::
    :include-source: True
@@ -116,25 +116,27 @@ across the range where it will be used.
    import matplotlib.pyplot as plt
    import cmasher as cmr
 
-   from lfkit import LuminosityFunction
+   from lfkit.photometry.conditional_lf_models import (
+       conditional_schechter,
+   )
 
    LABEL_SIZE = 15
    TICK_SIZE = 13
    TITLE_SIZE = 17
-   LEGEND_SIZE = 15
 
    absolute_mag = np.linspace(-24.0, -16.0, 220)
    redshift = np.linspace(0.0, 1.5, 180)
 
    mag_grid, z_grid = np.meshgrid(absolute_mag, redshift)
 
-   lf = LuminosityFunction.conditional_schechter(
+   phi = conditional_schechter(
+       mag_grid,
+       z_grid,
        phi_star=lambda z: 1.0e-3 * (1.0 + z) ** 0.8,
        m_star=lambda z: -20.5 - 0.7 * (z - 0.1),
        alpha=-1.1,
    )
 
-   phi = lf.phi(mag_grid, z_grid)
    log_phi = np.log10(phi)
 
    fig, ax = plt.subplots(figsize=(7.2, 5.0))
@@ -166,7 +168,8 @@ across the range where it will be used.
 
    cbar = fig.colorbar(mesh, ax=ax)
    cbar.set_label(
-       r"$\log_{10}\Phi(M \mid z)$ [$\log_{10}(\mathrm{Mpc}^{-3}\,\mathrm{mag}^{-1})$]",
+       r"$\log_{10}\Phi(M \mid z)$ "
+       r"[$\log_{10}(\mathrm{Mpc}^{-3}\,\mathrm{mag}^{-1})$]",
        fontsize=LABEL_SIZE,
    )
    cbar.ax.tick_params(labelsize=TICK_SIZE)
@@ -174,19 +177,15 @@ across the range where it will be used.
    plt.tight_layout()
 
 
-Conditional evolving Schechter model
-------------------------------------
+Conditional Schechter model with LFKit parameter models
+-------------------------------------------------------
 
-A conditional evolving Schechter model uses LFKit's registered parameter models
-to define how :math:`\phi_\star`, :math:`M_\star`, and :math:`\alpha` depend on
-the conditioning variable.
+LFKit can also evaluate conditional Schechter models using its registered
+parameter models. This is useful when the desired dependence follows one of the
+standard LFKit parameterizations.
 
-This example is similar to the standard evolving Schechter interface, but it is
-included here because it can be used in the same conditional-LF workflow. The
-conditioning variable is passed through ``phi(M, z)``.
-
-This is useful when the desired parameter evolution already matches one of
-LFKit's registered parameter models.
+Here, the normalization and characteristic magnitude evolve with the
+conditioning variable, while the faint-end slope is constant.
 
 .. plot::
    :include-source: True
@@ -196,32 +195,35 @@ LFKit's registered parameter models.
    import matplotlib.pyplot as plt
    import cmasher as cmr
 
-   from lfkit import LuminosityFunction
+   from lfkit.photometry.conditional_lf_models import (
+       conditional_schechter_evolving,
+   )
 
    LABEL_SIZE = 15
    TICK_SIZE = 13
    TITLE_SIZE = 17
    LEGEND_SIZE = 15
 
-   colors_red = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.03, 0.26))
+   colors = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.03, 0.26))
 
    absolute_mag = np.linspace(-24.0, -14.0, 500)
    redshifts = [0.1, 0.6, 1.1]
 
-   lf = LuminosityFunction.conditional_evolving_schechter(
-       phi_model="linear_p",
-       phi_kwargs={"phi_0_star": 1.0e-3, "p": 0.7},
-       m_star_model="linear_q",
-       m_star_kwargs={"m_0_star": -20.5, "q": 0.8, "z_ref": 0.1},
-       alpha_model="constant",
-       alpha_kwargs={"alpha": -1.1},
-   )
-
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
-   for z_value, color in zip(redshifts, colors_red):
+   for z_value, color in zip(redshifts, colors):
        z = np.full_like(absolute_mag, z_value)
-       phi = lf.phi(absolute_mag, z)
+
+       phi = conditional_schechter_evolving(
+           absolute_mag,
+           z,
+           phi_model="linear_p",
+           phi_kwargs={"phi_0_star": 1.0e-3, "p": 0.7},
+           m_star_model="linear_q",
+           m_star_kwargs={"m_0_star": -20.5, "q": 0.8, "z_ref": 0.1},
+           alpha_model="constant",
+           alpha_kwargs={"alpha": -1.1},
+       )
 
        ax.plot(
            absolute_mag,
@@ -234,26 +236,25 @@ LFKit's registered parameter models.
    ax.set_yscale("log")
    ax.invert_xaxis()
    ax.set_xlabel("Absolute magnitude $M$", fontsize=LABEL_SIZE)
-   ax.set_ylabel(r"$\Phi(M \mid z)$ [$\mathrm{Mpc}^{-3}\,\mathrm{mag}^{-1}$]", fontsize=LABEL_SIZE)
+   ax.set_ylabel(
+       r"$\Phi(M \mid z)$ [$\mathrm{Mpc}^{-3}\,\mathrm{mag}^{-1}$]",
+       fontsize=LABEL_SIZE,
+   )
    ax.set_title("Conditional evolving Schechter model", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
    ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="best")
    plt.tight_layout()
 
 
-Central lognormal conditional luminosity function
--------------------------------------------------
+Lognormal conditional component
+-------------------------------
 
-A central-galaxy conditional luminosity function can be represented by a narrow
-lognormal component in luminosity, written here in magnitude space.
+A narrow lognormal component can represent a population concentrated around a
+characteristic luminosity at fixed condition.
 
-This example shows a central component whose mean absolute magnitude becomes
-brighter with redshift. The scatter is kept fixed. The peak therefore shifts in
-absolute magnitude while retaining a similar width.
-
-This type of component is useful in central/satellite decompositions where the
-central galaxy population is concentrated around a characteristic luminosity at
-fixed condition.
+This example uses a mean absolute magnitude that becomes brighter with
+redshift. The scatter is fixed, so the peak shifts while retaining a similar
+width.
 
 .. plot::
    :include-source: True
@@ -263,29 +264,32 @@ fixed condition.
    import matplotlib.pyplot as plt
    import cmasher as cmr
 
-   from lfkit import LuminosityFunction
+   from lfkit.photometry.conditional_lf_models import (
+       lognormal_conditional_lf,
+   )
 
    LABEL_SIZE = 15
    TICK_SIZE = 13
    TITLE_SIZE = 17
    LEGEND_SIZE = 15
 
-   colors_blue = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.72, 0.96))
+   colors = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.72, 0.96))
 
    absolute_mag = np.linspace(-24.0, -16.0, 500)
    redshifts = [0.1, 0.6, 1.1]
 
-   lf = LuminosityFunction.central_lognormal_conditional(
-       mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
-       sigma_log_luminosity=0.18,
-       amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
-   )
-
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
-   for z_value, color in zip(redshifts, colors_blue):
+   for z_value, color in zip(redshifts, colors):
        z = np.full_like(absolute_mag, z_value)
-       phi = lf.phi(absolute_mag, z)
+
+       phi = lognormal_conditional_lf(
+           absolute_mag,
+           z,
+           mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
+           sigma_log_luminosity=0.18,
+           amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
+       )
 
        ax.plot(
            absolute_mag,
@@ -298,26 +302,23 @@ fixed condition.
    ax.set_yscale("log")
    ax.invert_xaxis()
    ax.set_xlabel("Absolute magnitude $M$", fontsize=LABEL_SIZE)
-   ax.set_ylabel(r"$\Phi_{\rm cen}(M \mid z)$ [$\mathrm{Mpc}^{-3}\,\mathrm{mag}^{-1}$]", fontsize=LABEL_SIZE)
-   ax.set_title("Central lognormal conditional LF", fontsize=TITLE_SIZE)
+   ax.set_ylabel(
+       r"$\Phi_{\rm lognormal}(M \mid z)$ "
+       r"[$\mathrm{Mpc}^{-3}\,\mathrm{mag}^{-1}$]",
+       fontsize=LABEL_SIZE,
+   )
+   ax.set_title("Lognormal conditional LF component", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
    ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="best")
    plt.tight_layout()
 
 
-Satellite modified-Schechter conditional luminosity function
-------------------------------------------------------------
+Modified Schechter conditional component
+----------------------------------------
 
-A satellite conditional luminosity function can be represented by a modified
-Schechter-like component.
-
-This example uses a satellite model with an exponential cutoff
-:math:`\exp[-(L/L_\star)^2]`. Compared with the central lognormal component,
-the satellite component is broader and contributes more strongly across a wider
+The modified Schechter component uses a squared exponential cutoff in luminosity
+ratio. It is broader than the lognormal component and contributes over a wider
 range of faint magnitudes.
-
-This is useful for modeling satellite populations separately from central
-galaxies.
 
 .. plot::
    :include-source: True
@@ -327,29 +328,32 @@ galaxies.
    import matplotlib.pyplot as plt
    import cmasher as cmr
 
-   from lfkit import LuminosityFunction
+   from lfkit.photometry.conditional_lf_models import (
+       modified_schechter_conditional_lf,
+   )
 
    LABEL_SIZE = 15
    TICK_SIZE = 13
    TITLE_SIZE = 17
    LEGEND_SIZE = 15
 
-   colors_red = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.03, 0.26))
+   colors = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.03, 0.26))
 
    absolute_mag = np.linspace(-24.0, -14.0, 500)
    redshifts = [0.1, 0.6, 1.1]
 
-   lf = LuminosityFunction.satellite_modified_schechter_conditional(
-       phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
-       m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
-       alpha=lambda z: -1.05 - 0.10 * z,
-   )
-
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
-   for z_value, color in zip(redshifts, colors_red):
+   for z_value, color in zip(redshifts, colors):
        z = np.full_like(absolute_mag, z_value)
-       phi = lf.phi(absolute_mag, z)
+
+       phi = modified_schechter_conditional_lf(
+           absolute_mag,
+           z,
+           phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
+           m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
+           alpha=lambda z: -1.05 - 0.10 * z,
+       )
 
        ax.plot(
            absolute_mag,
@@ -362,26 +366,25 @@ galaxies.
    ax.set_yscale("log")
    ax.invert_xaxis()
    ax.set_xlabel("Absolute magnitude $M$", fontsize=LABEL_SIZE)
-   ax.set_ylabel(r"$\Phi_{\rm sat}(M \mid z)$ [$\mathrm{Mpc}^{-3}\,\mathrm{mag}^{-1}$]", fontsize=LABEL_SIZE)
-   ax.set_title("Satellite modified-Schechter conditional LF", fontsize=TITLE_SIZE)
+   ax.set_ylabel(
+       r"$\Phi_{\rm modSch}(M \mid z)$ "
+       r"[$\mathrm{Mpc}^{-3}\,\mathrm{mag}^{-1}$]",
+       fontsize=LABEL_SIZE,
+   )
+   ax.set_title("Modified Schechter conditional LF component", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
    ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="best")
    plt.tight_layout()
 
 
-Central and satellite components
---------------------------------
+Standard, modified, and lognormal component shapes
+--------------------------------------------------
 
-The central and satellite conditional luminosity functions can be combined into
-a single central-plus-satellite model.
-
-This plot separates the central component, the satellite component, and their
-sum at a fixed redshift. The central component is narrow and localized around
-the mean central magnitude. The satellite component is broader and dominates
-over a wider faint-magnitude range.
-
-This decomposition is useful when checking which part of the galaxy population
-drives the total luminosity function.
+It is useful to compare the component shapes at fixed condition. The standard
+Schechter form has the usual exponential cutoff in luminosity ratio. The
+modified Schechter component uses a squared exponential cutoff, making the
+bright-end suppression sharper. The lognormal component is localized around a
+mean luminosity and is useful for narrow populations.
 
 .. plot::
    :include-source: True
@@ -391,7 +394,109 @@ drives the total luminosity function.
    import matplotlib.pyplot as plt
    import cmasher as cmr
 
-   from lfkit import LuminosityFunction
+   from lfkit.photometry.conditional_lf_models import (
+       conditional_schechter,
+       lognormal_conditional_lf,
+       modified_schechter_conditional_lf,
+   )
+
+   LABEL_SIZE = 15
+   TICK_SIZE = 13
+   TITLE_SIZE = 17
+   LEGEND_SIZE = 15
+
+   colors = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.08, 0.92))
+
+   absolute_mag = np.linspace(-24.0, -14.0, 600)
+   z_value = 0.6
+   z = np.full_like(absolute_mag, z_value)
+
+   phi_schechter = conditional_schechter(
+       absolute_mag,
+       z,
+       phi_star=1.0e-3,
+       m_star=-20.5,
+       alpha=-1.1,
+   )
+
+   phi_modified = modified_schechter_conditional_lf(
+       absolute_mag,
+       z,
+       phi_star=1.0e-3,
+       m_star=-20.5,
+       alpha=-1.1,
+   )
+
+   phi_lognormal = lognormal_conditional_lf(
+       absolute_mag,
+       z,
+       mean_absolute_mag=-20.5,
+       sigma_log_luminosity=0.20,
+       amplitude=1.0e-3,
+   )
+
+   fig, ax = plt.subplots(figsize=(7.0, 5.0))
+
+   ax.plot(
+       absolute_mag,
+       phi_schechter,
+       lw=3,
+       color=colors[0],
+       label="Standard Schechter",
+   )
+   ax.plot(
+       absolute_mag,
+       phi_modified,
+       lw=3,
+       color=colors[1],
+       label="Modified Schechter",
+   )
+   ax.plot(
+       absolute_mag,
+       phi_lognormal,
+       lw=3,
+       color=colors[2],
+       label="Lognormal",
+   )
+
+   ax.set_yscale("log")
+   ax.invert_xaxis()
+   ax.set_xlabel("Absolute magnitude $M$", fontsize=LABEL_SIZE)
+   ax.set_ylabel(
+       r"$\Phi(M \mid z=0.6)$ "
+       r"[$\mathrm{Mpc}^{-3}\,\mathrm{mag}^{-1}$]",
+       fontsize=LABEL_SIZE,
+   )
+   ax.set_title("Conditional LF component shapes", fontsize=TITLE_SIZE)
+   ax.tick_params(axis="both", labelsize=TICK_SIZE)
+   ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="best")
+
+   plt.tight_layout()
+
+
+Two-component conditional luminosity function
+---------------------------------------------
+
+The lognormal and modified Schechter components can be combined into a
+two-component conditional luminosity function.
+
+This plot separates the lognormal component, the modified Schechter component,
+and their sum at a fixed redshift. This is a useful way to check which component
+dominates different magnitude ranges.
+
+.. plot::
+   :include-source: True
+   :width: 520
+
+   import numpy as np
+   import matplotlib.pyplot as plt
+   import cmasher as cmr
+
+   from lfkit.photometry.conditional_lf_models import (
+       lognormal_conditional_lf,
+       modified_schechter_conditional_lf,
+       two_component_conditional_lf,
+   )
 
    LABEL_SIZE = 15
    TICK_SIZE = 13
@@ -400,82 +505,82 @@ drives the total luminosity function.
 
    colors_blue = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.72, 0.96))
    colors_red = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.03, 0.26))
-   c_mid = 0.5 * (np.array(colors_blue[1]) + np.array(colors_red[1]))
+   total_color = 0.5 * (np.array(colors_blue[1]) + np.array(colors_red[1]))
 
    absolute_mag = np.linspace(-24.0, -14.0, 500)
    z_value = 0.6
    z = np.full_like(absolute_mag, z_value)
 
-   central = LuminosityFunction.central_lognormal_conditional(
+   lognormal_phi = lognormal_conditional_lf(
+       absolute_mag,
+       z,
        mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
        sigma_log_luminosity=0.18,
        amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
    )
 
-   satellite = LuminosityFunction.satellite_modified_schechter_conditional(
+   modified_phi = modified_schechter_conditional_lf(
+       absolute_mag,
+       z,
        phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
        m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
        alpha=lambda z: -1.05 - 0.10 * z,
    )
 
-   total = LuminosityFunction.central_satellite_conditional(
-       central_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
-       central_sigma_log_luminosity=0.18,
-       central_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
-       satellite_phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
-       satellite_alpha=lambda z: -1.05 - 0.10 * z,
-       satellite_m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
+   total_phi = two_component_conditional_lf(
+       absolute_mag,
+       z,
+       lognormal_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
+       lognormal_sigma_log_luminosity=0.18,
+       lognormal_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
+       modified_phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
+       modified_m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
+       modified_alpha=lambda z: -1.05 - 0.10 * z,
    )
-
-   central_phi = central.phi(absolute_mag, z)
-   satellite_phi = satellite.phi(absolute_mag, z)
-   total_phi = total.phi(absolute_mag, z)
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
    ax.plot(
        absolute_mag,
-       central_phi,
+       lognormal_phi,
        lw=3,
        color=colors_blue[1],
-       label="Central",
+       label="Lognormal component",
    )
    ax.plot(
        absolute_mag,
-       satellite_phi,
+       modified_phi,
        lw=3,
        color=colors_red[1],
-       label="Satellite",
+       label="Modified Schechter component",
    )
    ax.plot(
        absolute_mag,
        total_phi,
        lw=3,
-       color=c_mid,
-       label="Central + satellite",
+       color=total_color,
+       label="Two-component total",
    )
 
    ax.set_yscale("log")
    ax.invert_xaxis()
    ax.set_xlabel("Absolute magnitude $M$", fontsize=LABEL_SIZE)
-   ax.set_ylabel(r"$\Phi(M \mid z)$ [$\mathrm{Mpc}^{-3}\,\mathrm{mag}^{-1}$]", fontsize=LABEL_SIZE)
-   ax.set_title(r"Central and satellite components at $z=0.6$", fontsize=TITLE_SIZE)
+   ax.set_ylabel(
+       r"$\Phi(M \mid z)$ [$\mathrm{Mpc}^{-3}\,\mathrm{mag}^{-1}$]",
+       fontsize=LABEL_SIZE,
+   )
+   ax.set_title(r"Two-component conditional LF at $z=0.6$", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
    ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="best")
    plt.tight_layout()
 
 
-Central-plus-satellite evolution
---------------------------------
+Two-component evolution
+-----------------------
 
-The central-plus-satellite model can also be evaluated at several redshifts.
-
-This plot shows how the total conditional luminosity function changes when the
-central and satellite parameters vary with redshift. The model combines a
-narrow central component with a broader satellite component at each redshift.
-
-This is useful when the total luminosity function is needed, but the model
-still keeps a physically interpretable central/satellite split.
+The two-component conditional luminosity function can be evaluated across
+several redshifts. This example shows how the full model changes when both
+components depend on the conditioning variable.
 
 .. plot::
    :include-source: True
@@ -485,32 +590,35 @@ still keeps a physically interpretable central/satellite split.
    import matplotlib.pyplot as plt
    import cmasher as cmr
 
-   from lfkit import LuminosityFunction
+   from lfkit.photometry.conditional_lf_models import (
+       two_component_conditional_lf,
+   )
 
    LABEL_SIZE = 15
    TICK_SIZE = 13
    TITLE_SIZE = 17
    LEGEND_SIZE = 15
 
-   colors_blue = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.72, 0.96))
+   colors = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.72, 0.96))
 
    absolute_mag = np.linspace(-24.0, -14.0, 500)
    redshifts = [0.1, 0.6, 1.1]
 
-   lf = LuminosityFunction.central_satellite_conditional(
-       central_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
-       central_sigma_log_luminosity=0.18,
-       central_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
-       satellite_phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
-       satellite_alpha=lambda z: -1.05 - 0.10 * z,
-       satellite_m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
-   )
-
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
-   for z_value, color in zip(redshifts, colors_blue):
+   for z_value, color in zip(redshifts, colors):
        z = np.full_like(absolute_mag, z_value)
-       phi = lf.phi(absolute_mag, z)
+
+       phi = two_component_conditional_lf(
+           absolute_mag,
+           z,
+           lognormal_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
+           lognormal_sigma_log_luminosity=0.18,
+           lognormal_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
+           modified_phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
+           modified_m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
+           modified_alpha=lambda z: -1.05 - 0.10 * z,
+       )
 
        ax.plot(
            absolute_mag,
@@ -523,8 +631,12 @@ still keeps a physically interpretable central/satellite split.
    ax.set_yscale("log")
    ax.invert_xaxis()
    ax.set_xlabel("Absolute magnitude $M$", fontsize=LABEL_SIZE)
-   ax.set_ylabel(r"$\Phi_{\rm cen+sat}(M \mid z)$ [$\mathrm{Mpc}^{-3}\,\mathrm{mag}^{-1}$]", fontsize=LABEL_SIZE)
-   ax.set_title("Central-plus-satellite conditional LF", fontsize=TITLE_SIZE)
+   ax.set_ylabel(
+       r"$\Phi_{\rm total}(M \mid z)$ "
+       r"[$\mathrm{Mpc}^{-3}\,\mathrm{mag}^{-1}$]",
+       fontsize=LABEL_SIZE,
+   )
+   ax.set_title("Two-component conditional LF", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
    ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="best")
    plt.tight_layout()
@@ -536,12 +648,10 @@ Integrated conditional number density
 A conditional luminosity function can be integrated over absolute magnitude at
 each value of the conditioning variable.
 
-This example integrates the central component, satellite component, and total
-central-plus-satellite luminosity function over a fixed absolute-magnitude
-range. The result shows how the selected number density changes with redshift.
-
-This type of calculation is useful when the conditional luminosity function is
-used as an ingredient in redshift-distribution or abundance calculations.
+This example uses LFKit's conditional luminosity-function integration helper to
+integrate the lognormal component, the modified Schechter component, and the
+two-component total over a fixed absolute-magnitude range. The result shows how
+the selected number density changes with redshift.
 
 .. plot::
    :include-source: True
@@ -551,7 +661,14 @@ used as an ingredient in redshift-distribution or abundance calculations.
    import matplotlib.pyplot as plt
    import cmasher as cmr
 
-   from lfkit import LuminosityFunction
+   from lfkit.photometry.conditional_lf_integrals import (
+       integrate_conditional_luminosity_function,
+   )
+   from lfkit.photometry.conditional_lf_models import (
+       lognormal_conditional_lf,
+       modified_schechter_conditional_lf,
+       two_component_conditional_lf,
+   )
 
    LABEL_SIZE = 15
    TICK_SIZE = 13
@@ -560,55 +677,78 @@ used as an ingredient in redshift-distribution or abundance calculations.
 
    colors_blue = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.72, 0.96))
    colors_red = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.03, 0.26))
-   c_mid = 0.5 * (np.array(colors_blue[1]) + np.array(colors_red[1]))
+   total_color = 0.5 * (np.array(colors_blue[1]) + np.array(colors_red[1]))
 
    redshift = np.linspace(0.05, 1.5, 180)
+   absolute_mag = np.linspace(-24.0, -14.0, 800)
 
-   central = LuminosityFunction.central_lognormal_conditional(
-       mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
-       sigma_log_luminosity=0.18,
-       amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
-   )
+   _, z_grid = np.meshgrid(absolute_mag, redshift)
 
-   satellite = LuminosityFunction.satellite_modified_schechter_conditional(
-       phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
-       m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
-       alpha=lambda z: -1.05 - 0.10 * z,
-   )
-
-   total = LuminosityFunction.central_satellite_conditional(
-       central_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
-       central_sigma_log_luminosity=0.18,
-       central_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
-       satellite_phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
-       satellite_alpha=lambda z: -1.05 - 0.10 * z,
-       satellite_m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
+   n_lognormal = integrate_conditional_luminosity_function(
+       absolute_mag=absolute_mag,
+       condition=z_grid,
+       conditional_lf=lambda absolute_mag, condition: lognormal_conditional_lf(
+           absolute_mag,
+           condition,
+           mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
+           sigma_log_luminosity=0.18,
+           amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
+       ),
+       axis=1,
    )
 
-   n_central = central.integrated_number_density(
-       redshift,
-       m_bright=-24.0,
-       m_faint=-14.0,
-       n_m=800,
+   n_modified = integrate_conditional_luminosity_function(
+       absolute_mag=absolute_mag,
+       condition=z_grid,
+       conditional_lf=lambda absolute_mag, condition: modified_schechter_conditional_lf(
+           absolute_mag,
+           condition,
+           phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
+           m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
+           alpha=lambda z: -1.05 - 0.10 * z,
+       ),
+       axis=1,
    )
-   n_satellite = satellite.integrated_number_density(
-       redshift,
-       m_bright=-24.0,
-       m_faint=-14.0,
-       n_m=800,
-   )
-   n_total = total.integrated_number_density(
-       redshift,
-       m_bright=-24.0,
-       m_faint=-14.0,
-       n_m=800,
+
+   n_total = integrate_conditional_luminosity_function(
+       absolute_mag=absolute_mag,
+       condition=z_grid,
+       conditional_lf=lambda absolute_mag, condition: two_component_conditional_lf(
+           absolute_mag,
+           condition,
+           lognormal_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
+           lognormal_sigma_log_luminosity=0.18,
+           lognormal_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
+           modified_phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
+           modified_m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
+           modified_alpha=lambda z: -1.05 - 0.10 * z,
+       ),
+       axis=1,
    )
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
-   ax.plot(redshift, n_central, lw=3, color=colors_blue[1], label="Central")
-   ax.plot(redshift, n_satellite, lw=3, color=colors_red[1], label="Satellite")
-   ax.plot(redshift, n_total, lw=3, color=c_mid, label="Central + satellite")
+   ax.plot(
+       redshift,
+       n_lognormal,
+       lw=3,
+       color=colors_blue[1],
+       label="Lognormal component",
+   )
+   ax.plot(
+       redshift,
+       n_modified,
+       lw=3,
+       color=colors_red[1],
+       label="Modified Schechter component",
+   )
+   ax.plot(
+       redshift,
+       n_total,
+       lw=3,
+       color=total_color,
+       label="Two-component total",
+   )
 
    ax.set_yscale("log")
    ax.set_xlabel("Redshift $z$", fontsize=LABEL_SIZE)
@@ -619,18 +759,16 @@ used as an ingredient in redshift-distribution or abundance calculations.
    plt.tight_layout()
 
 
-Central fraction
-----------------
+Component fractions
+-------------------
 
-The relative contribution of central and satellite galaxies can be summarized
-as a fraction of the integrated central-plus-satellite luminosity function.
+The relative contribution of each component can be summarized as a fraction of
+the integrated two-component luminosity function.
 
-This example computes the central fraction over a fixed absolute-magnitude
-range. The fraction changes with redshift because the central and satellite
-components have different conditional parameter dependence.
-
-This is a compact diagnostic for checking whether the selected population is
-central-dominated, satellite-dominated, or mixed.
+This example uses LFKit's conditional luminosity-function integration helper to
+compute the integrated lognormal and modified Schechter components. This is a
+compact diagnostic for checking whether the selected population is dominated by
+the lognormal component, the modified Schechter component, or a mixture of both.
 
 .. plot::
    :include-source: True
@@ -640,7 +778,13 @@ central-dominated, satellite-dominated, or mixed.
    import matplotlib.pyplot as plt
    import cmasher as cmr
 
-   from lfkit import LuminosityFunction
+   from lfkit.photometry.conditional_lf_integrals import (
+       integrate_conditional_luminosity_function,
+   )
+   from lfkit.photometry.conditional_lf_models import (
+       lognormal_conditional_lf,
+       modified_schechter_conditional_lf,
+   )
 
    LABEL_SIZE = 15
    TICK_SIZE = 13
@@ -651,73 +795,77 @@ central-dominated, satellite-dominated, or mixed.
    colors_red = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.03, 0.26))
 
    redshift = np.linspace(0.05, 1.5, 180)
+   absolute_mag = np.linspace(-24.0, -14.0, 800)
 
-   central = LuminosityFunction.central_lognormal_conditional(
-       mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
-       sigma_log_luminosity=0.18,
-       amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
+   _, z_grid = np.meshgrid(absolute_mag, redshift)
+
+   n_lognormal = integrate_conditional_luminosity_function(
+       absolute_mag=absolute_mag,
+       condition=z_grid,
+       conditional_lf=lambda absolute_mag, condition: lognormal_conditional_lf(
+           absolute_mag,
+           condition,
+           mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
+           sigma_log_luminosity=0.18,
+           amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
+       ),
+       axis=1,
    )
 
-   satellite = LuminosityFunction.satellite_modified_schechter_conditional(
-       phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
-       m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
-       alpha=lambda z: -1.05 - 0.10 * z,
+   n_modified = integrate_conditional_luminosity_function(
+       absolute_mag=absolute_mag,
+       condition=z_grid,
+       conditional_lf=lambda absolute_mag, condition: modified_schechter_conditional_lf(
+           absolute_mag,
+           condition,
+           phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
+           m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
+           alpha=lambda z: -1.05 - 0.10 * z,
+       ),
+       axis=1,
    )
 
-   n_central = central.integrated_number_density(
-       redshift,
-       m_bright=-24.0,
-       m_faint=-14.0,
-       n_m=800,
-   )
-   n_satellite = satellite.integrated_number_density(
-       redshift,
-       m_bright=-24.0,
-       m_faint=-14.0,
-       n_m=800,
-   )
+   n_total = n_lognormal + n_modified
 
-   central_fraction = n_central / (n_central + n_satellite)
-   satellite_fraction = n_satellite / (n_central + n_satellite)
+   lognormal_fraction = n_lognormal / n_total
+   modified_fraction = n_modified / n_total
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
    ax.plot(
        redshift,
-       central_fraction,
+       lognormal_fraction,
        lw=3,
        color=colors_blue[1],
-       label="Central fraction",
+       label="Lognormal fraction",
    )
    ax.plot(
        redshift,
-       satellite_fraction,
+       modified_fraction,
        lw=3,
        color=colors_red[1],
-       label="Satellite fraction",
+       label="Modified Schechter fraction",
    )
 
    ax.set_ylim(-0.05, 1.05)
    ax.set_xlabel("Redshift $z$", fontsize=LABEL_SIZE)
    ax.set_ylabel("Fraction of integrated LF", fontsize=LABEL_SIZE)
-   ax.set_title(r"Central and satellite fractions over $-24 \leq M \leq -14$", fontsize=TITLE_SIZE)
+   ax.set_title(r"Component fractions over $-24 \leq M \leq -14$", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
    ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="center right")
    plt.tight_layout()
 
 
-Central-plus-satellite surface
-------------------------------
+Two-component LF surface
+-----------------------------------------
 
-The full central-plus-satellite conditional luminosity function can be shown as
-a two-dimensional surface.
+The full two-component conditional luminosity function can be shown as a
+surface in the magnitude-redshift plane.
 
-The filled colour scale shows :math:`\log_{10}\Phi_{\rm cen+sat}(M \mid z)`.
-The white contours mark constant :math:`\log_{10}\Phi_{\rm cen+sat}(M \mid z)`
-levels at -5, -4, -3, and -2.
-
-This view is useful for checking whether the central peak, satellite tail, and
-redshift dependence combine smoothly over the full magnitude-redshift range.
+The filled colour scale shows :math:`\log_{10}\Phi_{\rm total}(M \mid z)`.
+The contours mark constant abundance levels. This view is useful for checking
+whether the narrow component, broad component, and redshift dependence combine
+smoothly.
 
 .. plot::
    :include-source: True
@@ -727,28 +875,30 @@ redshift dependence combine smoothly over the full magnitude-redshift range.
    import matplotlib.pyplot as plt
    import cmasher as cmr
 
-   from lfkit import LuminosityFunction
+   from lfkit.photometry.conditional_lf_models import (
+       two_component_conditional_lf,
+   )
 
    LABEL_SIZE = 15
    TICK_SIZE = 13
    TITLE_SIZE = 17
-   LEGEND_SIZE = 15
 
    absolute_mag = np.linspace(-24.0, -14.0, 220)
    redshift = np.linspace(0.0, 1.5, 180)
 
    mag_grid, z_grid = np.meshgrid(absolute_mag, redshift)
 
-   lf = LuminosityFunction.central_satellite_conditional(
-       central_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
-       central_sigma_log_luminosity=0.18,
-       central_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
-       satellite_phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
-       satellite_alpha=lambda z: -1.05 - 0.10 * z,
-       satellite_m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
+   phi = two_component_conditional_lf(
+       mag_grid,
+       z_grid,
+       lognormal_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
+       lognormal_sigma_log_luminosity=0.18,
+       lognormal_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
+       modified_phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
+       modified_m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
+       modified_alpha=lambda z: -1.05 - 0.10 * z,
    )
 
-   phi = lf.phi(mag_grid, z_grid)
    log_phi = np.log10(phi)
 
    fig, ax = plt.subplots(figsize=(7.2, 5.0))
@@ -775,14 +925,333 @@ redshift dependence combine smoothly over the full magnitude-redshift range.
    ax.invert_xaxis()
    ax.set_xlabel("Absolute magnitude $M$", fontsize=LABEL_SIZE)
    ax.set_ylabel("Redshift $z$", fontsize=LABEL_SIZE)
-   ax.set_title("Central-plus-satellite conditional LF surface", fontsize=TITLE_SIZE)
+   ax.set_title("Two-component conditional LF surface", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
 
    cbar = fig.colorbar(mesh, ax=ax)
    cbar.set_label(
-       r"$\log_{10}\Phi_{\rm cen+sat}(M \mid z)$ [$\log_{10}(\mathrm{Mpc}^{-3}\,\mathrm{mag}^{-1})$]",
+       r"$\log_{10}\Phi_{\rm total}(M \mid z)$ "
+       r"[$\log_{10}(\mathrm{Mpc}^{-3}\,\mathrm{mag}^{-1})$]",
        fontsize=LABEL_SIZE,
    )
    cbar.ax.tick_params(labelsize=TICK_SIZE)
+
+   plt.tight_layout()
+
+
+Halo-mass conditional luminosity function
+-----------------------------------------
+
+The conditioning variable does not need to be redshift. In halo-model
+applications, a conditional luminosity function is often written as
+:math:`\Phi(M \mid M_h)`, where :math:`M_h` is halo mass.
+
+This example uses log halo mass as the conditioning variable and lets the
+lognormal mean magnitude become brighter in more massive halos.
+
+.. plot::
+   :include-source: True
+   :width: 520
+
+   import numpy as np
+   import matplotlib.pyplot as plt
+   import cmasher as cmr
+
+   from lfkit.photometry.conditional_lf_models import lognormal_conditional_lf
+
+   LABEL_SIZE = 15
+   TICK_SIZE = 13
+   TITLE_SIZE = 17
+   LEGEND_SIZE = 15
+
+   colors = cmr.take_cmap_colors("cmr.guppy", 4, cmap_range=(0.08, 0.92))
+
+   absolute_mag = np.linspace(-24.0, -16.0, 600)
+   log_halo_masses = [11.5, 12.0, 12.5, 13.0]
+
+   fig, ax = plt.subplots(figsize=(7.0, 5.0))
+
+   for log_mh, color in zip(log_halo_masses, colors):
+       condition = np.full_like(absolute_mag, log_mh)
+
+       phi = lognormal_conditional_lf(
+           absolute_mag,
+           condition,
+           mean_absolute_mag=lambda log_mh: -20.0 - 0.8 * (log_mh - 12.0),
+           sigma_log_luminosity=0.18,
+           amplitude=lambda log_mh: 5.0e-4 * 10.0 ** (0.3 * (log_mh - 12.0)),
+       )
+
+       ax.plot(
+           absolute_mag,
+           phi,
+           lw=3,
+           color=color,
+           label=rf"$\log_{{10}} M_h={log_mh}$",
+       )
+
+   ax.set_yscale("log")
+   ax.invert_xaxis()
+   ax.set_xlabel("Absolute magnitude $M$", fontsize=LABEL_SIZE)
+   ax.set_ylabel(
+       r"$\Phi(M \mid M_h)$ [$\mathrm{Mpc}^{-3}\,\mathrm{mag}^{-1}$]",
+       fontsize=LABEL_SIZE,
+   )
+   ax.set_title("Halo-mass conditional lognormal LF", fontsize=TITLE_SIZE)
+   ax.tick_params(axis="both", labelsize=TICK_SIZE)
+   ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="best")
+
+   plt.tight_layout()
+
+
+Mean magnitude from a conditional luminosity function
+-----------------------------------------------------
+
+Weighted integrals can be used to compute summary statistics of a conditional
+luminosity function. For example, the mean absolute magnitude at fixed condition
+is
+
+:math:`\langle M \rangle(x) = \int M \Phi(M \mid x)\,dM / \int \Phi(M \mid x)\,dM`.
+
+.. plot::
+   :include-source: True
+   :width: 520
+
+   import numpy as np
+   import matplotlib.pyplot as plt
+   import cmasher as cmr
+
+   from lfkit.photometry.conditional_lf_integrals import (
+       integrate_conditional_luminosity_function,
+       integrate_weighted_conditional_luminosity_function,
+   )
+   from lfkit.photometry.conditional_lf_models import two_component_conditional_lf
+
+   LABEL_SIZE = 15
+   TICK_SIZE = 13
+   TITLE_SIZE = 17
+
+   redshift = np.linspace(0.05, 1.5, 180)
+   absolute_mag = np.linspace(-24.0, -14.0, 800)
+
+   mag_grid, z_grid = np.meshgrid(absolute_mag, redshift)
+
+   number_density = integrate_conditional_luminosity_function(
+       absolute_mag=absolute_mag,
+       condition=z_grid,
+       conditional_lf=lambda absolute_mag, condition: two_component_conditional_lf(
+           absolute_mag,
+           condition,
+           lognormal_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
+           lognormal_sigma_log_luminosity=0.18,
+           lognormal_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
+           modified_phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
+           modified_m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
+           modified_alpha=lambda z: -1.05 - 0.10 * z,
+       ),
+       axis=1,
+   )
+
+   weighted_magnitude = integrate_weighted_conditional_luminosity_function(
+       absolute_mag=absolute_mag,
+       condition=z_grid,
+       conditional_lf=lambda absolute_mag, condition: two_component_conditional_lf(
+           absolute_mag,
+           condition,
+           lognormal_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
+           lognormal_sigma_log_luminosity=0.18,
+           lognormal_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
+           modified_phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
+           modified_m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
+           modified_alpha=lambda z: -1.05 - 0.10 * z,
+       ),
+       weight=lambda absolute_mag, condition: absolute_mag,
+       axis=1,
+   )
+
+   mean_magnitude = weighted_magnitude / number_density
+
+   fig, ax = plt.subplots(figsize=(7.0, 5.0))
+
+   ax.plot(
+       redshift,
+       mean_magnitude,
+       lw=3,
+       color=cmr.take_cmap_colors("cmr.guppy", 1, cmap_range=(0.7, 0.9))[0],
+   )
+
+   ax.invert_yaxis()
+   ax.set_xlabel("Redshift $z$", fontsize=LABEL_SIZE)
+   ax.set_ylabel(r"Mean absolute magnitude $\langle M \rangle$", fontsize=LABEL_SIZE)
+   ax.set_title("Mean magnitude of the conditional LF", fontsize=TITLE_SIZE)
+   ax.tick_params(axis="both", labelsize=TICK_SIZE)
+
+   plt.tight_layout()
+
+
+Selection-limited conditional number density
+--------------------------------------------
+
+Instead of integrating over a fixed absolute-magnitude range by hand, LFKit can
+integrate a luminosity function callable over finite magnitude bounds. This is
+useful for survey-like selections where only galaxies brighter than a limiting
+absolute magnitude contribute to the selected sample.
+
+Here, the limiting absolute magnitude becomes brighter with redshift. The
+example compares the full number density over a fixed magnitude range with the
+number density brighter than the redshift-dependent limit.
+
+.. plot::
+   :include-source: True
+   :width: 520
+
+   import numpy as np
+   import matplotlib.pyplot as plt
+   import cmasher as cmr
+
+   from lfkit.photometry.conditional_lf_models import two_component_conditional_lf
+   from lfkit.photometry.lf_integrals import integrated_number_density
+
+   LABEL_SIZE = 15
+   TICK_SIZE = 13
+   TITLE_SIZE = 17
+   LEGEND_SIZE = 15
+
+   redshift = np.linspace(0.05, 1.5, 180)
+
+   def lf(absolute_mag, z):
+       return two_component_conditional_lf(
+           absolute_mag,
+           z,
+           lognormal_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
+           lognormal_sigma_log_luminosity=0.18,
+           lognormal_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
+           modified_phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
+           modified_m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
+           modified_alpha=lambda z: -1.05 - 0.10 * z,
+       )
+
+   limiting_mag = -18.5 - 1.2 * redshift
+
+   n_total = integrated_number_density(
+       redshift,
+       lf,
+       m_bright=-24.0,
+       m_faint=-14.0,
+       n_m=800,
+   )
+
+   n_selected = integrated_number_density(
+       redshift,
+       lf,
+       m_bright=-24.0,
+       m_faint=limiting_mag,
+       n_m=800,
+   )
+
+   colors = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.12, 0.9))
+
+   fig, ax = plt.subplots(figsize=(7.0, 5.0))
+
+   ax.plot(
+       redshift,
+       n_total,
+       lw=3,
+       color=colors[0],
+       label="Full magnitude range",
+   )
+   ax.plot(
+       redshift,
+       n_selected,
+       lw=3,
+       color=colors[2],
+       label="Brighter than limit",
+   )
+
+   ax.set_yscale("log")
+   ax.set_xlabel("Redshift $z$", fontsize=LABEL_SIZE)
+   ax.set_ylabel(
+       r"Integrated number density [$\mathrm{Mpc}^{-3}$]",
+       fontsize=LABEL_SIZE,
+   )
+   ax.set_title("Selection-limited conditional number density", fontsize=TITLE_SIZE)
+   ax.tick_params(axis="both", labelsize=TICK_SIZE)
+   ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="best")
+
+   plt.tight_layout()
+
+
+Selection fraction
+------------------
+
+The selected fraction is the ratio between the number density brighter than the
+redshift-dependent limiting magnitude and the number density over the full
+reference magnitude range.
+
+.. plot::
+   :include-source: True
+   :width: 520
+
+   import numpy as np
+   import matplotlib.pyplot as plt
+   import cmasher as cmr
+
+   from lfkit.photometry.conditional_lf_models import two_component_conditional_lf
+   from lfkit.photometry.lf_integrals import integrated_number_density
+
+   LABEL_SIZE = 15
+   TICK_SIZE = 13
+   TITLE_SIZE = 17
+
+   redshift = np.linspace(0.05, 1.5, 180)
+
+   def lf(absolute_mag, z):
+       return two_component_conditional_lf(
+           absolute_mag,
+           z,
+           lognormal_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
+           lognormal_sigma_log_luminosity=0.18,
+           lognormal_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
+           modified_phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
+           modified_m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
+           modified_alpha=lambda z: -1.05 - 0.10 * z,
+       )
+
+   limiting_mag = -18.5 - 1.2 * redshift
+
+   n_total = integrated_number_density(
+       redshift,
+       lf,
+       m_bright=-24.0,
+       m_faint=-14.0,
+       n_m=800,
+   )
+
+   n_selected = integrated_number_density(
+       redshift,
+       lf,
+       m_bright=-24.0,
+       m_faint=limiting_mag,
+       n_m=800,
+   )
+
+   selected_fraction = n_selected / n_total
+
+   color = cmr.take_cmap_colors("cmr.guppy", 1, cmap_range=(0.72, 0.9))[0]
+
+   fig, ax = plt.subplots(figsize=(7.0, 5.0))
+
+   ax.plot(
+       redshift,
+       selected_fraction,
+       lw=3,
+       color=color,
+   )
+
+   ax.set_ylim(-0.05, 1.05)
+   ax.set_xlabel("Redshift $z$", fontsize=LABEL_SIZE)
+   ax.set_ylabel("Selected fraction", fontsize=LABEL_SIZE)
+   ax.set_title("Fraction brighter than the limiting magnitude", fontsize=TITLE_SIZE)
+   ax.tick_params(axis="both", labelsize=TICK_SIZE)
 
    plt.tight_layout()

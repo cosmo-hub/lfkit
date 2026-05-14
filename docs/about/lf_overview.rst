@@ -303,7 +303,7 @@ and normalize the result over the supplied redshift grid.
    )
 
 This is useful for constructing LF-dependent redshift trends.
-Without a volume weight, the result is the luminosity-function
+Without a volume weight, the result is the luminosity function
 selection factor only, not a full survey redshift distribution.
 
 A volume-weighted trend can be computed by passing a callable:

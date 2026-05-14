@@ -54,7 +54,7 @@ Working, executable examples for using LFKit.
       :link-type: doc
       :shadow: md
 
-      **Conditional luminosity-function examples**
+      **Conditional luminosity function examples**
       ^^^
       Build conditional luminosity functions, including redshift-dependent
       Schechter models and central/satellite components.
