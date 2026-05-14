@@ -1,6 +1,6 @@
 r"""Luminosity-function redshift-density utilities.
 
-This module provides helpers for converting a luminosity-function callable into
+This module provides helpers for converting a luminosity function callable into
 an LF-integrated redshift-density curve.
 
 The core operation is

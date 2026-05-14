@@ -50,6 +50,19 @@ Working, executable examples for using LFKit.
       *API:* LuminosityFunction
 
    .. grid-item-card::
+      :link: conditional_luminosity_function_examples
+      :link-type: doc
+      :shadow: md
+
+      **Conditional luminosity function examples**
+      ^^^
+      Build conditional luminosity functions, including redshift-dependent
+      Schechter models and central/satellite components.
+
+      +++
+      *API:* LuminosityFunction
+
+   .. grid-item-card::
       :link: catalog_completeness_examples
       :link-type: doc
       :shadow: md
@@ -69,4 +82,5 @@ Working, executable examples for using LFKit.
    kcorrect_examples
    poggianti_examples
    luminosity_function_examples
+   conditional_luminosity_function_examples
    catalog_completeness_examples

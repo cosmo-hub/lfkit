@@ -1,15 +1,15 @@
 r"""Luminosity-function integration utilities.
 
-This module provides generic numerical integrals of luminosity-function
+This module provides generic numerical integrals of luminosity function
 callables over finite absolute-magnitude ranges.
 
-The core API accepts a luminosity-function callable with signature
+The core API accepts a luminosity function callable with signature
 
     lf(absolute_mag, z)
 
 where ``absolute_mag`` and ``z`` are NumPy arrays that can be broadcast
 together. This keeps the integration machinery independent of any specific
-luminosity-function parameterization, catalog selection, or cosmology backend.
+luminosity function parameterization, catalog selection, or cosmology backend.
 
 These helpers are intentionally generic. Catalog completeness, LF-dependent
 redshift densities, luminosity-density calculations, and selection-weighted
@@ -83,7 +83,7 @@ def lf_weighted_integral(
     weight_fn: Callable[[FloatArray, FloatArray], FloatArray],
     n_m: int = 512,
 ) -> FloatArray:
-    r"""Return a weighted luminosity-function integral.
+    r"""Return a weighted luminosity function integral.
 
     This computes
 

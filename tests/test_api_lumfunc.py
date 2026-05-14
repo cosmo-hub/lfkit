@@ -170,10 +170,10 @@ def test_phi_dispatches_double_schechter_model(monkeypatch):
 
 
 def test_phi_raises_for_unsupported_model():
-    """Tests that unsupported luminosity-function models fail clearly."""
+    """Tests that unsupported luminosity function models fail clearly."""
     lf = LuminosityFunction(model="bad_model", parameters={})
 
-    with pytest.raises(ValueError, match="Unsupported luminosity-function model"):
+    with pytest.raises(ValueError, match="Unsupported luminosity function model"):
         lf.phi(np.array([-21.0, -20.0]))
 
 
@@ -855,7 +855,7 @@ def test_phi_from_m_raises_for_unsupported_model():
     """Tests that phi_from_m rejects unsupported LF models."""
     lf = LuminosityFunction(model="bad_model", parameters={})
 
-    with pytest.raises(ValueError, match="Unsupported luminosity-function model"):
+    with pytest.raises(ValueError, match="Unsupported luminosity function model"):
         lf.phi_from_m(object(), np.array([0.1]), np.array([22.0]))
 
 

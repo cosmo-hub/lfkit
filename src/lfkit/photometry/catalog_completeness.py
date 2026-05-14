@@ -1,4 +1,4 @@
-r"""Catalog completeness utilities for luminosity-function models.
+r"""Catalog completeness utilities for luminosity function models.
 
 This module provides helpers for estimating the observed and missing galaxy
 population implied by a magnitude-limited catalog. These functions are useful
@@ -9,13 +9,13 @@ The utilities convert an apparent magnitude limit into an absolute-magnitude
 limit and call the generic LF integration helpers to return number densities
 or fractions.
 
-The core API accepts a luminosity-function callable with signature
+The core API accepts a luminosity function callable with signature
 
     lf(absolute_mag, z)
 
 where ``absolute_mag`` and ``z`` are NumPy arrays that can be broadcast
 together. This keeps the completeness machinery independent of any specific
-luminosity-function parameterization.
+luminosity function parameterization.
 """
 
 from __future__ import annotations

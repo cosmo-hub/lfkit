@@ -65,9 +65,10 @@ exclude = ["src/lfkit/_version.py"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-ra -m 'not slow'"
+addopts = "-ra -m 'not slow and not benchmark'"
 markers = [
   "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+  "benchmark: reference benchmark tests that are not part of the core unit-test suite",
 ]
 
 [tool.tox]

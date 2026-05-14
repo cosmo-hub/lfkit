@@ -2,8 +2,8 @@
    :alt: LFKit logo
    :width: 50px
 
-|lfkitlogo| Catalog completeness examples
-=========================================
+|lfkitlogo| Catalog completeness
+================================
 
 This page shows how to use :class:`lfkit.LuminosityFunction` to compute
 observed and missing galaxy number densities for a magnitude-limited catalog.

@@ -63,7 +63,7 @@ def test_main_writes_csv_files(tmp_path, monkeypatch):
     assert len(written) == 2
 
 
-def test_main_uses_correct_catalog(monkeypatch):
+def test_main_uses_correct_catalog(tmp_path, monkeypatch):
     """Tests that main calls Vizier.get_catalogs with the expected catalog identifier."""
     called = {}
 
@@ -72,7 +72,7 @@ def test_main_uses_correct_catalog(monkeypatch):
         return {}
 
     monkeypatch.setattr(dl.Vizier, "get_catalogs", fake_get_catalogs)
-    monkeypatch.setattr(dl, "PKG_DATADIR", Path("unused"))
+    monkeypatch.setattr(dl, "PKG_DATADIR", tmp_path / "unused")
 
     dl.main()
 

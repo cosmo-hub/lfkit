@@ -16,6 +16,9 @@ ParameterModel: TypeAlias = Callable[..., FloatArray]
 
 Cosmology: TypeAlias = Any
 LuminosityFunction: TypeAlias = Callable[[FloatArray, FloatArray], FloatArray]
+ConditionalParameter: TypeAlias = (
+    ParameterValue | Callable[[FloatArray], ParameterValue]
+)
 
 __all__ = [
     "Cosmology",
@@ -24,4 +27,5 @@ __all__ = [
     "LuminosityFunction",
     "ParameterModel",
     "ParameterValue",
+    "ConditionalParameter",
 ]

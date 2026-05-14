@@ -8,6 +8,8 @@ Submodules
    :maxdepth: 2
 
    lfkit.photometry.catalog_completeness
+   lfkit.photometry.conditional_lf_integrals
+   lfkit.photometry.conditional_lf_models
    lfkit.photometry.lf_integrals
    lfkit.photometry.lf_parameter_models
    lfkit.photometry.lf_redshift_density

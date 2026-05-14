@@ -1,10 +1,10 @@
 r"""Luminosity-function parameter evolution models for LFKit.
 
 This module provides helper functions for evaluating redshift-dependent
-luminosity-function parameters such as ``phi_star(z)``, ``M_star(z)``,
+luminosity function parameters such as ``phi_star(z)``, ``M_star(z)``,
 and ``alpha(z)``.
 
-These helpers are used by the main luminosity-function evaluators but do
+These helpers are used by the main luminosity function evaluators but do
 not evaluate the luminosity function themselves.
 
 Built-in options include constant evolution and simple linearized forms
@@ -201,7 +201,7 @@ def get_parameter_model(
     *,
     model_kind: str,
 ) -> ParameterModel:
-    r"""Return a registered luminosity-function parameter model.
+    r"""Return a registered luminosity function parameter model.
 
     Args:
         model_name: Name of the requested model.
@@ -225,7 +225,7 @@ def get_parameter_model(
 
 
 def available_lf_parameter_models() -> dict[str, list[str]]:
-    """Return available luminosity-function parameter evolution models."""
+    """Return available luminosity function parameter evolution models."""
     return {
         "phi_star": sorted(PHI_STAR_MODELS),
         "m_star": sorted(M_STAR_MODELS),
@@ -241,7 +241,7 @@ def _register_parameter_model(
     model_kind: str,
     overwrite: bool = False,
 ) -> None:
-    """Register a luminosity-function parameter evolution model."""
+    """Register a luminosity function parameter evolution model."""
     if not name:
         raise ValueError(f"{model_kind} model name cannot be empty.")
 
@@ -315,7 +315,7 @@ def evaluate_lf_parameters(
     alpha_model: str = "constant",
     alpha_kwargs: Mapping[str, ParameterValue] | None = None,
 ) -> tuple[FloatArray, FloatArray, FloatArray]:
-    r"""Evaluate evolving luminosity-function parameters at redshift ``z``.
+    r"""Evaluate evolving luminosity function parameters at redshift ``z``.
 
     Args:
         z: Redshift value or array-like of redshift values.
