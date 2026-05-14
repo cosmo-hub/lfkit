@@ -335,6 +335,13 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">lfkit.utils.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">FloatArray</span><span class="p">,</span> <span class="n">FloatInput</span><span class="p">,</span> <span class="n">LuminosityFunction</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">lfkit.utils.integrators</span><span class="w"> </span><span class="kn">import</span> <span class="n">integrate_between_variable_bounds</span><span class="p">,</span> <span class="n">safe_divide</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">lfkit.utils.evaluators</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">evaluate_optional_redshift_callable</span><span class="p">,</span>
+    <span class="n">evaluate_positive_redshift_callable</span><span class="p">,</span>
+    <span class="n">evaluate_lf_on_grid</span><span class="p">,</span>
+    <span class="n">evaluate_weight_on_grid</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">lfkit.utils.validators</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_array</span>
 
 
@@ -345,6 +352,7 @@
     <span class="s2">&quot;integrated_luminosity_density&quot;</span><span class="p">,</span>
     <span class="s2">&quot;mean_luminosity&quot;</span><span class="p">,</span>
     <span class="s2">&quot;cumulative_number_density&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;magnitude_window_number_density&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
 
@@ -590,7 +598,7 @@
         <span class="n">n_m</span><span class="o">=</span><span class="n">n_m</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">_safe_divide</span><span class="p">(</span><span class="n">luminosity_density</span><span class="p">,</span> <span class="n">number_density</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">safe_divide</span><span class="p">(</span><span class="n">luminosity_density</span><span class="p">,</span> <span class="n">number_density</span><span class="p">)</span></div>
 
 
 
@@ -666,6 +674,153 @@
 
 
 
+<div class="viewcode-block" id="magnitude_window_number_density">
+<a class="viewcode-back" href="../../../api/lfkit.photometry.lf_integrals.html#lfkit.photometry.lf_integrals.magnitude_window_number_density">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">magnitude_window_number_density</span><span class="p">(</span>
+    <span class="n">z</span><span class="p">:</span> <span class="n">FloatInput</span><span class="p">,</span>
+    <span class="n">lf</span><span class="p">:</span> <span class="n">LuminosityFunction</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">m_bright</span><span class="p">:</span> <span class="n">FloatInput</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">m_faint</span><span class="p">:</span> <span class="n">FloatInput</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">apparent_m_bright</span><span class="p">:</span> <span class="n">FloatInput</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">apparent_m_faint</span><span class="p">:</span> <span class="n">FloatInput</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">luminosity_distance_mpc_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">FloatArray</span><span class="p">],</span> <span class="n">FloatArray</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">k_correction_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">FloatArray</span><span class="p">],</span> <span class="n">FloatArray</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">e_correction_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">FloatArray</span><span class="p">],</span> <span class="n">FloatArray</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">n_m</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">512</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FloatArray</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return LF number density inside a magnitude-selection window.</span>
+
+<span class="sd">    This integrates a luminosity function over a finite absolute-magnitude</span>
+<span class="sd">    range. The bright and faint limits may be supplied directly as absolute</span>
+<span class="sd">    magnitudes, converted from apparent magnitudes, or supplied as a mixture of</span>
+<span class="sd">    both.</span>
+
+<span class="sd">    Magnitudes are ordered so that more negative values are brighter. Apparent</span>
+<span class="sd">    magnitude limits are converted to absolute-magnitude limits at each</span>
+<span class="sd">    redshift before integration.</span>
+
+<span class="sd">    This helper is science-use-case agnostic. It only defines the LF integral</span>
+<span class="sd">    over a magnitude window; interpretation of that selected population belongs</span>
+<span class="sd">    to the calling analysis.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        z: Redshift value or array-like of redshift values.</span>
+<span class="sd">        lf: Luminosity-function callable with signature ``lf(M, z)``.</span>
+<span class="sd">        m_bright: Bright absolute-magnitude bound.</span>
+<span class="sd">        m_faint: Faint absolute-magnitude bound.</span>
+<span class="sd">        apparent_m_bright: Bright apparent-magnitude bound.</span>
+<span class="sd">        apparent_m_faint: Faint apparent-magnitude bound.</span>
+<span class="sd">        luminosity_distance_mpc_fn: Callable returning luminosity distance in</span>
+<span class="sd">            Mpc. Required when either apparent-magnitude bound is supplied.</span>
+<span class="sd">        k_correction_fn: Optional K-correction callable evaluated at ``z``.</span>
+<span class="sd">        e_correction_fn: Optional E-correction callable evaluated at ``z``.</span>
+<span class="sd">        n_m: Number of magnitude-grid points used for the integral.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        NumPy array of number densities evaluated at ``z``.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If a bright or faint bound is missing, if both absolute and</span>
+<span class="sd">            apparent values are supplied for the same bound, or if an apparent</span>
+<span class="sd">            bound is supplied without a luminosity-distance callable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">z_arr</span> <span class="o">=</span> <span class="n">validate_array</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>
+
+    <span class="n">m_bright_resolved</span> <span class="o">=</span> <span class="n">_resolve_magnitude_window_bound</span><span class="p">(</span>
+        <span class="n">z_arr</span><span class="p">,</span>
+        <span class="n">absolute_mag</span><span class="o">=</span><span class="n">m_bright</span><span class="p">,</span>
+        <span class="n">apparent_mag</span><span class="o">=</span><span class="n">apparent_m_bright</span><span class="p">,</span>
+        <span class="n">luminosity_distance_mpc_fn</span><span class="o">=</span><span class="n">luminosity_distance_mpc_fn</span><span class="p">,</span>
+        <span class="n">k_correction_fn</span><span class="o">=</span><span class="n">k_correction_fn</span><span class="p">,</span>
+        <span class="n">e_correction_fn</span><span class="o">=</span><span class="n">e_correction_fn</span><span class="p">,</span>
+        <span class="n">bound_name</span><span class="o">=</span><span class="s2">&quot;bright&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">m_faint_resolved</span> <span class="o">=</span> <span class="n">_resolve_magnitude_window_bound</span><span class="p">(</span>
+        <span class="n">z_arr</span><span class="p">,</span>
+        <span class="n">absolute_mag</span><span class="o">=</span><span class="n">m_faint</span><span class="p">,</span>
+        <span class="n">apparent_mag</span><span class="o">=</span><span class="n">apparent_m_faint</span><span class="p">,</span>
+        <span class="n">luminosity_distance_mpc_fn</span><span class="o">=</span><span class="n">luminosity_distance_mpc_fn</span><span class="p">,</span>
+        <span class="n">k_correction_fn</span><span class="o">=</span><span class="n">k_correction_fn</span><span class="p">,</span>
+        <span class="n">e_correction_fn</span><span class="o">=</span><span class="n">e_correction_fn</span><span class="p">,</span>
+        <span class="n">bound_name</span><span class="o">=</span><span class="s2">&quot;faint&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">integrated_number_density</span><span class="p">(</span>
+        <span class="n">z_arr</span><span class="p">,</span>
+        <span class="n">lf</span><span class="p">,</span>
+        <span class="n">m_bright</span><span class="o">=</span><span class="n">m_bright_resolved</span><span class="p">,</span>
+        <span class="n">m_faint</span><span class="o">=</span><span class="n">m_faint_resolved</span><span class="p">,</span>
+        <span class="n">n_m</span><span class="o">=</span><span class="n">n_m</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_resolve_magnitude_window_bound</span><span class="p">(</span>
+    <span class="n">z</span><span class="p">:</span> <span class="n">FloatArray</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">absolute_mag</span><span class="p">:</span> <span class="n">FloatInput</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">apparent_mag</span><span class="p">:</span> <span class="n">FloatInput</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">luminosity_distance_mpc_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">FloatArray</span><span class="p">],</span> <span class="n">FloatArray</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">k_correction_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">FloatArray</span><span class="p">],</span> <span class="n">FloatArray</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">e_correction_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">FloatArray</span><span class="p">],</span> <span class="n">FloatArray</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">bound_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FloatArray</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return an absolute-magnitude bound for a magnitude window.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">absolute_mag</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">apparent_mag</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Must provide either m_</span><span class="si">{</span><span class="n">bound_name</span><span class="si">}</span><span class="s2"> or apparent_m_</span><span class="si">{</span><span class="n">bound_name</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">absolute_mag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">apparent_mag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Provide only one of m_</span><span class="si">{</span><span class="n">bound_name</span><span class="si">}</span><span class="s2"> or apparent_m_</span><span class="si">{</span><span class="n">bound_name</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">absolute_mag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">validate_array</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;m_</span><span class="si">{</span><span class="n">bound_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">luminosity_distance_mpc_fn</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;luminosity_distance_mpc_fn is required when apparent magnitude &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;bounds are supplied. Missing conversion for apparent_m_</span><span class="si">{</span><span class="n">bound_name</span><span class="si">}</span><span class="s2">.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="n">apparent_mag_arr</span> <span class="o">=</span> <span class="n">validate_array</span><span class="p">(</span>
+        <span class="n">apparent_mag</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;apparent_m_</span><span class="si">{</span><span class="n">bound_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">luminosity_distance_mpc</span> <span class="o">=</span> <span class="n">evaluate_positive_redshift_callable</span><span class="p">(</span>
+        <span class="n">luminosity_distance_mpc_fn</span><span class="p">,</span>
+        <span class="n">z</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;luminosity_distance_mpc_fn&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">k_correction</span> <span class="o">=</span> <span class="n">evaluate_optional_redshift_callable</span><span class="p">(</span>
+        <span class="n">k_correction_fn</span><span class="p">,</span>
+        <span class="n">z</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;k_correction_fn&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">e_correction</span> <span class="o">=</span> <span class="n">evaluate_optional_redshift_callable</span><span class="p">(</span>
+        <span class="n">e_correction_fn</span><span class="p">,</span>
+        <span class="n">z</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;e_correction_fn&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">k_correction</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">k_correction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">e_correction</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">e_correction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+    <span class="n">distance_modulus</span> <span class="o">=</span> <span class="mf">5.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">luminosity_distance_mpc</span><span class="p">)</span> <span class="o">+</span> <span class="mf">25.0</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
+        <span class="n">apparent_mag_arr</span> <span class="o">-</span> <span class="n">distance_modulus</span> <span class="o">-</span> <span class="n">k_correction</span> <span class="o">+</span> <span class="n">e_correction</span><span class="p">,</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
 <span class="k">def</span><span class="w"> </span><span class="nf">_integrated_lf_between_bounds</span><span class="p">(</span>
     <span class="n">z</span><span class="p">:</span> <span class="n">FloatInput</span><span class="p">,</span>
     <span class="n">lf</span><span class="p">:</span> <span class="n">LuminosityFunction</span><span class="p">,</span>
@@ -677,157 +832,42 @@
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FloatArray</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return finite-range LF integral between magnitude bounds.&quot;&quot;&quot;</span>
     <span class="n">z_arr</span> <span class="o">=</span> <span class="n">validate_array</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;z&quot;</span><span class="p">)</span>
-    <span class="n">m_lower_arr</span> <span class="o">=</span> <span class="n">validate_array</span><span class="p">(</span><span class="n">m_lower</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;m_lower&quot;</span><span class="p">)</span>
-    <span class="n">m_upper_arr</span> <span class="o">=</span> <span class="n">validate_array</span><span class="p">(</span><span class="n">m_upper</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;m_upper&quot;</span><span class="p">)</span>
 
-    <span class="n">_validate_integration_inputs</span><span class="p">(</span>
-        <span class="n">z</span><span class="o">=</span><span class="n">z_arr</span><span class="p">,</span>
-        <span class="n">m_lower</span><span class="o">=</span><span class="n">m_lower_arr</span><span class="p">,</span>
-        <span class="n">m_upper</span><span class="o">=</span><span class="n">m_upper_arr</span><span class="p">,</span>
-        <span class="n">n_m</span><span class="o">=</span><span class="n">n_m</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="n">z_b</span><span class="p">,</span> <span class="n">m_lower_b</span><span class="p">,</span> <span class="n">m_upper_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">broadcast_arrays</span><span class="p">(</span>
-        <span class="n">z_arr</span><span class="p">,</span>
-        <span class="n">m_lower_arr</span><span class="p">,</span>
-        <span class="n">m_upper_arr</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="n">integral</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">z_b</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-    <span class="n">valid</span> <span class="o">=</span> <span class="n">m_upper_b</span> <span class="o">&gt;</span> <span class="n">m_lower_b</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">valid</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">integral</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-
-    <span class="n">m_grid</span> <span class="o">=</span> <span class="n">_magnitude_grid</span><span class="p">(</span>
-        <span class="n">m_lower</span><span class="o">=</span><span class="n">m_lower_b</span><span class="p">[</span><span class="n">valid</span><span class="p">],</span>
-        <span class="n">m_upper</span><span class="o">=</span><span class="n">m_upper_b</span><span class="p">[</span><span class="n">valid</span><span class="p">],</span>
-        <span class="n">n_m</span><span class="o">=</span><span class="n">n_m</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">z_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">broadcast_to</span><span class="p">(</span><span class="n">z_b</span><span class="p">[</span><span class="n">valid</span><span class="p">][</span><span class="kc">None</span><span class="p">,</span> <span class="p">:],</span> <span class="n">m_grid</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-
-    <span class="n">phi</span> <span class="o">=</span> <span class="n">_evaluate_lf_on_grid</span><span class="p">(</span><span class="n">lf</span><span class="p">,</span> <span class="n">m_grid</span><span class="o">=</span><span class="n">m_grid</span><span class="p">,</span> <span class="n">z_grid</span><span class="o">=</span><span class="n">z_grid</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">weight_fn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">weight</span> <span class="o">=</span> <span class="n">_evaluate_weight_on_grid</span><span class="p">(</span>
-            <span class="n">weight_fn</span><span class="p">,</span>
-            <span class="n">m_grid</span><span class="o">=</span><span class="n">m_grid</span><span class="p">,</span>
-            <span class="n">z_grid</span><span class="o">=</span><span class="n">z_grid</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">phi</span> <span class="o">=</span> <span class="n">phi</span> <span class="o">*</span> <span class="n">weight</span>
-
-    <span class="n">integral</span><span class="p">[</span><span class="n">valid</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapezoid</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">m_grid</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">integral</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">_magnitude_grid</span><span class="p">(</span>
-    <span class="o">*</span><span class="p">,</span>
-    <span class="n">m_lower</span><span class="p">:</span> <span class="n">FloatArray</span><span class="p">,</span>
-    <span class="n">m_upper</span><span class="p">:</span> <span class="n">FloatArray</span><span class="p">,</span>
-    <span class="n">n_m</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FloatArray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return a magnitude grid for column-wise finite-range integration.&quot;&quot;&quot;</span>
-    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_m</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
-        <span class="n">m_lower</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+</span> <span class="n">t</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">m_upper</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">m_lower</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]),</span>
-        <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
-    <span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">_evaluate_lf_on_grid</span><span class="p">(</span>
-    <span class="n">lf</span><span class="p">:</span> <span class="n">LuminosityFunction</span><span class="p">,</span>
-    <span class="o">*</span><span class="p">,</span>
-    <span class="n">m_grid</span><span class="p">:</span> <span class="n">FloatArray</span><span class="p">,</span>
-    <span class="n">z_grid</span><span class="p">:</span> <span class="n">FloatArray</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FloatArray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return LF values evaluated on a magnitude-redshift grid.&quot;&quot;&quot;</span>
-    <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">lf</span><span class="p">(</span><span class="n">m_grid</span><span class="p">,</span> <span class="n">z_grid</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">phi</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">m_grid</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">broadcast_to</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">m_grid</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;lf(M, z) must return values broadcastable to the shape &quot;</span>
-                <span class="s2">&quot;of the magnitude-redshift integration grid.&quot;</span>
-            <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
-
-    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">phi</span><span class="p">)):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;lf(M, z) returned non-finite values.&quot;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">phi</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;lf(M, z) must be non-negative.&quot;</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">_evaluate_weight_on_grid</span><span class="p">(</span>
-    <span class="n">weight_fn</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">FloatArray</span><span class="p">,</span> <span class="n">FloatArray</span><span class="p">],</span> <span class="n">FloatArray</span><span class="p">],</span>
-    <span class="o">*</span><span class="p">,</span>
-    <span class="n">m_grid</span><span class="p">:</span> <span class="n">FloatArray</span><span class="p">,</span>
-    <span class="n">z_grid</span><span class="p">:</span> <span class="n">FloatArray</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FloatArray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return finite non-negative weight values on a magnitude-redshift grid.&quot;&quot;&quot;</span>
-    <span class="n">weight</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">weight_fn</span><span class="p">(</span><span class="n">m_grid</span><span class="p">,</span> <span class="n">z_grid</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">weight</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">m_grid</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">weight</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">broadcast_to</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="n">m_grid</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;weight_fn(M, z) must return values broadcastable to the shape &quot;</span>
-                <span class="s2">&quot;of the magnitude-redshift integration grid.&quot;</span>
-            <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
-
-    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">weight</span><span class="p">)):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;weight_fn(M, z) returned non-finite values.&quot;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">weight</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;weight_fn(M, z) must be non-negative.&quot;</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">_validate_integration_inputs</span><span class="p">(</span>
-    <span class="o">*</span><span class="p">,</span>
-    <span class="n">z</span><span class="p">:</span> <span class="n">FloatArray</span><span class="p">,</span>
-    <span class="n">m_lower</span><span class="p">:</span> <span class="n">FloatArray</span><span class="p">,</span>
-    <span class="n">m_upper</span><span class="p">:</span> <span class="n">FloatArray</span><span class="p">,</span>
-    <span class="n">n_m</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Validate inputs for finite-range LF integration.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">z</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">z_arr</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Redshift z must be &gt;= 0.&quot;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">m_lower</span><span class="p">)):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;m_lower must contain only finite values.&quot;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">m_upper</span><span class="p">)):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;m_upper must contain only finite values.&quot;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">n_m</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;n_m must be at least 2.&quot;</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">_safe_divide</span><span class="p">(</span>
-    <span class="n">numerator</span><span class="p">:</span> <span class="n">FloatArray</span><span class="p">,</span>
-    <span class="n">denominator</span><span class="p">:</span> <span class="n">FloatArray</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FloatArray</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return numerator / denominator with zero output for zero denominator.&quot;&quot;&quot;</span>
-    <span class="n">numerator_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">numerator</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-    <span class="n">denominator_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">denominator</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-
-    <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">invalid</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">):</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">divide</span><span class="p">(</span>
-            <span class="n">numerator_arr</span><span class="p">,</span>
-            <span class="n">denominator_arr</span><span class="p">,</span>
-            <span class="n">out</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">numerator_arr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span>
-            <span class="n">where</span><span class="o">=</span><span class="n">denominator_arr</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">integrand</span><span class="p">(</span>
+        <span class="n">absolute_mag</span><span class="p">:</span> <span class="n">FloatArray</span><span class="p">,</span>
+        <span class="n">redshift</span><span class="p">:</span> <span class="n">FloatArray</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FloatArray</span><span class="p">:</span>
+        <span class="n">phi</span> <span class="o">=</span> <span class="n">evaluate_lf_on_grid</span><span class="p">(</span>
+            <span class="n">lf</span><span class="p">,</span>
+            <span class="n">m_grid</span><span class="o">=</span><span class="n">absolute_mag</span><span class="p">,</span>
+            <span class="n">z_grid</span><span class="o">=</span><span class="n">redshift</span><span class="p">,</span>
         <span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">weight_fn</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">phi</span>
+
+        <span class="n">weight</span> <span class="o">=</span> <span class="n">evaluate_weight_on_grid</span><span class="p">(</span>
+            <span class="n">weight_fn</span><span class="p">,</span>
+            <span class="n">m_grid</span><span class="o">=</span><span class="n">absolute_mag</span><span class="p">,</span>
+            <span class="n">z_grid</span><span class="o">=</span><span class="n">redshift</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">phi</span> <span class="o">*</span> <span class="n">weight</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">integrate_between_variable_bounds</span><span class="p">(</span>
+        <span class="n">z_arr</span><span class="p">,</span>
+        <span class="n">lower</span><span class="o">=</span><span class="n">m_lower</span><span class="p">,</span>
+        <span class="n">upper</span><span class="o">=</span><span class="n">m_upper</span><span class="p">,</span>
+        <span class="n">integrand_fn</span><span class="o">=</span><span class="n">integrand</span><span class="p">,</span>
+        <span class="n">n_grid</span><span class="o">=</span><span class="n">n_m</span><span class="p">,</span>
+        <span class="n">y_name</span><span class="o">=</span><span class="s2">&quot;z&quot;</span><span class="p">,</span>
+        <span class="n">lower_name</span><span class="o">=</span><span class="s2">&quot;m_lower&quot;</span><span class="p">,</span>
+        <span class="n">upper_name</span><span class="o">=</span><span class="s2">&quot;m_upper&quot;</span><span class="p">,</span>
+        <span class="n">n_grid_name</span><span class="o">=</span><span class="s2">&quot;n_m&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
 </pre></div>
         </article>
       </div>
