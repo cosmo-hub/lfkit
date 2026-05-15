@@ -7,8 +7,10 @@ Submodules
 .. toctree::
    :maxdepth: 2
 
+   lfkit.api.conditional_luminosity_function
    lfkit.api.corrections
    lfkit.api.lumfunc
+   lfkit.api.luminosity_function
 
 Module contents
 ---------------
