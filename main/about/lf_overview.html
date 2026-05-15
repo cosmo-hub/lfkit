@@ -224,18 +224,24 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../examples/index.html"> Examples</a><input aria-label="Toggle navigation of  Examples" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../examples/api_overview.html"> API overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/luminosity_function_models.html"> Luminosity function models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/magnitude_integrals.html"> Luminosity-function magnitude integrals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/magnitudes_and_luminosities.html"> Magnitudes and luminosities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/redshift_density.html"> LF-weighted redshift density</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/catalog_completeness.html"> Catalog completeness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/conditional_luminosity_function.html"> Conditional luminosity functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/model_registry.html"> Available luminosity function models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/kcorrect_examples.html">kcorrect examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/poggianti_examples.html">Poggianti (1997) examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples/luminosity_function_examples.html"> Luminosity function examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples/conditional_luminosity_function_examples.html"> Conditional luminosity functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples/catalog_completeness_examples.html"> Catalog completeness</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../api/lfkit.html">lfkit package</a><input aria-label="Toggle navigation of lfkit package" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.api.html">lfkit.api package</a><input aria-label="Toggle navigation of lfkit.api package" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.api.conditional_luminosity_function.html">lfkit.api.conditional_luminosity_function module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/lfkit.api.corrections.html">lfkit.api.corrections module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.api.lumfunc.html">lfkit.api.lumfunc module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.api.luminosity_function.html">lfkit.api.luminosity_function module</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.corrections.html">lfkit.corrections package</a><input aria-label="Toggle navigation of lfkit.corrections package" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -267,6 +273,7 @@
 <li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.utils.html">lfkit.utils package</a><input aria-label="Toggle navigation of lfkit.utils package" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.download_poggianti97_data.html">lfkit.utils.download_poggianti97_data module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.evaluators.html">lfkit.utils.evaluators module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.integrators.html">lfkit.utils.integrators module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.interpolation.html">lfkit.utils.interpolation module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.io.html">lfkit.utils.io module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.types.html">lfkit.utils.types module</a></li>
@@ -319,7 +326,7 @@
           <section id="lfkitlogo-luminosity-functions">
 <h1><a class="reference internal" href="../_images/lfkit_logo.png"><img alt="LFKit logo black" src="../_images/lfkit_logo.png" style="width: 50px;" /></a> Luminosity Functions<a class="headerlink" href="#lfkitlogo-luminosity-functions" title="Link to this heading"><span>#</span></a></h1>
 <p>LFKit provides a public luminosity function interface through
-<a class="reference internal" href="../api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction" title="lfkit.api.lumfunc.LuminosityFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">LuminosityFunction</span></code></a>.</p>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">LuminosityFunction</span></code>.</p>
 <p>For most users, the recommended import is:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">LuminosityFunction</span>
 </pre></div>
@@ -358,7 +365,7 @@ x^{\alpha + 1} \exp(-x),\]</div>
 </section>
 <section id="standard-schechter-model">
 <h2>Standard Schechter model<a class="headerlink" href="#standard-schechter-model" title="Link to this heading"><span>#</span></a></h2>
-<p>Use <a class="reference internal" href="../api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.schechter" title="lfkit.api.lumfunc.LuminosityFunction.schechter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">schechter()</span></code></a> to construct a
+<p>Use <code class="xref py py-meth docutils literal notranslate"><span class="pre">schechter()</span></code> to construct a
 Schechter luminosity function with fixed parameters.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">LuminosityFunction</span>
 
@@ -376,7 +383,7 @@ input absolute magnitudes.</p>
 </section>
 <section id="evolving-schechter-model">
 <h2>Evolving Schechter model<a class="headerlink" href="#evolving-schechter-model" title="Link to this heading"><span>#</span></a></h2>
-<p>Use <a class="reference internal" href="../api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.evolving_schechter" title="lfkit.api.lumfunc.LuminosityFunction.evolving_schechter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">evolving_schechter()</span></code></a> to build a
+<p>Use <code class="xref py py-meth docutils literal notranslate"><span class="pre">evolving_schechter()</span></code> to build a
 Schechter luminosity function with redshift-dependent parameters.</p>
 <p>The evolving model evaluates</p>
 <div class="math-wrapper docutils container">
@@ -405,7 +412,7 @@ Schechter luminosity function with redshift-dependent parameters.</p>
 </section>
 <section id="double-schechter-model">
 <h2>Double Schechter model<a class="headerlink" href="#double-schechter-model" title="Link to this heading"><span>#</span></a></h2>
-<p>Use <a class="reference internal" href="../api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.double_schechter" title="lfkit.api.lumfunc.LuminosityFunction.double_schechter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">double_schechter()</span></code></a> to build a
+<p>Use <code class="xref py py-meth docutils literal notranslate"><span class="pre">double_schechter()</span></code> to build a
 double-power-law Schechter-style luminosity function.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">LuminosityFunction</span>
 
@@ -548,7 +555,7 @@ can be computed with:</p>
 </section>
 <section id="integrated-number-density">
 <h2>Integrated number density<a class="headerlink" href="#integrated-number-density" title="Link to this heading"><span>#</span></a></h2>
-<p>Use <a class="reference internal" href="../api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.integrated_number_density" title="lfkit.api.lumfunc.LuminosityFunction.integrated_number_density"><code class="xref py py-meth docutils literal notranslate"><span class="pre">integrated_number_density()</span></code></a> to
+<p>Use <code class="xref py py-meth docutils literal notranslate"><span class="pre">integrated_number_density()</span></code> to
 integrate the luminosity function over an absolute-magnitude range.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">n_total</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">integrated_number_density</span><span class="p">(</span>
     <span class="n">z</span><span class="p">,</span>

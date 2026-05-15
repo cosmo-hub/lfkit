@@ -223,18 +223,24 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../examples/index.html"> Examples</a><input aria-label="Toggle navigation of  Examples" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/api_overview.html"> API overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/luminosity_function_models.html"> Luminosity function models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/magnitude_integrals.html"> Luminosity-function magnitude integrals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/magnitudes_and_luminosities.html"> Magnitudes and luminosities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/redshift_density.html"> LF-weighted redshift density</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/catalog_completeness.html"> Catalog completeness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/conditional_luminosity_function.html"> Conditional luminosity functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/model_registry.html"> Available luminosity function models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../examples/kcorrect_examples.html">kcorrect examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../examples/poggianti_examples.html">Poggianti (1997) examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../examples/luminosity_function_examples.html"> Luminosity function examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../examples/conditional_luminosity_function_examples.html"> Conditional luminosity functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../examples/catalog_completeness_examples.html"> Catalog completeness</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../api/lfkit.html">lfkit package</a><input aria-label="Toggle navigation of lfkit package" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/lfkit.api.html">lfkit.api package</a><input aria-label="Toggle navigation of lfkit.api package" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.api.conditional_luminosity_function.html">lfkit.api.conditional_luminosity_function module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.api.corrections.html">lfkit.api.corrections module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.api.lumfunc.html">lfkit.api.lumfunc module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.api.luminosity_function.html">lfkit.api.luminosity_function module</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/lfkit.corrections.html">lfkit.corrections package</a><input aria-label="Toggle navigation of lfkit.corrections package" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -266,6 +272,7 @@
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../api/lfkit.utils.html">lfkit.utils package</a><input aria-label="Toggle navigation of lfkit.utils package" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.utils.download_poggianti97_data.html">lfkit.utils.download_poggianti97_data module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.utils.evaluators.html">lfkit.utils.evaluators module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.utils.integrators.html">lfkit.utils.integrators module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.utils.interpolation.html">lfkit.utils.interpolation module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.utils.io.html">lfkit.utils.io module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../api/lfkit.utils.types.html">lfkit.utils.types module</a></li>
@@ -336,7 +343,7 @@
     <span class="n">luminosity_ratio</span><span class="p">,</span>
     <span class="n">magnitude_difference_from_luminosity_ratio</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">lfkit.photometry.luminosity_function</span><span class="w"> </span><span class="kn">import</span> <span class="n">schechter</span><span class="p">,</span> <span class="n">schechter_double</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">lfkit.photometry.luminosity_function</span><span class="w"> </span><span class="kn">import</span> <span class="n">schechter</span><span class="p">,</span> <span class="n">double_schechter</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">lfkit.utils.types</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">ConditionalParameter</span><span class="p">,</span>
     <span class="n">FloatArray</span><span class="p">,</span>
@@ -348,8 +355,8 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s2">&quot;conditional_schechter&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;conditional_schechter_evolving&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;conditional_schechter_double&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;conditional_evolving_schechter&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;conditional_double_schechter&quot;</span><span class="p">,</span>
     <span class="s2">&quot;lognormal_conditional_lf&quot;</span><span class="p">,</span>
     <span class="s2">&quot;modified_schechter_conditional_lf&quot;</span><span class="p">,</span>
     <span class="s2">&quot;two_component_conditional_lf&quot;</span><span class="p">,</span>
@@ -404,9 +411,9 @@
 
 
 
-<div class="viewcode-block" id="conditional_schechter_evolving">
-<a class="viewcode-back" href="../../../api/lfkit.photometry.conditional_lf_models.html#lfkit.photometry.conditional_lf_models.conditional_schechter_evolving">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">conditional_schechter_evolving</span><span class="p">(</span>
+<div class="viewcode-block" id="conditional_evolving_schechter">
+<a class="viewcode-back" href="../../../api/lfkit.photometry.conditional_lf_models.html#lfkit.photometry.conditional_lf_models.conditional_evolving_schechter">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">conditional_evolving_schechter</span><span class="p">(</span>
     <span class="n">absolute_mag</span><span class="p">:</span> <span class="n">FloatInput</span><span class="p">,</span>
     <span class="n">condition</span><span class="p">:</span> <span class="n">FloatInput</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
@@ -419,7 +426,7 @@
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FloatArray</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Evaluate a conditional Schechter LF using LFKit parameter models.</span>
 
-<span class="sd">    This is the conditional LF analogue of ``schechter_evolving``. The</span>
+<span class="sd">    This is the conditional LF analogue of ``evolving_schechter``. The</span>
 <span class="sd">    conditioning variable is passed to LFKit&#39;s registered parameter models.</span>
 
 <span class="sd">    Args:</span>
@@ -459,9 +466,9 @@
 
 
 
-<div class="viewcode-block" id="conditional_schechter_double">
-<a class="viewcode-back" href="../../../api/lfkit.photometry.conditional_lf_models.html#lfkit.photometry.conditional_lf_models.conditional_schechter_double">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">conditional_schechter_double</span><span class="p">(</span>
+<div class="viewcode-block" id="conditional_double_schechter">
+<a class="viewcode-back" href="../../../api/lfkit.photometry.conditional_lf_models.html#lfkit.photometry.conditional_lf_models.conditional_double_schechter">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">conditional_double_schechter</span><span class="p">(</span>
     <span class="n">absolute_mag</span><span class="p">:</span> <span class="n">FloatInput</span><span class="p">,</span>
     <span class="n">condition</span><span class="p">:</span> <span class="n">FloatInput</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
@@ -490,7 +497,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">condition_arr</span> <span class="o">=</span> <span class="n">validate_array</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;condition&quot;</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">schechter_double</span><span class="p">(</span>
+    <span class="k">return</span> <span class="n">double_schechter</span><span class="p">(</span>
         <span class="n">absolute_mag</span><span class="p">,</span>
         <span class="n">phi_star</span><span class="o">=</span><span class="n">_evaluate_conditional_parameter</span><span class="p">(</span>
             <span class="n">phi_star</span><span class="p">,</span>

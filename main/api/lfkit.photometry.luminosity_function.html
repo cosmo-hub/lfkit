@@ -224,18 +224,24 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../examples/index.html"> Examples</a><input aria-label="Toggle navigation of  Examples" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../examples/api_overview.html"> API overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/luminosity_function_models.html"> Luminosity function models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/magnitude_integrals.html"> Luminosity-function magnitude integrals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/magnitudes_and_luminosities.html"> Magnitudes and luminosities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/redshift_density.html"> LF-weighted redshift density</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/catalog_completeness.html"> Catalog completeness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/conditional_luminosity_function.html"> Conditional luminosity functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/model_registry.html"> Available luminosity function models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/kcorrect_examples.html">kcorrect examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/poggianti_examples.html">Poggianti (1997) examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples/luminosity_function_examples.html"> Luminosity function examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples/conditional_luminosity_function_examples.html"> Conditional luminosity functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples/catalog_completeness_examples.html"> Catalog completeness</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l2 current has-children"><a class="reference internal" href="lfkit.html">lfkit package</a><input aria-label="Toggle navigation of lfkit package" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l3 has-children"><a class="reference internal" href="lfkit.api.html">lfkit.api package</a><input aria-label="Toggle navigation of lfkit.api package" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.api.conditional_luminosity_function.html">lfkit.api.conditional_luminosity_function module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lfkit.api.corrections.html">lfkit.api.corrections module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.api.lumfunc.html">lfkit.api.lumfunc module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.api.luminosity_function.html">lfkit.api.luminosity_function module</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="lfkit.corrections.html">lfkit.corrections package</a><input aria-label="Toggle navigation of lfkit.corrections package" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -267,6 +273,7 @@
 <li class="toctree-l3 has-children"><a class="reference internal" href="lfkit.utils.html">lfkit.utils package</a><input aria-label="Toggle navigation of lfkit.utils package" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="lfkit.utils.download_poggianti97_data.html">lfkit.utils.download_poggianti97_data module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lfkit.utils.evaluators.html">lfkit.utils.evaluators module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.integrators.html">lfkit.utils.integrators module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lfkit.utils.interpolation.html">lfkit.utils.interpolation module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lfkit.utils.io.html">lfkit.utils.io module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="lfkit.utils.types.html">lfkit.utils.types module</a></li>
@@ -337,7 +344,7 @@ space.</p>
 <p>The magnitude-space Schechter function is</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
-\[\phi(M) = 0.4 \ln(10) \, \phi_\star \, x^{lpha + 1} \exp(-x),\]</div>
+\[\phi(M) = 0.4 \ln(10) \, \phi_\star \, x^{\alpha + 1} \exp(-x),\]</div>
 </div>
 <p>where</p>
 <div class="math-wrapper docutils container">
@@ -360,6 +367,199 @@ A Description of Luminosity Function Evolution by Lin et al. 1999
 (arXiv:9902249) or GAMA: ugriz galaxy luminosity functions by Loveday et al.
 (arXiv:1111.0166).</p>
 <p>All returned quantities are NumPy arrays of dtype float.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="lfkit.photometry.luminosity_function.double_schechter">
+<span class="sig-prename descclassname"><span class="pre">lfkit.photometry.luminosity_function.</span></span><span class="sig-name descname"><span class="pre">double_schechter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">absolute_mag</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_star</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_star</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_transition</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/photometry/luminosity_function.html#double_schechter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.photometry.luminosity_function.double_schechter" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Return a double-power-law Schechter luminosity function in magnitude space.</p>
+<p>This implements the Loveday/GAMA-style faint-end extension</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\phi(L) = \phi_\star (L/L_\star)^\alpha \exp(-L/L_\star)
+         \times \left[1 + (L/L_t)^\beta\right]\]</div>
+</div>
+<p>converted into a per-magnitude luminosity function.</p>
+<p>Since</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\phi(M) \, dM = \phi(L) \, dL\]</div>
+</div>
+<p>and</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\frac{dL}{dM} = -0.4 \ln(10) \, L,\]</div>
+</div>
+<p>the magnitude-space form becomes</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\phi(M) = 0.4 \ln(10) \, \phi_\star \, x^{\alpha + 1} \exp(-x)
+         \times \left[1 + (x / x_t)^\beta\right]\]</div>
+</div>
+<p>with <span class="math notranslate nohighlight">\(x = L/L_\star\)</span> and <span class="math notranslate nohighlight">\(x_t = L_t/L_\star\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>absolute_mag</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Absolute magnitude value(s).</p></li>
+<li><p><strong>phi_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Overall normalization.</p></li>
+<li><p><strong>m_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Characteristic magnitude M_star.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Bright/intermediate faint-end slope parameter.</p></li>
+<li><p><strong>beta</strong> (<em>float</em>) – Additional faint-end slope modifier.</p></li>
+<li><p><strong>m_transition</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Transition magnitude M_t corresponding to L_t.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>NumPy array of luminosity function values evaluated at
+<code class="docutils literal notranslate"><span class="pre">absolute_mag</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lfkit.photometry.luminosity_function.double_schechter_from_m">
+<span class="sig-prename descclassname"><span class="pre">lfkit.photometry.luminosity_function.</span></span><span class="sig-name descname"><span class="pre">double_schechter_from_m</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cosmo_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apparent_mag</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_star</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_star</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_transition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/photometry/luminosity_function.html#double_schechter_from_m"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.photometry.luminosity_function.double_schechter_from_m" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Return a double-power-law Schechter luminosity function from apparent magnitudes.</p>
+<p>This uses</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[M = m - \mu - K + E,\]</div>
+</div>
+<p>followed by</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\phi(M) = 0.4 \ln(10) \, \phi_\star \, x^{\alpha + 1} \exp(-x)
+         \times \left[1 + (x / x_t)^\beta\right],\]</div>
+</div>
+<p>where</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[x = 10^{-0.4 (M - M_\star)}\]</div>
+</div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[x_t = 10^{-0.4 (M_t - M_\star)}.\]</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cosmo_obj</strong> (<em>Any</em>) – A PyCCL cosmology object.</p></li>
+<li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Redshift value or array-like of redshift values.</p></li>
+<li><p><strong>apparent_mag</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Apparent magnitude value(s).</p></li>
+<li><p><strong>phi_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Overall normalization.</p></li>
+<li><p><strong>m_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Characteristic magnitude M_star.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em>) – Bright/intermediate faint-end slope parameter.</p></li>
+<li><p><strong>beta</strong> (<em>float</em>) – Additional faint-end slope modifier.</p></li>
+<li><p><strong>m_transition</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Transition magnitude M_t.</p></li>
+<li><p><strong>h</strong> (<em>float</em><em> | </em><em>None</em>) – Optional dimensionless Hubble parameter used in the
+distance-modulus convention.</p></li>
+<li><p><strong>k_correction</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Optional k-correction term(s).</p></li>
+<li><p><strong>e_correction</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Optional evolution-correction term(s).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>NumPy array of luminosity function values corresponding to the
+supplied apparent magnitudes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lfkit.photometry.luminosity_function.evolving_schechter">
+<span class="sig-prename descclassname"><span class="pre">lfkit.photometry.luminosity_function.</span></span><span class="sig-name descname"><span class="pre">evolving_schechter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">absolute_mag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear_p'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_star_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear_q'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_star_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'constant'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/photometry/luminosity_function.html#evolving_schechter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.photometry.luminosity_function.evolving_schechter" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Return an evolving Schechter luminosity function in magnitude space.</p>
+<p>This evaluates</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\phi(M, z) = 0.4 \ln(10) \, \phi_\star(z) \, x(M, z)^{\alpha(z) + 1} \exp(-x(M, z)),\]</div>
+</div>
+<p>where</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[x(M, z) = 10^{-0.4 (M - M_\star(z))}.\]</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>absolute_mag</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Absolute magnitude value(s).</p></li>
+<li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Redshift value or array-like of redshift values.</p></li>
+<li><p><strong>phi_model</strong> (<em>str</em>) – Evolution model for <code class="docutils literal notranslate"><span class="pre">phi_star</span></code>.</p></li>
+<li><p><strong>phi_kwargs</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Keyword arguments passed to the selected
+<code class="docutils literal notranslate"><span class="pre">phi_star</span></code> evolution model.</p></li>
+<li><p><strong>m_star_model</strong> (<em>str</em>) – Evolution model for <code class="docutils literal notranslate"><span class="pre">M_star</span></code>.</p></li>
+<li><p><strong>m_star_kwargs</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Keyword arguments passed to the selected
+<code class="docutils literal notranslate"><span class="pre">M_star</span></code> evolution model.</p></li>
+<li><p><strong>alpha_model</strong> (<em>str</em>) – Evolution model for <code class="docutils literal notranslate"><span class="pre">alpha</span></code>.</p></li>
+<li><p><strong>alpha_kwargs</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Keyword arguments passed to the selected
+<code class="docutils literal notranslate"><span class="pre">alpha</span></code> evolution model.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>NumPy array of luminosity function values evaluated at
+<code class="docutils literal notranslate"><span class="pre">absolute_mag</span></code> and <code class="docutils literal notranslate"><span class="pre">z</span></code>.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If an unsupported evolution model is requested.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lfkit.photometry.luminosity_function.evolving_schechter_from_m">
+<span class="sig-prename descclassname"><span class="pre">lfkit.photometry.luminosity_function.</span></span><span class="sig-name descname"><span class="pre">evolving_schechter_from_m</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cosmo_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apparent_mag</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear_p'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_star_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear_q'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_star_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'constant'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/photometry/luminosity_function.html#evolving_schechter_from_m"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.photometry.luminosity_function.evolving_schechter_from_m" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Return an evolving Schechter luminosity function from apparent magnitudes.</p>
+<p>This uses</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[M = m - \mu - K + E,\]</div>
+</div>
+<p>followed by</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\phi(M, z) = 0.4 \ln(10) \, \phi_\star(z) \, x(M, z)^{\alpha(z) + 1} \exp(-x(M, z)),\]</div>
+</div>
+<p>where</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[x(M, z) = 10^{-0.4 (M - M_\star(z))}.\]</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cosmo_obj</strong> (<em>Any</em>) – A PyCCL cosmology object.</p></li>
+<li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Redshift value or array-like of redshift values.</p></li>
+<li><p><strong>apparent_mag</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Apparent magnitude value(s).</p></li>
+<li><p><strong>phi_model</strong> (<em>str</em>) – Evolution model for <code class="docutils literal notranslate"><span class="pre">phi_star</span></code>.</p></li>
+<li><p><strong>phi_kwargs</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Keyword arguments passed to the selected
+<code class="docutils literal notranslate"><span class="pre">phi_star</span></code> evolution model.</p></li>
+<li><p><strong>m_star_model</strong> (<em>str</em>) – Evolution model for <code class="docutils literal notranslate"><span class="pre">M_star</span></code>.</p></li>
+<li><p><strong>m_star_kwargs</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Keyword arguments passed to the selected
+<code class="docutils literal notranslate"><span class="pre">M_star</span></code> evolution model.</p></li>
+<li><p><strong>alpha_model</strong> (<em>str</em>) – Evolution model for <code class="docutils literal notranslate"><span class="pre">alpha</span></code>.</p></li>
+<li><p><strong>alpha_kwargs</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Keyword arguments passed to the selected
+<code class="docutils literal notranslate"><span class="pre">alpha</span></code> evolution model.</p></li>
+<li><p><strong>h</strong> (<em>float</em><em> | </em><em>None</em>) – Optional dimensionless Hubble parameter used in the
+distance-modulus convention.</p></li>
+<li><p><strong>k_correction</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Optional k-correction term(s).</p></li>
+<li><p><strong>e_correction</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Optional evolution-correction term(s).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>NumPy array of luminosity function values corresponding to the
+supplied apparent magnitudes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="lfkit.photometry.luminosity_function.schechter">
 <span class="sig-prename descclassname"><span class="pre">lfkit.photometry.luminosity_function.</span></span><span class="sig-name descname"><span class="pre">schechter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">absolute_mag</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_star</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_star</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/photometry/luminosity_function.html#schechter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.photometry.luminosity_function.schechter" title="Link to this definition"><span>#</span></a></dt>
@@ -496,199 +696,6 @@ supplied magnitude threshold(s) and redshift(s).</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="lfkit.photometry.luminosity_function.schechter_double">
-<span class="sig-prename descclassname"><span class="pre">lfkit.photometry.luminosity_function.</span></span><span class="sig-name descname"><span class="pre">schechter_double</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">absolute_mag</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_star</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_star</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_transition</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/photometry/luminosity_function.html#schechter_double"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.photometry.luminosity_function.schechter_double" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>Return a double-power-law Schechter luminosity function in magnitude space.</p>
-<p>This implements the Loveday/GAMA-style faint-end extension</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[\phi(L) = \phi_\star (L/L_\star)^\alpha \exp(-L/L_\star)
-         \times \left[1 + (L/L_t)^\beta\right]\]</div>
-</div>
-<p>converted into a per-magnitude luminosity function.</p>
-<p>Since</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[\phi(M) \, dM = \phi(L) \, dL\]</div>
-</div>
-<p>and</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[\frac{dL}{dM} = -0.4 \ln(10) \, L,\]</div>
-</div>
-<p>the magnitude-space form becomes</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[\phi(M) = 0.4 \ln(10) \, \phi_\star \, x^{\alpha + 1} \exp(-x)
-         \times \left[1 + (x / x_t)^\beta\right]\]</div>
-</div>
-<p>with <span class="math notranslate nohighlight">\(x = L/L_\star\)</span> and <span class="math notranslate nohighlight">\(x_t = L_t/L_\star\)</span>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>absolute_mag</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Absolute magnitude value(s).</p></li>
-<li><p><strong>phi_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Overall normalization.</p></li>
-<li><p><strong>m_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Characteristic magnitude M_star.</p></li>
-<li><p><strong>alpha</strong> (<em>float</em>) – Bright/intermediate faint-end slope parameter.</p></li>
-<li><p><strong>beta</strong> (<em>float</em>) – Additional faint-end slope modifier.</p></li>
-<li><p><strong>m_transition</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Transition magnitude M_t corresponding to L_t.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>NumPy array of luminosity function values evaluated at
-<code class="docutils literal notranslate"><span class="pre">absolute_mag</span></code>.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="lfkit.photometry.luminosity_function.schechter_double_from_m">
-<span class="sig-prename descclassname"><span class="pre">lfkit.photometry.luminosity_function.</span></span><span class="sig-name descname"><span class="pre">schechter_double_from_m</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cosmo_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apparent_mag</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_star</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_star</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_transition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/photometry/luminosity_function.html#schechter_double_from_m"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.photometry.luminosity_function.schechter_double_from_m" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>Return a double-power-law Schechter luminosity function from apparent magnitudes.</p>
-<p>This uses</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[M = m - \mu - K + E,\]</div>
-</div>
-<p>followed by</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[\phi(M) = 0.4 \ln(10) \, \phi_\star \, x^{\alpha + 1} \exp(-x)
-         \times \left[1 + (x / x_t)^\beta\right],\]</div>
-</div>
-<p>where</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[x = 10^{-0.4 (M - M_\star)}\]</div>
-</div>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[x_t = 10^{-0.4 (M_t - M_\star)}.\]</div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>cosmo_obj</strong> (<em>Any</em>) – A PyCCL cosmology object.</p></li>
-<li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Redshift value or array-like of redshift values.</p></li>
-<li><p><strong>apparent_mag</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Apparent magnitude value(s).</p></li>
-<li><p><strong>phi_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Overall normalization.</p></li>
-<li><p><strong>m_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Characteristic magnitude M_star.</p></li>
-<li><p><strong>alpha</strong> (<em>float</em>) – Bright/intermediate faint-end slope parameter.</p></li>
-<li><p><strong>beta</strong> (<em>float</em>) – Additional faint-end slope modifier.</p></li>
-<li><p><strong>m_transition</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Transition magnitude M_t.</p></li>
-<li><p><strong>h</strong> (<em>float</em><em> | </em><em>None</em>) – Optional dimensionless Hubble parameter used in the
-distance-modulus convention.</p></li>
-<li><p><strong>k_correction</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Optional k-correction term(s).</p></li>
-<li><p><strong>e_correction</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Optional evolution-correction term(s).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>NumPy array of luminosity function values corresponding to the
-supplied apparent magnitudes.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="lfkit.photometry.luminosity_function.schechter_evolving">
-<span class="sig-prename descclassname"><span class="pre">lfkit.photometry.luminosity_function.</span></span><span class="sig-name descname"><span class="pre">schechter_evolving</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">absolute_mag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear_p'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_star_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear_q'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_star_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'constant'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/photometry/luminosity_function.html#schechter_evolving"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.photometry.luminosity_function.schechter_evolving" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>Return an evolving Schechter luminosity function in magnitude space.</p>
-<p>This evaluates</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[\phi(M, z) = 0.4 \ln(10) \, \phi_\star(z) \, x(M, z)^{\alpha(z) + 1} \exp(-x(M, z)),\]</div>
-</div>
-<p>where</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[x(M, z) = 10^{-0.4 (M - M_\star(z))}.\]</div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>absolute_mag</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Absolute magnitude value(s).</p></li>
-<li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Redshift value or array-like of redshift values.</p></li>
-<li><p><strong>phi_model</strong> (<em>str</em>) – Evolution model for <code class="docutils literal notranslate"><span class="pre">phi_star</span></code>.</p></li>
-<li><p><strong>phi_kwargs</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Keyword arguments passed to the selected
-<code class="docutils literal notranslate"><span class="pre">phi_star</span></code> evolution model.</p></li>
-<li><p><strong>m_star_model</strong> (<em>str</em>) – Evolution model for <code class="docutils literal notranslate"><span class="pre">M_star</span></code>.</p></li>
-<li><p><strong>m_star_kwargs</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Keyword arguments passed to the selected
-<code class="docutils literal notranslate"><span class="pre">M_star</span></code> evolution model.</p></li>
-<li><p><strong>alpha_model</strong> (<em>str</em>) – Evolution model for <code class="docutils literal notranslate"><span class="pre">alpha</span></code>.</p></li>
-<li><p><strong>alpha_kwargs</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Keyword arguments passed to the selected
-<code class="docutils literal notranslate"><span class="pre">alpha</span></code> evolution model.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>NumPy array of luminosity function values evaluated at
-<code class="docutils literal notranslate"><span class="pre">absolute_mag</span></code> and <code class="docutils literal notranslate"><span class="pre">z</span></code>.</p>
-</dd>
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If an unsupported evolution model is requested.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="lfkit.photometry.luminosity_function.schechter_evolving_from_m">
-<span class="sig-prename descclassname"><span class="pre">lfkit.photometry.luminosity_function.</span></span><span class="sig-name descname"><span class="pre">schechter_evolving_from_m</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cosmo_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apparent_mag</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear_p'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_star_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear_q'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_star_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'constant'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/photometry/luminosity_function.html#schechter_evolving_from_m"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.photometry.luminosity_function.schechter_evolving_from_m" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>Return an evolving Schechter luminosity function from apparent magnitudes.</p>
-<p>This uses</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[M = m - \mu - K + E,\]</div>
-</div>
-<p>followed by</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[\phi(M, z) = 0.4 \ln(10) \, \phi_\star(z) \, x(M, z)^{\alpha(z) + 1} \exp(-x(M, z)),\]</div>
-</div>
-<p>where</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[x(M, z) = 10^{-0.4 (M - M_\star(z))}.\]</div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>cosmo_obj</strong> (<em>Any</em>) – A PyCCL cosmology object.</p></li>
-<li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Redshift value or array-like of redshift values.</p></li>
-<li><p><strong>apparent_mag</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Apparent magnitude value(s).</p></li>
-<li><p><strong>phi_model</strong> (<em>str</em>) – Evolution model for <code class="docutils literal notranslate"><span class="pre">phi_star</span></code>.</p></li>
-<li><p><strong>phi_kwargs</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Keyword arguments passed to the selected
-<code class="docutils literal notranslate"><span class="pre">phi_star</span></code> evolution model.</p></li>
-<li><p><strong>m_star_model</strong> (<em>str</em>) – Evolution model for <code class="docutils literal notranslate"><span class="pre">M_star</span></code>.</p></li>
-<li><p><strong>m_star_kwargs</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Keyword arguments passed to the selected
-<code class="docutils literal notranslate"><span class="pre">M_star</span></code> evolution model.</p></li>
-<li><p><strong>alpha_model</strong> (<em>str</em>) – Evolution model for <code class="docutils literal notranslate"><span class="pre">alpha</span></code>.</p></li>
-<li><p><strong>alpha_kwargs</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Keyword arguments passed to the selected
-<code class="docutils literal notranslate"><span class="pre">alpha</span></code> evolution model.</p></li>
-<li><p><strong>h</strong> (<em>float</em><em> | </em><em>None</em>) – Optional dimensionless Hubble parameter used in the
-distance-modulus convention.</p></li>
-<li><p><strong>k_correction</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Optional k-correction term(s).</p></li>
-<li><p><strong>e_correction</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Optional evolution-correction term(s).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>NumPy array of luminosity function values corresponding to the
-supplied apparent magnitudes.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="lfkit.photometry.luminosity_function.schechter_from_m">
 <span class="sig-prename descclassname"><span class="pre">lfkit.photometry.luminosity_function.</span></span><span class="sig-name descname"><span class="pre">schechter_from_m</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cosmo_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apparent_mag</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_star</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_star</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/photometry/luminosity_function.html#schechter_from_m"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.photometry.luminosity_function.schechter_from_m" title="Link to this definition"><span>#</span></a></dt>
 <dd><p>Return the standard Schechter luminosity function from apparent magnitudes.</p>
@@ -793,13 +800,13 @@ supplied apparent magnitudes.</p>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">lfkit.photometry.luminosity_function module</a><ul>
+<li><a class="reference internal" href="#lfkit.photometry.luminosity_function.double_schechter"><code class="docutils literal notranslate"><span class="pre">double_schechter()</span></code></a></li>
+<li><a class="reference internal" href="#lfkit.photometry.luminosity_function.double_schechter_from_m"><code class="docutils literal notranslate"><span class="pre">double_schechter_from_m()</span></code></a></li>
+<li><a class="reference internal" href="#lfkit.photometry.luminosity_function.evolving_schechter"><code class="docutils literal notranslate"><span class="pre">evolving_schechter()</span></code></a></li>
+<li><a class="reference internal" href="#lfkit.photometry.luminosity_function.evolving_schechter_from_m"><code class="docutils literal notranslate"><span class="pre">evolving_schechter_from_m()</span></code></a></li>
 <li><a class="reference internal" href="#lfkit.photometry.luminosity_function.schechter"><code class="docutils literal notranslate"><span class="pre">schechter()</span></code></a></li>
 <li><a class="reference internal" href="#lfkit.photometry.luminosity_function.schechter_cumulative"><code class="docutils literal notranslate"><span class="pre">schechter_cumulative()</span></code></a></li>
 <li><a class="reference internal" href="#lfkit.photometry.luminosity_function.schechter_cumulative_evolving"><code class="docutils literal notranslate"><span class="pre">schechter_cumulative_evolving()</span></code></a></li>
-<li><a class="reference internal" href="#lfkit.photometry.luminosity_function.schechter_double"><code class="docutils literal notranslate"><span class="pre">schechter_double()</span></code></a></li>
-<li><a class="reference internal" href="#lfkit.photometry.luminosity_function.schechter_double_from_m"><code class="docutils literal notranslate"><span class="pre">schechter_double_from_m()</span></code></a></li>
-<li><a class="reference internal" href="#lfkit.photometry.luminosity_function.schechter_evolving"><code class="docutils literal notranslate"><span class="pre">schechter_evolving()</span></code></a></li>
-<li><a class="reference internal" href="#lfkit.photometry.luminosity_function.schechter_evolving_from_m"><code class="docutils literal notranslate"><span class="pre">schechter_evolving_from_m()</span></code></a></li>
 <li><a class="reference internal" href="#lfkit.photometry.luminosity_function.schechter_from_m"><code class="docutils literal notranslate"><span class="pre">schechter_from_m()</span></code></a></li>
 </ul>
 </li>

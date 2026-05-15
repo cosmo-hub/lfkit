@@ -222,18 +222,24 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="examples/index.html"> Examples</a><input aria-label="Toggle navigation of  Examples" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/api_overview.html"> API overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/luminosity_function_models.html"> Luminosity function models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/magnitude_integrals.html"> Luminosity-function magnitude integrals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/magnitudes_and_luminosities.html"> Magnitudes and luminosities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/redshift_density.html"> LF-weighted redshift density</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/catalog_completeness.html"> Catalog completeness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/conditional_luminosity_function.html"> Conditional luminosity functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/model_registry.html"> Available luminosity function models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/kcorrect_examples.html">kcorrect examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/poggianti_examples.html">Poggianti (1997) examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples/luminosity_function_examples.html"> Luminosity function examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples/conditional_luminosity_function_examples.html"> Conditional luminosity functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples/catalog_completeness_examples.html"> Catalog completeness</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="api/lfkit.html">lfkit package</a><input aria-label="Toggle navigation of lfkit package" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l3 has-children"><a class="reference internal" href="api/lfkit.api.html">lfkit.api package</a><input aria-label="Toggle navigation of lfkit.api package" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/lfkit.api.conditional_luminosity_function.html">lfkit.api.conditional_luminosity_function module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/lfkit.api.corrections.html">lfkit.api.corrections module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="api/lfkit.api.lumfunc.html">lfkit.api.lumfunc module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/lfkit.api.luminosity_function.html">lfkit.api.luminosity_function module</a></li>
 </ul>
 </li>
 <li class="toctree-l3 has-children"><a class="reference internal" href="api/lfkit.corrections.html">lfkit.corrections package</a><input aria-label="Toggle navigation of lfkit.corrections package" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
@@ -265,6 +271,7 @@
 <li class="toctree-l3 has-children"><a class="reference internal" href="api/lfkit.utils.html">lfkit.utils package</a><input aria-label="Toggle navigation of lfkit.utils package" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="api/lfkit.utils.download_poggianti97_data.html">lfkit.utils.download_poggianti97_data module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/lfkit.utils.evaluators.html">lfkit.utils.evaluators module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/lfkit.utils.integrators.html">lfkit.utils.integrators module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/lfkit.utils.interpolation.html">lfkit.utils.interpolation module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/lfkit.utils.io.html">lfkit.utils.io module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/lfkit.utils.types.html">lfkit.utils.types module</a></li>
@@ -318,64 +325,46 @@
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/lfkit.photometry.magnitudes.html#lfkit.photometry.magnitudes.absolute_magnitude">absolute_magnitude() (in module lfkit.photometry.magnitudes)</a>
-
-        <ul>
-          <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.absolute_magnitude">(lfkit.api.lumfunc.LuminosityFunction method)</a>
 </li>
-          <li><a href="api/lfkit.html#lfkit.LuminosityFunction.absolute_magnitude">(lfkit.LuminosityFunction method)</a>
-</li>
-        </ul></li>
         <li><a href="api/lfkit.photometry.magnitudes.html#lfkit.photometry.magnitudes.absolute_magnitude_from_luminosity_distance">absolute_magnitude_from_luminosity_distance() (in module lfkit.photometry.magnitudes)</a>
-
-        <ul>
-          <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.absolute_magnitude_from_luminosity_distance">(lfkit.api.lumfunc.LuminosityFunction method)</a>
 </li>
-          <li><a href="api/lfkit.html#lfkit.LuminosityFunction.absolute_magnitude_from_luminosity_distance">(lfkit.LuminosityFunction method)</a>
-</li>
-        </ul></li>
         <li><a href="api/lfkit.photometry.catalog_completeness.html#lfkit.photometry.catalog_completeness.absolute_magnitude_limit">absolute_magnitude_limit() (in module lfkit.photometry.catalog_completeness)</a>
-
-        <ul>
-          <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.absolute_magnitude_limit">(lfkit.api.lumfunc.LuminosityFunction method)</a>
 </li>
-          <li><a href="api/lfkit.html#lfkit.LuminosityFunction.absolute_magnitude_limit">(lfkit.LuminosityFunction method)</a>
-</li>
-        </ul></li>
         <li><a href="api/lfkit.photometry.lf_parameter_models.html#lfkit.photometry.lf_parameter_models.alpha_constant">alpha_constant() (in module lfkit.photometry.lf_parameter_models)</a>
 </li>
         <li><a href="api/lfkit.photometry.lf_parameter_models.html#lfkit.photometry.lf_parameter_models.alpha_linear">alpha_linear() (in module lfkit.photometry.lf_parameter_models)</a>
 </li>
         <li><a href="api/lfkit.photometry.magnitudes.html#lfkit.photometry.magnitudes.apparent_magnitude">apparent_magnitude() (in module lfkit.photometry.magnitudes)</a>
+</li>
+        <li><a href="api/lfkit.photometry.magnitudes.html#lfkit.photometry.magnitudes.apparent_magnitude_from_luminosity_distance">apparent_magnitude_from_luminosity_distance() (in module lfkit.photometry.magnitudes)</a>
+</li>
+        <li><a href="api/lfkit.utils.interpolation.html#lfkit.utils.interpolation.as_1d_finite_grid">as_1d_finite_grid() (in module lfkit.utils.interpolation)</a>
+</li>
+        <li><a href="api/lfkit.api.luminosity_function.html#lfkit.api.luminosity_function.LuminosityFunction.available_from_m_models">available_from_m_models() (lfkit.api.luminosity_function.LuminosityFunction static method)</a>
 
         <ul>
-          <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.apparent_magnitude">(lfkit.api.lumfunc.LuminosityFunction method)</a>
-</li>
-          <li><a href="api/lfkit.html#lfkit.LuminosityFunction.apparent_magnitude">(lfkit.LuminosityFunction method)</a>
+          <li><a href="api/lfkit.html#lfkit.LuminosityFunction.available_from_m_models">(lfkit.LuminosityFunction static method)</a>
 </li>
         </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/lfkit.photometry.magnitudes.html#lfkit.photometry.magnitudes.apparent_magnitude_from_luminosity_distance">apparent_magnitude_from_luminosity_distance() (in module lfkit.photometry.magnitudes)</a>
-
-        <ul>
-          <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.apparent_magnitude_from_luminosity_distance">(lfkit.api.lumfunc.LuminosityFunction method)</a>
-</li>
-          <li><a href="api/lfkit.html#lfkit.LuminosityFunction.apparent_magnitude_from_luminosity_distance">(lfkit.LuminosityFunction method)</a>
-</li>
-        </ul></li>
-        <li><a href="api/lfkit.utils.interpolation.html#lfkit.utils.interpolation.as_1d_finite_grid">as_1d_finite_grid() (in module lfkit.utils.interpolation)</a>
-</li>
         <li><a href="api/lfkit.utils.io.html#lfkit.utils.io.available_from_table">available_from_table() (in module lfkit.utils.io)</a>
 </li>
         <li><a href="api/lfkit.photometry.lf_parameter_models.html#lfkit.photometry.lf_parameter_models.available_lf_parameter_models">available_lf_parameter_models() (in module lfkit.photometry.lf_parameter_models)</a>
 </li>
+        <li><a href="api/lfkit.api.luminosity_function.html#lfkit.api.luminosity_function.LuminosityFunction.available_models">available_models() (lfkit.api.luminosity_function.LuminosityFunction static method)</a>
+
+        <ul>
+          <li><a href="api/lfkit.html#lfkit.LuminosityFunction.available_models">(lfkit.LuminosityFunction static method)</a>
+</li>
+        </ul></li>
         <li><a href="api/lfkit.corrections.poggianti1997.html#lfkit.corrections.poggianti1997.available_pairs">available_pairs() (in module lfkit.corrections.poggianti1997)</a>
 
         <ul>
           <li><a href="api/lfkit.utils.io.html#lfkit.utils.io.available_pairs">(in module lfkit.utils.io)</a>
 </li>
         </ul></li>
-        <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.available_parameter_models">available_parameter_models() (lfkit.api.lumfunc.LuminosityFunction static method)</a>
+        <li><a href="api/lfkit.api.luminosity_function.html#lfkit.api.luminosity_function.LuminosityFunction.available_parameter_models">available_parameter_models() (lfkit.api.luminosity_function.LuminosityFunction static method)</a>
 
         <ul>
           <li><a href="api/lfkit.html#lfkit.LuminosityFunction.available_parameter_models">(lfkit.LuminosityFunction static method)</a>
@@ -405,56 +394,26 @@
   <h2>C</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.catalog_completeness">catalog_completeness() (lfkit.api.lumfunc.LuminosityFunction method)</a>
-
-        <ul>
-          <li><a href="api/lfkit.html#lfkit.LuminosityFunction.catalog_completeness">(lfkit.LuminosityFunction method)</a>
-</li>
-        </ul></li>
         <li><a href="api/lfkit.photometry.catalog_completeness.html#lfkit.photometry.catalog_completeness.catalog_completeness_fraction">catalog_completeness_fraction() (in module lfkit.photometry.catalog_completeness)</a>
 </li>
-        <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.central_lognormal_conditional">central_lognormal_conditional() (lfkit.api.lumfunc.LuminosityFunction class method)</a>
-
-        <ul>
-          <li><a href="api/lfkit.html#lfkit.LuminosityFunction.central_lognormal_conditional">(lfkit.LuminosityFunction class method)</a>
-</li>
-        </ul></li>
-        <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.central_satellite_conditional">central_satellite_conditional() (lfkit.api.lumfunc.LuminosityFunction class method)</a>
-
-        <ul>
-          <li><a href="api/lfkit.html#lfkit.LuminosityFunction.central_satellite_conditional">(lfkit.LuminosityFunction class method)</a>
-</li>
-        </ul></li>
         <li><a href="api/lfkit.cosmo.cosmology.html#lfkit.cosmo.cosmology.comoving_distance_mpc">comoving_distance_mpc() (in module lfkit.cosmo.cosmology)</a>
 </li>
         <li><a href="api/lfkit.corrections.kcorrect_grids.html#lfkit.corrections.kcorrect_grids.compute_k_table">compute_k_table() (in module lfkit.corrections.kcorrect_grids)</a>
 </li>
-        <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.conditional_double_schechter">conditional_double_schechter() (lfkit.api.lumfunc.LuminosityFunction class method)</a>
-
-        <ul>
-          <li><a href="api/lfkit.html#lfkit.LuminosityFunction.conditional_double_schechter">(lfkit.LuminosityFunction class method)</a>
+        <li><a href="api/lfkit.photometry.conditional_lf_models.html#lfkit.photometry.conditional_lf_models.conditional_double_schechter">conditional_double_schechter() (in module lfkit.photometry.conditional_lf_models)</a>
 </li>
-        </ul></li>
-        <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.conditional_evolving_schechter">conditional_evolving_schechter() (lfkit.api.lumfunc.LuminosityFunction class method)</a>
-
-        <ul>
-          <li><a href="api/lfkit.html#lfkit.LuminosityFunction.conditional_evolving_schechter">(lfkit.LuminosityFunction class method)</a>
+        <li><a href="api/lfkit.photometry.conditional_lf_models.html#lfkit.photometry.conditional_lf_models.conditional_evolving_schechter">conditional_evolving_schechter() (in module lfkit.photometry.conditional_lf_models)</a>
 </li>
-        </ul></li>
+        <li><a href="api/lfkit.photometry.conditional_lf_models.html#lfkit.photometry.conditional_lf_models.conditional_schechter">conditional_schechter() (in module lfkit.photometry.conditional_lf_models)</a>
+</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/lfkit.photometry.conditional_lf_models.html#lfkit.photometry.conditional_lf_models.conditional_schechter">conditional_schechter() (in module lfkit.photometry.conditional_lf_models)</a>
+        <li><a href="api/lfkit.html#lfkit.ConditionalLuminosityFunction">ConditionalLuminosityFunction (class in lfkit)</a>
 
         <ul>
-          <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.conditional_schechter">(lfkit.api.lumfunc.LuminosityFunction class method)</a>
-</li>
-          <li><a href="api/lfkit.html#lfkit.LuminosityFunction.conditional_schechter">(lfkit.LuminosityFunction class method)</a>
+          <li><a href="api/lfkit.api.conditional_luminosity_function.html#lfkit.api.conditional_luminosity_function.ConditionalLuminosityFunction">(class in lfkit.api.conditional_luminosity_function)</a>
 </li>
         </ul></li>
-        <li><a href="api/lfkit.photometry.conditional_lf_models.html#lfkit.photometry.conditional_lf_models.conditional_schechter_double">conditional_schechter_double() (in module lfkit.photometry.conditional_lf_models)</a>
-</li>
-        <li><a href="api/lfkit.photometry.conditional_lf_models.html#lfkit.photometry.conditional_lf_models.conditional_schechter_evolving">conditional_schechter_evolving() (in module lfkit.photometry.conditional_lf_models)</a>
-</li>
         <li><a href="api/lfkit.html#lfkit.Corrections">Corrections (class in lfkit)</a>
 
         <ul>
@@ -466,13 +425,7 @@
         <li><a href="api/lfkit.utils.types.html#lfkit.utils.types.Cosmology">Cosmology (in module lfkit.utils.types)</a>
 </li>
         <li><a href="api/lfkit.photometry.lf_integrals.html#lfkit.photometry.lf_integrals.cumulative_number_density">cumulative_number_density() (in module lfkit.photometry.lf_integrals)</a>
-
-        <ul>
-          <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.cumulative_number_density">(lfkit.api.lumfunc.LuminosityFunction method)</a>
 </li>
-          <li><a href="api/lfkit.html#lfkit.LuminosityFunction.cumulative_number_density">(lfkit.LuminosityFunction method)</a>
-</li>
-        </ul></li>
     </ul></td>
   </tr></table>
 </section>
@@ -487,16 +440,24 @@
 </li>
         <li><a href="api/lfkit.corrections.responses.html#lfkit.corrections.responses.discover_response_dir_auto">discover_response_dir_auto() (in module lfkit.corrections.responses)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/lfkit.cosmo.cosmology.html#lfkit.cosmo.cosmology.distance_modulus">distance_modulus() (in module lfkit.cosmo.cosmology)</a>
 </li>
-        <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.double_schechter">double_schechter() (lfkit.api.lumfunc.LuminosityFunction class method)</a>
+        <li><a href="api/lfkit.photometry.luminosity_function.html#lfkit.photometry.luminosity_function.double_schechter">double_schechter() (in module lfkit.photometry.luminosity_function)</a>
 
         <ul>
+          <li><a href="api/lfkit.api.conditional_luminosity_function.html#lfkit.api.conditional_luminosity_function.ConditionalLuminosityFunction.double_schechter">(lfkit.api.conditional_luminosity_function.ConditionalLuminosityFunction static method)</a>
+</li>
+          <li><a href="api/lfkit.api.luminosity_function.html#lfkit.api.luminosity_function.LuminosityFunction.double_schechter">(lfkit.api.luminosity_function.LuminosityFunction class method)</a>
+</li>
+          <li><a href="api/lfkit.html#lfkit.ConditionalLuminosityFunction.double_schechter">(lfkit.ConditionalLuminosityFunction static method)</a>
+</li>
           <li><a href="api/lfkit.html#lfkit.LuminosityFunction.double_schechter">(lfkit.LuminosityFunction class method)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/lfkit.photometry.luminosity_function.html#lfkit.photometry.luminosity_function.double_schechter_from_m">double_schechter_from_m() (in module lfkit.photometry.luminosity_function)</a>
+</li>
     </ul></td>
   </tr></table>
 </section>
@@ -519,20 +480,28 @@
 </li>
         <li><a href="api/lfkit.utils.evaluators.html#lfkit.utils.evaluators.evaluate_non_negative_redshift_callable">evaluate_non_negative_redshift_callable() (in module lfkit.utils.evaluators)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/lfkit.utils.evaluators.html#lfkit.utils.evaluators.evaluate_optional_redshift_callable">evaluate_optional_redshift_callable() (in module lfkit.utils.evaluators)</a>
 </li>
         <li><a href="api/lfkit.utils.evaluators.html#lfkit.utils.evaluators.evaluate_positive_redshift_callable">evaluate_positive_redshift_callable() (in module lfkit.utils.evaluators)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/lfkit.utils.evaluators.html#lfkit.utils.evaluators.evaluate_weight_on_grid">evaluate_weight_on_grid() (in module lfkit.utils.evaluators)</a>
 </li>
-        <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.evolving_schechter">evolving_schechter() (lfkit.api.lumfunc.LuminosityFunction class method)</a>
+        <li><a href="api/lfkit.photometry.luminosity_function.html#lfkit.photometry.luminosity_function.evolving_schechter">evolving_schechter() (in module lfkit.photometry.luminosity_function)</a>
 
         <ul>
+          <li><a href="api/lfkit.api.conditional_luminosity_function.html#lfkit.api.conditional_luminosity_function.ConditionalLuminosityFunction.evolving_schechter">(lfkit.api.conditional_luminosity_function.ConditionalLuminosityFunction static method)</a>
+</li>
+          <li><a href="api/lfkit.api.luminosity_function.html#lfkit.api.luminosity_function.LuminosityFunction.evolving_schechter">(lfkit.api.luminosity_function.LuminosityFunction class method)</a>
+</li>
+          <li><a href="api/lfkit.html#lfkit.ConditionalLuminosityFunction.evolving_schechter">(lfkit.ConditionalLuminosityFunction static method)</a>
+</li>
           <li><a href="api/lfkit.html#lfkit.LuminosityFunction.evolving_schechter">(lfkit.LuminosityFunction class method)</a>
 </li>
         </ul></li>
+        <li><a href="api/lfkit.photometry.luminosity_function.html#lfkit.photometry.luminosity_function.evolving_schechter_from_m">evolving_schechter_from_m() (in module lfkit.photometry.luminosity_function)</a>
+</li>
         <li><a href="api/lfkit.corrections.poggianti1997.html#lfkit.corrections.poggianti1997.extract_sed_spectrum">extract_sed_spectrum() (in module lfkit.corrections.poggianti1997)</a>
 </li>
         <li><a href="api/lfkit.utils.io.html#lfkit.utils.io.extract_series">extract_series() (in module lfkit.utils.io)</a>
@@ -575,28 +544,18 @@
   <h2>I</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/lfkit.utils.integrators.html#lfkit.utils.integrators.integrate_between_variable_bounds">integrate_between_variable_bounds() (in module lfkit.utils.integrators)</a>
+</li>
         <li><a href="api/lfkit.photometry.conditional_lf_integrals.html#lfkit.photometry.conditional_lf_integrals.integrate_conditional_luminosity_function">integrate_conditional_luminosity_function() (in module lfkit.photometry.conditional_lf_integrals)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/lfkit.photometry.conditional_lf_integrals.html#lfkit.photometry.conditional_lf_integrals.integrate_weighted_conditional_luminosity_function">integrate_weighted_conditional_luminosity_function() (in module lfkit.photometry.conditional_lf_integrals)</a>
 </li>
         <li><a href="api/lfkit.photometry.lf_integrals.html#lfkit.photometry.lf_integrals.integrated_luminosity_density">integrated_luminosity_density() (in module lfkit.photometry.lf_integrals)</a>
-
-        <ul>
-          <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.integrated_luminosity_density">(lfkit.api.lumfunc.LuminosityFunction method)</a>
 </li>
-          <li><a href="api/lfkit.html#lfkit.LuminosityFunction.integrated_luminosity_density">(lfkit.LuminosityFunction method)</a>
-</li>
-        </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/lfkit.photometry.lf_integrals.html#lfkit.photometry.lf_integrals.integrated_number_density">integrated_number_density() (in module lfkit.photometry.lf_integrals)</a>
-
-        <ul>
-          <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.integrated_number_density">(lfkit.api.lumfunc.LuminosityFunction method)</a>
 </li>
-          <li><a href="api/lfkit.html#lfkit.LuminosityFunction.integrated_number_density">(lfkit.LuminosityFunction method)</a>
-</li>
-        </ul></li>
     </ul></td>
   </tr></table>
 </section>
@@ -642,29 +601,11 @@
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/lfkit.photometry.lf_redshift_density.html#lfkit.photometry.lf_redshift_density.lf_integrated_number_density">lf_integrated_number_density() (in module lfkit.photometry.lf_redshift_density)</a>
-
-        <ul>
-          <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.lf_integrated_number_density">(lfkit.api.lumfunc.LuminosityFunction method)</a>
 </li>
-          <li><a href="api/lfkit.html#lfkit.LuminosityFunction.lf_integrated_number_density">(lfkit.LuminosityFunction method)</a>
-</li>
-        </ul></li>
         <li><a href="api/lfkit.photometry.lf_integrals.html#lfkit.photometry.lf_integrals.lf_weighted_integral">lf_weighted_integral() (in module lfkit.photometry.lf_integrals)</a>
-
-        <ul>
-          <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.lf_weighted_integral">(lfkit.api.lumfunc.LuminosityFunction method)</a>
 </li>
-          <li><a href="api/lfkit.html#lfkit.LuminosityFunction.lf_weighted_integral">(lfkit.LuminosityFunction method)</a>
-</li>
-        </ul></li>
         <li><a href="api/lfkit.photometry.lf_redshift_density.html#lfkit.photometry.lf_redshift_density.lf_weighted_redshift_density">lf_weighted_redshift_density() (in module lfkit.photometry.lf_redshift_density)</a>
-
-        <ul>
-          <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.lf_weighted_redshift_density">(lfkit.api.lumfunc.LuminosityFunction method)</a>
 </li>
-          <li><a href="api/lfkit.html#lfkit.LuminosityFunction.lf_weighted_redshift_density">(lfkit.LuminosityFunction method)</a>
-</li>
-        </ul></li>
         <li>
     lfkit
 
@@ -680,6 +621,13 @@
 </li>
         </ul></li>
         <li>
+    lfkit.api.conditional_luminosity_function
+
+        <ul>
+          <li><a href="api/lfkit.api.conditional_luminosity_function.html#module-lfkit.api.conditional_luminosity_function">module</a>
+</li>
+        </ul></li>
+        <li>
     lfkit.api.corrections
 
         <ul>
@@ -687,10 +635,10 @@
 </li>
         </ul></li>
         <li>
-    lfkit.api.lumfunc
+    lfkit.api.luminosity_function
 
         <ul>
-          <li><a href="api/lfkit.api.lumfunc.html#module-lfkit.api.lumfunc">module</a>
+          <li><a href="api/lfkit.api.luminosity_function.html#module-lfkit.api.luminosity_function">module</a>
 </li>
         </ul></li>
         <li>
@@ -791,8 +739,6 @@
           <li><a href="api/lfkit.photometry.conditional_lf_models.html#module-lfkit.photometry.conditional_lf_models">module</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     lfkit.photometry.lf_integrals
 
@@ -807,6 +753,8 @@
           <li><a href="api/lfkit.photometry.lf_parameter_models.html#module-lfkit.photometry.lf_parameter_models">module</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     lfkit.photometry.lf_redshift_density
 
@@ -857,6 +805,13 @@
 </li>
         </ul></li>
         <li>
+    lfkit.utils.integrators
+
+        <ul>
+          <li><a href="api/lfkit.utils.integrators.html#module-lfkit.utils.integrators">module</a>
+</li>
+        </ul></li>
+        <li>
     lfkit.utils.interpolation
 
         <ul>
@@ -903,6 +858,12 @@
 </li>
         <li><a href="api/lfkit.utils.io.html#lfkit.utils.io.load_vizier_csv">load_vizier_csv() (in module lfkit.utils.io)</a>
 </li>
+        <li><a href="api/lfkit.api.conditional_luminosity_function.html#lfkit.api.conditional_luminosity_function.ConditionalLuminosityFunction.lognormal">lognormal() (lfkit.api.conditional_luminosity_function.ConditionalLuminosityFunction static method)</a>
+
+        <ul>
+          <li><a href="api/lfkit.html#lfkit.ConditionalLuminosityFunction.lognormal">(lfkit.ConditionalLuminosityFunction static method)</a>
+</li>
+        </ul></li>
         <li><a href="api/lfkit.photometry.conditional_lf_models.html#lfkit.photometry.conditional_lf_models.lognormal_conditional_lf">lognormal_conditional_lf() (in module lfkit.photometry.conditional_lf_models)</a>
 </li>
         <li><a href="api/lfkit.cosmo.cosmology.html#lfkit.cosmo.cosmology.lookback_time_gyr">lookback_time_gyr() (in module lfkit.cosmo.cosmology)</a>
@@ -920,7 +881,7 @@
         <li><a href="api/lfkit.html#lfkit.LuminosityFunction">LuminosityFunction (class in lfkit)</a>
 
         <ul>
-          <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction">(class in lfkit.api.lumfunc)</a>
+          <li><a href="api/lfkit.api.luminosity_function.html#lfkit.api.luminosity_function.LuminosityFunction">(class in lfkit.api.luminosity_function)</a>
 </li>
         </ul></li>
     </ul></td>
@@ -954,19 +915,13 @@
         <li><a href="api/lfkit.corrections.filters.html#lfkit.corrections.filters.make_response_map">make_response_map() (in module lfkit.corrections.filters)</a>
 </li>
         <li><a href="api/lfkit.photometry.lf_integrals.html#lfkit.photometry.lf_integrals.mean_luminosity">mean_luminosity() (in module lfkit.photometry.lf_integrals)</a>
-
-        <ul>
-          <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.mean_luminosity">(lfkit.api.lumfunc.LuminosityFunction method)</a>
 </li>
-          <li><a href="api/lfkit.html#lfkit.LuminosityFunction.mean_luminosity">(lfkit.LuminosityFunction method)</a>
-</li>
-        </ul></li>
         <li><a href="api/lfkit.photometry.catalog_completeness.html#lfkit.photometry.catalog_completeness.missing_number_density">missing_number_density() (in module lfkit.photometry.catalog_completeness)</a>
+</li>
+        <li><a href="api/lfkit.api.conditional_luminosity_function.html#lfkit.api.conditional_luminosity_function.ConditionalLuminosityFunction.modified_schechter">modified_schechter() (lfkit.api.conditional_luminosity_function.ConditionalLuminosityFunction static method)</a>
 
         <ul>
-          <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.missing_number_density">(lfkit.api.lumfunc.LuminosityFunction method)</a>
-</li>
-          <li><a href="api/lfkit.html#lfkit.LuminosityFunction.missing_number_density">(lfkit.LuminosityFunction method)</a>
+          <li><a href="api/lfkit.html#lfkit.ConditionalLuminosityFunction.modified_schechter">(lfkit.ConditionalLuminosityFunction static method)</a>
 </li>
         </ul></li>
         <li><a href="api/lfkit.photometry.conditional_lf_models.html#lfkit.photometry.conditional_lf_models.modified_schechter_conditional_lf">modified_schechter_conditional_lf() (in module lfkit.photometry.conditional_lf_models)</a>
@@ -979,9 +934,11 @@
 </li>
           <li><a href="api/lfkit.api.html#module-lfkit.api">lfkit.api</a>
 </li>
+          <li><a href="api/lfkit.api.conditional_luminosity_function.html#module-lfkit.api.conditional_luminosity_function">lfkit.api.conditional_luminosity_function</a>
+</li>
           <li><a href="api/lfkit.api.corrections.html#module-lfkit.api.corrections">lfkit.api.corrections</a>
 </li>
-          <li><a href="api/lfkit.api.lumfunc.html#module-lfkit.api.lumfunc">lfkit.api.lumfunc</a>
+          <li><a href="api/lfkit.api.luminosity_function.html#module-lfkit.api.luminosity_function">lfkit.api.luminosity_function</a>
 </li>
           <li><a href="api/lfkit.corrections.html#module-lfkit.corrections">lfkit.corrections</a>
 </li>
@@ -1029,6 +986,8 @@
 </li>
           <li><a href="api/lfkit.utils.evaluators.html#module-lfkit.utils.evaluators">lfkit.utils.evaluators</a>
 </li>
+          <li><a href="api/lfkit.utils.integrators.html#module-lfkit.utils.integrators">lfkit.utils.integrators</a>
+</li>
           <li><a href="api/lfkit.utils.interpolation.html#module-lfkit.utils.interpolation">lfkit.utils.interpolation</a>
 </li>
           <li><a href="api/lfkit.utils.io.html#module-lfkit.utils.io">lfkit.utils.io</a>
@@ -1063,23 +1022,11 @@
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/lfkit.photometry.catalog_completeness.html#lfkit.photometry.catalog_completeness.observed_number_density">observed_number_density() (in module lfkit.photometry.catalog_completeness)</a>
-
-        <ul>
-          <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.observed_number_density">(lfkit.api.lumfunc.LuminosityFunction method)</a>
 </li>
-          <li><a href="api/lfkit.html#lfkit.LuminosityFunction.observed_number_density">(lfkit.LuminosityFunction method)</a>
-</li>
-        </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/lfkit.photometry.catalog_completeness.html#lfkit.photometry.catalog_completeness.out_of_catalog_fraction">out_of_catalog_fraction() (in module lfkit.photometry.catalog_completeness)</a>
-
-        <ul>
-          <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.out_of_catalog_fraction">(lfkit.api.lumfunc.LuminosityFunction method)</a>
 </li>
-          <li><a href="api/lfkit.html#lfkit.LuminosityFunction.out_of_catalog_fraction">(lfkit.LuminosityFunction method)</a>
-</li>
-        </ul></li>
     </ul></td>
   </tr></table>
 </section>
@@ -1088,19 +1035,19 @@
   <h2>P</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.parameters">parameters() (lfkit.api.lumfunc.LuminosityFunction method)</a>
+        <li><a href="api/lfkit.api.luminosity_function.html#lfkit.api.luminosity_function.LuminosityFunction.parameters">parameters() (lfkit.api.luminosity_function.LuminosityFunction method)</a>
 
         <ul>
           <li><a href="api/lfkit.html#lfkit.LuminosityFunction.parameters">(lfkit.LuminosityFunction method)</a>
 </li>
         </ul></li>
-        <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.phi">phi() (lfkit.api.lumfunc.LuminosityFunction method)</a>
+        <li><a href="api/lfkit.api.luminosity_function.html#lfkit.api.luminosity_function.LuminosityFunction.phi">phi() (lfkit.api.luminosity_function.LuminosityFunction method)</a>
 
         <ul>
           <li><a href="api/lfkit.html#lfkit.LuminosityFunction.phi">(lfkit.LuminosityFunction method)</a>
 </li>
         </ul></li>
-        <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.phi_from_m">phi_from_m() (lfkit.api.lumfunc.LuminosityFunction method)</a>
+        <li><a href="api/lfkit.api.luminosity_function.html#lfkit.api.luminosity_function.LuminosityFunction.phi_from_m">phi_from_m() (lfkit.api.luminosity_function.LuminosityFunction method)</a>
 
         <ul>
           <li><a href="api/lfkit.html#lfkit.LuminosityFunction.phi_from_m">(lfkit.LuminosityFunction method)</a>
@@ -1137,7 +1084,7 @@
         <li><a href="api/lfkit.photometry.lf_parameter_models.html#lfkit.photometry.lf_parameter_models.register_alpha_model">register_alpha_model() (in module lfkit.photometry.lf_parameter_models)</a>
 
         <ul>
-          <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.register_alpha_model">(lfkit.api.lumfunc.LuminosityFunction static method)</a>
+          <li><a href="api/lfkit.api.luminosity_function.html#lfkit.api.luminosity_function.LuminosityFunction.register_alpha_model">(lfkit.api.luminosity_function.LuminosityFunction static method)</a>
 </li>
           <li><a href="api/lfkit.html#lfkit.LuminosityFunction.register_alpha_model">(lfkit.LuminosityFunction static method)</a>
 </li>
@@ -1145,7 +1092,7 @@
         <li><a href="api/lfkit.photometry.lf_parameter_models.html#lfkit.photometry.lf_parameter_models.register_m_star_model">register_m_star_model() (in module lfkit.photometry.lf_parameter_models)</a>
 
         <ul>
-          <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.register_m_star_model">(lfkit.api.lumfunc.LuminosityFunction static method)</a>
+          <li><a href="api/lfkit.api.luminosity_function.html#lfkit.api.luminosity_function.LuminosityFunction.register_m_star_model">(lfkit.api.luminosity_function.LuminosityFunction static method)</a>
 </li>
           <li><a href="api/lfkit.html#lfkit.LuminosityFunction.register_m_star_model">(lfkit.LuminosityFunction static method)</a>
 </li>
@@ -1155,7 +1102,7 @@
         <li><a href="api/lfkit.photometry.lf_parameter_models.html#lfkit.photometry.lf_parameter_models.register_phi_star_model">register_phi_star_model() (in module lfkit.photometry.lf_parameter_models)</a>
 
         <ul>
-          <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.register_phi_star_model">(lfkit.api.lumfunc.LuminosityFunction static method)</a>
+          <li><a href="api/lfkit.api.luminosity_function.html#lfkit.api.luminosity_function.LuminosityFunction.register_phi_star_model">(lfkit.api.luminosity_function.LuminosityFunction static method)</a>
 </li>
           <li><a href="api/lfkit.html#lfkit.LuminosityFunction.register_phi_star_model">(lfkit.LuminosityFunction static method)</a>
 </li>
@@ -1174,39 +1121,31 @@
   <h2>S</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="api/lfkit.utils.integrators.html#lfkit.utils.integrators.safe_divide">safe_divide() (in module lfkit.utils.integrators)</a>
+</li>
         <li><a href="api/lfkit.photometry.luminosities.html#lfkit.photometry.luminosities.sample_schechter_luminosity">sample_schechter_luminosity() (in module lfkit.photometry.luminosities)</a>
 </li>
-        <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.satellite_modified_schechter_conditional">satellite_modified_schechter_conditional() (lfkit.api.lumfunc.LuminosityFunction class method)</a>
-
-        <ul>
-          <li><a href="api/lfkit.html#lfkit.LuminosityFunction.satellite_modified_schechter_conditional">(lfkit.LuminosityFunction class method)</a>
-</li>
-        </ul></li>
         <li><a href="api/lfkit.utils.io.html#lfkit.utils.io.save_kcorr_package">save_kcorr_package() (in module lfkit.utils.io)</a>
 </li>
         <li><a href="api/lfkit.photometry.luminosity_function.html#lfkit.photometry.luminosity_function.schechter">schechter() (in module lfkit.photometry.luminosity_function)</a>
 
         <ul>
-          <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.schechter">(lfkit.api.lumfunc.LuminosityFunction class method)</a>
+          <li><a href="api/lfkit.api.conditional_luminosity_function.html#lfkit.api.conditional_luminosity_function.ConditionalLuminosityFunction.schechter">(lfkit.api.conditional_luminosity_function.ConditionalLuminosityFunction static method)</a>
+</li>
+          <li><a href="api/lfkit.api.luminosity_function.html#lfkit.api.luminosity_function.LuminosityFunction.schechter">(lfkit.api.luminosity_function.LuminosityFunction class method)</a>
+</li>
+          <li><a href="api/lfkit.html#lfkit.ConditionalLuminosityFunction.schechter">(lfkit.ConditionalLuminosityFunction static method)</a>
 </li>
           <li><a href="api/lfkit.html#lfkit.LuminosityFunction.schechter">(lfkit.LuminosityFunction class method)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/lfkit.photometry.luminosity_function.html#lfkit.photometry.luminosity_function.schechter_cumulative">schechter_cumulative() (in module lfkit.photometry.luminosity_function)</a>
 </li>
         <li><a href="api/lfkit.photometry.luminosity_function.html#lfkit.photometry.luminosity_function.schechter_cumulative_evolving">schechter_cumulative_evolving() (in module lfkit.photometry.luminosity_function)</a>
 </li>
         <li><a href="api/lfkit.photometry.luminosities.html#lfkit.photometry.luminosities.schechter_cumulative_number_density_luminosity">schechter_cumulative_number_density_luminosity() (in module lfkit.photometry.luminosities)</a>
-</li>
-        <li><a href="api/lfkit.photometry.luminosity_function.html#lfkit.photometry.luminosity_function.schechter_double">schechter_double() (in module lfkit.photometry.luminosity_function)</a>
-</li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="api/lfkit.photometry.luminosity_function.html#lfkit.photometry.luminosity_function.schechter_double_from_m">schechter_double_from_m() (in module lfkit.photometry.luminosity_function)</a>
-</li>
-        <li><a href="api/lfkit.photometry.luminosity_function.html#lfkit.photometry.luminosity_function.schechter_evolving">schechter_evolving() (in module lfkit.photometry.luminosity_function)</a>
-</li>
-        <li><a href="api/lfkit.photometry.luminosity_function.html#lfkit.photometry.luminosity_function.schechter_evolving_from_m">schechter_evolving_from_m() (in module lfkit.photometry.luminosity_function)</a>
 </li>
         <li><a href="api/lfkit.photometry.luminosity_function.html#lfkit.photometry.luminosity_function.schechter_from_m">schechter_from_m() (in module lfkit.photometry.luminosity_function)</a>
 </li>
@@ -1219,13 +1158,7 @@
         <li><a href="api/lfkit.utils.units.html#lfkit.utils.units.sec_per_gyr">sec_per_gyr() (in module lfkit.utils.units)</a>
 </li>
         <li><a href="api/lfkit.photometry.lf_integrals.html#lfkit.photometry.lf_integrals.selection_weighted_number_density">selection_weighted_number_density() (in module lfkit.photometry.lf_integrals)</a>
-
-        <ul>
-          <li><a href="api/lfkit.api.lumfunc.html#lfkit.api.lumfunc.LuminosityFunction.selection_weighted_number_density">(lfkit.api.lumfunc.LuminosityFunction method)</a>
 </li>
-          <li><a href="api/lfkit.html#lfkit.LuminosityFunction.selection_weighted_number_density">(lfkit.LuminosityFunction method)</a>
-</li>
-        </ul></li>
     </ul></td>
   </tr></table>
 </section>
@@ -1236,6 +1169,12 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/lfkit.photometry.magnitudes.html#lfkit.photometry.magnitudes.total_magnitude_correction">total_magnitude_correction() (in module lfkit.photometry.magnitudes)</a>
 </li>
+        <li><a href="api/lfkit.api.conditional_luminosity_function.html#lfkit.api.conditional_luminosity_function.ConditionalLuminosityFunction.two_component">two_component() (lfkit.api.conditional_luminosity_function.ConditionalLuminosityFunction static method)</a>
+
+        <ul>
+          <li><a href="api/lfkit.html#lfkit.ConditionalLuminosityFunction.two_component">(lfkit.ConditionalLuminosityFunction static method)</a>
+</li>
+        </ul></li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="api/lfkit.photometry.conditional_lf_models.html#lfkit.photometry.conditional_lf_models.two_component_conditional_lf">two_component_conditional_lf() (in module lfkit.photometry.conditional_lf_models)</a>
