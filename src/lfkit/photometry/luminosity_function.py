@@ -1,4 +1,4 @@
-"""Luminosity function utilities for LFKit.
+r"""Luminosity function utilities for LFKit.
 
 This module provides simple standalone functions for evaluating
 common galaxy luminosity function parameterization.
@@ -63,11 +63,11 @@ from lfkit.utils.validators import validate_array
 
 __all__ = [
     "schechter",
-    "schechter_evolving",
-    "schechter_double",
+    "evolving_schechter",
+    "double_schechter",
     "schechter_from_m",
-    "schechter_evolving_from_m",
-    "schechter_double_from_m",
+    "evolving_schechter_from_m",
+    "double_schechter_from_m",
     "schechter_cumulative",
     "schechter_cumulative_evolving",
 ]
@@ -124,7 +124,7 @@ def schechter(
     return np.asarray(phi, dtype=float)
 
 
-def schechter_evolving(
+def evolving_schechter(
     absolute_mag: FloatInput,
     z: FloatInput,
     *,
@@ -187,7 +187,7 @@ def schechter_evolving(
     )
 
 
-def schechter_double(
+def double_schechter(
     absolute_mag: FloatInput,
     *,
     phi_star: ParameterValue,
@@ -351,7 +351,7 @@ def schechter_from_m(
     )
 
 
-def schechter_evolving_from_m(
+def evolving_schechter_from_m(
     cosmo_obj: Cosmology,
     z: FloatInput,
     apparent_mag: FloatInput,
@@ -439,7 +439,7 @@ def schechter_evolving_from_m(
 
     abs_mag = validate_array(abs_mag, name="abs_mag")
 
-    return schechter_evolving(
+    return evolving_schechter(
         abs_mag,
         z,
         phi_model=phi_model,
@@ -451,7 +451,7 @@ def schechter_evolving_from_m(
     )
 
 
-def schechter_double_from_m(
+def double_schechter_from_m(
     cosmo_obj: Cosmology,
     z: FloatInput,
     apparent_mag: FloatInput,
@@ -524,7 +524,7 @@ def schechter_double_from_m(
 
     abs_mag = validate_array(abs_mag, name="abs_mag")
 
-    return schechter_double(
+    return double_schechter(
         abs_mag,
         phi_star=phi_star,
         m_star=m_star,
