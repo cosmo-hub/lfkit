@@ -24,7 +24,7 @@ from lfkit.photometry.luminosities import (
     luminosity_ratio,
     magnitude_difference_from_luminosity_ratio,
 )
-from lfkit.photometry.luminosity_function import schechter, schechter_double
+from lfkit.photometry.luminosity_function import schechter, double_schechter
 from lfkit.utils.types import (
     ConditionalParameter,
     FloatArray,
@@ -36,8 +36,8 @@ from lfkit.utils.validators import validate_array
 
 __all__ = [
     "conditional_schechter",
-    "conditional_schechter_evolving",
-    "conditional_schechter_double",
+    "conditional_evolving_schechter",
+    "conditional_double_schechter",
     "lognormal_conditional_lf",
     "modified_schechter_conditional_lf",
     "two_component_conditional_lf",
@@ -89,7 +89,7 @@ def conditional_schechter(
     )
 
 
-def conditional_schechter_evolving(
+def conditional_evolving_schechter(
     absolute_mag: FloatInput,
     condition: FloatInput,
     *,
@@ -102,7 +102,7 @@ def conditional_schechter_evolving(
 ) -> FloatArray:
     """Evaluate a conditional Schechter LF using LFKit parameter models.
 
-    This is the conditional LF analogue of ``schechter_evolving``. The
+    This is the conditional LF analogue of ``evolving_schechter``. The
     conditioning variable is passed to LFKit's registered parameter models.
 
     Args:
@@ -141,7 +141,7 @@ def conditional_schechter_evolving(
     )
 
 
-def conditional_schechter_double(
+def conditional_double_schechter(
     absolute_mag: FloatInput,
     condition: FloatInput,
     *,
@@ -170,7 +170,7 @@ def conditional_schechter_double(
     """
     condition_arr = validate_array(condition, name="condition")
 
-    return schechter_double(
+    return double_schechter(
         absolute_mag,
         phi_star=_evaluate_conditional_parameter(
             phi_star,

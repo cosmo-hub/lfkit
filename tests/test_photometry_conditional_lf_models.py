@@ -5,8 +5,8 @@ import pytest
 
 from lfkit.photometry.conditional_lf_models import (
     conditional_schechter,
-    conditional_schechter_double,
-    conditional_schechter_evolving,
+    conditional_double_schechter,
+    conditional_evolving_schechter,
     lognormal_conditional_lf,
     modified_schechter_conditional_lf,
     two_component_conditional_lf,
@@ -15,7 +15,7 @@ from lfkit.photometry.luminosities import (
     luminosity_ratio,
     magnitude_difference_from_luminosity_ratio,
 )
-from lfkit.photometry.luminosity_function import schechter, schechter_double
+from lfkit.photometry.luminosity_function import schechter, double_schechter
 
 
 def test_conditional_schechter_matches_schechter_for_scalar_parameters() -> None:
@@ -94,13 +94,13 @@ def test_conditional_schechter_rejects_non_finite_callable_parameter() -> None:
         )
 
 
-def test_conditional_schechter_evolving_matches_explicit_parameter_models() -> None:
+def test_conditional_evolving_schechter_matches_explicit_parameter_models() -> None:
     """Tests the conditional evolving Schechter wrapper with simple models."""
 
     absolute_mag = np.array([-22.0, -21.0, -20.0])
     condition = np.array([0.0, 1.0, 2.0])
 
-    result = conditional_schechter_evolving(
+    result = conditional_evolving_schechter(
         absolute_mag=absolute_mag,
         condition=condition,
         phi_model="constant",
@@ -122,11 +122,11 @@ def test_conditional_schechter_evolving_matches_explicit_parameter_models() -> N
     assert result.dtype == np.float64
 
 
-def test_conditional_schechter_evolving_rejects_unknown_model() -> None:
+def test_conditional_evolving_schechter_rejects_unknown_model() -> None:
     """Tests that unknown LF parameter models are rejected."""
 
     with pytest.raises(ValueError):
-        conditional_schechter_evolving(
+        conditional_evolving_schechter(
             absolute_mag=[-22.0, -21.0, -20.0],
             condition=[0.0, 1.0, 2.0],
             phi_model="not_a_model",
@@ -138,13 +138,13 @@ def test_conditional_schechter_evolving_rejects_unknown_model() -> None:
         )
 
 
-def test_conditional_schechter_double_matches_double_schechter() -> None:
+def test_conditional_double_schechter_matches_double_schechter() -> None:
     """Tests that the conditional double-Schechter wrapper matches the model."""
 
     absolute_mag = np.array([-22.0, -21.0, -20.0])
     condition = np.array([0.0, 1.0, 2.0])
 
-    result = conditional_schechter_double(
+    result = conditional_double_schechter(
         absolute_mag=absolute_mag,
         condition=condition,
         phi_star=1.0e-3,
@@ -154,7 +154,7 @@ def test_conditional_schechter_double_matches_double_schechter() -> None:
         m_transition=-19.5,
     )
 
-    expected = schechter_double(
+    expected = double_schechter(
         absolute_mag,
         phi_star=1.0e-3,
         m_star=-21.0,
@@ -167,13 +167,13 @@ def test_conditional_schechter_double_matches_double_schechter() -> None:
     assert result.dtype == np.float64
 
 
-def test_conditional_schechter_double_accepts_callable_parameters() -> None:
+def test_conditional_double_schechter_accepts_callable_parameters() -> None:
     """Tests callable parameters for the conditional double-Schechter model."""
 
     absolute_mag = np.array([-22.0, -21.0, -20.0])
     condition = np.array([0.0, 1.0, 2.0])
 
-    result = conditional_schechter_double(
+    result = conditional_double_schechter(
         absolute_mag=absolute_mag,
         condition=condition,
         phi_star=lambda x: 1.0e-3 * (1.0 + x),
@@ -183,7 +183,7 @@ def test_conditional_schechter_double_accepts_callable_parameters() -> None:
         m_transition=lambda x: -19.5 - 0.2 * x,
     )
 
-    expected = schechter_double(
+    expected = double_schechter(
         absolute_mag,
         phi_star=np.array([1.0e-3, 2.0e-3, 3.0e-3]),
         m_star=np.array([-21.0, -21.1, -21.2]),

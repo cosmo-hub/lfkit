@@ -6,8 +6,8 @@ import pytest
 from lfkit.photometry.luminosities import  luminosity_ratio
 from lfkit.photometry.luminosity_function import (
     schechter,
-    schechter_evolving,
-    schechter_double,
+    evolving_schechter,
+    double_schechter,
     schechter_cumulative,
     schechter_cumulative_evolving,
 )
@@ -35,8 +35,8 @@ def test_schechter_negative_phi_star_error():
         schechter(M, phi_star=-1.0, m_star=-20.0, alpha=-1.0)
 
 
-def test_schechter_evolving_matches_constant_case():
-    """Tests that schechter_evolving reduces to schechter for constant models."""
+def test_evolving_schechter_matches_constant_case():
+    """Tests that evolving_schechter reduces to schechter for constant models."""
     M = np.array([-20.0])
     z = np.array([0.5])
 
@@ -47,7 +47,7 @@ def test_schechter_evolving_matches_constant_case():
         alpha=-1.0,
     )
 
-    phi2 = schechter_evolving(
+    phi2 = evolving_schechter(
         M,
         z,
         phi_model="constant",
@@ -61,20 +61,20 @@ def test_schechter_evolving_matches_constant_case():
     assert np.allclose(phi1, phi2)
 
 
-def test_schechter_evolving_invalid_model():
-    """Tests that schechter_evolving raises for invalid model names."""
+def test_evolving_schechter_invalid_model():
+    """Tests that evolving_schechter raises for invalid model names."""
     with pytest.raises(ValueError):
-        schechter_evolving(
+        evolving_schechter(
             [-20.0],
             [0.5],
             phi_model="invalid",
         )
 
 
-def test_schechter_double_positive():
-    """Tests that schechter_double returns finite positive values."""
+def test_double_schechter_positive():
+    """Tests that double_schechter returns finite positive values."""
     M = np.linspace(-22, -18, 10)
-    phi = schechter_double(
+    phi = double_schechter(
         M,
         phi_star=1e-3,
         m_star=-20.0,
@@ -86,10 +86,10 @@ def test_schechter_double_positive():
     assert np.all(phi >= 0)
 
 
-def test_schechter_double_invalid_alpha():
-    """Tests that schechter_double raises for non-finite alpha."""
+def test_double_schechter_invalid_alpha():
+    """Tests that double_schechter raises for non-finite alpha."""
     with pytest.raises(ValueError):
-        schechter_double(
+        double_schechter(
             [-20.0],
             phi_star=1e-3,
             m_star=-20.0,
@@ -220,11 +220,11 @@ def test_schechter_cumulative_evolving_matches_constant():
     assert np.allclose(n1, n2)
 
 
-def test_schechter_double_transition_effect():
-    """Tests that schechter_double changes slope across transition magnitude."""
+def test_double_schechter_transition_effect():
+    """Tests that double_schechter changes slope across transition magnitude."""
     M = np.array([-19.0, -17.0])
 
-    phi = schechter_double(
+    phi = double_schechter(
         M,
         phi_star=1e-3,
         m_star=-20.0,
@@ -244,10 +244,10 @@ def test_schechter_extreme_magnitudes_finite():
     assert np.all(np.isfinite(phi))
 
 
-def test_schechter_evolving_missing_kwargs():
-    """Tests that schechter_evolving raises if required kwargs are missing."""
+def test_evolving_schechter_missing_kwargs():
+    """Tests that evolving_schechter raises if required kwargs are missing."""
     with pytest.raises(TypeError):
-        schechter_evolving(
+        evolving_schechter(
             [-20.0],
             [0.5],
             phi_model="linear_p",  # requires phi_0_star and p

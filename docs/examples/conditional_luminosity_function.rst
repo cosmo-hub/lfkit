@@ -5,17 +5,23 @@
 |lfkitlogo| Conditional luminosity functions
 ============================================
 
-This page shows how to evaluate conditional luminosity functions with LFKit.
+This page shows how to evaluate conditional luminosity functions with LFKit's
+public API.
 
 A conditional luminosity function has the form :math:`\Phi(M \mid x)`, where
 :math:`M` is absolute magnitude and :math:`x` is an external conditioning
 variable. The conditioning variable is generic: it can represent redshift, halo
 mass, environment, galaxy type, richness, stellar mass, or another quantity.
 
+LFKit exposes conditional luminosity functions through
+:class:`lfkit.ConditionalLuminosityFunction`. Each constructor returns a
+:class:`lfkit.LuminosityFunction` object, so the resulting model can be
+evaluated with ``lf.phi`` and integrated with the usual ``lf.integrals``
+namespace.
+
 The examples below use redshift as the conditioning variable because it is a
-natural choice for luminosity function evolution. The same functions can be
-used with any other conditioning variable by replacing ``z`` with the desired
-quantity.
+natural choice for luminosity function evolution. The same API can be used with
+any other conditioning variable by replacing ``z`` with the desired quantity.
 
 The examples include:
 
@@ -24,7 +30,9 @@ The examples include:
 * a lognormal component,
 * a modified Schechter-like component,
 * a two-component lognormal plus modified-Schechter model,
-* integrated number densities and component fractions.
+* integrated number densities and component fractions,
+* a halo-mass conditional example,
+* selection-limited number densities.
 
 The number-density units follow the normalization supplied to the luminosity
 function. For example, if the amplitudes are supplied in
@@ -51,9 +59,7 @@ conditioning variable.
    import matplotlib.pyplot as plt
    import cmasher as cmr
 
-   from lfkit.photometry.conditional_lf_models import (
-       conditional_schechter,
-   )
+   from lfkit import ConditionalLuminosityFunction
 
    LABEL_SIZE = 15
    TICK_SIZE = 13
@@ -65,18 +71,17 @@ conditioning variable.
    absolute_mag = np.linspace(-24.0, -14.0, 500)
    redshifts = [0.1, 0.6, 1.1]
 
+   lf = ConditionalLuminosityFunction.schechter(
+       phi_star=lambda z: 1.0e-3 * (1.0 + z) ** 0.8,
+       m_star=lambda z: -20.5 - 0.7 * (z - 0.1),
+       alpha=-1.1,
+   )
+
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
    for z_value, color in zip(redshifts, colors):
        z = np.full_like(absolute_mag, z_value)
-
-       phi = conditional_schechter(
-           absolute_mag,
-           z,
-           phi_star=lambda z: 1.0e-3 * (1.0 + z) ** 0.8,
-           m_star=lambda z: -20.5 - 0.7 * (z - 0.1),
-           alpha=-1.1,
-       )
+       phi = lf.phi(absolute_mag, z)
 
        ax.plot(
            absolute_mag,
@@ -96,6 +101,7 @@ conditioning variable.
    ax.set_title("Conditional Schechter luminosity function", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
    ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="best")
+
    plt.tight_layout()
 
 
@@ -116,9 +122,7 @@ the conditional model behaves smoothly across the region where it will be used.
    import matplotlib.pyplot as plt
    import cmasher as cmr
 
-   from lfkit.photometry.conditional_lf_models import (
-       conditional_schechter,
-   )
+   from lfkit import ConditionalLuminosityFunction
 
    LABEL_SIZE = 15
    TICK_SIZE = 13
@@ -129,14 +133,13 @@ the conditional model behaves smoothly across the region where it will be used.
 
    mag_grid, z_grid = np.meshgrid(absolute_mag, redshift)
 
-   phi = conditional_schechter(
-       mag_grid,
-       z_grid,
+   lf = ConditionalLuminosityFunction.schechter(
        phi_star=lambda z: 1.0e-3 * (1.0 + z) ** 0.8,
        m_star=lambda z: -20.5 - 0.7 * (z - 0.1),
        alpha=-1.1,
    )
 
+   phi = lf.phi(mag_grid, z_grid)
    log_phi = np.log10(phi)
 
    fig, ax = plt.subplots(figsize=(7.2, 5.0))
@@ -195,9 +198,7 @@ conditioning variable, while the faint-end slope is constant.
    import matplotlib.pyplot as plt
    import cmasher as cmr
 
-   from lfkit.photometry.conditional_lf_models import (
-       conditional_schechter_evolving,
-   )
+   from lfkit import ConditionalLuminosityFunction
 
    LABEL_SIZE = 15
    TICK_SIZE = 13
@@ -209,21 +210,20 @@ conditioning variable, while the faint-end slope is constant.
    absolute_mag = np.linspace(-24.0, -14.0, 500)
    redshifts = [0.1, 0.6, 1.1]
 
+   lf = ConditionalLuminosityFunction.evolving_schechter(
+       phi_model="linear_p",
+       phi_kwargs={"phi_0_star": 1.0e-3, "p": 0.7},
+       m_star_model="linear_q",
+       m_star_kwargs={"m_0_star": -20.5, "q": 0.8, "z_ref": 0.1},
+       alpha_model="constant",
+       alpha_kwargs={"alpha": -1.1},
+   )
+
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
    for z_value, color in zip(redshifts, colors):
        z = np.full_like(absolute_mag, z_value)
-
-       phi = conditional_schechter_evolving(
-           absolute_mag,
-           z,
-           phi_model="linear_p",
-           phi_kwargs={"phi_0_star": 1.0e-3, "p": 0.7},
-           m_star_model="linear_q",
-           m_star_kwargs={"m_0_star": -20.5, "q": 0.8, "z_ref": 0.1},
-           alpha_model="constant",
-           alpha_kwargs={"alpha": -1.1},
-       )
+       phi = lf.phi(absolute_mag, z)
 
        ax.plot(
            absolute_mag,
@@ -243,6 +243,7 @@ conditioning variable, while the faint-end slope is constant.
    ax.set_title("Conditional evolving Schechter model", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
    ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="best")
+
    plt.tight_layout()
 
 
@@ -264,9 +265,7 @@ width.
    import matplotlib.pyplot as plt
    import cmasher as cmr
 
-   from lfkit.photometry.conditional_lf_models import (
-       lognormal_conditional_lf,
-   )
+   from lfkit import ConditionalLuminosityFunction
 
    LABEL_SIZE = 15
    TICK_SIZE = 13
@@ -278,18 +277,17 @@ width.
    absolute_mag = np.linspace(-24.0, -16.0, 500)
    redshifts = [0.1, 0.6, 1.1]
 
+   lf = ConditionalLuminosityFunction.lognormal(
+       mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
+       sigma_log_luminosity=0.18,
+       amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
+   )
+
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
    for z_value, color in zip(redshifts, colors):
        z = np.full_like(absolute_mag, z_value)
-
-       phi = lognormal_conditional_lf(
-           absolute_mag,
-           z,
-           mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
-           sigma_log_luminosity=0.18,
-           amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
-       )
+       phi = lf.phi(absolute_mag, z)
 
        ax.plot(
            absolute_mag,
@@ -310,6 +308,7 @@ width.
    ax.set_title("Lognormal conditional LF component", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
    ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="best")
+
    plt.tight_layout()
 
 
@@ -328,9 +327,7 @@ range of faint magnitudes.
    import matplotlib.pyplot as plt
    import cmasher as cmr
 
-   from lfkit.photometry.conditional_lf_models import (
-       modified_schechter_conditional_lf,
-   )
+   from lfkit import ConditionalLuminosityFunction
 
    LABEL_SIZE = 15
    TICK_SIZE = 13
@@ -342,18 +339,17 @@ range of faint magnitudes.
    absolute_mag = np.linspace(-24.0, -14.0, 500)
    redshifts = [0.1, 0.6, 1.1]
 
+   lf = ConditionalLuminosityFunction.modified_schechter(
+       phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
+       m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
+       alpha=lambda z: -1.05 - 0.10 * z,
+   )
+
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
    for z_value, color in zip(redshifts, colors):
        z = np.full_like(absolute_mag, z_value)
-
-       phi = modified_schechter_conditional_lf(
-           absolute_mag,
-           z,
-           phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
-           m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
-           alpha=lambda z: -1.05 - 0.10 * z,
-       )
+       phi = lf.phi(absolute_mag, z)
 
        ax.plot(
            absolute_mag,
@@ -374,6 +370,7 @@ range of faint magnitudes.
    ax.set_title("Modified Schechter conditional LF component", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
    ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="best")
+
    plt.tight_layout()
 
 
@@ -382,9 +379,9 @@ Standard, modified, and lognormal component shapes
 
 It is useful to compare the component shapes at fixed condition. The standard
 Schechter form has the usual exponential cutoff in luminosity ratio. The
-modified Schechter component uses a squared exponential cutoff, making the
-bright-end suppression sharper. The lognormal component is localized around a
-mean luminosity and is useful for narrow populations.
+modified Schechter component uses a squared exponential cutoff. The lognormal
+component is localized around a mean luminosity and is useful for narrow
+populations.
 
 .. plot::
    :include-source: True
@@ -394,11 +391,7 @@ mean luminosity and is useful for narrow populations.
    import matplotlib.pyplot as plt
    import cmasher as cmr
 
-   from lfkit.photometry.conditional_lf_models import (
-       conditional_schechter,
-       lognormal_conditional_lf,
-       modified_schechter_conditional_lf,
-   )
+   from lfkit import ConditionalLuminosityFunction
 
    LABEL_SIZE = 15
    TICK_SIZE = 13
@@ -411,29 +404,27 @@ mean luminosity and is useful for narrow populations.
    z_value = 0.6
    z = np.full_like(absolute_mag, z_value)
 
-   phi_schechter = conditional_schechter(
-       absolute_mag,
-       z,
+   schechter_lf = ConditionalLuminosityFunction.schechter(
        phi_star=1.0e-3,
        m_star=-20.5,
        alpha=-1.1,
    )
 
-   phi_modified = modified_schechter_conditional_lf(
-       absolute_mag,
-       z,
+   modified_lf = ConditionalLuminosityFunction.modified_schechter(
        phi_star=1.0e-3,
        m_star=-20.5,
        alpha=-1.1,
    )
 
-   phi_lognormal = lognormal_conditional_lf(
-       absolute_mag,
-       z,
+   lognormal_lf = ConditionalLuminosityFunction.lognormal(
        mean_absolute_mag=-20.5,
        sigma_log_luminosity=0.20,
        amplitude=1.0e-3,
    )
+
+   phi_schechter = schechter_lf.phi(absolute_mag, z)
+   phi_modified = modified_lf.phi(absolute_mag, z)
+   phi_lognormal = lognormal_lf.phi(absolute_mag, z)
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
@@ -492,11 +483,7 @@ dominates different magnitude ranges.
    import matplotlib.pyplot as plt
    import cmasher as cmr
 
-   from lfkit.photometry.conditional_lf_models import (
-       lognormal_conditional_lf,
-       modified_schechter_conditional_lf,
-       two_component_conditional_lf,
-   )
+   from lfkit import ConditionalLuminosityFunction
 
    LABEL_SIZE = 15
    TICK_SIZE = 13
@@ -511,25 +498,19 @@ dominates different magnitude ranges.
    z_value = 0.6
    z = np.full_like(absolute_mag, z_value)
 
-   lognormal_phi = lognormal_conditional_lf(
-       absolute_mag,
-       z,
+   lognormal_lf = ConditionalLuminosityFunction.lognormal(
        mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
        sigma_log_luminosity=0.18,
        amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
    )
 
-   modified_phi = modified_schechter_conditional_lf(
-       absolute_mag,
-       z,
+   modified_lf = ConditionalLuminosityFunction.modified_schechter(
        phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
        m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
        alpha=lambda z: -1.05 - 0.10 * z,
    )
 
-   total_phi = two_component_conditional_lf(
-       absolute_mag,
-       z,
+   total_lf = ConditionalLuminosityFunction.two_component(
        lognormal_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
        lognormal_sigma_log_luminosity=0.18,
        lognormal_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
@@ -537,6 +518,10 @@ dominates different magnitude ranges.
        modified_m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
        modified_alpha=lambda z: -1.05 - 0.10 * z,
    )
+
+   lognormal_phi = lognormal_lf.phi(absolute_mag, z)
+   modified_phi = modified_lf.phi(absolute_mag, z)
+   total_phi = total_lf.phi(absolute_mag, z)
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
@@ -572,6 +557,7 @@ dominates different magnitude ranges.
    ax.set_title(r"Two-component conditional LF at $z=0.6$", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
    ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="best")
+
    plt.tight_layout()
 
 
@@ -590,9 +576,7 @@ components depend on the conditioning variable.
    import matplotlib.pyplot as plt
    import cmasher as cmr
 
-   from lfkit.photometry.conditional_lf_models import (
-       two_component_conditional_lf,
-   )
+   from lfkit import ConditionalLuminosityFunction
 
    LABEL_SIZE = 15
    TICK_SIZE = 13
@@ -604,21 +588,20 @@ components depend on the conditioning variable.
    absolute_mag = np.linspace(-24.0, -14.0, 500)
    redshifts = [0.1, 0.6, 1.1]
 
+   lf = ConditionalLuminosityFunction.two_component(
+       lognormal_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
+       lognormal_sigma_log_luminosity=0.18,
+       lognormal_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
+       modified_phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
+       modified_m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
+       modified_alpha=lambda z: -1.05 - 0.10 * z,
+   )
+
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
    for z_value, color in zip(redshifts, colors):
        z = np.full_like(absolute_mag, z_value)
-
-       phi = two_component_conditional_lf(
-           absolute_mag,
-           z,
-           lognormal_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
-           lognormal_sigma_log_luminosity=0.18,
-           lognormal_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
-           modified_phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
-           modified_m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
-           modified_alpha=lambda z: -1.05 - 0.10 * z,
-       )
+       phi = lf.phi(absolute_mag, z)
 
        ax.plot(
            absolute_mag,
@@ -639,6 +622,7 @@ components depend on the conditioning variable.
    ax.set_title("Two-component conditional LF", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
    ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="best")
+
    plt.tight_layout()
 
 
@@ -648,10 +632,9 @@ Integrated conditional number density
 A conditional luminosity function can be integrated over absolute magnitude at
 each value of the conditioning variable.
 
-This example uses LFKit's conditional luminosity-function integration helper to
-integrate the lognormal component, the modified Schechter component, and the
-two-component total over a fixed absolute-magnitude range. The result shows how
-the selected number density changes with redshift.
+Because conditional constructors return normal LFKit luminosity function
+objects, the same ``lf.integrals`` namespace can be used here. The result shows
+how the selected number density changes with redshift.
 
 .. plot::
    :include-source: True
@@ -661,14 +644,7 @@ the selected number density changes with redshift.
    import matplotlib.pyplot as plt
    import cmasher as cmr
 
-   from lfkit.photometry.conditional_lf_integrals import (
-       integrate_conditional_luminosity_function,
-   )
-   from lfkit.photometry.conditional_lf_models import (
-       lognormal_conditional_lf,
-       modified_schechter_conditional_lf,
-       two_component_conditional_lf,
-   )
+   from lfkit import ConditionalLuminosityFunction
 
    LABEL_SIZE = 15
    TICK_SIZE = 13
@@ -680,50 +656,47 @@ the selected number density changes with redshift.
    total_color = 0.5 * (np.array(colors_blue[1]) + np.array(colors_red[1]))
 
    redshift = np.linspace(0.05, 1.5, 180)
-   absolute_mag = np.linspace(-24.0, -14.0, 800)
 
-   _, z_grid = np.meshgrid(absolute_mag, redshift)
-
-   n_lognormal = integrate_conditional_luminosity_function(
-       absolute_mag=absolute_mag,
-       condition=z_grid,
-       conditional_lf=lambda absolute_mag, condition: lognormal_conditional_lf(
-           absolute_mag,
-           condition,
-           mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
-           sigma_log_luminosity=0.18,
-           amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
-       ),
-       axis=1,
+   lognormal_lf = ConditionalLuminosityFunction.lognormal(
+       mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
+       sigma_log_luminosity=0.18,
+       amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
    )
 
-   n_modified = integrate_conditional_luminosity_function(
-       absolute_mag=absolute_mag,
-       condition=z_grid,
-       conditional_lf=lambda absolute_mag, condition: modified_schechter_conditional_lf(
-           absolute_mag,
-           condition,
-           phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
-           m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
-           alpha=lambda z: -1.05 - 0.10 * z,
-       ),
-       axis=1,
+   modified_lf = ConditionalLuminosityFunction.modified_schechter(
+       phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
+       m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
+       alpha=lambda z: -1.05 - 0.10 * z,
    )
 
-   n_total = integrate_conditional_luminosity_function(
-       absolute_mag=absolute_mag,
-       condition=z_grid,
-       conditional_lf=lambda absolute_mag, condition: two_component_conditional_lf(
-           absolute_mag,
-           condition,
-           lognormal_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
-           lognormal_sigma_log_luminosity=0.18,
-           lognormal_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
-           modified_phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
-           modified_m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
-           modified_alpha=lambda z: -1.05 - 0.10 * z,
-       ),
-       axis=1,
+   total_lf = ConditionalLuminosityFunction.two_component(
+       lognormal_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
+       lognormal_sigma_log_luminosity=0.18,
+       lognormal_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
+       modified_phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
+       modified_m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
+       modified_alpha=lambda z: -1.05 - 0.10 * z,
+   )
+
+   n_lognormal = lognormal_lf.integrals.number_density(
+       redshift,
+       m_bright=-24.0,
+       m_faint=-14.0,
+       n_m=800,
+   )
+
+   n_modified = modified_lf.integrals.number_density(
+       redshift,
+       m_bright=-24.0,
+       m_faint=-14.0,
+       n_m=800,
+   )
+
+   n_total = total_lf.integrals.number_density(
+       redshift,
+       m_bright=-24.0,
+       m_faint=-14.0,
+       n_m=800,
    )
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
@@ -756,6 +729,7 @@ the selected number density changes with redshift.
    ax.set_title(r"Integrated conditional LF over $-24 \leq M \leq -14$", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
    ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="best")
+
    plt.tight_layout()
 
 
@@ -765,10 +739,10 @@ Component fractions
 The relative contribution of each component can be summarized as a fraction of
 the integrated two-component luminosity function.
 
-This example uses LFKit's conditional luminosity-function integration helper to
-compute the integrated lognormal and modified Schechter components. This is a
-compact diagnostic for checking whether the selected population is dominated by
-the lognormal component, the modified Schechter component, or a mixture of both.
+This example computes the integrated lognormal and modified Schechter
+components with ``lf.integrals.number_density``. This is a compact diagnostic
+for checking whether the selected population is dominated by the lognormal
+component, the modified Schechter component, or a mixture of both.
 
 .. plot::
    :include-source: True
@@ -778,13 +752,7 @@ the lognormal component, the modified Schechter component, or a mixture of both.
    import matplotlib.pyplot as plt
    import cmasher as cmr
 
-   from lfkit.photometry.conditional_lf_integrals import (
-       integrate_conditional_luminosity_function,
-   )
-   from lfkit.photometry.conditional_lf_models import (
-       lognormal_conditional_lf,
-       modified_schechter_conditional_lf,
-   )
+   from lfkit import ConditionalLuminosityFunction
 
    LABEL_SIZE = 15
    TICK_SIZE = 13
@@ -795,34 +763,31 @@ the lognormal component, the modified Schechter component, or a mixture of both.
    colors_red = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.03, 0.26))
 
    redshift = np.linspace(0.05, 1.5, 180)
-   absolute_mag = np.linspace(-24.0, -14.0, 800)
 
-   _, z_grid = np.meshgrid(absolute_mag, redshift)
-
-   n_lognormal = integrate_conditional_luminosity_function(
-       absolute_mag=absolute_mag,
-       condition=z_grid,
-       conditional_lf=lambda absolute_mag, condition: lognormal_conditional_lf(
-           absolute_mag,
-           condition,
-           mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
-           sigma_log_luminosity=0.18,
-           amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
-       ),
-       axis=1,
+   lognormal_lf = ConditionalLuminosityFunction.lognormal(
+       mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
+       sigma_log_luminosity=0.18,
+       amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
    )
 
-   n_modified = integrate_conditional_luminosity_function(
-       absolute_mag=absolute_mag,
-       condition=z_grid,
-       conditional_lf=lambda absolute_mag, condition: modified_schechter_conditional_lf(
-           absolute_mag,
-           condition,
-           phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
-           m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
-           alpha=lambda z: -1.05 - 0.10 * z,
-       ),
-       axis=1,
+   modified_lf = ConditionalLuminosityFunction.modified_schechter(
+       phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
+       m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
+       alpha=lambda z: -1.05 - 0.10 * z,
+   )
+
+   n_lognormal = lognormal_lf.integrals.number_density(
+       redshift,
+       m_bright=-24.0,
+       m_faint=-14.0,
+       n_m=800,
+   )
+
+   n_modified = modified_lf.integrals.number_density(
+       redshift,
+       m_bright=-24.0,
+       m_faint=-14.0,
+       n_m=800,
    )
 
    n_total = n_lognormal + n_modified
@@ -853,11 +818,12 @@ the lognormal component, the modified Schechter component, or a mixture of both.
    ax.set_title(r"Component fractions over $-24 \leq M \leq -14$", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
    ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="center right")
+
    plt.tight_layout()
 
 
 Two-component LF surface
------------------------------------------
+------------------------
 
 The full two-component conditional luminosity function can be shown as a
 surface in the magnitude-redshift plane.
@@ -875,9 +841,7 @@ smoothly.
    import matplotlib.pyplot as plt
    import cmasher as cmr
 
-   from lfkit.photometry.conditional_lf_models import (
-       two_component_conditional_lf,
-   )
+   from lfkit import ConditionalLuminosityFunction
 
    LABEL_SIZE = 15
    TICK_SIZE = 13
@@ -888,9 +852,7 @@ smoothly.
 
    mag_grid, z_grid = np.meshgrid(absolute_mag, redshift)
 
-   phi = two_component_conditional_lf(
-       mag_grid,
-       z_grid,
+   lf = ConditionalLuminosityFunction.two_component(
        lognormal_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
        lognormal_sigma_log_luminosity=0.18,
        lognormal_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
@@ -899,6 +861,7 @@ smoothly.
        modified_alpha=lambda z: -1.05 - 0.10 * z,
    )
 
+   phi = lf.phi(mag_grid, z_grid)
    log_phi = np.log10(phi)
 
    fig, ax = plt.subplots(figsize=(7.2, 5.0))
@@ -957,7 +920,7 @@ lognormal mean magnitude become brighter in more massive halos.
    import matplotlib.pyplot as plt
    import cmasher as cmr
 
-   from lfkit.photometry.conditional_lf_models import lognormal_conditional_lf
+   from lfkit import ConditionalLuminosityFunction
 
    LABEL_SIZE = 15
    TICK_SIZE = 13
@@ -969,18 +932,17 @@ lognormal mean magnitude become brighter in more massive halos.
    absolute_mag = np.linspace(-24.0, -16.0, 600)
    log_halo_masses = [11.5, 12.0, 12.5, 13.0]
 
+   lf = ConditionalLuminosityFunction.lognormal(
+       mean_absolute_mag=lambda log_mh: -20.0 - 0.8 * (log_mh - 12.0),
+       sigma_log_luminosity=0.18,
+       amplitude=lambda log_mh: 5.0e-4 * 10.0 ** (0.3 * (log_mh - 12.0)),
+   )
+
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
    for log_mh, color in zip(log_halo_masses, colors):
        condition = np.full_like(absolute_mag, log_mh)
-
-       phi = lognormal_conditional_lf(
-           absolute_mag,
-           condition,
-           mean_absolute_mag=lambda log_mh: -20.0 - 0.8 * (log_mh - 12.0),
-           sigma_log_luminosity=0.18,
-           amplitude=lambda log_mh: 5.0e-4 * 10.0 ** (0.3 * (log_mh - 12.0)),
-       )
+       phi = lf.phi(absolute_mag, condition)
 
        ax.plot(
            absolute_mag,
@@ -1004,14 +966,18 @@ lognormal mean magnitude become brighter in more massive halos.
    plt.tight_layout()
 
 
-Mean magnitude from a conditional luminosity function
------------------------------------------------------
+Mean luminosity ratio from a conditional luminosity function
+------------------------------------------------------------
 
-Weighted integrals can be used to compute summary statistics of a conditional
-luminosity function. For example, the mean absolute magnitude at fixed condition
-is
+Weighted integrals can be used to compute positive luminosity-weighted summary
+statistics of a conditional luminosity function. For example, the mean
+luminosity ratio relative to a reference magnitude is
 
-:math:`\langle M \rangle(x) = \int M \Phi(M \mid x)\,dM / \int \Phi(M \mid x)\,dM`.
+:math:`\langle L/L_{\rm ref} \rangle(x) =
+\int (L/L_{\rm ref}) \Phi(M \mid x)\,dM / \int \Phi(M \mid x)\,dM`.
+
+This example uses the ``lf.integrals`` namespace on a two-component conditional
+luminosity function.
 
 .. plot::
    :include-source: True
@@ -1021,69 +987,55 @@ is
    import matplotlib.pyplot as plt
    import cmasher as cmr
 
-   from lfkit.photometry.conditional_lf_integrals import (
-       integrate_conditional_luminosity_function,
-       integrate_weighted_conditional_luminosity_function,
-   )
-   from lfkit.photometry.conditional_lf_models import two_component_conditional_lf
+   from lfkit import ConditionalLuminosityFunction
 
    LABEL_SIZE = 15
    TICK_SIZE = 13
    TITLE_SIZE = 17
 
    redshift = np.linspace(0.05, 1.5, 180)
-   absolute_mag = np.linspace(-24.0, -14.0, 800)
+   reference_mag = -20.5
 
-   mag_grid, z_grid = np.meshgrid(absolute_mag, redshift)
-
-   number_density = integrate_conditional_luminosity_function(
-       absolute_mag=absolute_mag,
-       condition=z_grid,
-       conditional_lf=lambda absolute_mag, condition: two_component_conditional_lf(
-           absolute_mag,
-           condition,
-           lognormal_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
-           lognormal_sigma_log_luminosity=0.18,
-           lognormal_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
-           modified_phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
-           modified_m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
-           modified_alpha=lambda z: -1.05 - 0.10 * z,
-       ),
-       axis=1,
+   lf = ConditionalLuminosityFunction.two_component(
+       lognormal_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
+       lognormal_sigma_log_luminosity=0.18,
+       lognormal_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
+       modified_phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
+       modified_m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
+       modified_alpha=lambda z: -1.05 - 0.10 * z,
    )
 
-   weighted_magnitude = integrate_weighted_conditional_luminosity_function(
-       absolute_mag=absolute_mag,
-       condition=z_grid,
-       conditional_lf=lambda absolute_mag, condition: two_component_conditional_lf(
-           absolute_mag,
-           condition,
-           lognormal_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
-           lognormal_sigma_log_luminosity=0.18,
-           lognormal_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
-           modified_phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
-           modified_m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
-           modified_alpha=lambda z: -1.05 - 0.10 * z,
-       ),
-       weight=lambda absolute_mag, condition: absolute_mag,
-       axis=1,
+   number_density = lf.integrals.number_density(
+       redshift,
+       m_bright=-24.0,
+       m_faint=-14.0,
+       n_m=800,
    )
 
-   mean_magnitude = weighted_magnitude / number_density
+   weighted_luminosity_ratio = lf.integrals.weighted(
+       redshift,
+       weight_fn=lambda absolute_mag, condition: 10.0 ** (
+           -0.4 * (absolute_mag - reference_mag)
+       ),
+       m_bright=-24.0,
+       m_faint=-14.0,
+       n_m=800,
+   )
+
+   mean_luminosity_ratio = weighted_luminosity_ratio / number_density
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
    ax.plot(
        redshift,
-       mean_magnitude,
+       mean_luminosity_ratio,
        lw=3,
        color=cmr.take_cmap_colors("cmr.guppy", 1, cmap_range=(0.7, 0.9))[0],
    )
 
-   ax.invert_yaxis()
    ax.set_xlabel("Redshift $z$", fontsize=LABEL_SIZE)
-   ax.set_ylabel(r"Mean absolute magnitude $\langle M \rangle$", fontsize=LABEL_SIZE)
-   ax.set_title("Mean magnitude of the conditional LF", fontsize=TITLE_SIZE)
+   ax.set_ylabel(r"Mean luminosity ratio $\langle L/L_{\rm ref} \rangle$", fontsize=LABEL_SIZE)
+   ax.set_title("Mean luminosity ratio of the conditional LF", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
 
    plt.tight_layout()
@@ -1092,10 +1044,9 @@ is
 Selection-limited conditional number density
 --------------------------------------------
 
-Instead of integrating over a fixed absolute-magnitude range by hand, LFKit can
-integrate a luminosity function callable over finite magnitude bounds. This is
-useful for survey-like selections where only galaxies brighter than a limiting
-absolute magnitude contribute to the selected sample.
+The LFKit API can integrate a conditional luminosity function over finite
+magnitude bounds. This is useful for survey-like selections where only galaxies
+brighter than a limiting absolute magnitude contribute to the selected sample.
 
 Here, the limiting absolute magnitude becomes brighter with redshift. The
 example compares the full number density over a fixed magnitude range with the
@@ -1109,8 +1060,7 @@ number density brighter than the redshift-dependent limit.
    import matplotlib.pyplot as plt
    import cmasher as cmr
 
-   from lfkit.photometry.conditional_lf_models import two_component_conditional_lf
-   from lfkit.photometry.lf_integrals import integrated_number_density
+   from lfkit import ConditionalLuminosityFunction
 
    LABEL_SIZE = 15
    TICK_SIZE = 13
@@ -1119,31 +1069,26 @@ number density brighter than the redshift-dependent limit.
 
    redshift = np.linspace(0.05, 1.5, 180)
 
-   def lf(absolute_mag, z):
-       return two_component_conditional_lf(
-           absolute_mag,
-           z,
-           lognormal_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
-           lognormal_sigma_log_luminosity=0.18,
-           lognormal_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
-           modified_phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
-           modified_m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
-           modified_alpha=lambda z: -1.05 - 0.10 * z,
-       )
+   lf = ConditionalLuminosityFunction.two_component(
+       lognormal_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
+       lognormal_sigma_log_luminosity=0.18,
+       lognormal_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
+       modified_phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
+       modified_m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
+       modified_alpha=lambda z: -1.05 - 0.10 * z,
+   )
 
    limiting_mag = -18.5 - 1.2 * redshift
 
-   n_total = integrated_number_density(
+   n_total = lf.integrals.number_density(
        redshift,
-       lf,
        m_bright=-24.0,
        m_faint=-14.0,
        n_m=800,
    )
 
-   n_selected = integrated_number_density(
+   n_selected = lf.integrals.number_density(
        redshift,
-       lf,
        m_bright=-24.0,
        m_faint=limiting_mag,
        n_m=800,
@@ -1196,8 +1141,7 @@ reference magnitude range.
    import matplotlib.pyplot as plt
    import cmasher as cmr
 
-   from lfkit.photometry.conditional_lf_models import two_component_conditional_lf
-   from lfkit.photometry.lf_integrals import integrated_number_density
+   from lfkit import ConditionalLuminosityFunction
 
    LABEL_SIZE = 15
    TICK_SIZE = 13
@@ -1205,31 +1149,26 @@ reference magnitude range.
 
    redshift = np.linspace(0.05, 1.5, 180)
 
-   def lf(absolute_mag, z):
-       return two_component_conditional_lf(
-           absolute_mag,
-           z,
-           lognormal_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
-           lognormal_sigma_log_luminosity=0.18,
-           lognormal_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
-           modified_phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
-           modified_m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
-           modified_alpha=lambda z: -1.05 - 0.10 * z,
-       )
+   lf = ConditionalLuminosityFunction.two_component(
+       lognormal_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
+       lognormal_sigma_log_luminosity=0.18,
+       lognormal_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
+       modified_phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
+       modified_m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
+       modified_alpha=lambda z: -1.05 - 0.10 * z,
+   )
 
    limiting_mag = -18.5 - 1.2 * redshift
 
-   n_total = integrated_number_density(
+   n_total = lf.integrals.number_density(
        redshift,
-       lf,
        m_bright=-24.0,
        m_faint=-14.0,
        n_m=800,
    )
 
-   n_selected = integrated_number_density(
+   n_selected = lf.integrals.number_density(
        redshift,
-       lf,
        m_bright=-24.0,
        m_faint=limiting_mag,
        n_m=800,
@@ -1241,12 +1180,7 @@ reference magnitude range.
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
-   ax.plot(
-       redshift,
-       selected_fraction,
-       lw=3,
-       color=color,
-   )
+   ax.plot(redshift, selected_fraction, lw=3, color=color)
 
    ax.set_ylim(-0.05, 1.05)
    ax.set_xlabel("Redshift $z$", fontsize=LABEL_SIZE)

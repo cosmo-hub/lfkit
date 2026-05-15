@@ -15,11 +15,10 @@ redshift only brighter galaxies remain above the catalog limit.
 
 All examples below are executable via ``.. plot::``.
 
-The examples intentionally use ``corrections=None``. This means that no
-:math:`K`-correction or evolution correction is applied. Users can pass their
-own correction model through the ``corrections`` argument, for example a
-:class:`lfkit.Corrections` object or any compatible correction callable used by
-the LFKit magnitude-conversion methods.
+The examples do not apply :math:`K`-corrections or evolution corrections. Users
+can pass correction values explicitly through the ``k_correction`` and
+``e_correction`` keyword arguments of the magnitude-limit and completeness
+methods.
 
 The number-density units follow the normalization of the luminosity function.
 For example, if :math:`\phi_*` is given in comoving :math:`{\rm Mpc}^{-3}`, then
@@ -81,11 +80,10 @@ higher on the plot.
        alpha_kwargs={"alpha": -1.1},
    )
 
-   m_limit = lf.absolute_magnitude_limit(
+   m_limit = lf.completeness.absolute_magnitude_limit(
        cosmo,
        z,
        m_lim=24.5,
-       corrections=None,
    )
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
@@ -158,28 +156,26 @@ population described by the luminosity function, or only the bright tail of it.
    m_bright = -24.0
    m_faint = -14.0
 
-   n_total = lf.integrated_number_density(
+   n_total = lf.integrals.number_density(
        z,
        m_bright=m_bright,
        m_faint=m_faint,
    )
 
-   n_obs = lf.observed_number_density(
+   n_obs = lf.completeness.observed_number_density(
        cosmo,
        z,
        m_lim=24.5,
        m_bright=m_bright,
        m_faint=m_faint,
-       corrections=None,
    )
 
-   n_miss = lf.missing_number_density(
+   n_miss = lf.completeness.missing_number_density(
        cosmo,
        z,
        m_lim=24.5,
        m_bright=m_bright,
        m_faint=m_faint,
-       corrections=None,
    )
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
@@ -253,22 +249,20 @@ catalog contains only a small fraction of the intrinsic galaxy population.
    m_bright = -24.0
    m_faint = -14.0
 
-   f_obs = lf.catalog_completeness(
+   f_obs = lf.completeness.catalog_fraction(
        cosmo,
        z,
        m_lim=24.5,
        m_bright=m_bright,
        m_faint=m_faint,
-       corrections=None,
    )
 
-   f_miss = lf.out_of_catalog_fraction(
+   f_miss = lf.completeness.out_of_catalog_fraction(
        cosmo,
        z,
        m_lim=24.5,
        m_bright=m_bright,
        m_faint=m_faint,
-       corrections=None,
    )
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
@@ -342,13 +336,12 @@ incomplete.
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
    for m_lim, color in zip(limits, colors_blue):
-       f_obs = lf.catalog_completeness(
+       f_obs = lf.completeness.catalog_fraction(
            cosmo,
            z,
            m_lim=m_lim,
            m_bright=-24.0,
            m_faint=-14.0,
-           corrections=None,
        )
        ax.plot(z, f_obs, lw=3, color=color, label=rf"$m_{{\rm lim}}={m_lim}$")
 
@@ -421,11 +414,10 @@ boundary.
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
    for m_lim, color in zip(limits, colors_blue):
-       m_limit = lf.absolute_magnitude_limit(
+       m_limit = lf.completeness.absolute_magnitude_limit(
            cosmo,
            z,
            m_lim=m_lim,
-           corrections=None,
        )
        ax.plot(z, m_limit, lw=3, color=color, label=rf"$m_{{\rm lim}}={m_lim}$")
 
@@ -497,13 +489,12 @@ about a much fainter underlying population.
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
    for m_faint, color in zip(faint_limits, colors_red):
-       f_obs = lf.catalog_completeness(
+       f_obs = lf.completeness.catalog_fraction(
            cosmo,
            z,
            m_lim=24.5,
            m_bright=-24.0,
            m_faint=m_faint,
-           corrections=None,
        )
        ax.plot(
            z,
@@ -589,13 +580,12 @@ redshift range is safe for a magnitude-limited sample.
    completeness = []
 
    for m_lim in limits:
-       f_obs = lf.catalog_completeness(
+       f_obs = lf.completeness.catalog_fraction(
            cosmo,
            z,
            m_lim=m_lim,
            m_bright=-24.0,
            m_faint=-14.0,
-           corrections=None,
        )
        completeness.append(f_obs)
 
@@ -714,11 +704,10 @@ The lower panel shows the residual relative to the reference cosmology,
    m_limits = {}
 
    for label, cosmo in cosmologies.items():
-       m_limits[label] = lf.absolute_magnitude_limit(
+       m_limits[label] = lf.completeness.absolute_magnitude_limit(
            cosmo,
            z,
            m_lim=24.5,
-           corrections=None,
        )
 
    reference_label = r"$\Omega_{\rm m}=0.30,\ h=0.70$"
@@ -828,13 +817,12 @@ The lower panel shows the residual relative to the reference cosmology,
    completeness = {}
 
    for label, cosmo in cosmologies.items():
-       completeness[label] = lf.catalog_completeness(
+       completeness[label] = lf.completeness.catalog_fraction(
            cosmo,
            z,
            m_lim=24.5,
            m_bright=-24.0,
            m_faint=-14.0,
-           corrections=None,
        )
 
    reference_label = r"$\Omega_{\rm m}=0.30,\ h=0.70$"
