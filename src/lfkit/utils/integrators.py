@@ -2,7 +2,7 @@
 
 This module provides small reusable helpers for integrating tabulated values
 over fixed or variable finite bounds. These helpers do not encode any
-luminosity-function, photometry, or cosmology assumptions.
+luminosity function, photometry, or cosmology assumptions.
 """
 
 from __future__ import annotations

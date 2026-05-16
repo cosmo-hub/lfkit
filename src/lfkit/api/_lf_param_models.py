@@ -24,7 +24,7 @@ from lfkit.photometry.luminosity_function import (
 
 
 class LFModelSpec(TypedDict):
-    """Description of a luminosity-function model exposed by the API."""
+    """Description of a luminosity function model exposed by the API."""
 
     function: Callable[..., Any]
     requires_z: bool

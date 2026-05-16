@@ -1,4 +1,4 @@
-"""Smoke tests for conditional luminosity-function API constructors.
+"""Smoke tests for conditional luminosity function API constructors.
 
 These tests check that the public conditional LF factory methods create
 LuminosityFunction objects with the expected model names and parameter payloads.
