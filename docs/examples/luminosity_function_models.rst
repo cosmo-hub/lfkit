@@ -23,7 +23,7 @@ function. For example, if ``phi_star`` is supplied in
 :math:`{\rm Mpc}^{-3}\,{\rm mag}^{-1}`.
 
 
-Schechter-family models
+Schechter family models
 -----------------------
 
 The Schechter family is the main luminosity function model family currently
@@ -89,7 +89,7 @@ Standard Schechter luminosity function with apparent magnitude axis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Schechter luminosity function is evaluated in absolute magnitude. A
-secondary x-axis can show the corresponding apparent magnitude at a fixed
+secondary *x*-axis can show the corresponding apparent magnitude at a fixed
 luminosity distance using the LFKit magnitude converters.
 
 This keeps the model-native absolute magnitude axis while also showing where
@@ -153,8 +153,9 @@ the same magnitude range would appear observationally.
        fontsize=LABEL_SIZE,
    )
    ax.set_title(
-       "Schechter luminosity function with apparent magnitude axis",
+       "Schechter luminosity function",
        fontsize=TITLE_SIZE,
+       pad=0.5,
    )
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
 
@@ -443,8 +444,9 @@ distance-redshift mappings into one top axis.
        fontsize=LABEL_SIZE,
    )
    ax.set_title(
-       "Evolving Schechter luminosity function with apparent magnitude axis",
+       "Evolving Schechter luminosity function",
        fontsize=TITLE_SIZE,
+       pad=0.5,
    )
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
    ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="best")
