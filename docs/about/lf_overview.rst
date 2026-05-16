@@ -15,7 +15,7 @@ For most users, the recommended import is:
    from lfkit import LuminosityFunction
 
 The ``LuminosityFunction`` object defines and evaluates luminosity function
-models in rest-frame absolute-magnitude space. It can also evaluate luminosity
+models in rest-frame absolute magnitude space. It can also evaluate luminosity
 functions from apparent magnitudes, convert between apparent and absolute
 magnitudes, and compute number-density quantities for magnitude-limited catalog
 selections.
@@ -250,7 +250,7 @@ LFKit magnitude convention.
        corrections=corr,
    )
 
-The absolute-magnitude limit corresponding to an apparent-magnitude catalog cut
+The absolute magnitude limit corresponding to an apparent magnitude catalog cut
 can be computed with:
 
 .. code-block:: python
@@ -267,7 +267,7 @@ Integrated number density
 -------------------------
 
 Use :meth:`~lfkit.api.lumfunc.LuminosityFunction.integrated_number_density` to
-integrate the luminosity function over an absolute-magnitude range.
+integrate the luminosity function over an absolute magnitude range.
 
 .. code-block:: python
 
@@ -277,7 +277,7 @@ integrate the luminosity function over an absolute-magnitude range.
        m_faint=-14.0,
    )
 
-This computes the number density inside the requested absolute-magnitude
+This computes the number density inside the requested absolute magnitude
 interval.
 
 
@@ -338,8 +338,8 @@ magnitude-limited catalog.
 The core idea is:
 
 1. convert the apparent catalog limit :math:`m_{\rm lim}` into an
-   absolute-magnitude limit :math:`M_{\rm lim}(z)`,
-2. integrate the luminosity function over a finite absolute-magnitude range,
+   absolute magnitude limit :math:`M_{\rm lim}(z)`,
+2. integrate the luminosity function over a finite absolute magnitude range,
 3. split the population into observed and missing pieces.
 
 The limiting absolute magnitude is
@@ -536,6 +536,6 @@ LFKit does not read survey catalogs, apply angular masks, or model survey-area
 incompleteness in this layer.
 
 For magnitude-limited catalog applications, LFKit models the part of the
-selection function that comes from the apparent-magnitude limit. Other effects,
+selection function that comes from the apparent magnitude limit. Other effects,
 such as unobserved sky area, angular masks, spectroscopic targeting, blending,
 or color cuts, should be handled by the calling analysis code.

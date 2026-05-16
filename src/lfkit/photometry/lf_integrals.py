@@ -1,7 +1,7 @@
 r"""Luminosity-function integration utilities.
 
 This module provides generic numerical integrals of luminosity function
-callables over finite absolute-magnitude ranges.
+callables over finite absolute magnitude ranges.
 
 The core API accepts a luminosity function callable with signature
 
@@ -66,8 +66,8 @@ def integrated_number_density(
     Args:
         z: Redshift value or array-like of redshift values.
         lf: Luminosity-function callable with signature ``lf(M, z)``.
-        m_bright: Bright absolute-magnitude bound. May be scalar or array-like.
-        m_faint: Faint absolute-magnitude bound. May be scalar or array-like.
+        m_bright: Bright absolute magnitude bound. May be scalar or array-like.
+        m_faint: Faint absolute magnitude bound. May be scalar or array-like.
         n_m: Number of magnitude-grid points used for the integral.
 
     Returns:
@@ -103,8 +103,8 @@ def lf_weighted_integral(
     Args:
         z: Redshift value or array-like of redshift values.
         lf: Luminosity-function callable with signature ``lf(M, z)``.
-        m_bright: Bright absolute-magnitude bound. May be scalar or array-like.
-        m_faint: Faint absolute-magnitude bound. May be scalar or array-like.
+        m_bright: Bright absolute magnitude bound. May be scalar or array-like.
+        m_faint: Faint absolute magnitude bound. May be scalar or array-like.
         weight_fn: Weight callable with signature ``weight_fn(M, z)``. Its
             return values must be broadcastable to the magnitude-redshift grid.
         n_m: Number of magnitude-grid points used for the integral.
@@ -144,8 +144,8 @@ def selection_weighted_number_density(
     Args:
         z: Redshift value or array-like of redshift values.
         lf: Luminosity-function callable with signature ``lf(M, z)``.
-        m_bright: Bright absolute-magnitude bound. May be scalar or array-like.
-        m_faint: Faint absolute-magnitude bound. May be scalar or array-like.
+        m_bright: Bright absolute magnitude bound. May be scalar or array-like.
+        m_faint: Faint absolute magnitude bound. May be scalar or array-like.
         selection_fn: Selection callable with signature ``selection_fn(M, z)``.
             Values should usually lie between 0 and 1, although this function
             only requires finite non-negative values.
@@ -193,8 +193,8 @@ def integrated_luminosity_density(
     Args:
         z: Redshift value or array-like of redshift values.
         lf: Luminosity-function callable with signature ``lf(M, z)``.
-        m_bright: Bright absolute-magnitude bound. May be scalar or array-like.
-        m_faint: Faint absolute-magnitude bound. May be scalar or array-like.
+        m_bright: Bright absolute magnitude bound. May be scalar or array-like.
+        m_faint: Faint absolute magnitude bound. May be scalar or array-like.
         m_reference: Reference absolute magnitude defining the luminosity unit.
         n_m: Number of magnitude-grid points used for the integral.
 
@@ -247,8 +247,8 @@ def mean_luminosity(
     Args:
         z: Redshift value or array-like of redshift values.
         lf: Luminosity-function callable with signature ``lf(M, z)``.
-        m_bright: Bright absolute-magnitude bound. May be scalar or array-like.
-        m_faint: Faint absolute-magnitude bound. May be scalar or array-like.
+        m_bright: Bright absolute magnitude bound. May be scalar or array-like.
+        m_faint: Faint absolute magnitude bound. May be scalar or array-like.
         m_reference: Reference absolute magnitude defining the luminosity unit.
         n_m: Number of magnitude-grid points used for the integral.
 
@@ -306,9 +306,9 @@ def cumulative_number_density(
     Args:
         z: Redshift value or array-like of redshift values.
         lf: Luminosity-function callable with signature ``lf(M, z)``.
-        m_threshold: Absolute-magnitude threshold. May be scalar or array-like.
-        m_bright: Bright absolute-magnitude bound. May be scalar or array-like.
-        m_faint: Faint absolute-magnitude bound. May be scalar or array-like.
+        m_threshold: Absolute magnitude threshold. May be scalar or array-like.
+        m_bright: Bright absolute magnitude bound. May be scalar or array-like.
+        m_faint: Faint absolute magnitude bound. May be scalar or array-like.
         brighter_than: If True, integrate galaxies brighter than the threshold.
             If False, integrate galaxies fainter than the threshold.
         n_m: Number of magnitude-grid points used for the integral.
@@ -359,13 +359,13 @@ def magnitude_window_number_density(
 ) -> FloatArray:
     r"""Return LF number density inside a magnitude-selection window.
 
-    This integrates a luminosity function over a finite absolute-magnitude
+    This integrates a luminosity function over a finite absolute magnitude
     range. The bright and faint limits may be supplied directly as absolute
     magnitudes, converted from apparent magnitudes, or supplied as a mixture of
     both.
 
     Magnitudes are ordered so that more negative values are brighter. Apparent
-    magnitude limits are converted to absolute-magnitude limits at each
+    magnitude limits are converted to absolute magnitude limits at each
     redshift before integration.
 
     This helper is science-use-case agnostic. It only defines the LF integral
@@ -375,12 +375,12 @@ def magnitude_window_number_density(
     Args:
         z: Redshift value or array-like of redshift values.
         lf: Luminosity-function callable with signature ``lf(M, z)``.
-        m_bright: Bright absolute-magnitude bound.
-        m_faint: Faint absolute-magnitude bound.
-        apparent_m_bright: Bright apparent-magnitude bound.
-        apparent_m_faint: Faint apparent-magnitude bound.
+        m_bright: Bright absolute magnitude bound.
+        m_faint: Faint absolute magnitude bound.
+        apparent_m_bright: Bright apparent magnitude bound.
+        apparent_m_faint: Faint apparent magnitude bound.
         luminosity_distance_mpc_fn: Callable returning luminosity distance in
-            Mpc. Required when either apparent-magnitude bound is supplied.
+            Mpc. Required when either apparent magnitude bound is supplied.
         k_correction_fn: Optional K-correction callable evaluated at ``z``.
         e_correction_fn: Optional E-correction callable evaluated at ``z``.
         n_m: Number of magnitude-grid points used for the integral.
@@ -433,7 +433,7 @@ def _resolve_magnitude_window_bound(
     e_correction_fn: Callable[[FloatArray], FloatArray] | None,
     bound_name: str,
 ) -> FloatArray:
-    r"""Return an absolute-magnitude bound for a magnitude window."""
+    r"""Return an absolute magnitude bound for a magnitude window."""
     if absolute_mag is None and apparent_mag is None:
         raise ValueError(
             f"Must provide either m_{bound_name} or apparent_m_{bound_name}."

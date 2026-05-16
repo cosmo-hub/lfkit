@@ -9,9 +9,9 @@ This page shows how to convert a luminosity function into a redshift-dependent
 selection or weighting factor.
 
 The ``redshift_density`` namespace is useful when constructing LF-dependent
-redshift trends for survey forecasting. It combines an apparent-magnitude limit
+redshift trends for survey forecasting. It combines an apparent magnitude limit
 with a luminosity-distance callable, integrates the luminosity function over the
-visible absolute-magnitude range, and can optionally apply a redshift or volume
+visible absolute magnitude range, and can optionally apply a redshift or volume
 weight.
 
 This is not required to be a complete survey :math:`n(z)` by itself. It is the
@@ -25,7 +25,7 @@ Magnitude-limited LF redshift density
 -------------------------------------
 
 The integrated version computes the luminosity function number density selected
-by an apparent-magnitude limit.
+by an apparent magnitude limit.
 
 .. plot::
    :include-source: True

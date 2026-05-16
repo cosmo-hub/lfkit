@@ -12,7 +12,7 @@ from lfkit.photometry.magnitudes import (
 
 
 class LFMagnitudesAPI:
-    """Grouped API for apparent- and absolute-magnitude conversions."""
+    """Grouped API for apparent- and absolute magnitude conversions."""
 
     correction = staticmethod(total_magnitude_correction)
 

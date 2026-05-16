@@ -5,7 +5,7 @@ population implied by a magnitude-limited catalog. These functions are useful
 for applications that need an out-of-catalog correction, such as galaxy-catalog
 priors for gravitational-wave cosmology.
 
-The utilities convert an apparent magnitude limit into an absolute-magnitude
+The utilities convert an apparent magnitude limit into an absolute magnitude
 limit and call the generic LF integration helpers to return number densities
 or fractions.
 
@@ -53,7 +53,7 @@ def absolute_magnitude_limit(
     k_correction: FloatInput | None = None,
     e_correction: FloatInput | None = None,
 ) -> FloatArray:
-    r"""Return the absolute-magnitude limit of an apparent-magnitude catalog cut.
+    r"""Return the absolute magnitude limit of an apparent magnitude catalog cut.
 
     This converts an apparent magnitude limit into the corresponding limiting
     absolute magnitude at each redshift,
@@ -124,8 +124,8 @@ def observed_number_density(
         z: Redshift value or array-like of redshift values.
         lf: Luminosity-function callable with signature ``lf(M, z)``.
         m_lim: Apparent magnitude limit of the catalog.
-        m_bright: Bright absolute-magnitude bound of the LF model.
-        m_faint: Faint absolute-magnitude bound of the LF model.
+        m_bright: Bright absolute magnitude bound of the LF model.
+        m_faint: Faint absolute magnitude bound of the LF model.
         n_m: Number of magnitude-grid points used for the integral.
         h: Optional dimensionless Hubble parameter used in the
             distance-modulus convention.
@@ -187,8 +187,8 @@ def missing_number_density(
         z: Redshift value or array-like of redshift values.
         lf: Luminosity-function callable with signature ``lf(M, z)``.
         m_lim: Apparent magnitude limit of the catalog.
-        m_bright: Bright absolute-magnitude bound of the LF model.
-        m_faint: Faint absolute-magnitude bound of the LF model.
+        m_bright: Bright absolute magnitude bound of the LF model.
+        m_faint: Faint absolute magnitude bound of the LF model.
         n_m: Number of magnitude-grid points used for the integral.
         h: Optional dimensionless Hubble parameter used in the
             distance-modulus convention.
@@ -249,8 +249,8 @@ def catalog_completeness_fraction(
         z: Redshift value or array-like of redshift values.
         lf: Luminosity-function callable with signature ``lf(M, z)``.
         m_lim: Apparent magnitude limit of the catalog.
-        m_bright: Bright absolute-magnitude bound of the LF model.
-        m_faint: Faint absolute-magnitude bound of the LF model.
+        m_bright: Bright absolute magnitude bound of the LF model.
+        m_faint: Faint absolute magnitude bound of the LF model.
         n_m: Number of magnitude-grid points used for the integral.
         h: Optional dimensionless Hubble parameter used in the
             distance-modulus convention.
@@ -315,8 +315,8 @@ def out_of_catalog_fraction(
         z: Redshift value or array-like of redshift values.
         lf: Luminosity-function callable with signature ``lf(M, z)``.
         m_lim: Apparent magnitude limit of the catalog.
-        m_bright: Bright absolute-magnitude bound of the LF model.
-        m_faint: Faint absolute-magnitude bound of the LF model.
+        m_bright: Bright absolute magnitude bound of the LF model.
+        m_faint: Faint absolute magnitude bound of the LF model.
         n_m: Number of magnitude-grid points used for the integral.
         h: Optional dimensionless Hubble parameter used in the
             distance-modulus convention.

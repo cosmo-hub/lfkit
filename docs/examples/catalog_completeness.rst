@@ -90,7 +90,7 @@ higher on the plot.
    ax.plot(z, m_limit, lw=3, color=colors_blue[1])
    ax.invert_yaxis()
    ax.set_xlabel("Redshift $z$", fontsize=LABEL_SIZE)
-   ax.set_ylabel(r"Absolute-magnitude limit $M_{\rm lim}(z)$", fontsize=LABEL_SIZE)
+   ax.set_ylabel(r"Absolute magnitude limit $M_{\rm lim}(z)$", fontsize=LABEL_SIZE)
    ax.set_title(r"Catalog limit for $m_{\rm lim}=24.5$", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
    plt.tight_layout()
@@ -354,7 +354,7 @@ incomplete.
    plt.tight_layout()
 
 
-Absolute-magnitude limits for different depths
+Absolute magnitude limits for different depths
 ----------------------------------------------
 
 The apparent magnitude limit can also be shown directly as an absolute magnitude
@@ -423,7 +423,7 @@ boundary.
 
    ax.invert_yaxis()
    ax.set_xlabel("Redshift $z$", fontsize=LABEL_SIZE)
-   ax.set_ylabel(r"Absolute-magnitude limit $M_{\rm lim}(z)$", fontsize=LABEL_SIZE)
+   ax.set_ylabel(r"Absolute magnitude limit $M_{\rm lim}(z)$", fontsize=LABEL_SIZE)
    ax.set_title("Catalog selection boundary", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
    ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="best")
@@ -615,7 +615,7 @@ redshift range is safe for a magnitude-limited sample.
    ax.clabel(contours, inline=True, fontsize=TICK_SIZE, fmt="%.1f")
 
    ax.set_xlabel("Redshift $z$", fontsize=LABEL_SIZE)
-   ax.set_ylabel(r"Apparent-magnitude limit $m_{\rm lim}$", fontsize=LABEL_SIZE)
+   ax.set_ylabel(r"Apparent magnitude limit $m_{\rm lim}$", fontsize=LABEL_SIZE)
    ax.set_title(r"Completeness over $-24 \leq M \leq -14$", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
 

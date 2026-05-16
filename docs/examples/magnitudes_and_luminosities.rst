@@ -23,7 +23,7 @@ page.
 LF from apparent magnitude
 --------------------------
 
-For models with apparent-magnitude support,
+For models with apparent magnitude support,
 :meth:`lfkit.LuminosityFunction.phi_from_m` converts apparent magnitude to
 absolute magnitude and evaluates the luminosity function.
 

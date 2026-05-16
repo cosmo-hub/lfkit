@@ -2,7 +2,7 @@
    :alt: LFKit logo
    :width: 50px
 
-|lfkitlogo| Luminosity-function magnitude integrals
+|lfkitlogo| Luminosity function magnitude integrals
 ===================================================
 
 This page shows how to integrate a bound
@@ -26,7 +26,7 @@ Integrated number density
 -------------------------
 
 The integrated number density is the luminosity function integrated over a
-finite absolute-magnitude range.
+finite absolute magnitude range.
 
 This example compares a bright sample to a broader sample that also includes
 fainter galaxies. The broader magnitude range gives a larger number density
@@ -103,7 +103,7 @@ Cumulative number density
 -------------------------
 
 The number density can also be viewed as a cumulative function of the faint
-absolute-magnitude limit.
+absolute magnitude limit.
 
 This diagnostic is useful for checking how much faint galaxies contribute to
 the total abundance. As the faint limit moves to less negative magnitudes, more
@@ -149,7 +149,7 @@ of the luminosity function is included.
    ax.set_yscale("log")
    ax.invert_xaxis()
    ax.set_xlabel(
-       r"Faint absolute-magnitude limit $M_{\rm faint}$",
+       r"Faint absolute magnitude limit $M_{\rm faint}$",
        fontsize=LABEL_SIZE,
    )
    ax.set_ylabel(

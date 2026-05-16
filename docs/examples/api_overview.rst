@@ -5,48 +5,19 @@
 |lfkitlogo| API overview
 ========================
 
-This page gives a high-level overview of how LFKit's public API is organized.
+This page gives a high-level overview of LFKit's public API, how the main
+example pages fit together, and which page to use for each type of calculation.
 
-LFKit is built around a small number of user-facing entry points. The goal is
-that most users should not need to import low-level functions from
-``lfkit.photometry`` directly. Instead, they can start from the public API
-objects and use grouped namespaces for related calculations.
-
-The main API areas are:
-
-* luminosity function models,
-* conditional luminosity function models,
-* luminosity function integrals,
-* magnitude-limited completeness,
-* LF-weighted redshift-density calculations,
-* magnitude and luminosity conversions,
-* photometric corrections.
-
-The detailed examples are split across separate pages. This page is only a map
-of the public API and the intended workflow.
+LFKit is organized around a small number of user-facing entry points. Most
+workflows start by creating a luminosity function model and then using grouped
+methods attached to that model for integrals, completeness calculations,
+redshift-density trends, and magnitude or luminosity conversions.
 
 
-Main entry points
------------------
+Start here
+----------
 
-The most important public objects are imported from :mod:`lfkit`:
-
-.. code-block:: python
-
-   from lfkit import LuminosityFunction
-   from lfkit import Corrections
-
-If conditional luminosity functions are exposed through a separate public class,
-the intended import should be:
-
-.. code-block:: python
-
-   from lfkit import ConditionalLuminosityFunction
-
-The public API is organized so that users first create a model object and then
-call grouped methods from that object.
-
-For example, a standard luminosity function workflow starts with:
+For ordinary luminosity functions, start with :class:`lfkit.LuminosityFunction`:
 
 .. code-block:: python
 
@@ -60,17 +31,130 @@ For example, a standard luminosity function workflow starts with:
 
    phi = lf.phi(-20.0)
 
-The object ``lf`` stores the chosen luminosity function model and exposes
-namespaces for common calculations.
+The object ``lf`` represents the chosen luminosity function model. Once the
+model is created, the same object can be used for direct evaluation, magnitude
+integrals, survey completeness calculations, redshift-density calculations, and
+diagnostic conversions.
+
+Photometric corrections are exposed separately through :class:`lfkit.Corrections`:
+
+.. code-block:: python
+
+   from lfkit import Corrections
+
+Correction functions can be passed into calculations that need k-corrections,
+evolution corrections, or other magnitude corrections.
 
 
-Luminosity-function API
------------------------
+Main API areas
+--------------
 
-The :class:`lfkit.LuminosityFunction` object is the main interface for ordinary
-luminosity function models.
+The main public API areas are:
 
-It provides constructors for supported LF parameterizations, for example:
+* luminosity function models,
+* conditional luminosity function models,
+* luminosity function integrals,
+* magnitude-limited completeness,
+* LF-weighted redshift-density calculations,
+* magnitude and luminosity conversions,
+* photometric corrections,
+* model discovery utilities.
+
+
+Which tool do I need?
+---------------------
+
+.. list-table::
+   :header-rows: 1
+   :widths: 28 42 30
+
+   * - Task
+     - Use
+     - Example page
+   * - Evaluate or compare luminosity function models
+     - :class:`lfkit.LuminosityFunction`
+     - :doc:`luminosity function models <luminosity_function_models>`
+   * - Integrate a luminosity function over absolute magnitude
+     - ``lf.integrals``
+     - :doc:`magnitude_integrals`
+   * - Convert between apparent magnitude, absolute magnitude, and luminosity distance
+     - ``lf.magnitudes``
+     - :doc:`magnitudes_and_luminosities`
+   * - Work with luminosity ratios and Schechter luminosity variables
+     - ``lf.luminosities``
+     - :doc:`magnitudes_and_luminosities`
+   * - Estimate observed, missing, and out-of-catalog fractions
+     - ``lf.completeness``
+     - :doc:`catalog completeness <catalog_completeness>`
+   * - Build magnitude-limited or volume-weighted redshift trends
+     - ``lf.redshift_density``
+     - :doc:`redshift_density`
+   * - Work with conditional luminosity functions
+     - ``ConditionalLuminosityFunction``
+     - :doc:`conditional luminosity function <conditional_luminosity_function>`
+   * - Use k-corrections from the kcorrect backend
+     - :class:`lfkit.Corrections`
+     - :doc:`kcorrect_examples`
+   * - Use Poggianti correction tables
+     - :class:`lfkit.Corrections`
+     - :doc:`poggianti_examples`
+   * - Inspect available model names
+     - ``available_models()`` methods
+     - :doc:`model_registry`
+
+
+Basic workflow
+--------------
+
+A typical LFKit workflow has three steps:
+
+1. choose a luminosity function model,
+2. evaluate it directly or pass it to one of the grouped calculation namespaces,
+3. add survey limits, correction functions, or cosmology-dependent distances
+   when the calculation needs them.
+
+For example:
+
+.. code-block:: python
+
+   from lfkit import LuminosityFunction
+
+   lf = LuminosityFunction.schechter(
+       phi_star=1.0e-3,
+       m_star=-20.5,
+       alpha=-1.1,
+   )
+
+   phi = lf.phi(-20.0)
+
+   number_density = lf.integrals.number_density(
+       redshift=0.5,
+       m_bright=-24.0,
+       m_faint=-16.0,
+   )
+
+   catalog_fraction = lf.completeness.catalog_fraction(
+       cosmo,
+       redshift=0.5,
+       m_lim=24.0,
+       m_bright=-24.0,
+       m_faint=-16.0,
+       h=0.7,
+   )
+
+The first line evaluates the luminosity function at a single absolute
+magnitude. The integral example computes the number density over a finite
+absolute magnitude range. The completeness example adds an apparent magnitude
+limit and asks what fraction of the intrinsic luminosity function is visible in
+a survey.
+
+
+Luminosity function models
+--------------------------
+
+Use :class:`lfkit.LuminosityFunction` for ordinary luminosity function models.
+
+For a standard Schechter model:
 
 .. code-block:: python
 
@@ -80,49 +164,26 @@ It provides constructors for supported LF parameterizations, for example:
        alpha=-1.1,
    )
 
-   lf = LuminosityFunction.double_schechter(
-       phi_star=1.0e-3,
-       m_star=-20.5,
-       alpha=-1.1,
-       beta=-1.5,
-       m_transition=-19.5,
-   )
-
-   lf = LuminosityFunction.evolving_schechter(
-       phi_model="linear_p",
-       phi_kwargs={"phi_0_star": 1.0e-3, "p": 0.7},
-       m_star_model="linear_q",
-       m_star_kwargs={"m_0_star": -20.5, "q": 0.8, "z_ref": 0.1},
-       alpha_model="constant",
-       alpha_kwargs={"alpha": -1.1},
-   )
-
-Once created, the object can evaluate the luminosity function:
-
-.. code-block:: python
-
    phi = lf.phi(absolute_mag)
 
-For evolving models, pass redshift as well:
+For an evolving model, pass redshift when evaluating the model:
 
 .. code-block:: python
 
    phi = lf.phi(absolute_mag, redshift)
 
-The same object can also expose the redshift-dependent parameters:
+The luminosity function examples page shows how to compare models, evaluate
+evolving parameters, and visualize luminosity function behavior:
 
-.. code-block:: python
+.. code-block:: rst
 
-   phi_star, m_star, alpha = lf.parameters(redshift)
+   :doc:`luminosity function models <luminosity_function_models>`
 
 
-Grouped namespaces
-------------------
+Grouped methods
+---------------
 
-A :class:`lfkit.LuminosityFunction` object groups related functionality into
-small namespaces.
-
-The main namespaces are:
+A luminosity function object exposes grouped methods for common calculations:
 
 .. list-table::
    :header-rows: 1
@@ -132,170 +193,91 @@ The main namespaces are:
      - Purpose
      - Example
    * - ``lf.integrals``
-     - Magnitude integrals of the bound luminosity function.
+     - Integrals over absolute magnitude.
      - ``lf.integrals.number_density(...)``
-   * - ``lf.redshift_density``
-     - Magnitude-limited and volume-weighted redshift-density calculations.
-     - ``lf.redshift_density.weighted(...)``
    * - ``lf.completeness``
-     - Magnitude-limited catalog completeness and missing fractions.
+     - Magnitude-limited catalog fractions and missing fractions.
      - ``lf.completeness.catalog_fraction(...)``
+   * - ``lf.redshift_density``
+     - LF-weighted redshift trends and magnitude-limited number densities.
+     - ``lf.redshift_density.weighted(...)``
    * - ``lf.magnitudes``
-     - Apparent/absolute magnitude and distance-modulus helpers.
+     - Apparent/absolute magnitude and luminosity-distance conversions.
      - ``lf.magnitudes.absolute_from_luminosity_distance(...)``
    * - ``lf.luminosities``
-     - Luminosity-ratio and Schechter helper functions.
+     - Luminosity ratios and related helpers.
      - ``lf.luminosities.ratio_from_magnitudes(...)``
 
-This keeps the public API readable. Users can discover functionality from the
-model object without needing to remember which low-level module contains each
-calculation.
+This grouping is meant to make notebook workflows easier to read. Start from
+the model object, then choose the namespace that matches the calculation.
 
 
 Magnitude integrals
 -------------------
 
-The ``integrals`` namespace evaluates integrals over absolute magnitude for the
-luminosity function stored in ``lf``.
+Use ``lf.integrals`` when you want to integrate a luminosity function over an
+absolute magnitude range.
 
-Typical methods include number density, luminosity density, mean luminosity,
-and selection-weighted number density.
+For example:
 
 .. code-block:: python
 
    number_density = lf.integrals.number_density(
-       redshift,
+       redshift=0.5,
        m_bright=-24.0,
        m_faint=-16.0,
        n_m=800,
    )
 
-   luminosity_density = lf.integrals.luminosity_density(
-       redshift,
-       m_bright=-24.0,
-       m_faint=-16.0,
-       n_m=800,
-   )
+Other useful quantities include luminosity density, mean luminosity, and
+selection-weighted number density.
 
-   mean_luminosity = lf.integrals.mean_luminosity(
-       redshift,
-       m_bright=-24.0,
-       m_faint=-16.0,
-       n_m=800,
-   )
+See the dedicated page for complete examples:
 
-Selection weights can be supplied through a callable:
+.. code-block:: rst
 
-.. code-block:: python
-
-   def selection_fn(absolute_mag, z):
-       limiting_mag = -18.5 - 1.2 * z
-       width = 0.35
-       return 1.0 / (1.0 + np.exp((absolute_mag - limiting_mag) / width))
-
-   selected_density = lf.integrals.selection_weighted_number_density(
-       redshift,
-       selection_fn=selection_fn,
-       m_bright=-24.0,
-       m_faint=-14.0,
-       n_m=800,
-   )
-
-The luminosity function callable is inserted internally by the API, so users
-only provide the redshift grid, magnitude bounds, and optional selection
-function.
+   :doc:`magnitude_integrals`
 
 
 Completeness calculations
 -------------------------
 
-The ``completeness`` namespace handles magnitude-limited catalog calculations.
+Use ``lf.completeness`` when a survey apparent magnitude limit is part of the
+calculation.
 
-These methods are useful when a survey has an apparent-magnitude limit
-``m_lim`` and the user wants to know which part of the intrinsic luminosity
-function is visible at each redshift.
-
-Typical quantities are:
+For example:
 
 .. code-block:: python
-
-   observed = lf.completeness.observed_number_density(
-       cosmo,
-       redshift,
-       m_lim=24.0,
-       m_bright=-24.0,
-       m_faint=-16.0,
-       n_m=800,
-       h=0.7,
-   )
-
-   missing = lf.completeness.missing_number_density(
-       cosmo,
-       redshift,
-       m_lim=24.0,
-       m_bright=-24.0,
-       m_faint=-16.0,
-       n_m=800,
-       h=0.7,
-   )
 
    catalog_fraction = lf.completeness.catalog_fraction(
        cosmo,
-       redshift,
+       redshift=0.5,
        m_lim=24.0,
        m_bright=-24.0,
        m_faint=-16.0,
-       n_m=800,
        h=0.7,
    )
 
-   out_of_catalog_fraction = lf.completeness.out_of_catalog_fraction(
-       cosmo,
-       redshift,
-       m_lim=24.0,
-       m_bright=-24.0,
-       m_faint=-16.0,
-       n_m=800,
-       h=0.7,
-   )
+This answers a common survey question: given an apparent magnitude limit, what
+fraction of the intrinsic luminosity function is visible at a given redshift?
 
-The same namespace also exposes the absolute-magnitude limit implied by an
-apparent-magnitude cut:
+The same namespace can also be used to compute observed number densities,
+missing number densities, out-of-catalog fractions, and the absolute magnitude
+limit implied by an apparent magnitude cut.
 
-.. code-block:: python
+See the dedicated page for complete examples:
 
-   m_limit = lf.completeness.absolute_magnitude_limit(
-       cosmo,
-       redshift,
-       m_lim=24.0,
-       h=0.7,
-   )
+.. code-block:: rst
 
-This is often the first diagnostic to check before interpreting completeness
-fractions.
+   :doc:`catalog completeness <catalog_completeness>`
 
 
 Redshift-density calculations
 -----------------------------
 
-The ``redshift_density`` namespace is for building LF-weighted redshift trends.
+Use ``lf.redshift_density`` when you want to build an LF-weighted redshift trend.
 
-These methods are useful when LFKit is used as an ingredient in survey
-forecasting or tomography construction.
-
-A magnitude-limited number density can be computed with:
-
-.. code-block:: python
-
-   number_density = lf.redshift_density.integrated_number_density(
-       redshift,
-       m_lim=24.0,
-       m_bright=-24.0,
-       luminosity_distance_mpc_fn=luminosity_distance_mpc,
-       n_m=800,
-   )
-
-A volume-weighted redshift trend can be computed with:
+For example:
 
 .. code-block:: python
 
@@ -308,18 +290,21 @@ A volume-weighted redshift trend can be computed with:
        n_m=800,
    )
 
-Here ``luminosity_distance_mpc_fn`` and ``volume_weight_fn`` are callables
-supplied by the user or by another cosmology package.
+This is useful when LFKit is used as part of a survey, tomography, or forecasting
+workflow.
 
-This design keeps LFKit independent of one specific cosmology backend for these
-generic redshift-density utilities.
+See the dedicated page for complete examples:
+
+.. code-block:: rst
+
+   :doc:`redshift_density`
 
 
-Magnitude and luminosity helpers
---------------------------------
+Magnitude and luminosity conversions
+------------------------------------
 
-The ``magnitudes`` namespace provides public helpers for converting between
-apparent magnitude, absolute magnitude, and luminosity distance.
+Use ``lf.magnitudes`` for apparent magnitude, absolute magnitude, and
+luminosity-distance conversions.
 
 For example:
 
@@ -330,12 +315,7 @@ For example:
        luminosity_distance_mpc,
    )
 
-   apparent_mag = lf.magnitudes.apparent_from_luminosity_distance(
-       absolute_mag,
-       luminosity_distance_mpc,
-   )
-
-The ``luminosities`` namespace provides luminosity-ratio helpers:
+Use ``lf.luminosities`` for luminosity ratios and related luminosity variables:
 
 .. code-block:: python
 
@@ -344,24 +324,27 @@ The ``luminosities`` namespace provides luminosity-ratio helpers:
        m_star,
    )
 
-These helpers are useful for diagnostics, selection functions, and examples
-where the user wants to inspect the magnitude-luminosity mapping directly.
+These helpers are especially useful for diagnostics, selection functions, and
+plots that compare magnitude and luminosity conventions.
+
+See the dedicated page for complete examples:
+
+.. code-block:: rst
+
+   :doc:`magnitudes_and_luminosities`
 
 
-Conditional luminosity function API
------------------------------------
+Conditional luminosity functions
+--------------------------------
 
-Conditional luminosity functions describe luminosity distributions conditioned
-on another variable, usually halo mass.
+Use ``ConditionalLuminosityFunction`` when the luminosity distribution is
+conditioned on another variable, such as halo mass.
 
-They should be kept conceptually separate from ordinary luminosity functions.
-A conditional luminosity function object should be responsible for CLF models,
-while :class:`lfkit.LuminosityFunction` remains responsible for ordinary LF
-models.
-
-A typical CLF workflow should look like:
+A typical workflow looks like:
 
 .. code-block:: python
+
+   from lfkit import ConditionalLuminosityFunction
 
    clf = ConditionalLuminosityFunction.schechter(
        phi_star=1.0,
@@ -371,32 +354,24 @@ A typical CLF workflow should look like:
 
    phi = clf.phi(luminosity, halo_mass)
 
-or, for magnitude-based CLF models:
+Conditional luminosity function examples are kept on a separate page because
+they answer a different modeling question from ordinary luminosity functions.
 
-.. code-block:: python
+See the dedicated page for complete examples:
 
-   phi = clf.phi(absolute_mag, halo_mass)
+.. code-block:: rst
 
-The detailed CLF examples should live on a separate page. This overview page
-only records the architectural boundary:
-
-* ordinary LF models belong to ``LuminosityFunction``,
-* conditional LF models belong to ``ConditionalLuminosityFunction``,
-* shared numerical helpers should stay in lower-level utility modules,
-* the public API should avoid duplicating the low-level model code.
+   :doc:`conditional luminosity function <conditional_luminosity_function>`
 
 
 Photometric corrections
 -----------------------
 
-Photometric corrections are exposed separately through :class:`lfkit.Corrections`.
+Use :class:`lfkit.Corrections` when you want to construct or evaluate
+photometric corrections.
 
-This keeps corrections independent from the luminosity function model itself.
-Users can construct or evaluate corrections and then pass them into magnitude,
-completeness, or redshift-density calculations when needed.
-
-For example, correction callables can be passed into LF calculations that need
-k-corrections or evolution corrections:
+Correction callables can be passed into calculations that need k-corrections or
+evolution corrections. For example:
 
 .. code-block:: python
 
@@ -410,28 +385,33 @@ k-corrections or evolution corrections:
        n_m=800,
    )
 
-The sign convention used by the magnitude helpers is:
+The magnitude convention used by LFKit is:
 
 .. math::
 
    M = m - \mu - K + E,
 
-and equivalently,
+or equivalently,
 
 .. math::
 
    m = M + \mu + K - E.
 
-This means that corrections can be supplied without hard-coding one correction
-backend into the luminosity function API.
+See the correction-specific pages for complete examples:
+
+.. code-block:: rst
+
+   :doc:`kcorrect_examples`
+   :doc:`poggianti_examples`
 
 
-Available models
-----------------
+Model discovery
+---------------
 
-The API can report which models are registered.
+LFKit provides methods for inspecting available model names. These are useful in
+notebooks, examples, and validation scripts.
 
-For luminosity function models:
+For ordinary luminosity functions:
 
 .. code-block:: python
 
@@ -441,7 +421,7 @@ For luminosity function models:
    LuminosityFunction.available_from_m_models()
    LuminosityFunction.available_parameter_models()
 
-For conditional luminosity function models, the matching API should be:
+For conditional luminosity functions:
 
 .. code-block:: python
 
@@ -449,105 +429,53 @@ For conditional luminosity function models, the matching API should be:
 
    ConditionalLuminosityFunction.available_models()
 
-These discovery methods are useful in examples, notebooks, and validation
-scripts.
+See the dedicated page for complete examples:
+
+.. code-block:: rst
+
+   :doc:`model_registry`
 
 
-Recommended example-page split
-------------------------------
+Example pages
+-------------
 
-The detailed examples should stay split by topic rather than collected into one
-large page.
-
-A useful organization is:
+The examples are split by topic so that each page stays focused.
 
 .. list-table::
    :header-rows: 1
-   :widths: 28 52
+   :widths: 35 65
 
    * - Page
      - Contents
-   * - ``api_overview``
-     - High-level organization of the public API.
-   * - ``luminosity_function_examples``
-     - Basic LF models, model comparison, evolving parameters, and LF surfaces.
-   * - ``conditional_luminosity_function_examples``
-     - CLF models and halo-mass-dependent luminosity distributions.
-   * - ``magnitude_integrals``
+   * - :doc:`luminosity function models <luminosity_function_models>`
+     - Basic luminosity function models, model comparison, evolving parameters, and luminosity function surfaces.
+   * - :doc:`conditional luminosity function <conditional_luminosity_function>`
+     - Conditional luminosity function models and halo-mass-dependent luminosity distributions.
+   * - :doc:`magnitude_integrals`
      - Number density, luminosity density, mean luminosity, and selection-weighted integrals.
-   * - ``magnitudes_and_luminosities``
+   * - :doc:`magnitudes_and_luminosities`
      - Magnitude conversions, luminosity-distance helpers, and luminosity-ratio helpers.
-   * - ``catalog_completeness_examples``
-     - Observed/missing number densities and catalog fractions.
-   * - ``redshift_density``
+   * - :doc:`catalog completeness <catalog_completeness>`
+     - Observed and missing number densities, catalog fractions, and out-of-catalog fractions.
+   * - :doc:`redshift_density`
      - Magnitude-limited and volume-weighted LF redshift trends.
-   * - ``kcorrect_examples``
+   * - :doc:`kcorrect_examples`
      - Examples using the kcorrect backend.
-   * - ``poggianti_examples``
+   * - :doc:`poggianti_examples`
      - Examples using Poggianti correction tables.
-   * - ``model_registry``
-     - Registered models and how to inspect them.
-
-This keeps each page small enough to read and maintain.
+   * - :doc:`model_registry`
+     - Registered model names and model-discovery helpers.
 
 
-Which API should I use?
------------------------
+Next steps
+----------
 
-Use :class:`lfkit.LuminosityFunction` when you want to evaluate or integrate an
-ordinary luminosity function:
+If you are new to LFKit, start with the luminosity function examples page and
+then move to the calculation that matches your use case:
 
-.. code-block:: python
-
-   lf = LuminosityFunction.schechter(...)
-   phi = lf.phi(...)
-   number_density = lf.integrals.number_density(...)
-
-Use the ``completeness`` namespace when a survey apparent-magnitude limit is
-part of the calculation:
-
-.. code-block:: python
-
-   fraction = lf.completeness.catalog_fraction(...)
-
-Use the ``redshift_density`` namespace when constructing an LF-weighted
-redshift trend:
-
-.. code-block:: python
-
-   nz = lf.redshift_density.weighted(...)
-
-Use the ``magnitudes`` and ``luminosities`` namespaces for conversions and
-diagnostics:
-
-.. code-block:: python
-
-   m_abs = lf.magnitudes.absolute_from_luminosity_distance(...)
-   l_ratio = lf.luminosities.ratio_from_magnitudes(...)
-
-Use :class:`lfkit.Corrections` when constructing or evaluating photometric
-corrections.
-
-Use ``ConditionalLuminosityFunction`` when the model is conditional on halo mass
-or another external variable.
-
-
-Design principle
-----------------
-
-The public API should be thin and user-facing.
-
-Low-level modules should contain the numerical implementation. Public API
-classes should organize those functions into discoverable workflows without
-duplicating the underlying model code.
-
-In practice, this means:
-
-* model constructors store the selected model and parameters,
-* bound namespaces inject the stored LF callable automatically,
-* correction callables are passed explicitly where needed,
-* low-level functions remain available for specialist use,
-* examples should use the public API wherever possible.
-
-This keeps the docs readable while preserving the flexibility of the underlying
-photometry modules.
+* use :doc:`magnitude_integrals` for intrinsic LF integrals,
+* use :doc:`catalog completeness <catalog_completeness>` for survey magnitude limits,
+* use :doc:`redshift_density` for LF-weighted redshift trends,
+* use :doc:`magnitudes_and_luminosities` for conversions and diagnostics,
+* use :doc:`kcorrect_examples` or :doc:`poggianti_examples` when corrections are
+  needed.

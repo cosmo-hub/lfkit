@@ -1,7 +1,7 @@
 r"""Public luminosity function interface.
 
 This module provides the user-facing :class:`LuminosityFunction` API for
-evaluating luminosity functions in absolute- or apparent-magnitude space.
+evaluating luminosity functions in absolute- or apparent magnitude space.
 
 The class stores luminosity function model state and exposes grouped API
 namespaces for related calculations. Low-level numerical and photometric
@@ -181,7 +181,7 @@ class LuminosityFunction:
         absolute_mag: FloatInput,
         z: FloatInput | None = None,
     ) -> FloatArray:
-        """Evaluate the luminosity function in absolute-magnitude space.
+        """Evaluate the luminosity function in absolute magnitude space.
 
         Args:
             absolute_mag: Absolute magnitude values where the LF is evaluated.
@@ -293,7 +293,7 @@ class LuminosityFunction:
 
     @staticmethod
     def available_from_m_models() -> list[str]:
-        """Return models that support apparent-magnitude evaluation."""
+        """Return models that support apparent magnitude evaluation."""
         return sorted(LF_FROM_M_MODELS)
 
     @staticmethod

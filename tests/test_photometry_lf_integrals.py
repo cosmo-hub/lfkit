@@ -491,7 +491,7 @@ def test_cumulative_number_density_rejects_negative_redshift() -> None:
 
 
 def test_magnitude_window_number_density_uses_absolute_bounds() -> None:
-    """Tests magnitude-window density with direct absolute-magnitude bounds."""
+    """Tests magnitude-window density with direct absolute magnitude bounds."""
     result = li.magnitude_window_number_density(
         [0.1, 0.2],
         constant_lf,
@@ -564,7 +564,7 @@ def test_magnitude_window_number_density_rejects_duplicate_bright_bounds() -> No
 
 
 def test_magnitude_window_density_requires_distance_for_apparent_bounds() -> None:
-    """Tests that apparent-magnitude bounds require a distance callable."""
+    """Tests that apparent magnitude bounds require a distance callable."""
     with pytest.raises(
         ValueError,
         match="luminosity_distance_mpc_fn is required",
@@ -578,7 +578,7 @@ def test_magnitude_window_density_requires_distance_for_apparent_bounds() -> Non
 
 
 def test_magnitude_window_number_density_applies_k_and_e_corrections() -> None:
-    """Tests apparent-magnitude conversion with K- and E-corrections."""
+    """Tests apparent magnitude conversion with K- and E-corrections."""
 
     def luminosity_distance_mpc_fn(z: np.ndarray) -> np.ndarray:
         """Return a constant luminosity distance."""

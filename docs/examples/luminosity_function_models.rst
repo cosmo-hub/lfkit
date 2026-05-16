@@ -10,7 +10,7 @@ This page introduces the luminosity function models exposed by
 
 The examples focus on constructing, evaluating, visualizing, and comparing
 luminosity function models. Magnitude integrals, completeness calculations,
-apparent-magnitude limits, redshift-density weighting, and conditional
+apparent magnitude limits, redshift-density weighting, and conditional
 luminosity functions are covered on separate pages.
 
 The API is centered on :class:`lfkit.LuminosityFunction`. A luminosity function
@@ -85,14 +85,14 @@ A Schechter luminosity function can be created with
    plt.tight_layout()
 
 
-Standard Schechter luminosity function with apparent-magnitude axis
+Standard Schechter luminosity function with apparent magnitude axis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Schechter luminosity function is evaluated in absolute magnitude. A
 secondary x-axis can show the corresponding apparent magnitude at a fixed
 luminosity distance using the LFKit magnitude converters.
 
-This keeps the model-native absolute-magnitude axis while also showing where
+This keeps the model-native absolute magnitude axis while also showing where
 the same magnitude range would appear observationally.
 
 .. plot::
@@ -153,7 +153,7 @@ the same magnitude range would appear observationally.
        fontsize=LABEL_SIZE,
    )
    ax.set_title(
-       "Schechter luminosity function with apparent-magnitude axis",
+       "Schechter luminosity function with apparent magnitude axis",
        fontsize=TITLE_SIZE,
    )
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
@@ -357,11 +357,11 @@ same LF object should evaluate :math:`\Phi(M, z)` at many redshifts.
    plt.tight_layout()
 
 
-Evolving Schechter luminosity function with apparent-magnitude axis
+Evolving Schechter luminosity function with apparent magnitude axis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The evolving Schechter model is evaluated as :math:`\Phi(M, z)`. A secondary
-x-axis can show the apparent magnitude corresponding to the absolute-magnitude
+x-axis can show the apparent magnitude corresponding to the absolute magnitude
 range at a chosen reference luminosity distance.
 
 Here, the curves are evaluated at several redshifts, while the upper apparent
@@ -443,7 +443,7 @@ distance-redshift mappings into one top axis.
        fontsize=LABEL_SIZE,
    )
    ax.set_title(
-       "Evolving Schechter luminosity function with apparent-magnitude axis",
+       "Evolving Schechter luminosity function with apparent magnitude axis",
        fontsize=TITLE_SIZE,
    )
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
