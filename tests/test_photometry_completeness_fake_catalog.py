@@ -124,7 +124,7 @@ def test_observed_and_missing_fractions_sum_to_one() -> None:
 
 
 def test_deeper_catalog_limit_increases_completeness() -> None:
-    """Tests that a fainter apparent-magnitude limit increases completeness."""
+    """Tests that a fainter apparent magnitude limit increases completeness."""
     catalog = load_fake_catalog()
     cosmo = make_cosmology()
 
@@ -154,7 +154,7 @@ def test_deeper_catalog_limit_increases_completeness() -> None:
 
 
 def test_deeper_catalog_limit_decreases_missing_density() -> None:
-    """Tests that a fainter apparent-magnitude limit misses no more galaxies."""
+    """Tests that a fainter apparent magnitude limit misses no more galaxies."""
     catalog = load_fake_catalog()
     cosmo = make_cosmology()
 
@@ -183,7 +183,7 @@ def test_deeper_catalog_limit_decreases_missing_density() -> None:
 
 
 def test_deeper_catalog_limit_increases_observed_density() -> None:
-    """Tests that a fainter apparent-magnitude limit observes no fewer galaxies."""
+    """Tests that a fainter apparent magnitude limit observes no fewer galaxies."""
     catalog = load_fake_catalog()
     cosmo = make_cosmology()
 

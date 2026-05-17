@@ -1,7 +1,7 @@
 """Smoke tests for user-facing API delegation.
 
 These tests check that the public API namespaces are wired to the expected
-low-level functions. They intentionally avoid testing luminosity-function
+low-level functions. They intentionally avoid testing luminosity function
 physics, which is covered by the lower-level photometry tests.
 """
 

@@ -20,7 +20,7 @@ can pass correction values explicitly through the ``k_correction`` and
 ``e_correction`` keyword arguments of the magnitude-limit and completeness
 methods.
 
-The number-density units follow the normalization of the luminosity function.
+The number density units follow the normalization of the luminosity function.
 For example, if :math:`\phi_*` is given in comoving :math:`{\rm Mpc}^{-3}`, then
 the integrated number densities are also in :math:`{\rm Mpc}^{-3}`. Fractions
 are dimensionless and are always defined relative to the chosen intrinsic
@@ -57,7 +57,7 @@ higher on the plot.
    TITLE_SIZE = 17
    LEGEND_SIZE = 15
 
-   colors_blue = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.72, 0.96))
+   red = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.0, 0.2))[1]
 
    cosmo = ccl.Cosmology(
        Omega_c=0.25,
@@ -87,10 +87,10 @@ higher on the plot.
    )
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
-   ax.plot(z, m_limit, lw=3, color=colors_blue[1])
+   ax.plot(z, m_limit, lw=3, color=red)
    ax.invert_yaxis()
    ax.set_xlabel("Redshift $z$", fontsize=LABEL_SIZE)
-   ax.set_ylabel(r"Absolute-magnitude limit $M_{\rm lim}(z)$", fontsize=LABEL_SIZE)
+   ax.set_ylabel(r"Absolute magnitude limit $M_{\rm lim}(z)$", fontsize=LABEL_SIZE)
    ax.set_title(r"Catalog limit for $m_{\rm lim}=24.5$", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
    plt.tight_layout()
@@ -128,9 +128,9 @@ population described by the luminosity function, or only the bright tail of it.
    TITLE_SIZE = 17
    LEGEND_SIZE = 15
 
-   colors_blue = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.72, 0.96))
-   colors_red = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.03, 0.26))
-   c_mid = 0.5 * (np.array(colors_blue[1]) + np.array(colors_red[1]))
+   c_red = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.0, 0.2))[1]
+   c_blue = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.8, 1.0))[1]
+   c_mid = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.0, 1.0))[1]
 
    cosmo = ccl.Cosmology(
        Omega_c=0.25,
@@ -180,8 +180,8 @@ population described by the luminosity function, or only the bright tail of it.
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
    ax.plot(z, n_total, lw=3, color=c_mid, label="Total LF integral")
-   ax.plot(z, n_obs, lw=3, color=colors_blue[1], label=r"Observed: $M < M_{\rm lim}(z)$")
-   ax.plot(z, n_miss, lw=3, color=colors_red[1], label=r"Missing: $M_{\rm lim}(z) < M < M_{\rm faint}$")
+   ax.plot(z, n_obs, lw=3, color=c_blue, label=r"Observed: $M < M_{\rm lim}(z)$")
+   ax.plot(z, n_miss, lw=3, color=c_red, label=r"Missing: $M_{\rm lim}(z) < M < M_{\rm faint}$")
    ax.set_yscale("log")
    ax.set_xlabel("Redshift $z$", fontsize=LABEL_SIZE)
    ax.set_ylabel(r"Comoving number density $n(z)$ [$\mathrm{Mpc}^{-3}$]", fontsize=LABEL_SIZE)
@@ -222,8 +222,8 @@ catalog contains only a small fraction of the intrinsic galaxy population.
    TITLE_SIZE = 17
    LEGEND_SIZE = 15
 
-   colors_blue = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.72, 0.96))
-   colors_red = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.03, 0.26))
+   red = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.0, 0.2))[1]
+   blue = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.8, 1.0))[1]
 
    cosmo = ccl.Cosmology(
        Omega_c=0.25,
@@ -266,8 +266,8 @@ catalog contains only a small fraction of the intrinsic galaxy population.
    )
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
-   ax.plot(z, f_obs, lw=3, color=colors_blue[1], label="Observable LF fraction")
-   ax.plot(z, f_miss, lw=3, color=colors_red[1], label="Missing LF fraction")
+   ax.plot(z, f_obs, lw=3, color=blue, label="Observable LF fraction")
+   ax.plot(z, f_miss, lw=3, color=red, label="Missing LF fraction")
    ax.set_ylim(-0.05, 1.05)
    ax.set_xlabel("Redshift $z$", fontsize=LABEL_SIZE)
    ax.set_ylabel("Fraction of chosen LF integral", fontsize=LABEL_SIZE)
@@ -308,8 +308,6 @@ incomplete.
    TITLE_SIZE = 17
    LEGEND_SIZE = 15
 
-   colors_blue = cmr.take_cmap_colors("cmr.guppy", 4, cmap_range=(0.66, 0.98))
-
    cosmo = ccl.Cosmology(
        Omega_c=0.25,
        Omega_b=0.05,
@@ -332,10 +330,15 @@ incomplete.
    )
 
    limits = [22.5, 23.5, 24.5, 25.5]
+   colors = cmr.take_cmap_colors(
+       "cmr.guppy",
+       len(limits),
+       cmap_range=(0.0, 0.2),
+   )
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
-   for m_lim, color in zip(limits, colors_blue):
+   for m_lim, color in zip(limits, colors):
        f_obs = lf.completeness.catalog_fraction(
            cosmo,
            z,
@@ -354,7 +357,7 @@ incomplete.
    plt.tight_layout()
 
 
-Absolute-magnitude limits for different depths
+Absolute magnitude limits for different depths
 ----------------------------------------------
 
 The apparent magnitude limit can also be shown directly as an absolute magnitude
@@ -386,8 +389,6 @@ boundary.
    TITLE_SIZE = 17
    LEGEND_SIZE = 15
 
-   colors_blue = cmr.take_cmap_colors("cmr.guppy", 4, cmap_range=(0.66, 0.98))
-
    cosmo = ccl.Cosmology(
        Omega_c=0.25,
        Omega_b=0.05,
@@ -410,10 +411,15 @@ boundary.
    )
 
    limits = [22.5, 23.5, 24.5, 25.5]
+   colors = cmr.take_cmap_colors(
+       "cmr.guppy",
+       len(limits),
+       cmap_range=(0.0, 0.2),
+   )
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
-   for m_lim, color in zip(limits, colors_blue):
+   for m_lim, color in zip(limits, colors):
        m_limit = lf.completeness.absolute_magnitude_limit(
            cosmo,
            z,
@@ -423,7 +429,7 @@ boundary.
 
    ax.invert_yaxis()
    ax.set_xlabel("Redshift $z$", fontsize=LABEL_SIZE)
-   ax.set_ylabel(r"Absolute-magnitude limit $M_{\rm lim}(z)$", fontsize=LABEL_SIZE)
+   ax.set_ylabel(r"Absolute magnitude limit $M_{\rm lim}(z)$", fontsize=LABEL_SIZE)
    ax.set_title("Catalog selection boundary", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
    ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="best")
@@ -461,8 +467,6 @@ about a much fainter underlying population.
    TITLE_SIZE = 17
    LEGEND_SIZE = 15
 
-   colors_red = cmr.take_cmap_colors("cmr.guppy", 4, cmap_range=(0.03, 0.30))
-
    cosmo = ccl.Cosmology(
        Omega_c=0.25,
        Omega_b=0.05,
@@ -485,10 +489,15 @@ about a much fainter underlying population.
    )
 
    faint_limits = [-17.0, -16.0, -15.0, -14.0]
+   colors = cmr.take_cmap_colors(
+       "cmr.guppy",
+       len(faint_limits),
+       cmap_range=(0.0, 0.2),
+   )
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
-   for m_faint, color in zip(faint_limits, colors_red):
+   for m_faint, color in zip(faint_limits, colors):
        f_obs = lf.completeness.catalog_fraction(
            cosmo,
            z,
@@ -610,12 +619,12 @@ redshift range is safe for a magnitude-limited sample.
        completeness,
        levels=contour_levels,
        colors="white",
-       linewidths=1.2,
+       linewidths=1.5,
    )
    ax.clabel(contours, inline=True, fontsize=TICK_SIZE, fmt="%.1f")
 
    ax.set_xlabel("Redshift $z$", fontsize=LABEL_SIZE)
-   ax.set_ylabel(r"Apparent-magnitude limit $m_{\rm lim}$", fontsize=LABEL_SIZE)
+   ax.set_ylabel(r"Apparent magnitude limit $m_{\rm lim}$", fontsize=LABEL_SIZE)
    ax.set_title(r"Completeness over $-24 \leq M \leq -14$", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
 
@@ -657,8 +666,6 @@ The lower panel shows the residual relative to the reference cosmology,
    TICK_SIZE = 13
    TITLE_SIZE = 17
    LEGEND_SIZE = 15
-
-   colors_red = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.03, 0.26))
 
    cosmologies = {
        r"$\Omega_{\rm m}=0.25,\ h=0.70$": ccl.Cosmology(
@@ -713,16 +720,21 @@ The lower panel shows the residual relative to the reference cosmology,
    reference_label = r"$\Omega_{\rm m}=0.30,\ h=0.70$"
    reference = m_limits[reference_label]
 
+   colors = cmr.take_cmap_colors(
+       "cmr.guppy",
+       len(cosmologies),
+       cmap_range=(0.0, 0.2),
+   )
+
    fig, (ax_top, ax_bottom) = plt.subplots(
        2,
        1,
        figsize=(7.0, 6.2),
        sharex=True,
        gridspec_kw={"height_ratios": [3, 1]},
-       constrained_layout=True,
    )
 
-   for (label, m_limit), color in zip(m_limits.items(), colors_red):
+   for (label, m_limit), color in zip(m_limits.items(), colors):
        ax_top.plot(z, m_limit, lw=3, color=color, label=label)
        ax_bottom.plot(z, m_limit - reference, lw=2.5, color=color)
 
@@ -771,8 +783,6 @@ The lower panel shows the residual relative to the reference cosmology,
    TITLE_SIZE = 17
    LEGEND_SIZE = 15
 
-   colors_red = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.03, 0.26))
-
    cosmologies = {
        r"$\Omega_{\rm m}=0.25,\ h=0.70$": ccl.Cosmology(
            Omega_c=0.20,
@@ -802,6 +812,12 @@ The lower panel shows the residual relative to the reference cosmology,
            matter_power_spectrum="linear",
        ),
    }
+
+   colors = cmr.take_cmap_colors(
+       "cmr.guppy",
+       len(cosmologies),
+       cmap_range=(0.0, 0.2),
+   )
 
    z = np.linspace(0.05, 1.2, 250)
 
@@ -834,10 +850,9 @@ The lower panel shows the residual relative to the reference cosmology,
        figsize=(7.0, 6.2),
        sharex=True,
        gridspec_kw={"height_ratios": [3, 1]},
-       constrained_layout=True,
    )
 
-   for (label, f_obs), color in zip(completeness.items(), colors_red):
+   for (label, f_obs), color in zip(completeness.items(), colors):
        ax_top.plot(z, f_obs, lw=3, color=color, label=label)
        ax_bottom.plot(z, f_obs - reference, lw=2.5, color=color)
 

@@ -1,4 +1,4 @@
-"""Public conditional luminosity-function constructors."""
+"""Public conditional luminosity function constructors."""
 
 from __future__ import annotations
 
@@ -26,7 +26,7 @@ def _make_conditional_lf(
 
 
 class ConditionalLuminosityFunction:
-    """Factory namespace for conditional luminosity-function models."""
+    """Factory namespace for conditional luminosity function models."""
 
     @staticmethod
     def schechter(

@@ -52,7 +52,7 @@ def expected_absolute_magnitude_limit(
     k_correction: float | np.ndarray = 0.0,
     evolution_correction: float | np.ndarray = 0.0,
 ) -> np.ndarray:
-    """Return the expected absolute-magnitude limit for test inputs."""
+    """Return the expected absolute magnitude limit for test inputs."""
     return (
         m_lim
         - 5.0 * np.log10(luminosity_distance_mpc)
@@ -63,7 +63,7 @@ def expected_absolute_magnitude_limit(
 
 
 def test_lf_integrated_number_density_integrates_to_absolute_magnitude_limit() -> None:
-    """Tests LF integration to the apparent-magnitude-implied absolute limit."""
+    """Tests LF integration to the apparent magnitude-implied absolute limit."""
     result = lfrd.lf_integrated_number_density(
         [0.1, 0.2],
         constant_lf,
@@ -124,7 +124,7 @@ def test_lf_integrated_number_density_uses_luminosity_distance_function() -> Non
 
 
 def test_lf_integrated_number_density_applies_k_correction() -> None:
-    """Tests that k-corrections shift the absolute-magnitude limit."""
+    """Tests that k-corrections shift the absolute magnitude limit."""
     result = lfrd.lf_integrated_number_density(
         [0.1, 0.2],
         constant_lf,
@@ -139,7 +139,7 @@ def test_lf_integrated_number_density_applies_k_correction() -> None:
 
 
 def test_lf_integrated_number_density_applies_evolution_correction() -> None:
-    """Tests that evolution corrections shift the absolute-magnitude limit."""
+    """Tests that evolution corrections shift the absolute magnitude limit."""
     result = lfrd.lf_integrated_number_density(
         [0.1, 0.2],
         constant_lf,

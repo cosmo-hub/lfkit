@@ -18,7 +18,7 @@ class LFRedshiftDensityAPI:
     """Grouped API for LF-weighted redshift-density calculations.
 
     Args:
-        lf: Parent luminosity-function object.
+        lf: Parent luminosity function object.
     """
 
     def __init__(self, lf: LuminosityFunction) -> None:

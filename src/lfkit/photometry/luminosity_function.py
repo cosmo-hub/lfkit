@@ -6,7 +6,7 @@ common galaxy luminosity function parameterization.
 All luminosity functions in this module are defined in rest-frame absolute
 magnitude space. Functions with names ending in ``_from_m`` are convenience
 wrappers that accept apparent magnitudes, convert them to absolute
-magnitudes, and then evaluate the luminosity function in absolute-magnitude
+magnitudes, and then evaluate the luminosity function in absolute magnitude
 space.
 
 Implemented models:

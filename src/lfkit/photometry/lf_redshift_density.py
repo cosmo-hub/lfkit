@@ -7,7 +7,7 @@ The core operation is
 
     n_lf(z) = int phi(M, z) dM
 
-over the observable absolute-magnitude range implied by an apparent-magnitude
+over the observable absolute magnitude range implied by an apparent magnitude
 limit. A second helper multiplies this LF-integrated density by a user-supplied
 redshift or volume weight.
 
@@ -62,7 +62,7 @@ def lf_integrated_number_density(
         \int_{M_{\mathrm{bright}}}^{M_{\mathrm{lim}}(z)}
         \phi(M, z)\,dM,
 
-    where ``M_lim(z)`` is the absolute-magnitude limit implied by the apparent
+    where ``M_lim(z)`` is the absolute magnitude limit implied by the apparent
     magnitude cut ``m_lim``.
 
     The magnitude conversion follows
@@ -79,7 +79,7 @@ def lf_integrated_number_density(
         z: Redshift value or array-like of redshift values.
         lf: Luminosity-function callable with signature ``lf(M, z)``.
         m_lim: Apparent magnitude limit of the catalog.
-        m_bright: Bright absolute-magnitude integration bound.
+        m_bright: Bright absolute magnitude integration bound.
         n_m: Number of magnitude-grid points used for the integral.
         luminosity_distance_mpc_fn: Callable returning luminosity distance in
             Mpc as a function of redshift.
@@ -164,7 +164,7 @@ def lf_weighted_redshift_density(
         z: Redshift value or array-like of redshift values.
         lf: Luminosity-function callable with signature ``lf(M, z)``.
         m_lim: Apparent magnitude limit of the catalog.
-        m_bright: Bright absolute-magnitude integration bound.
+        m_bright: Bright absolute magnitude integration bound.
         n_m: Number of magnitude-grid points used for the integral.
         luminosity_distance_mpc_fn: Callable returning luminosity distance in
             Mpc as a function of redshift.

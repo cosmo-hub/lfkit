@@ -1,4 +1,4 @@
-"""User-facing conditional luminosity-function model API namespace."""
+"""User-facing conditional luminosity function model API namespace."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ from lfkit.photometry.conditional_lf_models import (
 
 
 class LFConditionalModelsAPI:
-    """Grouped API for evaluating conditional luminosity-function models."""
+    """Grouped API for evaluating conditional luminosity function models."""
 
     schechter = staticmethod(conditional_schechter)
     evolving_schechter = staticmethod(conditional_evolving_schechter)

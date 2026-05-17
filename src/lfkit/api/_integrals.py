@@ -1,4 +1,4 @@
-"""User-facing luminosity-function integral API namespace."""
+"""User-facing luminosity function integral API namespace."""
 
 from __future__ import annotations
 
@@ -20,10 +20,10 @@ if TYPE_CHECKING:
 
 
 class LFIntegralsAPI:
-    """Grouped API for luminosity-function integrals.
+    """Grouped API for luminosity function integrals.
 
     Args:
-        lf: Parent luminosity-function object.
+        lf: Parent luminosity function object.
     """
 
     def __init__(self, lf: LuminosityFunction) -> None:

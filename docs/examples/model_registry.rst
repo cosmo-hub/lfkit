@@ -23,7 +23,7 @@ Available luminosity function models
    LuminosityFunction.available_models()
 
 
-Available apparent-magnitude models
+Available apparent magnitude models
 -----------------------------------
 
 .. code-block:: python

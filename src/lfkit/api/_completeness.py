@@ -21,7 +21,7 @@ class LFCompletenessAPI:
     """Grouped API for catalog-completeness calculations.
 
     Args:
-        lf: Parent luminosity-function object.
+        lf: Parent luminosity function object.
     """
 
     def __init__(self, lf: LuminosityFunction) -> None:
