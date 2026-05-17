@@ -21,7 +21,7 @@ Core components
    :gutter: 3
 
    .. grid-item-card::
-      :link: corr_overview
+      :link: corrections_overview
       :link-type: doc
       :shadow: md
 
@@ -33,7 +33,7 @@ Core components
       filter response curves and spectral energy distributions (SEDs).
 
    .. grid-item-card::
-      :link: lf_overview
+      :link: photometry_overview
       :link-type: doc
       :shadow: md
 
@@ -49,5 +49,5 @@ Core components
    :maxdepth: 1
    :hidden:
 
-   corr_overview
-   lf_overview
+   corrections_overview
+   photometry_overview

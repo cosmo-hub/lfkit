@@ -10,8 +10,8 @@ authors:
     email: "nikolina.sarcevic@gmail.com"
     orcid: "https://orcid.org/0000-0001-7301-6415"
 
-version: "0.1.0"
-date-released: 2026-03-01
+version: "0.2.0"
+date-released: 2026-05-15
 
 repository-code: "https://github.com/cosmo-hub/lfkit"
 url: "https://github.com/cosmo-hub/lfkit"

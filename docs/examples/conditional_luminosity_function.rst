@@ -6,12 +6,22 @@
 ============================================
 
 This page shows how to evaluate conditional luminosity functions with LFKit's
-public API.
+public API. A conditional luminosity function describes the abundance of
+galaxies as a function of absolute magnitude while allowing the model to depend
+on another variable.
 
 A conditional luminosity function has the form :math:`\Phi(M \mid x)`, where
-:math:`M` is absolute magnitude and :math:`x` is an external conditioning
-variable. The conditioning variable is generic: it can represent redshift, halo
-mass, environment, galaxy type, richness, stellar mass, or another quantity.
+:math:`M` is absolute magnitude and :math:`x` is the conditioning variable. The
+quantity
+
+.. math::
+
+   \Phi(M \mid x)\,dM
+
+is the number density of galaxies with absolute magnitudes between :math:`M`
+and :math:`M+dM` at fixed :math:`x`. The conditioning variable is generic: it
+can represent redshift, halo mass, environment, galaxy type, richness, stellar
+mass, or another quantity.
 
 LFKit exposes conditional luminosity functions through
 :class:`lfkit.ConditionalLuminosityFunction`. Each constructor returns a
@@ -19,9 +29,11 @@ LFKit exposes conditional luminosity functions through
 evaluated with ``lf.phi`` and integrated with the usual ``lf.integrals``
 namespace.
 
-The examples below use redshift as the conditioning variable because it is a
-natural choice for luminosity function evolution. The same API can be used with
-any other conditioning variable by replacing ``z`` with the desired quantity.
+The examples below use redshift as the conditioning variable because this is
+the most common use case for luminosity function evolution. In that case,
+:math:`\Phi(M \mid z)` describes how the magnitude distribution of galaxies
+changes with redshift. The same API can be used with any other conditioning
+variable by replacing ``z`` with the desired quantity.
 
 The examples include:
 
@@ -43,13 +55,17 @@ of :math:`{\rm Mpc}^{-3}\,{\rm mag}^{-1}`.
 Conditional Schechter luminosity function
 -----------------------------------------
 
-A conditional Schechter luminosity function allows the Schechter parameters to
-depend on an external variable.
+A conditional Schechter luminosity function is a Schechter model whose
+parameters depend on an external variable. Instead of using one fixed
+normalization, characteristic magnitude, and faint-end slope, the model can let
+one or more of these quantities vary with the condition.
 
-This example makes the normalization and characteristic magnitude depend on
-redshift. The faint-end slope is kept fixed. At each redshift, the model is
-still a Schechter luminosity function, but the curve evolves smoothly with the
-conditioning variable.
+This example uses redshift as the condition. The normalization
+:math:`\phi_\star(z)` and characteristic magnitude :math:`M_\star(z)` evolve
+with redshift, while the faint-end slope :math:`\alpha` is kept fixed. Each
+curve is therefore a Schechter luminosity function at one redshift. Comparing
+the curves shows how the abundance and bright-end turnover shift as the
+population evolves.
 
 .. plot::
    :include-source: True
@@ -66,10 +82,14 @@ conditioning variable.
    TITLE_SIZE = 17
    LEGEND_SIZE = 15
 
-   colors = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.72, 0.96))
-
    absolute_mag = np.linspace(-24.0, -14.0, 500)
    redshifts = [0.1, 0.6, 1.1]
+
+   colors = cmr.take_cmap_colors(
+       "cmr.guppy",
+       len(redshifts),
+       cmap_range=(0.0, 0.2),
+   )
 
    lf = ConditionalLuminosityFunction.schechter(
        phi_star=lambda z: 1.0e-3 * (1.0 + z) ** 0.8,
@@ -92,6 +112,7 @@ conditioning variable.
        )
 
    ax.set_yscale("log")
+   ax.set_ylim(1.0e-8, 1.0e-1)
    ax.invert_xaxis()
    ax.set_xlabel("Absolute magnitude $M$", fontsize=LABEL_SIZE)
    ax.set_ylabel(
@@ -108,11 +129,14 @@ conditioning variable.
 Conditional Schechter surface
 -----------------------------
 
-The same model can be shown across the full magnitude-redshift plane.
+The same conditional Schechter model can be evaluated over the full
+magnitude-redshift plane rather than at a few selected redshifts.
 
 The filled colour scale shows :math:`\log_{10}\Phi(M \mid z)`. The contours
-mark constant abundance levels. This is a useful diagnostic for checking that
-the conditional model behaves smoothly across the region where it will be used.
+mark constant abundance levels. This view is useful for checking the global
+behaviour of the model: smooth contours indicate that the parameter evolution
+produces a smooth luminosity function, while abrupt features would signal a
+problem with the chosen parameterization or redshift dependence.
 
 .. plot::
    :include-source: True
@@ -139,7 +163,7 @@ the conditional model behaves smoothly across the region where it will be used.
        alpha=-1.1,
    )
 
-   phi = lf.phi(mag_grid, z_grid)
+   phi = np.clip(lf.phi(mag_grid, z_grid), 1.0e-8, 1.0e-1)
    log_phi = np.log10(phi)
 
    fig, ax = plt.subplots(figsize=(7.2, 5.0))
@@ -159,7 +183,8 @@ the conditional model behaves smoothly across the region where it will be used.
        log_phi,
        levels=contour_levels,
        colors="white",
-       linewidths=1.2,
+       linewidths=1.5,
+       linestyles="solid",
    )
    ax.clabel(contours, inline=True, fontsize=TICK_SIZE, fmt=r"$10^{%.0f}$")
 
@@ -183,12 +208,16 @@ the conditional model behaves smoothly across the region where it will be used.
 Conditional Schechter model with LFKit parameter models
 -------------------------------------------------------
 
-LFKit can also evaluate conditional Schechter models using its registered
-parameter models. This is useful when the desired dependence follows one of the
-standard LFKit parameterizations.
+LFKit can also build conditional Schechter models from its registered parameter
+models. This is useful when the desired evolution follows one of the standard
+forms already available in LFKit, rather than being written manually as a
+callable.
 
 Here, the normalization and characteristic magnitude evolve with the
-conditioning variable, while the faint-end slope is constant.
+conditioning variable, while the faint-end slope is constant. The result is
+equivalent in spirit to the previous example, but the parameter evolution is
+defined through named LFKit models. This makes the model easier to reproduce,
+configure, and document.
 
 .. plot::
    :include-source: True
@@ -205,10 +234,14 @@ conditioning variable, while the faint-end slope is constant.
    TITLE_SIZE = 17
    LEGEND_SIZE = 15
 
-   colors = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.03, 0.26))
-
    absolute_mag = np.linspace(-24.0, -14.0, 500)
    redshifts = [0.1, 0.6, 1.1]
+
+   colors = cmr.take_cmap_colors(
+       "cmr.guppy",
+       len(redshifts),
+       cmap_range=(0.0, 0.2),
+   )
 
    lf = ConditionalLuminosityFunction.evolving_schechter(
        phi_model="linear_p",
@@ -234,6 +267,7 @@ conditioning variable, while the faint-end slope is constant.
        )
 
    ax.set_yscale("log")
+   ax.set_ylim(1.0e-8, 1.0e-1)
    ax.invert_xaxis()
    ax.set_xlabel("Absolute magnitude $M$", fontsize=LABEL_SIZE)
    ax.set_ylabel(
@@ -250,12 +284,15 @@ conditioning variable, while the faint-end slope is constant.
 Lognormal conditional component
 -------------------------------
 
-A narrow lognormal component can represent a population concentrated around a
-characteristic luminosity at fixed condition.
+A lognormal conditional component describes a population concentrated around a
+characteristic luminosity at fixed condition. In magnitude space, this appears
+as a relatively narrow feature centred on a mean absolute magnitude.
 
-This example uses a mean absolute magnitude that becomes brighter with
-redshift. The scatter is fixed, so the peak shifts while retaining a similar
-width.
+This example lets the mean absolute magnitude become brighter with redshift,
+while the scatter is fixed. The peak therefore shifts to brighter magnitudes as
+redshift increases, but the width of the component remains similar. This kind
+of component is useful for representing a population with a preferred luminosity
+scale rather than a broad Schechter-like faint-end tail.
 
 .. plot::
    :include-source: True
@@ -272,10 +309,14 @@ width.
    TITLE_SIZE = 17
    LEGEND_SIZE = 15
 
-   colors = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.72, 0.96))
-
    absolute_mag = np.linspace(-24.0, -16.0, 500)
    redshifts = [0.1, 0.6, 1.1]
+
+   colors = cmr.take_cmap_colors(
+       "cmr.guppy",
+       len(redshifts),
+       cmap_range=(0.0, 0.2),
+   )
 
    lf = ConditionalLuminosityFunction.lognormal(
        mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
@@ -298,6 +339,7 @@ width.
        )
 
    ax.set_yscale("log")
+   ax.set_ylim(1.0e-8, 1.0e-1)
    ax.invert_xaxis()
    ax.set_xlabel("Absolute magnitude $M$", fontsize=LABEL_SIZE)
    ax.set_ylabel(
@@ -315,9 +357,14 @@ width.
 Modified Schechter conditional component
 ----------------------------------------
 
-The modified Schechter component uses a squared exponential cutoff in luminosity
-ratio. It is broader than the lognormal component and contributes over a wider
-range of faint magnitudes.
+The modified Schechter component is Schechter-like at the faint end but uses a
+different cutoff at high luminosity. Instead of the standard exponential cutoff,
+it has a broader cutoff controlled by the luminosity ratio.
+
+This example lets the normalization, characteristic magnitude, and faint-end
+slope vary with redshift. The model therefore changes both in amplitude and in
+shape. This is useful when a standard Schechter function is too restrictive,
+especially for populations whose bright end falls off more gradually.
 
 .. plot::
    :include-source: True
@@ -334,10 +381,14 @@ range of faint magnitudes.
    TITLE_SIZE = 17
    LEGEND_SIZE = 15
 
-   colors = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.03, 0.26))
-
    absolute_mag = np.linspace(-24.0, -14.0, 500)
    redshifts = [0.1, 0.6, 1.1]
+
+   colors = cmr.take_cmap_colors(
+       "cmr.guppy",
+       len(redshifts),
+       cmap_range=(0.0, 0.2),
+   )
 
    lf = ConditionalLuminosityFunction.modified_schechter(
        phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
@@ -360,6 +411,7 @@ range of faint magnitudes.
        )
 
    ax.set_yscale("log")
+   ax.set_ylim(1.0e-8, 1.0e-1)
    ax.invert_xaxis()
    ax.set_xlabel("Absolute magnitude $M$", fontsize=LABEL_SIZE)
    ax.set_ylabel(
@@ -377,11 +429,15 @@ range of faint magnitudes.
 Standard, modified, and lognormal component shapes
 --------------------------------------------------
 
-It is useful to compare the component shapes at fixed condition. The standard
-Schechter form has the usual exponential cutoff in luminosity ratio. The
-modified Schechter component uses a squared exponential cutoff. The lognormal
-component is localized around a mean luminosity and is useful for narrow
-populations.
+It is useful to compare the component shapes at fixed condition before combining
+them into more complicated models. This separates differences in functional
+form from differences caused by redshift or halo-mass evolution.
+
+The standard Schechter form has a power-law faint end and an exponential
+bright-end cutoff. The modified Schechter component has a broader bright-end
+shape. The lognormal component is localized around a characteristic luminosity.
+Together, these examples show the kinds of galaxy populations each component is
+best suited to describe.
 
 .. plot::
    :include-source: True
@@ -398,7 +454,9 @@ populations.
    TITLE_SIZE = 17
    LEGEND_SIZE = 15
 
-   colors = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.08, 0.92))
+   colors_blue = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.8, 1.0))
+   colors_red = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.0, 0.2))
+   colors_all = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.0, 1.0))
 
    absolute_mag = np.linspace(-24.0, -14.0, 600)
    z_value = 0.6
@@ -432,25 +490,26 @@ populations.
        absolute_mag,
        phi_schechter,
        lw=3,
-       color=colors[0],
+       color=colors_blue[1],
        label="Standard Schechter",
    )
    ax.plot(
        absolute_mag,
        phi_modified,
        lw=3,
-       color=colors[1],
+       color=colors_red[1],
        label="Modified Schechter",
    )
    ax.plot(
        absolute_mag,
        phi_lognormal,
        lw=3,
-       color=colors[2],
+       color=colors_all[1],
        label="Lognormal",
    )
 
    ax.set_yscale("log")
+   ax.set_ylim(1.0e-8, 1.0e-1)
    ax.invert_xaxis()
    ax.set_xlabel("Absolute magnitude $M$", fontsize=LABEL_SIZE)
    ax.set_ylabel(
@@ -465,15 +524,19 @@ populations.
    plt.tight_layout()
 
 
-Two-component conditional luminosity function
+Two-component conditional LF
 ---------------------------------------------
 
 The lognormal and modified Schechter components can be combined into a
-two-component conditional luminosity function.
+two-component conditional luminosity function. This is useful when one component
+is intended to describe a relatively narrow population and the other describes a
+broader luminosity distribution.
 
 This plot separates the lognormal component, the modified Schechter component,
-and their sum at a fixed redshift. This is a useful way to check which component
-dominates different magnitude ranges.
+and their sum at a fixed redshift. The comparison shows which component
+dominates different magnitude ranges. In this example, the lognormal component
+is concentrated near its characteristic magnitude, while the modified Schechter
+component contributes over a wider range of magnitudes.
 
 .. plot::
    :include-source: True
@@ -490,9 +553,9 @@ dominates different magnitude ranges.
    TITLE_SIZE = 17
    LEGEND_SIZE = 15
 
-   colors_blue = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.72, 0.96))
-   colors_red = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.03, 0.26))
-   total_color = 0.5 * (np.array(colors_blue[1]) + np.array(colors_red[1]))
+   colors_blue = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.8, 1.0))
+   colors_red = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.0, 0.2))
+   colors_all = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.0, 1.0))
 
    absolute_mag = np.linspace(-24.0, -14.0, 500)
    z_value = 0.6
@@ -543,11 +606,12 @@ dominates different magnitude ranges.
        absolute_mag,
        total_phi,
        lw=3,
-       color=total_color,
+       color=colors_all[1],
        label="Two-component total",
    )
 
    ax.set_yscale("log")
+   ax.set_ylim(1.0e-8, 1.0e-1)
    ax.invert_xaxis()
    ax.set_xlabel("Absolute magnitude $M$", fontsize=LABEL_SIZE)
    ax.set_ylabel(
@@ -564,9 +628,15 @@ dominates different magnitude ranges.
 Two-component evolution
 -----------------------
 
-The two-component conditional luminosity function can be evaluated across
-several redshifts. This example shows how the full model changes when both
+The two-component conditional luminosity function can also be evaluated at
+several redshifts. This shows how the total population changes when both
 components depend on the conditioning variable.
+
+Each curve is the sum of the lognormal and modified Schechter components at one
+redshift. Changes in the curves reflect the combined evolution of the component
+amplitudes, characteristic magnitudes, and faint-end behaviour. This plot is a
+compact way to check whether the full conditional model evolves in the expected
+direction.
 
 .. plot::
    :include-source: True
@@ -583,10 +653,14 @@ components depend on the conditioning variable.
    TITLE_SIZE = 17
    LEGEND_SIZE = 15
 
-   colors = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.72, 0.96))
-
    absolute_mag = np.linspace(-24.0, -14.0, 500)
    redshifts = [0.1, 0.6, 1.1]
+
+   colors = cmr.take_cmap_colors(
+       "cmr.guppy",
+       len(redshifts),
+       cmap_range=(0.0, 0.2),
+   )
 
    lf = ConditionalLuminosityFunction.two_component(
        lognormal_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
@@ -612,6 +686,7 @@ components depend on the conditioning variable.
        )
 
    ax.set_yscale("log")
+   ax.set_ylim(1.0e-8, 1.0e-1)
    ax.invert_xaxis()
    ax.set_xlabel("Absolute magnitude $M$", fontsize=LABEL_SIZE)
    ax.set_ylabel(
@@ -630,11 +705,22 @@ Integrated conditional number density
 -------------------------------------
 
 A conditional luminosity function can be integrated over absolute magnitude at
-each value of the conditioning variable.
+each value of the conditioning variable. The result is an integrated number
+density,
 
-Because conditional constructors return normal LFKit luminosity function
-objects, the same ``lf.integrals`` namespace can be used here. The result shows
-how the selected number density changes with redshift.
+.. math::
+
+   n(x) = \int_{M_{\rm bright}}^{M_{\rm faint}} \Phi(M \mid x)\,\mathrm{d}M.
+
+For redshift as the conditioning variable, this gives the number density of
+galaxies inside the chosen magnitude range as a function of redshift. Because
+conditional constructors return normal LFKit luminosity function objects, the
+same ``lf.integrals`` namespace can be used here.
+
+This example integrates the lognormal component, the modified Schechter
+component, and the full two-component model. The total number density is the sum
+of the two components, while the individual curves show how much each component
+contributes.
 
 .. plot::
    :include-source: True
@@ -651,9 +737,9 @@ how the selected number density changes with redshift.
    TITLE_SIZE = 17
    LEGEND_SIZE = 15
 
-   colors_blue = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.72, 0.96))
-   colors_red = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.03, 0.26))
-   total_color = 0.5 * (np.array(colors_blue[1]) + np.array(colors_red[1]))
+   colors_blue = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.8, 1.0))
+   colors_red = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.0, 0.2))
+   colors_all = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.0, 1.0))
 
    redshift = np.linspace(0.05, 1.5, 180)
 
@@ -719,11 +805,12 @@ how the selected number density changes with redshift.
        redshift,
        n_total,
        lw=3,
-       color=total_color,
+       color=colors_all[1],
        label="Two-component total",
    )
 
    ax.set_yscale("log")
+   ax.set_ylim(1.0e-4, 1.0e-1)
    ax.set_xlabel("Redshift $z$", fontsize=LABEL_SIZE)
    ax.set_ylabel(r"Integrated number density [$\mathrm{Mpc}^{-3}$]", fontsize=LABEL_SIZE)
    ax.set_title(r"Integrated conditional LF over $-24 \leq M \leq -14$", fontsize=TITLE_SIZE)
@@ -737,12 +824,19 @@ Component fractions
 -------------------
 
 The relative contribution of each component can be summarized as a fraction of
-the integrated two-component luminosity function.
+the integrated two-component luminosity function. For components
+:math:`n_1(z)` and :math:`n_2(z)`, the corresponding fractions are
+
+.. math::
+
+   f_1(z) = \frac{n_1(z)}{n_1(z) + n_2(z)}, \qquad
+   f_2(z) = \frac{n_2(z)}{n_1(z) + n_2(z)}.
 
 This example computes the integrated lognormal and modified Schechter
-components with ``lf.integrals.number_density``. This is a compact diagnostic
-for checking whether the selected population is dominated by the lognormal
-component, the modified Schechter component, or a mixture of both.
+components with ``lf.integrals.number_density``. The resulting fractions show
+whether the selected population is dominated by the narrow lognormal component,
+the broader modified Schechter component, or a mixture of both. This is often
+easier to interpret than comparing raw number densities alone.
 
 .. plot::
    :include-source: True
@@ -759,8 +853,8 @@ component, the modified Schechter component, or a mixture of both.
    TITLE_SIZE = 17
    LEGEND_SIZE = 15
 
-   colors_blue = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.72, 0.96))
-   colors_red = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.03, 0.26))
+   colors_blue = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.8, 1.0))
+   colors_red = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.0, 0.2))
 
    redshift = np.linspace(0.05, 1.5, 180)
 
@@ -826,12 +920,14 @@ Two-component LF surface
 ------------------------
 
 The full two-component conditional luminosity function can be shown as a
-surface in the magnitude-redshift plane.
+surface in the magnitude-redshift plane. This combines the component structure
+and the redshift evolution in a single diagnostic plot.
 
 The filled colour scale shows :math:`\log_{10}\Phi_{\rm total}(M \mid z)`.
 The contours mark constant abundance levels. This view is useful for checking
 whether the narrow component, broad component, and redshift dependence combine
-smoothly.
+smoothly across the full domain. It also makes it easier to identify where the
+model predicts the largest abundance of galaxies.
 
 .. plot::
    :include-source: True
@@ -861,7 +957,7 @@ smoothly.
        modified_alpha=lambda z: -1.05 - 0.10 * z,
    )
 
-   phi = lf.phi(mag_grid, z_grid)
+   phi = np.clip(lf.phi(mag_grid, z_grid), 1.0e-8, 1.0e-1)
    log_phi = np.log10(phi)
 
    fig, ax = plt.subplots(figsize=(7.2, 5.0))
@@ -881,7 +977,8 @@ smoothly.
        log_phi,
        levels=contour_levels,
        colors="white",
-       linewidths=1.2,
+       linewidths=1.5,
+       linestyles="solid",
    )
    ax.clabel(contours, inline=True, fontsize=TICK_SIZE, fmt=r"$10^{%.0f}$")
 
@@ -907,10 +1004,13 @@ Halo-mass conditional luminosity function
 
 The conditioning variable does not need to be redshift. In halo-model
 applications, a conditional luminosity function is often written as
-:math:`\Phi(M \mid M_h)`, where :math:`M_h` is halo mass.
+:math:`\Phi(M \mid M_h)`, where :math:`M_h` is halo mass. This describes the
+luminosity distribution of galaxies hosted by halos of a given mass.
 
-This example uses log halo mass as the conditioning variable and lets the
-lognormal mean magnitude become brighter in more massive halos.
+This example uses log halo mass as the conditioning variable. The lognormal
+mean magnitude becomes brighter in more massive halos, and the amplitude also
+increases with halo mass. The interpretation is that more massive halos host
+brighter and more abundant galaxies in this toy model.
 
 .. plot::
    :include-source: True
@@ -927,10 +1027,14 @@ lognormal mean magnitude become brighter in more massive halos.
    TITLE_SIZE = 17
    LEGEND_SIZE = 15
 
-   colors = cmr.take_cmap_colors("cmr.guppy", 4, cmap_range=(0.08, 0.92))
-
    absolute_mag = np.linspace(-24.0, -16.0, 600)
    log_halo_masses = [11.5, 12.0, 12.5, 13.0]
+
+   colors = cmr.take_cmap_colors(
+       "cmr.guppy",
+       len(log_halo_masses),
+       cmap_range=(0.0, 0.2),
+   )
 
    lf = ConditionalLuminosityFunction.lognormal(
        mean_absolute_mag=lambda log_mh: -20.0 - 0.8 * (log_mh - 12.0),
@@ -953,6 +1057,7 @@ lognormal mean magnitude become brighter in more massive halos.
        )
 
    ax.set_yscale("log")
+   ax.set_ylim(1.0e-8, 1.0e-1)
    ax.invert_xaxis()
    ax.set_xlabel("Absolute magnitude $M$", fontsize=LABEL_SIZE)
    ax.set_ylabel(
@@ -969,15 +1074,27 @@ lognormal mean magnitude become brighter in more massive halos.
 Mean luminosity ratio from a conditional luminosity function
 ------------------------------------------------------------
 
-Weighted integrals can be used to compute positive luminosity-weighted summary
-statistics of a conditional luminosity function. For example, the mean
-luminosity ratio relative to a reference magnitude is
+Weighted integrals can be used to compute luminosity-weighted summary
+statistics of a conditional luminosity function. Instead of only counting
+galaxies, the integral can weight each magnitude by a physically meaningful
+quantity.
 
-:math:`\langle L/L_{\rm ref} \rangle(x) =
-\int (L/L_{\rm ref}) \Phi(M \mid x)\,dM / \int \Phi(M \mid x)\,dM`.
+For example, the mean luminosity ratio relative to a reference magnitude is
+
+.. math::
+
+   \left\langle \frac{L}{L_{\rm ref}} \right\rangle(x)
+   =
+   \frac{
+   \int (L/L_{\rm ref}) \Phi(M \mid x)\,\mathrm{d}M
+   }{
+   \int \Phi(M \mid x)\,\mathrm{d}M
+   }.
 
 This example uses the ``lf.integrals`` namespace on a two-component conditional
-luminosity function.
+luminosity function. The numerator is a luminosity-weighted integral and the
+denominator is the number density. Their ratio gives the average luminosity of
+the selected population relative to the chosen reference luminosity.
 
 .. plot::
    :include-source: True
@@ -1030,7 +1147,7 @@ luminosity function.
        redshift,
        mean_luminosity_ratio,
        lw=3,
-       color=cmr.take_cmap_colors("cmr.guppy", 1, cmap_range=(0.7, 0.9))[0],
+       color=cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.0, 0.2))[1],
    )
 
    ax.set_xlabel("Redshift $z$", fontsize=LABEL_SIZE)
@@ -1046,11 +1163,13 @@ Selection-limited conditional number density
 
 The LFKit API can integrate a conditional luminosity function over finite
 magnitude bounds. This is useful for survey-like selections where only galaxies
-brighter than a limiting absolute magnitude contribute to the selected sample.
+brighter than a limiting absolute magnitude contribute to the observed sample.
 
 Here, the limiting absolute magnitude becomes brighter with redshift. The
-example compares the full number density over a fixed magnitude range with the
-number density brighter than the redshift-dependent limit.
+example compares the full number density over a fixed reference magnitude range
+with the number density brighter than the redshift-dependent limit. The gap
+between the two curves shows how much of the luminosity function is excluded by
+the selection.
 
 .. plot::
    :include-source: True
@@ -1094,7 +1213,8 @@ number density brighter than the redshift-dependent limit.
        n_m=800,
    )
 
-   colors = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.12, 0.9))
+   colors_blue = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.8, 1.0))
+   colors_red = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.0, 0.2))
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
@@ -1102,18 +1222,19 @@ number density brighter than the redshift-dependent limit.
        redshift,
        n_total,
        lw=3,
-       color=colors[0],
+       color=colors_blue[1],
        label="Full magnitude range",
    )
    ax.plot(
        redshift,
        n_selected,
        lw=3,
-       color=colors[2],
+       color=colors_red[1],
        label="Brighter than limit",
    )
 
    ax.set_yscale("log")
+   ax.set_ylim(1.0e-4, 1.0e-1)
    ax.set_xlabel("Redshift $z$", fontsize=LABEL_SIZE)
    ax.set_ylabel(
        r"Integrated number density [$\mathrm{Mpc}^{-3}$]",
@@ -1131,7 +1252,22 @@ Selection fraction
 
 The selected fraction is the ratio between the number density brighter than the
 redshift-dependent limiting magnitude and the number density over the full
-reference magnitude range.
+reference magnitude range,
+
+.. math::
+
+   f_{\rm selected}(z)
+   =
+   \frac{
+   n(M_{\rm bright} \leq M \leq M_{\rm lim}(z))
+   }{
+   n(M_{\rm bright} \leq M \leq M_{\rm faint})
+   }.
+
+This diagnostic compresses the selection effect into a number between zero and
+one. Values close to one mean that most of the reference luminosity function is
+included by the selection. Smaller values mean that the limiting magnitude
+removes a larger fraction of the population.
 
 .. plot::
    :include-source: True
@@ -1176,7 +1312,7 @@ reference magnitude range.
 
    selected_fraction = n_selected / n_total
 
-   color = cmr.take_cmap_colors("cmr.guppy", 1, cmap_range=(0.72, 0.9))[0]
+   color = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.0, 0.2))[1]
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 

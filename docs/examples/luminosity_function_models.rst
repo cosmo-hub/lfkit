@@ -6,7 +6,8 @@
 ======================================
 
 This page introduces the luminosity function models exposed by
-:class:`lfkit.LuminosityFunction`.
+:class:`lfkit.LuminosityFunction`. These models describe the abundance of
+galaxies as a function of magnitude, usually written as :math:`\Phi(M)`.
 
 The examples focus on constructing, evaluating, visualizing, and comparing
 luminosity function models. Magnitude integrals, completeness calculations,
@@ -31,8 +32,10 @@ exposed by LFKit. It includes the standard Schechter model, double-Schechter
 variants, and redshift-evolving Schechter models.
 
 These models are useful for describing galaxy luminosity functions with a
-power-law faint end and an exponential bright-end cutoff. The examples below
-show how to construct, evaluate, compare, and inspect Schechter-family models.
+power-law faint end and an exponential bright-end cutoff. The faint end controls
+the abundance of low-luminosity galaxies, while the bright-end cutoff suppresses
+very luminous galaxies. The examples below show how to construct, evaluate,
+compare, and inspect Schechter-family models.
 
 
 Standard Schechter luminosity function
@@ -41,6 +44,10 @@ Standard Schechter luminosity function
 A Schechter luminosity function can be created with
 :meth:`lfkit.LuminosityFunction.schechter`. The returned object evaluates
 :math:`\Phi(M)` through :meth:`lfkit.LuminosityFunction.phi`.
+
+This example shows the basic shape of the model in absolute magnitude. The
+curve rises toward fainter magnitudes because of the power-law faint end, while
+the abundance drops rapidly at the bright end because of the exponential cutoff.
 
 .. plot::
    :include-source: True
@@ -70,7 +77,7 @@ A Schechter luminosity function can be created with
        absolute_mag,
        phi,
        lw=3,
-       color=cmr.take_cmap_colors("cmr.guppy", 1, cmap_range=(0.72, 0.9))[0],
+       color=cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0., 0.2))[1],
    )
 
    ax.set_yscale("log")
@@ -93,7 +100,9 @@ secondary *x*-axis can show the corresponding apparent magnitude at a fixed
 luminosity distance using the LFKit magnitude converters.
 
 This keeps the model-native absolute magnitude axis while also showing where
-the same magnitude range would appear observationally.
+the same magnitude range would appear observationally. The apparent magnitude
+axis is only a reference conversion for the chosen luminosity distance; changing
+that distance would shift the upper axis.
 
 .. plot::
    :include-source: True
@@ -117,18 +126,6 @@ the same magnitude range would appear observationally.
 
    luminosity_distance_mpc = 3500.0
 
-   def absolute_to_apparent(absolute_mag):
-       return lf.magnitudes.apparent_from_luminosity_distance(
-           absolute_mag,
-           luminosity_distance_mpc,
-       )
-
-   def apparent_to_absolute(apparent_mag):
-       return lf.magnitudes.absolute_from_luminosity_distance(
-           apparent_mag,
-           luminosity_distance_mpc,
-       )
-
    absolute_mag = np.linspace(-24.0, -14.0, 500)
    phi = lf.phi(absolute_mag)
 
@@ -137,12 +134,21 @@ the same magnitude range would appear observationally.
        absolute_mag,
        phi,
        lw=3,
-       color=cmr.take_cmap_colors("cmr.guppy", 1, cmap_range=(0.72, 0.9))[0],
+       color=cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.0, 0.2))[1],
    )
 
    secax = ax.secondary_xaxis(
        "top",
-       functions=(absolute_to_apparent, apparent_to_absolute),
+       functions=(
+           lambda absolute_mag: lf.magnitudes.apparent_from_luminosity_distance(
+               absolute_mag,
+               luminosity_distance_mpc,
+           ),
+           lambda apparent_mag: lf.magnitudes.absolute_from_luminosity_distance(
+               apparent_mag,
+               luminosity_distance_mpc,
+           ),
+       ),
    )
 
    ax.set_yscale("log")
@@ -170,16 +176,14 @@ Comparing Schechter slopes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Changing :math:`\alpha` modifies the faint-end behaviour of the luminosity
-function.
+function. More negative values of :math:`\alpha` produce a steeper rise toward
+faint magnitudes, while less negative values give a shallower faint-end
+population.
 
-This comparison shows how the faint-end slope changes the abundance of faint
-galaxies while keeping the other Schechter parameters fixed. More negative
-values of :math:`\alpha` produce a steeper rise toward faint magnitudes.
-
-This is useful because the faint-end slope often controls how strongly low
-luminosity galaxies contribute to integrated quantities, such as number density
-or luminosity density. Even if the bright end is almost unchanged, the total
-abundance can change noticeably when the faint end is modified.
+This comparison keeps the other Schechter parameters fixed so that the effect
+of :math:`\alpha` is isolated. This is useful because the faint-end slope often
+controls how strongly low-luminosity galaxies contribute to integrated
+quantities such as number density or luminosity density.
 
 .. plot::
    :include-source: True
@@ -196,10 +200,14 @@ abundance can change noticeably when the faint end is modified.
    TITLE_SIZE = 17
    LEGEND_SIZE = 15
 
-   colors = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.03, 0.26))
-
    absolute_mag = np.linspace(-24.0, -14.0, 500)
-   alphas = [-0.8, -1.1, -1.4]
+   alphas = [-0.5, -0.75, -1.0, -1.25, -1.5]
+
+   colors = cmr.take_cmap_colors(
+           "cmr.guppy",
+           len(alphas),
+           cmap_range=(0.0, 0.2)
+       )
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
@@ -237,6 +245,10 @@ The API also exposes a double-Schechter constructor. This is useful for models
 that need extra flexibility at the faint end while retaining a Schechter-like
 bright-end cutoff.
 
+The double-Schechter form adds a second faint-end component. This can represent
+a luminosity function whose faint population cannot be captured well by one
+single Schechter slope.
+
 .. plot::
    :include-source: True
    :width: 520
@@ -267,7 +279,7 @@ bright-end cutoff.
    )
 
    absolute_mag = np.linspace(-24.0, -14.0, 500)
-   colors = cmr.take_cmap_colors("cmr.guppy", 2, cmap_range=(0.15, 0.85))
+   colors = cmr.take_cmap_colors("cmr.guppy", 2, cmap_range=(0.0, 0.2))
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
    ax.plot(
@@ -305,6 +317,11 @@ An evolving Schechter luminosity function lets the Schechter parameters depend
 on redshift through LFKit's registered parameter models. This is useful when the
 same LF object should evaluate :math:`\Phi(M, z)` at many redshifts.
 
+The curves below show how the predicted luminosity function changes when the
+normalization, characteristic magnitude, or slope evolve with redshift. This is
+the model form used when the galaxy population is not assumed to be fixed across
+cosmic time.
+
 .. plot::
    :include-source: True
    :width: 520
@@ -331,7 +348,11 @@ same LF object should evaluate :math:`\Phi(M, z)` at many redshifts.
 
    absolute_mag = np.linspace(-24.0, -14.0, 500)
    redshifts = [0.1, 0.6, 1.1]
-   colors = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.03, 0.26))
+   colors = cmr.take_cmap_colors(
+           "cmr.guppy",
+           len(redshifts),
+           cmap_range=(0.0, 0.2)
+       )
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
@@ -362,13 +383,14 @@ Evolving Schechter luminosity function with apparent magnitude axis
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The evolving Schechter model is evaluated as :math:`\Phi(M, z)`. A secondary
-x-axis can show the apparent magnitude corresponding to the absolute magnitude
+*x*-axis can show the apparent magnitude corresponding to the absolute magnitude
 range at a chosen reference luminosity distance.
 
 Here, the curves are evaluated at several redshifts, while the upper apparent
 magnitude axis is defined for the reference redshift :math:`z=0.6`. This keeps
 the bottom axis model-native and avoids mixing several different
-distance-redshift mappings into one top axis.
+distance-redshift mappings into one top axis. The top axis should therefore be
+read as a reference guide, not as a separate conversion for every curve.
 
 .. plot::
    :include-source: True
@@ -405,19 +427,11 @@ distance-redshift mappings into one top axis.
    }
    reference_luminosity_distance_mpc = luminosity_distance_mpc[reference_redshift]
 
-   def absolute_to_apparent(absolute_mag):
-       return lf.magnitudes.apparent_from_luminosity_distance(
-           absolute_mag,
-           reference_luminosity_distance_mpc,
+   colors = cmr.take_cmap_colors(
+           "cmr.guppy",
+           len(redshifts),
+           cmap_range=(0.0, 0.2)
        )
-
-   def apparent_to_absolute(apparent_mag):
-       return lf.magnitudes.absolute_from_luminosity_distance(
-           apparent_mag,
-           reference_luminosity_distance_mpc,
-       )
-
-   colors = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.03, 0.26))
 
    fig, ax = plt.subplots(figsize=(7.2, 5.0))
 
@@ -433,7 +447,16 @@ distance-redshift mappings into one top axis.
 
    secax = ax.secondary_xaxis(
        "top",
-       functions=(absolute_to_apparent, apparent_to_absolute),
+       functions=(
+           lambda absolute_mag: lf.magnitudes.apparent_from_luminosity_distance(
+               absolute_mag,
+               reference_luminosity_distance_mpc,
+           ),
+           lambda apparent_mag: lf.magnitudes.absolute_from_luminosity_distance(
+               apparent_mag,
+               reference_luminosity_distance_mpc,
+           ),
+       ),
    )
 
    ax.set_yscale("log")
@@ -465,12 +488,18 @@ Inspecting evolving parameters
 
 For evolving models, :meth:`lfkit.LuminosityFunction.parameters` evaluates the
 registered parameter models at the requested redshift. This is useful for
-checking the physical behaviour before using the LF in number-density or
-selection calculations.
+checking the model behaviour before using the LF in number-density or selection
+calculations.
+
+Here all three Schechter parameters evolve with redshift, including the
+faint-end slope :math:`\alpha(z)`. This diagnostic separates the ingredients of
+the luminosity function: :math:`\phi_*` controls the normalization,
+:math:`M_*` sets the characteristic magnitude, and :math:`\alpha` controls the
+faint-end slope.
 
 .. plot::
    :include-source: True
-   :width: 520
+   :width: 560
 
    import numpy as np
    import matplotlib.pyplot as plt
@@ -481,49 +510,57 @@ selection calculations.
    LABEL_SIZE = 15
    TICK_SIZE = 13
    TITLE_SIZE = 17
-   LEGEND_SIZE = 15
 
    lf = LuminosityFunction.evolving_schechter(
        phi_model="linear_p",
        phi_kwargs={"phi_0_star": 1.0e-3, "p": 0.7},
        m_star_model="linear_q",
        m_star_kwargs={"m_0_star": -20.5, "q": 0.8, "z_ref": 0.1},
-       alpha_model="constant",
-       alpha_kwargs={"alpha": -1.1},
+       alpha_model="linear",
+       alpha_kwargs={"alpha_0": -1.0, "alpha_1": -0.25, "z_ref": 0.1},
    )
 
    redshift = np.linspace(0.0, 1.5, 200)
    phi_star, m_star, alpha = lf.parameters(redshift)
-   colors = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.1, 0.9))
+   colors = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.0, 0.2))
 
-   fig, ax = plt.subplots(figsize=(7.0, 5.0))
-   ax.plot(
+   fig, axes = plt.subplots(
+       nrows=3,
+       ncols=1,
+       figsize=(7.0, 8.0),
+       sharex=True,
+   )
+
+   axes[0].plot(
        redshift,
        phi_star / 1.0e-3,
        lw=3,
        color=colors[0],
-       label=r"$\phi_*/10^{-3}$",
    )
-   ax.plot(
+   axes[0].set_ylabel(r"$\phi_*/10^{-3}$", fontsize=LABEL_SIZE)
+
+   axes[1].plot(
        redshift,
        m_star,
        lw=3,
        color=colors[1],
-       label=r"$M_*$",
    )
-   ax.plot(
+   axes[1].set_ylabel(r"$M_*$", fontsize=LABEL_SIZE)
+
+   axes[2].plot(
        redshift,
        alpha,
        lw=3,
        color=colors[2],
-       label=r"$\alpha$",
    )
+   axes[2].set_ylabel(r"$\alpha(z)$", fontsize=LABEL_SIZE)
+   axes[2].set_xlabel("Redshift $z$", fontsize=LABEL_SIZE)
 
-   ax.set_xlabel("Redshift $z$", fontsize=LABEL_SIZE)
-   ax.set_ylabel("Parameter value", fontsize=LABEL_SIZE)
-   ax.set_title("Evolving Schechter parameters", fontsize=TITLE_SIZE)
-   ax.tick_params(axis="both", labelsize=TICK_SIZE)
-   ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="best")
+   axes[0].set_title("Evolving Schechter parameters", fontsize=TITLE_SIZE)
+
+   for axis in axes:
+       axis.tick_params(axis="both", labelsize=TICK_SIZE)
+
    plt.tight_layout()
 
 
@@ -534,12 +571,18 @@ The same evolving model can be shown over the full magnitude-redshift plane.
 The filled colour scale shows :math:`\log_{10}\Phi(M, z)`, while contours mark
 constant abundance levels.
 
+This view is useful for seeing the joint magnitude and redshift dependence in
+one panel. Horizontal changes show how the luminosity function varies with
+magnitude, while vertical changes show how the evolving parameters modify the
+model with redshift.
+
 .. plot::
    :include-source: True
    :width: 560
 
    import numpy as np
    import matplotlib.pyplot as plt
+   import cmasher as cmr
 
    from lfkit import LuminosityFunction
 
@@ -564,12 +607,13 @@ constant abundance levels.
    log_phi = np.log10(phi)
 
    fig, ax = plt.subplots(figsize=(7.2, 5.0))
+
    mesh = ax.pcolormesh(
        absolute_mag,
        redshift,
        log_phi,
        shading="auto",
-       cmap="cmr.guppy",
+       cmap=cmr.get_sub_cmap('cmr.guppy_r', 0.0, 1)
    )
 
    contour_levels = [-5.0, -4.0, -3.0, -2.0]

@@ -64,7 +64,11 @@ than an intrinsic absolute magnitude.
 
    apparent_mag = np.linspace(18.0, 26.0, 500)
    redshifts = [0.3, 0.6, 1.0]
-   colors = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.08, 0.9))
+   colors = cmr.take_cmap_colors(
+           "cmr.guppy",
+           len(redshifts),
+           cmap_range=(0.0, 0.2),
+       )
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
@@ -131,21 +135,22 @@ distance array from another cosmology backend.
        luminosity_distance_mpc,
    )
 
-   colors = cmr.take_cmap_colors("cmr.guppy", 2, cmap_range=(0.2, 0.9))
+   red = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.0, 0.2))[1]
+   blue = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.8, 1.0))[1]
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
    ax.plot(
        luminosity_distance_mpc,
        absolute_mag,
        lw=3,
-       color=colors[0],
+       color=red,
        label=r"$M(m=24, d_L)$",
    )
    ax.plot(
        luminosity_distance_mpc,
        apparent_mag,
        lw=3,
-       color=colors[1],
+       color=blue,
        label=r"$m(M=-20.5, d_L)$",
    )
 
@@ -199,7 +204,7 @@ increases toward more negative absolute magnitudes.
        absolute_mag,
        luminosity_ratio,
        lw=3,
-       color=cmr.take_cmap_colors("cmr.guppy", 1, cmap_range=(0.72, 0.9))[0],
+       color=cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.0, 0.2))[1],
    )
 
    ax.set_yscale("log")

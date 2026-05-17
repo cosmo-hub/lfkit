@@ -5,25 +5,25 @@
 |lfkitlogo| LFKit
 =================
 
-**LFKit** is a toolkit for modelling galaxy luminosity functions,
-photometric corrections, and magnitude-limited catalog completeness.
+**LFKit** is a Python toolkit for modelling galaxy luminosity functions,
+photometric corrections, magnitude conversions, and magnitude-limited catalog
+selection.
 
-It provides a clean interface for building theoretical luminosity functions,
-including redshift-dependent parameter models, and for connecting apparent
-magnitude limits to observable and missing galaxy number densities.
-
-LFKit is designed to be science-use-case agnostic: the same luminosity function
-machinery can be used in photometric-redshift modelling, intrinsic-alignment
-modelling, cluster science, GW-cosmology catalog completeness, or any other
-analysis that needs luminosity function-based number densities.
+It provides a modular interface for turning luminosity function models into
+number densities, completeness fractions, LF-weighted redshift trends, and
+observable or missing catalog populations. The same machinery can be used in
+photometric redshift modelling, intrinsic alignment modelling, cluster science,
+GW-cosmology catalog completeness, survey forecasting, or any analysis that
+connects galaxy luminosities, magnitudes, redshift evolution, and observed
+catalog limits.
 
 Getting started
 ---------------
 
-Use the examples section for runnable workflows with plots, or the API
-reference for detailed documentation of the public classes and functions.
+Start with the theory overview for the main conventions and definitions, or use
+the examples section for executable workflows with plots.
 
-.. grid:: 3
+.. grid:: 2
    :gutter: 2
 
    .. grid-item-card::
@@ -31,9 +31,10 @@ reference for detailed documentation of the public classes and functions.
       :link-type: doc
       :shadow: md
 
-      **About**
+      **Theory and overview**
       ^^^
-      Overview of the package, scope, and design choices.
+      Core concepts, conventions, and package scope, including luminosity
+      functions, photometry, corrections, and catalog selection.
 
    .. grid-item-card::
       :link: examples/index
@@ -42,23 +43,19 @@ reference for detailed documentation of the public classes and functions.
 
       **Examples**
       ^^^
-      Runnable examples for luminosity functions, corrections, and catalog
-      completeness.
+      Runnable examples for luminosity function models, magnitude conversions,
+      integrals, corrections, redshift trends, and catalog completeness.
 
-   .. grid-item-card::
-      :link: api/index
-      :link-type: doc
-      :shadow: md
-
-      **API reference**
-      ^^^
-      Public classes, functions, and modules.
+Documentation
+-------------
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Documentation
-   :hidden:
+   :maxdepth: 1
 
+   installation
    about/index
    examples/index
    api/index
+   citation
+   contributing
+   license
