@@ -9,7 +9,7 @@
         <link rel="prefetch" href="../_static/logos/lfkit_logo-icon.png" as="image">
 
     <link rel="shortcut icon" href="../_static/lfkit_logo-icon.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
-        <title>Luminosity-function magnitude integrals - LFKit Documentation</title>
+        <title>Luminosity function magnitude integrals - LFKit Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
@@ -216,17 +216,16 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
-<ul class="current">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html"> Installation</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../about/index.html"> About LFKit</a><input aria-label="Toggle navigation of  About LFKit" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../about/corr_overview.html"> Photometric Corrections</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../about/lf_overview.html"> Luminosity Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/corrections_overview.html"> Photometric Corrections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/photometry_overview.html"> Photometry Overview</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html"> Examples</a><input aria-label="Toggle navigation of  Examples" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="api_overview.html"> API overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="luminosity_function_models.html"> Luminosity function models</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#"> Luminosity-function magnitude integrals</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#"> Luminosity function magnitude integrals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="magnitudes_and_luminosities.html"> Magnitudes and luminosities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="redshift_density.html"> LF-weighted redshift density</a></li>
 <li class="toctree-l2"><a class="reference internal" href="catalog_completeness.html"> Catalog completeness</a></li>
@@ -285,6 +284,9 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../citation.html"> Citation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html"> Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html"> License</a></li>
 </ul>
 
 </div>
@@ -324,7 +326,7 @@
         </div>
         <article role="main" id="furo-main-content">
           <section id="lfkitlogo-luminosity-function-magnitude-integrals">
-<h1><a class="reference internal" href="../_images/lfkit_logo-icon.png"><img alt="LFKit logo" src="../_images/lfkit_logo-icon.png" style="width: 50px;" /></a> Luminosity-function magnitude integrals<a class="headerlink" href="#lfkitlogo-luminosity-function-magnitude-integrals" title="Link to this heading"><span>#</span></a></h1>
+<h1><a class="reference internal" href="../_images/lfkit_logo-icon.png"><img alt="LFKit logo" src="../_images/lfkit_logo-icon.png" style="width: 50px;" /></a> Luminosity function magnitude integrals<a class="headerlink" href="#lfkitlogo-luminosity-function-magnitude-integrals" title="Link to this heading"><span>#</span></a></h1>
 <p>This page shows how to integrate a bound
 <a class="reference internal" href="../api/lfkit.html#lfkit.LuminosityFunction" title="lfkit.LuminosityFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.LuminosityFunction</span></code></a> over absolute magnitude.</p>
 <p>The examples use the <code class="docutils literal notranslate"><span class="pre">lf.integrals</span></code> namespace. These methods insert the
@@ -340,13 +342,17 @@ densities have units of <span class="math notranslate nohighlight">\({\rm Mpc}^{
 <section id="integrated-number-density">
 <h2>Integrated number density<a class="headerlink" href="#integrated-number-density" title="Link to this heading"><span>#</span></a></h2>
 <p>The integrated number density is the luminosity function integrated over a
-finite absolute-magnitude range.</p>
+finite absolute magnitude range. It gives the abundance of galaxies retained by
+a chosen magnitude selection.</p>
 <p>This example compares a bright sample to a broader sample that also includes
 fainter galaxies. The broader magnitude range gives a larger number density
-because more galaxies are included in the integral.</p>
+because more of the faint end of the luminosity function is included. In
+practice, these magnitude limits can be changed to match a survey cut, a
+science sample definition, or a test range used for model comparisons.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.ticker</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogLocator</span><span class="p">,</span> <span class="n">LogFormatterMathtext</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">LuminosityFunction</span>
 
@@ -380,25 +386,32 @@ because more galaxies are included in the integral.</p>
     <span class="n">n_m</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">colors</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">))</span>
+<span class="n">red</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">blue</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
     <span class="n">redshift</span><span class="p">,</span>
     <span class="n">n_bright</span><span class="p">,</span>
     <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">red</span><span class="p">,</span>
     <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$-24 \leq M \leq -20$&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
     <span class="n">redshift</span><span class="p">,</span>
     <span class="n">n_total</span><span class="p">,</span>
     <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">blue</span><span class="p">,</span>
     <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$-24 \leq M \leq -16$&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">LogLocator</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">numticks</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">LogFormatterMathtext</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="mf">10.0</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_minor_locator</span><span class="p">(</span>
+    <span class="n">LogLocator</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">subs</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">numticks</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="p">)</span>
+
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Redshift $z$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Number density [$\mathrm</span><span class="si">{Mpc}</span><span class="s2">^{-3}$]&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Integrated LF number density&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">TITLE_SIZE</span><span class="p">)</span>
@@ -407,7 +420,7 @@ because more galaxies are included in the integral.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/ccb7f6f5f707426c90ccc984f4a841bd/magnitude_integrals-1.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/314390c39c0192ec34fd893e9d342c1b/magnitude_integrals-1.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/magnitude_integrals-1.png"><img alt="../_images/magnitude_integrals-1.png" class="plot-directive" src="../_images/magnitude_integrals-1.png" style="width: 520px;" />
 </a>
@@ -416,10 +429,12 @@ because more galaxies are included in the integral.</p>
 <section id="cumulative-number-density">
 <h2>Cumulative number density<a class="headerlink" href="#cumulative-number-density" title="Link to this heading"><span>#</span></a></h2>
 <p>The number density can also be viewed as a cumulative function of the faint
-absolute-magnitude limit.</p>
+absolute magnitude limit. Here the bright limit is held fixed, while the faint
+limit is moved across the luminosity function.</p>
 <p>This diagnostic is useful for checking how much faint galaxies contribute to
 the total abundance. As the faint limit moves to less negative magnitudes, more
-of the luminosity function is included.</p>
+galaxies are included and the cumulative number density increases. The shape of
+this curve shows where most of the abundance is coming from in magnitude space.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
@@ -450,13 +465,13 @@ of the luminosity function is included.</p>
     <span class="n">magnitude_limits</span><span class="p">,</span>
     <span class="n">number_density</span><span class="p">,</span>
     <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.72</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">))[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))[</span><span class="mi">1</span><span class="p">],</span>
 <span class="p">)</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">invert_xaxis</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span>
-    <span class="sa">r</span><span class="s2">&quot;Faint absolute-magnitude limit $M_{\rm faint}$&quot;</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;Faint absolute magnitude limit $M_{\rm faint}$&quot;</span><span class="p">,</span>
     <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span>
@@ -468,7 +483,7 @@ of the luminosity function is included.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/ee004f1122fced59e7438dfb900662f5/magnitude_integrals-2.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/f8eff9f2ee05fe5e79237877edb15b1c/magnitude_integrals-2.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/magnitude_integrals-2.png"><img alt="../_images/magnitude_integrals-2.png" class="plot-directive" src="../_images/magnitude_integrals-2.png" style="width: 520px;" />
 </a>
@@ -477,9 +492,13 @@ of the luminosity function is included.</p>
 <section id="luminosity-density-and-mean-luminosity">
 <h2>Luminosity density and mean luminosity<a class="headerlink" href="#luminosity-density-and-mean-luminosity" title="Link to this heading"><span>#</span></a></h2>
 <p>The same namespace can compute luminosity-weighted summaries such as luminosity
-density and mean luminosity over a selected magnitude range.</p>
+density and mean luminosity over a selected magnitude range. These quantities
+weight the luminosity function by luminosity before integrating, so they are
+more sensitive to the bright end than the number density alone.</p>
 <p>The curves below are normalized by their first redshift value to emphasize the
-relative redshift trend rather than the absolute normalization.</p>
+relative redshift trend rather than the absolute normalization. This makes it
+easier to compare how the luminosity density and mean luminosity evolve across
+redshift for the same underlying luminosity function model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
@@ -516,21 +535,22 @@ relative redshift trend rather than the absolute normalization.</p>
     <span class="n">n_m</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">colors</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">))</span>
+<span class="n">red</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">blue</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
     <span class="n">redshift</span><span class="p">,</span>
     <span class="n">luminosity_density</span> <span class="o">/</span> <span class="n">luminosity_density</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
     <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">red</span><span class="p">,</span>
     <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Luminosity density&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
     <span class="n">redshift</span><span class="p">,</span>
     <span class="n">mean_luminosity</span> <span class="o">/</span> <span class="n">mean_luminosity</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
     <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">blue</span><span class="p">,</span>
     <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Mean luminosity&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 
@@ -542,7 +562,7 @@ relative redshift trend rather than the absolute normalization.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/f904c2587aa35492fad1c59befabfb89/magnitude_integrals-3.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/0522cee49c2063e4da7d6c1f49a53594/magnitude_integrals-3.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/magnitude_integrals-3.png"><img alt="../_images/magnitude_integrals-3.png" class="plot-directive" src="../_images/magnitude_integrals-3.png" style="width: 520px;" />
 </a>
@@ -551,13 +571,18 @@ relative redshift trend rather than the absolute normalization.</p>
 <section id="selection-weighted-number-density">
 <h2>Selection-weighted number density<a class="headerlink" href="#selection-weighted-number-density" title="Link to this heading"><span>#</span></a></h2>
 <p>Selection weights can be applied directly through the integrals API. This is
-useful when a sample is not selected by a hard magnitude cut alone.</p>
-<p>This example uses a smooth selection function in absolute magnitude. The
-selected number density is lower than the total number density because the
-selection downweights part of the magnitude range.</p>
+useful when a sample is not selected by a hard magnitude cut alone, but instead
+has a gradual completeness, targeting, or selection probability.</p>
+<p>This example uses a smooth user-defined selection function in absolute
+magnitude. The function used here is only one possible choice: users can replace
+it with any callable that returns a selection weight for absolute magnitude and
+redshift. The selected number density is lower than the total number density
+because the selection downweights part of the magnitude range instead of
+retaining every galaxy equally.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.ticker</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogLocator</span><span class="p">,</span> <span class="n">LogFormatterMathtext</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">LuminosityFunction</span>
 
@@ -597,19 +622,26 @@ selection downweights part of the magnitude range.</p>
     <span class="n">n_m</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">colors</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">))</span>
+<span class="n">red</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">blue</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">))</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">redshift</span><span class="p">,</span> <span class="n">n_total</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Total&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">redshift</span><span class="p">,</span> <span class="n">n_total</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">red</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Total&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
     <span class="n">redshift</span><span class="p">,</span>
     <span class="n">n_selected</span><span class="p">,</span>
     <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">blue</span><span class="p">,</span>
     <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Selection weighted&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">LogLocator</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">numticks</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">LogFormatterMathtext</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="mf">10.0</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_minor_locator</span><span class="p">(</span>
+    <span class="n">LogLocator</span><span class="p">(</span><span class="n">base</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">subs</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">numticks</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="p">)</span>
+
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Redshift $z$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Number density [$\mathrm</span><span class="si">{Mpc}</span><span class="s2">^{-3}$]&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Selection-weighted LF number density&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">TITLE_SIZE</span><span class="p">)</span>
@@ -618,7 +650,7 @@ selection downweights part of the magnitude range.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/9004ab89d00d33d36f07a110c811d9e8/magnitude_integrals-4.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/89ef04c59feae93fbbad8fec2c13e5e2/magnitude_integrals-4.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/magnitude_integrals-4.png"><img alt="../_images/magnitude_integrals-4.png" class="plot-directive" src="../_images/magnitude_integrals-4.png" style="width: 520px;" />
 </a>
@@ -627,9 +659,26 @@ selection downweights part of the magnitude range.</p>
 <section id="selection-fraction">
 <h2>Selection fraction<a class="headerlink" href="#selection-fraction" title="Link to this heading"><span>#</span></a></h2>
 <p>The selected fraction is the ratio between the selection-weighted number density
-and the total number density over the same reference magnitude range.</p>
-<p>This diagnostic is useful for checking how strongly a soft selection function
-changes the effective sample abundance as a function of redshift.</p>
+and the total number density over the same reference magnitude range. It is a
+dimensionless diagnostic of how much of the available luminosity function remains
+after applying a selection function.</p>
+<p>This diagnostic is useful for checking how strongly a soft selection changes the
+effective sample abundance as a function of redshift. A value close to one means
+that most of the luminosity function within the reference magnitude range is
+retained, while a value close to zero means that the selection removes most of
+the available population.</p>
+<p>The surface below repeats the calculation for several values of the selection
+threshold. For each threshold, the code defines a smooth user-controlled
+selection function and computes the retained fraction relative to the same total
+number density. Brighter thresholds retain a smaller fraction of the luminosity
+function, while fainter thresholds retain more of the reference magnitude range.
+The contours mark constant retained fractions.</p>
+<p>In this example the effective limiting magnitude becomes brighter with
+redshift, so the retained fraction generally decreases toward larger redshift at
+fixed threshold. Moving to fainter threshold values increases the retained
+fraction because more of the faint end of the luminosity function passes the
+selection. Users can replace the threshold model, redshift dependence, or width
+of the soft transition to represent a different survey selection.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
@@ -650,11 +699,7 @@ changes the effective sample abundance as a function of redshift.</p>
 <span class="p">)</span>
 
 <span class="n">redshift</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">soft_selection</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
-    <span class="n">limiting_mag</span> <span class="o">=</span> <span class="o">-</span><span class="mf">18.5</span> <span class="o">-</span> <span class="mf">1.2</span> <span class="o">*</span> <span class="n">z</span>
-    <span class="n">width</span> <span class="o">=</span> <span class="mf">0.35</span>
-    <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">((</span><span class="n">absolute_mag</span> <span class="o">-</span> <span class="n">limiting_mag</span><span class="p">)</span> <span class="o">/</span> <span class="n">width</span><span class="p">))</span>
+<span class="n">selection_thresholds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">22.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">15.5</span><span class="p">,</span> <span class="mi">160</span><span class="p">)</span>
 
 <span class="n">n_total</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">integrals</span><span class="o">.</span><span class="n">number_density</span><span class="p">(</span>
     <span class="n">redshift</span><span class="p">,</span>
@@ -663,35 +708,78 @@ changes the effective sample abundance as a function of redshift.</p>
     <span class="n">n_m</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">n_selected</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">integrals</span><span class="o">.</span><span class="n">selection_weighted_number_density</span><span class="p">(</span>
-    <span class="n">redshift</span><span class="p">,</span>
-    <span class="n">selection_fn</span><span class="o">=</span><span class="n">soft_selection</span><span class="p">,</span>
-    <span class="n">m_bright</span><span class="o">=-</span><span class="mf">24.0</span><span class="p">,</span>
-    <span class="n">m_faint</span><span class="o">=-</span><span class="mf">14.0</span><span class="p">,</span>
-    <span class="n">n_m</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="n">selected_fraction</span> <span class="o">=</span> <span class="p">[]</span>
 
-<span class="n">selected_fraction</span> <span class="o">=</span> <span class="n">n_selected</span> <span class="o">/</span> <span class="n">n_total</span>
+<span class="k">for</span> <span class="n">threshold</span> <span class="ow">in</span> <span class="n">selection_thresholds</span><span class="p">:</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">))</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">soft_selection</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span><span class="p">):</span>
+        <span class="n">limiting_mag</span> <span class="o">=</span> <span class="n">threshold</span> <span class="o">-</span> <span class="mf">1.2</span> <span class="o">*</span> <span class="n">z</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="mf">0.35</span>
+        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">((</span><span class="n">absolute_mag</span> <span class="o">-</span> <span class="n">limiting_mag</span><span class="p">)</span> <span class="o">/</span> <span class="n">width</span><span class="p">))</span>
+
+    <span class="n">n_selected</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">integrals</span><span class="o">.</span><span class="n">selection_weighted_number_density</span><span class="p">(</span>
+        <span class="n">redshift</span><span class="p">,</span>
+        <span class="n">selection_fn</span><span class="o">=</span><span class="n">soft_selection</span><span class="p">,</span>
+        <span class="n">m_bright</span><span class="o">=-</span><span class="mf">24.0</span><span class="p">,</span>
+        <span class="n">m_faint</span><span class="o">=-</span><span class="mf">14.0</span><span class="p">,</span>
+        <span class="n">n_m</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">selected_fraction</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n_selected</span> <span class="o">/</span> <span class="n">n_total</span><span class="p">)</span>
+
+<span class="n">selected_fraction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">selected_fraction</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.2</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">))</span>
+
+<span class="n">mesh</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span>
     <span class="n">redshift</span><span class="p">,</span>
+    <span class="n">selection_thresholds</span><span class="p">,</span>
     <span class="n">selected_fraction</span><span class="p">,</span>
-    <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.72</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">))[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">shading</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="n">cmr</span><span class="o">.</span><span class="n">get_sub_cmap</span><span class="p">(</span><span class="s2">&quot;cmr.guppy_r&quot;</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+    <span class="n">vmin</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">vmax</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">)</span>
+<span class="n">contour_levels</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">]</span>
+
+<span class="n">contours</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span>
+    <span class="n">redshift</span><span class="p">,</span>
+    <span class="n">selection_thresholds</span><span class="p">,</span>
+    <span class="n">selected_fraction</span><span class="p">,</span>
+    <span class="n">levels</span><span class="o">=</span><span class="n">contour_levels</span><span class="p">,</span>
+    <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
+    <span class="n">linewidths</span><span class="o">=</span><span class="mf">1.1</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span>
+    <span class="n">contours</span><span class="p">,</span>
+    <span class="n">inline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">fontsize</span><span class="o">=</span><span class="n">TICK_SIZE</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%.2f</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Redshift $z$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Selected fraction&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Fraction retained by the soft selection&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">TITLE_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Selection threshold $M_0$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+    <span class="s2">&quot;Fraction retained by the soft selection&quot;</span><span class="p">,</span>
+    <span class="n">fontsize</span><span class="o">=</span><span class="n">TITLE_SIZE</span><span class="p">,</span>
+    <span class="n">pad</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="n">TICK_SIZE</span><span class="p">)</span>
+
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;Selected fraction&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="n">TICK_SIZE</span><span class="p">)</span>
+
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/0473cb5ae74bced47af13f7d4d07a908/magnitude_integrals-5.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/3d5a479dbc26cd7d0a33214f173a437f/magnitude_integrals-5.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
-<a class="plot-directive reference internal image-reference" href="../_images/magnitude_integrals-5.png"><img alt="../_images/magnitude_integrals-5.png" class="plot-directive" src="../_images/magnitude_integrals-5.png" style="width: 520px;" />
+<a class="plot-directive reference internal image-reference" href="../_images/magnitude_integrals-5.png"><img alt="../_images/magnitude_integrals-5.png" class="plot-directive" src="../_images/magnitude_integrals-5.png" style="width: 560px;" />
 </a>
 </figure>
 </section>
@@ -752,7 +840,7 @@ changes the effective sample abundance as a function of redshift.</p>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#"> Luminosity-function magnitude integrals</a><ul>
+<li><a class="reference internal" href="#"> Luminosity function magnitude integrals</a><ul>
 <li><a class="reference internal" href="#integrated-number-density">Integrated number density</a></li>
 <li><a class="reference internal" href="#cumulative-number-density">Cumulative number density</a></li>
 <li><a class="reference internal" href="#luminosity-density-and-mean-luminosity">Luminosity density and mean luminosity</a></li>

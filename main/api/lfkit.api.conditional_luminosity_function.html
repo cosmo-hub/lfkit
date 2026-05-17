@@ -216,17 +216,16 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
-<ul class="current">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html"> Installation</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../about/index.html"> About LFKit</a><input aria-label="Toggle navigation of  About LFKit" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../about/corr_overview.html"> Photometric Corrections</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../about/lf_overview.html"> Luminosity Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/corrections_overview.html"> Photometric Corrections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/photometry_overview.html"> Photometry Overview</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../examples/index.html"> Examples</a><input aria-label="Toggle navigation of  Examples" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../examples/api_overview.html"> API overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/luminosity_function_models.html"> Luminosity function models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples/magnitude_integrals.html"> Luminosity-function magnitude integrals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/magnitude_integrals.html"> Luminosity function magnitude integrals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/magnitudes_and_luminosities.html"> Magnitudes and luminosities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/redshift_density.html"> LF-weighted redshift density</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/catalog_completeness.html"> Catalog completeness</a></li>
@@ -285,6 +284,9 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../citation.html"> Citation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html"> Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html"> License</a></li>
 </ul>
 
 </div>
@@ -325,12 +327,12 @@
         <article role="main" id="furo-main-content">
           <section id="module-lfkit.api.conditional_luminosity_function">
 <span id="lfkit-api-conditional-luminosity-function-module"></span><h1>lfkit.api.conditional_luminosity_function module<a class="headerlink" href="#module-lfkit.api.conditional_luminosity_function" title="Link to this heading"><span>#</span></a></h1>
-<p>Public conditional luminosity-function constructors.</p>
+<p>Public conditional luminosity function constructors.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="lfkit.api.conditional_luminosity_function.ConditionalLuminosityFunction">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lfkit.api.conditional_luminosity_function.</span></span><span class="sig-name descname"><span class="pre">ConditionalLuminosityFunction</span></span><a class="reference internal" href="../_modules/lfkit/api/conditional_luminosity_function.html#ConditionalLuminosityFunction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.api.conditional_luminosity_function.ConditionalLuminosityFunction" title="Link to this definition"><span>#</span></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Factory namespace for conditional luminosity-function models.</p>
+<p>Factory namespace for conditional luminosity function models.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="lfkit.api.conditional_luminosity_function.ConditionalLuminosityFunction.double_schechter">
 <em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">double_schechter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_star</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_star</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_transition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/api/conditional_luminosity_function.html#ConditionalLuminosityFunction.double_schechter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.api.conditional_luminosity_function.ConditionalLuminosityFunction.double_schechter" title="Link to this definition"><span>#</span></a></dt>

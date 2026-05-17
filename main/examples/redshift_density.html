@@ -216,17 +216,16 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
-<ul class="current">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html"> Installation</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../about/index.html"> About LFKit</a><input aria-label="Toggle navigation of  About LFKit" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../about/corr_overview.html"> Photometric Corrections</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../about/lf_overview.html"> Luminosity Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/corrections_overview.html"> Photometric Corrections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/photometry_overview.html"> Photometry Overview</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html"> Examples</a><input aria-label="Toggle navigation of  Examples" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="api_overview.html"> API overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="luminosity_function_models.html"> Luminosity function models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="magnitude_integrals.html"> Luminosity-function magnitude integrals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="magnitude_integrals.html"> Luminosity function magnitude integrals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="magnitudes_and_luminosities.html"> Magnitudes and luminosities</a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#"> LF-weighted redshift density</a></li>
 <li class="toctree-l2"><a class="reference internal" href="catalog_completeness.html"> Catalog completeness</a></li>
@@ -285,6 +284,9 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../citation.html"> Citation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html"> Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html"> License</a></li>
 </ul>
 
 </div>
@@ -328,9 +330,9 @@
 <p>This page shows how to convert a luminosity function into a redshift-dependent
 selection or weighting factor.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">redshift_density</span></code> namespace is useful when constructing LF-dependent
-redshift trends for survey forecasting. It combines an apparent-magnitude limit
-with a luminosity-distance callable, integrates the luminosity function over the
-visible absolute-magnitude range, and can optionally apply a redshift or volume
+redshift trends for survey forecasting. It combines an apparent magnitude limit
+with a luminosity distance callable, integrates the luminosity function over the
+visible absolute magnitude range, and can optionally apply a redshift or volume
 weight.</p>
 <p>This is not required to be a complete survey <span class="math notranslate nohighlight">\(n(z)\)</span> by itself. It is the
 LF-dependent ingredient that can be combined with survey geometry, volume
@@ -339,7 +341,7 @@ weights, or tomography code.</p>
 <section id="magnitude-limited-lf-redshift-density">
 <h2>Magnitude-limited LF redshift density<a class="headerlink" href="#magnitude-limited-lf-redshift-density" title="Link to this heading"><span>#</span></a></h2>
 <p>The integrated version computes the luminosity function number density selected
-by an apparent-magnitude limit.</p>
+by an apparent magnitude limit.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
@@ -366,7 +368,7 @@ by an apparent-magnitude limit.</p>
     <span class="k">return</span> <span class="mf">3000.0</span> <span class="o">*</span> <span class="n">z</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">z</span><span class="p">)</span>
 
 <span class="n">limits</span> <span class="o">=</span> <span class="p">[</span><span class="mf">23.5</span><span class="p">,</span> <span class="mf">24.5</span><span class="p">,</span> <span class="mf">25.5</span><span class="p">]</span>
-<span class="n">colors</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">limits</span><span class="p">),</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.08</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">))</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">limits</span><span class="p">),</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">))</span>
 
@@ -397,7 +399,7 @@ by an apparent-magnitude limit.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/ff97658064b18ee0c176314af2d69869/redshift_density-1.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/d3a804890b1ab728df14d86044cfed37/redshift_density-1.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/redshift_density-1.png"><img alt="../_images/redshift_density-1.png" class="plot-directive" src="../_images/redshift_density-1.png" style="width: 520px;" />
 </a>
@@ -452,21 +454,22 @@ a user-provided redshift or volume weight.</p>
     <span class="n">n_m</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">colors</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">))</span>
+<span class="n">red</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">blue</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
     <span class="n">redshift</span><span class="p">,</span>
     <span class="n">number_density</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">number_density</span><span class="p">),</span>
     <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">red</span><span class="p">,</span>
     <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Magnitude-limited LF integral&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
     <span class="n">redshift</span><span class="p">,</span>
     <span class="n">weighted_density</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">weighted_density</span><span class="p">),</span>
     <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">blue</span><span class="p">,</span>
     <span class="n">label</span><span class="o">=</span><span class="s2">&quot;LF-weighted redshift density&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 
@@ -478,7 +481,7 @@ a user-provided redshift or volume weight.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/efc7324e8800a7142eeb204eab2894b1/redshift_density-2.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/adb6559cb66f41005b9ecb8227947961/redshift_density-2.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/redshift_density-2.png"><img alt="../_images/redshift_density-2.png" class="plot-directive" src="../_images/redshift_density-2.png" style="width: 520px;" />
 </a>
@@ -541,11 +544,12 @@ cosmology backend.</p>
 <span class="n">low_z_trend</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapezoid</span><span class="p">(</span><span class="n">low_z_trend</span><span class="p">,</span> <span class="n">redshift</span><span class="p">)</span>
 <span class="n">tapered_trend</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapezoid</span><span class="p">(</span><span class="n">tapered_trend</span><span class="p">,</span> <span class="n">redshift</span><span class="p">)</span>
 
-<span class="n">colors</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">))</span>
+<span class="n">red</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">blue</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">))</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">redshift</span><span class="p">,</span> <span class="n">low_z_trend</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$w(z)=z^2$&quot;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">redshift</span><span class="p">,</span> <span class="n">tapered_trend</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$w(z)=z^2 e^{-z/0.8}$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">redshift</span><span class="p">,</span> <span class="n">low_z_trend</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">red</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$w(z)=z^2$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">redshift</span><span class="p">,</span> <span class="n">tapered_trend</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">blue</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$w(z)=z^2 e^{-z/0.8}$&quot;</span><span class="p">)</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Redshift $z$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Normalized weighted trend&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
@@ -555,7 +559,7 @@ cosmology backend.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/3be87e6f9105dc92d7639aae2fa69664/redshift_density-3.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/71a48fea056af5aef11d94d684a388e3/redshift_density-3.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/redshift_density-3.png"><img alt="../_images/redshift_density-3.png" class="plot-directive" src="../_images/redshift_density-3.png" style="width: 520px;" />
 </a>

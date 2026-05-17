@@ -216,17 +216,16 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
-<ul class="current">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html"> Installation</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../about/index.html"> About LFKit</a><input aria-label="Toggle navigation of  About LFKit" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../about/corr_overview.html"> Photometric Corrections</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../about/lf_overview.html"> Luminosity Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/corrections_overview.html"> Photometric Corrections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/photometry_overview.html"> Photometry Overview</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../examples/index.html"> Examples</a><input aria-label="Toggle navigation of  Examples" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../examples/api_overview.html"> API overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/luminosity_function_models.html"> Luminosity function models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples/magnitude_integrals.html"> Luminosity-function magnitude integrals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/magnitude_integrals.html"> Luminosity function magnitude integrals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/magnitudes_and_luminosities.html"> Magnitudes and luminosities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/redshift_density.html"> LF-weighted redshift density</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/catalog_completeness.html"> Catalog completeness</a></li>
@@ -285,6 +284,9 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../citation.html"> Citation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html"> Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html"> License</a></li>
 </ul>
 
 </div>
@@ -330,7 +332,7 @@
 population implied by a magnitude-limited catalog. These functions are useful
 for applications that need an out-of-catalog correction, such as galaxy-catalog
 priors for gravitational-wave cosmology.</p>
-<p>The utilities convert an apparent magnitude limit into an absolute-magnitude
+<p>The utilities convert an apparent magnitude limit into an absolute magnitude
 limit and call the generic LF integration helpers to return number densities
 or fractions.</p>
 <p>The core API accepts a luminosity function callable with signature</p>
@@ -343,7 +345,7 @@ luminosity function parameterization.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="lfkit.photometry.catalog_completeness.absolute_magnitude_limit">
 <span class="sig-prename descclassname"><span class="pre">lfkit.photometry.catalog_completeness.</span></span><span class="sig-name descname"><span class="pre">absolute_magnitude_limit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cosmo_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">m_lim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e_correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/photometry/catalog_completeness.html#absolute_magnitude_limit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.photometry.catalog_completeness.absolute_magnitude_limit" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>Return the absolute-magnitude limit of an apparent-magnitude catalog cut.</p>
+<dd><p>Return the absolute magnitude limit of an apparent magnitude catalog cut.</p>
 <p>This converts an apparent magnitude limit into the corresponding limiting
 absolute magnitude at each redshift,</p>
 <div class="math-wrapper docutils container">
@@ -390,8 +392,8 @@ distance-modulus convention. If not provided, this is read from
 <li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Redshift value or array-like of redshift values.</p></li>
 <li><p><strong>lf</strong> (<em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>) – Luminosity-function callable with signature <code class="docutils literal notranslate"><span class="pre">lf(M,</span> <span class="pre">z)</span></code>.</p></li>
 <li><p><strong>m_lim</strong> (<em>float</em>) – Apparent magnitude limit of the catalog.</p></li>
-<li><p><strong>m_bright</strong> (<em>float</em>) – Bright absolute-magnitude bound of the LF model.</p></li>
-<li><p><strong>m_faint</strong> (<em>float</em>) – Faint absolute-magnitude bound of the LF model.</p></li>
+<li><p><strong>m_bright</strong> (<em>float</em>) – Bright absolute magnitude bound of the LF model.</p></li>
+<li><p><strong>m_faint</strong> (<em>float</em>) – Faint absolute magnitude bound of the LF model.</p></li>
 <li><p><strong>n_m</strong> (<em>int</em>) – Number of magnitude-grid points used for the integral.</p></li>
 <li><p><strong>h</strong> (<em>float</em><em> | </em><em>None</em>) – Optional dimensionless Hubble parameter used in the
 distance-modulus convention.</p></li>
@@ -427,8 +429,8 @@ catalog limit,</p>
 <li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Redshift value or array-like of redshift values.</p></li>
 <li><p><strong>lf</strong> (<em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>) – Luminosity-function callable with signature <code class="docutils literal notranslate"><span class="pre">lf(M,</span> <span class="pre">z)</span></code>.</p></li>
 <li><p><strong>m_lim</strong> (<em>float</em>) – Apparent magnitude limit of the catalog.</p></li>
-<li><p><strong>m_bright</strong> (<em>float</em>) – Bright absolute-magnitude bound of the LF model.</p></li>
-<li><p><strong>m_faint</strong> (<em>float</em>) – Faint absolute-magnitude bound of the LF model.</p></li>
+<li><p><strong>m_bright</strong> (<em>float</em>) – Bright absolute magnitude bound of the LF model.</p></li>
+<li><p><strong>m_faint</strong> (<em>float</em>) – Faint absolute magnitude bound of the LF model.</p></li>
 <li><p><strong>n_m</strong> (<em>int</em>) – Number of magnitude-grid points used for the integral.</p></li>
 <li><p><strong>h</strong> (<em>float</em><em> | </em><em>None</em>) – Optional dimensionless Hubble parameter used in the
 distance-modulus convention.</p></li>
@@ -464,8 +466,8 @@ catalog limit,</p>
 <li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Redshift value or array-like of redshift values.</p></li>
 <li><p><strong>lf</strong> (<em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>) – Luminosity-function callable with signature <code class="docutils literal notranslate"><span class="pre">lf(M,</span> <span class="pre">z)</span></code>.</p></li>
 <li><p><strong>m_lim</strong> (<em>float</em>) – Apparent magnitude limit of the catalog.</p></li>
-<li><p><strong>m_bright</strong> (<em>float</em>) – Bright absolute-magnitude bound of the LF model.</p></li>
-<li><p><strong>m_faint</strong> (<em>float</em>) – Faint absolute-magnitude bound of the LF model.</p></li>
+<li><p><strong>m_bright</strong> (<em>float</em>) – Bright absolute magnitude bound of the LF model.</p></li>
+<li><p><strong>m_faint</strong> (<em>float</em>) – Faint absolute magnitude bound of the LF model.</p></li>
 <li><p><strong>n_m</strong> (<em>int</em>) – Number of magnitude-grid points used for the integral.</p></li>
 <li><p><strong>h</strong> (<em>float</em><em> | </em><em>None</em>) – Optional dimensionless Hubble parameter used in the
 distance-modulus convention.</p></li>
@@ -498,8 +500,8 @@ distance-modulus convention.</p></li>
 <li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Redshift value or array-like of redshift values.</p></li>
 <li><p><strong>lf</strong> (<em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>) – Luminosity-function callable with signature <code class="docutils literal notranslate"><span class="pre">lf(M,</span> <span class="pre">z)</span></code>.</p></li>
 <li><p><strong>m_lim</strong> (<em>float</em>) – Apparent magnitude limit of the catalog.</p></li>
-<li><p><strong>m_bright</strong> (<em>float</em>) – Bright absolute-magnitude bound of the LF model.</p></li>
-<li><p><strong>m_faint</strong> (<em>float</em>) – Faint absolute-magnitude bound of the LF model.</p></li>
+<li><p><strong>m_bright</strong> (<em>float</em>) – Bright absolute magnitude bound of the LF model.</p></li>
+<li><p><strong>m_faint</strong> (<em>float</em>) – Faint absolute magnitude bound of the LF model.</p></li>
 <li><p><strong>n_m</strong> (<em>int</em>) – Number of magnitude-grid points used for the integral.</p></li>
 <li><p><strong>h</strong> (<em>float</em><em> | </em><em>None</em>) – Optional dimensionless Hubble parameter used in the
 distance-modulus convention.</p></li>

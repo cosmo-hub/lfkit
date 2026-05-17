@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="API overview" href="api_overview.html"><link rel="prev" title="Luminosity Functions" href="../about/lf_overview.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Luminosity function models" href="luminosity_function_models.html"><link rel="prev" title="Photometry Overview" href="../about/photometry_overview.html">
         <link rel="canonical" href="https://cosmology-kit.github.io/lfkit/examples/index.html">
         <link rel="prefetch" href="../_static/logos/lfkit_logo-icon.png" as="image">
         <link rel="prefetch" href="../_static/logos/lfkit_logo-icon.png" as="image">
@@ -194,7 +194,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -216,17 +216,16 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
-<ul class="current">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html"> Installation</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../about/index.html"> About LFKit</a><input aria-label="Toggle navigation of  About LFKit" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../about/corr_overview.html"> Photometric Corrections</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../about/lf_overview.html"> Luminosity Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/corrections_overview.html"> Photometric Corrections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/photometry_overview.html"> Photometry Overview</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#"> Examples</a><input aria-label="Toggle navigation of  Examples" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="api_overview.html"> API overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="luminosity_function_models.html"> Luminosity function models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="magnitude_integrals.html"> Luminosity-function magnitude integrals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="magnitude_integrals.html"> Luminosity function magnitude integrals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="magnitudes_and_luminosities.html"> Magnitudes and luminosities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="redshift_density.html"> LF-weighted redshift density</a></li>
 <li class="toctree-l2"><a class="reference internal" href="catalog_completeness.html"> Catalog completeness</a></li>
@@ -285,6 +284,9 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../citation.html"> Citation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html"> Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html"> License</a></li>
 </ul>
 
 </div>
@@ -318,15 +320,530 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
           <section id="lfkitlogo-examples">
 <h1><a class="reference internal" href="../_images/lfkit_logo-icon.png"><img alt="LFKit logo" src="../_images/lfkit_logo-icon.png" style="width: 50px;" /></a> Examples<a class="headerlink" href="#lfkitlogo-examples" title="Link to this heading"><span>#</span></a></h1>
+<p>This page gives a high-level overview of LFKit’s public API, how the main
+example pages fit together, and which page to use for each type of calculation.
+Detailed examples are provided on the topic-specific pages listed below.</p>
+<p>LFKit is organized around a small number of user-facing entry points. Most
+workflows start by creating a luminosity function model and then using grouped
+methods attached to that model for integrals, completeness calculations,
+redshift-density trends, and magnitude or luminosity conversions.</p>
 <div class="toctree-wrapper compound">
 </div>
+<section id="start-here">
+<h2>Start here<a class="headerlink" href="#start-here" title="Link to this heading"><span>#</span></a></h2>
+<p>For ordinary luminosity functions, start with <a class="reference internal" href="../api/lfkit.html#lfkit.LuminosityFunction" title="lfkit.LuminosityFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.LuminosityFunction</span></code></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">LuminosityFunction</span>
+
+<span class="n">lf</span> <span class="o">=</span> <span class="n">LuminosityFunction</span><span class="o">.</span><span class="n">schechter</span><span class="p">(</span>
+    <span class="n">phi_star</span><span class="o">=</span><span class="mf">1.0e-3</span><span class="p">,</span>
+    <span class="n">m_star</span><span class="o">=-</span><span class="mf">20.5</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=-</span><span class="mf">1.1</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">phi</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">phi</span><span class="p">(</span><span class="o">-</span><span class="mf">20.0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The object <code class="docutils literal notranslate"><span class="pre">lf</span></code> represents the chosen luminosity function model. Once the
+model is created, the same object can be used for direct evaluation, magnitude
+integrals, survey completeness calculations, redshift-density calculations, and
+diagnostic conversions.</p>
+<p>Photometric corrections are exposed separately through <a class="reference internal" href="../api/lfkit.html#lfkit.Corrections" title="lfkit.Corrections"><code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.Corrections</span></code></a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">Corrections</span>
+</pre></div>
+</div>
+<p>Correction functions can be passed into calculations that need k-corrections,
+evolution corrections, or other magnitude corrections.</p>
+</section>
+<section id="main-api-areas">
+<h2>Main API areas<a class="headerlink" href="#main-api-areas" title="Link to this heading"><span>#</span></a></h2>
+<p>The main public API areas are:</p>
+<ul class="simple">
+<li><p>luminosity function models,</p></li>
+<li><p>conditional luminosity function models,</p></li>
+<li><p>luminosity function integrals,</p></li>
+<li><p>magnitude-limited completeness,</p></li>
+<li><p>LF-weighted redshift-density calculations,</p></li>
+<li><p>magnitude and luminosity conversions,</p></li>
+<li><p>photometric corrections,</p></li>
+<li><p>model discovery utilities.</p></li>
+</ul>
+</section>
+<section id="which-tool-do-i-need">
+<h2>Which tool do I need?<a class="headerlink" href="#which-tool-do-i-need" title="Link to this heading"><span>#</span></a></h2>
+<div class="table-wrapper colwidths-given docutils container">
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 28.0%" />
+<col style="width: 42.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Task</p></th>
+<th class="head"><p>Use</p></th>
+<th class="head"><p>Example page</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Evaluate or compare luminosity function models</p></td>
+<td><p><a class="reference internal" href="../api/lfkit.html#lfkit.LuminosityFunction" title="lfkit.LuminosityFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.LuminosityFunction</span></code></a></p></td>
+<td><p><a class="reference internal" href="luminosity_function_models.html"><span class="doc">luminosity function models</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Integrate a luminosity function over absolute magnitude</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lf.integrals</span></code></p></td>
+<td><p><a class="reference internal" href="magnitude_integrals.html"><span class="doc"> Luminosity function magnitude integrals</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>Convert between apparent magnitude, absolute magnitude, and luminosity distance</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lf.magnitudes</span></code></p></td>
+<td><p><a class="reference internal" href="magnitudes_and_luminosities.html"><span class="doc"> Magnitudes and luminosities</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Work with luminosity ratios and Schechter luminosity variables</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lf.luminosities</span></code></p></td>
+<td><p><a class="reference internal" href="magnitudes_and_luminosities.html"><span class="doc"> Magnitudes and luminosities</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>Estimate observed, missing, and out-of-catalog fractions</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lf.completeness</span></code></p></td>
+<td><p><a class="reference internal" href="catalog_completeness.html"><span class="doc">catalog completeness</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Build magnitude-limited or volume-weighted redshift trends</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lf.redshift_density</span></code></p></td>
+<td><p><a class="reference internal" href="redshift_density.html"><span class="doc"> LF-weighted redshift density</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>Work with conditional luminosity functions</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ConditionalLuminosityFunction</span></code></p></td>
+<td><p><a class="reference internal" href="conditional_luminosity_function.html"><span class="doc">conditional luminosity function</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Use k-corrections from the kcorrect backend</p></td>
+<td><p><a class="reference internal" href="../api/lfkit.html#lfkit.Corrections" title="lfkit.Corrections"><code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.Corrections</span></code></a></p></td>
+<td><p><a class="reference internal" href="kcorrect_examples.html"><span class="doc">kcorrect examples</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>Use Poggianti correction tables</p></td>
+<td><p><a class="reference internal" href="../api/lfkit.html#lfkit.Corrections" title="lfkit.Corrections"><code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.Corrections</span></code></a></p></td>
+<td><p><a class="reference internal" href="poggianti_examples.html"><span class="doc">Poggianti (1997) examples</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Inspect available model names</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">available_models()</span></code> methods</p></td>
+<td><p><a class="reference internal" href="model_registry.html"><span class="doc"> Available luminosity function models</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="basic-workflow">
+<h2>Basic workflow<a class="headerlink" href="#basic-workflow" title="Link to this heading"><span>#</span></a></h2>
+<p>A typical LFKit workflow has three steps:</p>
+<ol class="arabic simple">
+<li><p>choose a luminosity function model,</p></li>
+<li><p>evaluate it directly or pass it to one of the grouped calculation namespaces,</p></li>
+<li><p>add survey limits, correction functions, or cosmology-dependent distances
+when the calculation needs them.</p></li>
+</ol>
+<p>For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">LuminosityFunction</span>
+
+<span class="n">lf</span> <span class="o">=</span> <span class="n">LuminosityFunction</span><span class="o">.</span><span class="n">schechter</span><span class="p">(</span>
+    <span class="n">phi_star</span><span class="o">=</span><span class="mf">1.0e-3</span><span class="p">,</span>
+    <span class="n">m_star</span><span class="o">=-</span><span class="mf">20.5</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=-</span><span class="mf">1.1</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">phi</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">phi</span><span class="p">(</span><span class="o">-</span><span class="mf">20.0</span><span class="p">)</span>
+
+<span class="n">number_density</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">integrals</span><span class="o">.</span><span class="n">number_density</span><span class="p">(</span>
+    <span class="n">redshift</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">m_bright</span><span class="o">=-</span><span class="mf">24.0</span><span class="p">,</span>
+    <span class="n">m_faint</span><span class="o">=-</span><span class="mf">16.0</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">catalog_fraction</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">completeness</span><span class="o">.</span><span class="n">catalog_fraction</span><span class="p">(</span>
+    <span class="n">cosmo</span><span class="p">,</span>
+    <span class="n">redshift</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">m_lim</span><span class="o">=</span><span class="mf">24.0</span><span class="p">,</span>
+    <span class="n">m_bright</span><span class="o">=-</span><span class="mf">24.0</span><span class="p">,</span>
+    <span class="n">m_faint</span><span class="o">=-</span><span class="mf">16.0</span><span class="p">,</span>
+    <span class="n">h</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The first line evaluates the luminosity function at a single absolute
+magnitude. The integral example computes the number density over a finite
+absolute magnitude range. The completeness example adds an apparent magnitude
+limit and asks what fraction of the intrinsic luminosity function is visible in
+a survey.</p>
+</section>
+<section id="grouped-methods">
+<h2>Grouped methods<a class="headerlink" href="#grouped-methods" title="Link to this heading"><span>#</span></a></h2>
+<p>A luminosity function object exposes grouped methods for common calculations:</p>
+<div class="table-wrapper colwidths-given docutils container">
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 55.0%" />
+<col style="width: 20.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Namespace</p></th>
+<th class="head"><p>Purpose</p></th>
+<th class="head"><p>Example</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lf.integrals</span></code></p></td>
+<td><p>Integrals over absolute magnitude.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lf.integrals.number_density(...)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lf.completeness</span></code></p></td>
+<td><p>Magnitude-limited catalog fractions and missing fractions.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lf.completeness.catalog_fraction(...)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lf.redshift_density</span></code></p></td>
+<td><p>LF-weighted redshift trends and magnitude-limited number densities.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lf.redshift_density.weighted(...)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">lf.magnitudes</span></code></p></td>
+<td><p>Apparent/absolute magnitude and luminosity-distance conversions.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lf.magnitudes.absolute_from_luminosity_distance(...)</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">lf.luminosities</span></code></p></td>
+<td><p>Luminosity ratios and related helpers.</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">lf.luminosities.ratio_from_magnitudes(...)</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>This grouping is meant to make notebook workflows easier to read. Start from
+the model object, then choose the namespace that matches the calculation.</p>
+</section>
+<section id="example-pages">
+<h2>Example pages<a class="headerlink" href="#example-pages" title="Link to this heading"><span>#</span></a></h2>
+<p>The examples are split by topic so that each page stays focused.</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-2 sd-row-cols-xs-2 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-md sd-card-hover docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Luminosity function models</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Build, evaluate, and compare ordinary luminosity function models,
+including evolving models and model surfaces.</p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text"><em>API:</em> <code class="docutils literal notranslate"><span class="pre">LuminosityFunction</span></code></p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="luminosity_function_models.html"><span class="doc"> Luminosity function models</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-md sd-card-hover docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Magnitude integrals</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Compute number density, luminosity density, mean luminosity, and
+selection-weighted integrals over absolute magnitude.</p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text"><em>API:</em> <code class="docutils literal notranslate"><span class="pre">lf.integrals</span></code></p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="magnitude_integrals.html"><span class="doc"> Luminosity function magnitude integrals</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-md sd-card-hover docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Magnitudes and luminosities</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Convert between apparent magnitude, absolute magnitude, luminosity
+distance, luminosity ratios, and Schechter luminosity variables.</p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text"><em>API:</em> <code class="docutils literal notranslate"><span class="pre">lf.magnitudes</span></code> and <code class="docutils literal notranslate"><span class="pre">lf.luminosities</span></code></p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="magnitudes_and_luminosities.html"><span class="doc"> Magnitudes and luminosities</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-md sd-card-hover docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Redshift density</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Build magnitude-limited and volume-weighted LF redshift trends for survey,
+tomography, and forecasting workflows.</p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text"><em>API:</em> <code class="docutils literal notranslate"><span class="pre">lf.redshift_density</span></code></p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="redshift_density.html"><span class="doc"> LF-weighted redshift density</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-md sd-card-hover docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Catalog completeness</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Estimate observed, missing, and out-of-catalog fractions from apparent
+magnitude limits.</p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text"><em>API:</em> <code class="docutils literal notranslate"><span class="pre">lf.completeness</span></code></p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="catalog_completeness.html"><span class="doc"> Catalog completeness</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-md sd-card-hover docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Conditional luminosity functions</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Work with luminosity distributions conditioned on another variable, such
+as halo mass.</p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text"><em>API:</em> <code class="docutils literal notranslate"><span class="pre">ConditionalLuminosityFunction</span></code></p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="conditional_luminosity_function.html"><span class="doc"> Conditional luminosity functions</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-md sd-card-hover docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Model registry</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Inspect available model names and model-discovery helpers for ordinary
+and conditional luminosity functions.</p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text"><em>API:</em> <code class="docutils literal notranslate"><span class="pre">available_models()</span></code></p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="model_registry.html"><span class="doc"> Available luminosity function models</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-md sd-card-hover docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>kcorrect examples</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Build k-corrections with the kcorrect backend and pass correction
+callables into LFKit calculations.</p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text"><em>API:</em> <code class="docutils literal notranslate"><span class="pre">Corrections</span></code></p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="kcorrect_examples.html"><span class="doc">kcorrect examples</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-md sd-card-hover docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Poggianti examples</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Evaluate Poggianti tabulated k-corrections and evolution corrections for
+galaxy-type-dependent workflows.</p>
+</div>
+<div class="sd-card-footer docutils">
+<p class="sd-card-text"><em>API:</em> <code class="docutils literal notranslate"><span class="pre">Corrections</span></code></p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="poggianti_examples.html"><span class="doc">Poggianti (1997) examples</span></a></div>
+</div>
+</div>
+</div>
+</section>
+<section id="luminosity-function-models">
+<h2>Luminosity function models<a class="headerlink" href="#luminosity-function-models" title="Link to this heading"><span>#</span></a></h2>
+<p>Use <a class="reference internal" href="../api/lfkit.html#lfkit.LuminosityFunction" title="lfkit.LuminosityFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.LuminosityFunction</span></code></a> for ordinary luminosity function models.</p>
+<p>For a standard Schechter model:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lf</span> <span class="o">=</span> <span class="n">LuminosityFunction</span><span class="o">.</span><span class="n">schechter</span><span class="p">(</span>
+    <span class="n">phi_star</span><span class="o">=</span><span class="mf">1.0e-3</span><span class="p">,</span>
+    <span class="n">m_star</span><span class="o">=-</span><span class="mf">20.5</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=-</span><span class="mf">1.1</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">phi</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">phi</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For an evolving model, pass redshift when evaluating the model:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">phi</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">phi</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">redshift</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The luminosity function examples page shows how to compare models, evaluate
+evolving parameters, and visualize luminosity function behavior:</p>
+<p><a class="reference internal" href="luminosity_function_models.html"><span class="doc">luminosity function models</span></a></p>
+</section>
+<section id="magnitude-integrals">
+<h2>Magnitude integrals<a class="headerlink" href="#magnitude-integrals" title="Link to this heading"><span>#</span></a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">lf.integrals</span></code> when you want to integrate a luminosity function over an
+absolute magnitude range.</p>
+<p>For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">number_density</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">integrals</span><span class="o">.</span><span class="n">number_density</span><span class="p">(</span>
+    <span class="n">redshift</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">m_bright</span><span class="o">=-</span><span class="mf">24.0</span><span class="p">,</span>
+    <span class="n">m_faint</span><span class="o">=-</span><span class="mf">16.0</span><span class="p">,</span>
+    <span class="n">n_m</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Other useful quantities include luminosity density, mean luminosity, and
+selection-weighted number density.</p>
+<p>See the dedicated page for complete examples:</p>
+<p><a class="reference internal" href="magnitude_integrals.html"><span class="doc"> Luminosity function magnitude integrals</span></a></p>
+</section>
+<section id="completeness-calculations">
+<h2>Completeness calculations<a class="headerlink" href="#completeness-calculations" title="Link to this heading"><span>#</span></a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">lf.completeness</span></code> when a survey apparent magnitude limit is part of the
+calculation.</p>
+<p>For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">catalog_fraction</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">completeness</span><span class="o">.</span><span class="n">catalog_fraction</span><span class="p">(</span>
+    <span class="n">cosmo</span><span class="p">,</span>
+    <span class="n">redshift</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">m_lim</span><span class="o">=</span><span class="mf">24.0</span><span class="p">,</span>
+    <span class="n">m_bright</span><span class="o">=-</span><span class="mf">24.0</span><span class="p">,</span>
+    <span class="n">m_faint</span><span class="o">=-</span><span class="mf">16.0</span><span class="p">,</span>
+    <span class="n">h</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>This answers a common survey question: given an apparent magnitude limit, what
+fraction of the intrinsic luminosity function is visible at a given redshift?</p>
+<p>The same namespace can also be used to compute observed number densities,
+missing number densities, out-of-catalog fractions, and the absolute magnitude
+limit implied by an apparent magnitude cut.</p>
+<p>See the dedicated page for complete examples:</p>
+<p><a class="reference internal" href="catalog_completeness.html"><span class="doc">catalog completeness</span></a></p>
+</section>
+<section id="redshift-density-calculations">
+<h2>Redshift-density calculations<a class="headerlink" href="#redshift-density-calculations" title="Link to this heading"><span>#</span></a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">lf.redshift_density</span></code> when you want to build an LF-weighted redshift trend.</p>
+<p>For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">weighted_density</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">redshift_density</span><span class="o">.</span><span class="n">weighted</span><span class="p">(</span>
+    <span class="n">redshift</span><span class="p">,</span>
+    <span class="n">m_lim</span><span class="o">=</span><span class="mf">24.0</span><span class="p">,</span>
+    <span class="n">m_bright</span><span class="o">=-</span><span class="mf">24.0</span><span class="p">,</span>
+    <span class="n">luminosity_distance_mpc_fn</span><span class="o">=</span><span class="n">luminosity_distance_mpc</span><span class="p">,</span>
+    <span class="n">volume_weight_fn</span><span class="o">=</span><span class="n">volume_weight</span><span class="p">,</span>
+    <span class="n">n_m</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>This is useful when LFKit is used as part of a survey, tomography, or forecasting
+workflow.</p>
+<p>See the dedicated page for complete examples:</p>
+<p><a class="reference internal" href="redshift_density.html"><span class="doc"> LF-weighted redshift density</span></a></p>
+</section>
+<section id="magnitude-and-luminosity-conversions">
+<h2>Magnitude and luminosity conversions<a class="headerlink" href="#magnitude-and-luminosity-conversions" title="Link to this heading"><span>#</span></a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">lf.magnitudes</span></code> for apparent magnitude, absolute magnitude, and
+luminosity-distance conversions.</p>
+<p>For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">absolute_mag</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">magnitudes</span><span class="o">.</span><span class="n">absolute_from_luminosity_distance</span><span class="p">(</span>
+    <span class="n">apparent_mag</span><span class="p">,</span>
+    <span class="n">luminosity_distance_mpc</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Use <code class="docutils literal notranslate"><span class="pre">lf.luminosities</span></code> for luminosity ratios and related luminosity variables:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">luminosity_ratio</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">luminosities</span><span class="o">.</span><span class="n">ratio_from_magnitudes</span><span class="p">(</span>
+    <span class="n">absolute_mag</span><span class="p">,</span>
+    <span class="n">m_star</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>These helpers are especially useful for diagnostics, selection functions, and
+plots that compare magnitude and luminosity conventions.</p>
+<p>See the dedicated page for complete examples:</p>
+<p><a class="reference internal" href="magnitudes_and_luminosities.html"><span class="doc"> Magnitudes and luminosities</span></a></p>
+</section>
+<section id="conditional-luminosity-functions">
+<h2>Conditional luminosity functions<a class="headerlink" href="#conditional-luminosity-functions" title="Link to this heading"><span>#</span></a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">ConditionalLuminosityFunction</span></code> when the luminosity distribution is
+conditioned on another variable, such as halo mass.</p>
+<p>A typical workflow looks like:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConditionalLuminosityFunction</span>
+
+<span class="n">clf</span> <span class="o">=</span> <span class="n">ConditionalLuminosityFunction</span><span class="o">.</span><span class="n">schechter</span><span class="p">(</span>
+    <span class="n">phi_star</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">l_star</span><span class="o">=</span><span class="mf">1.0e10</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=-</span><span class="mf">1.1</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">phi</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">phi</span><span class="p">(</span><span class="n">luminosity</span><span class="p">,</span> <span class="n">halo_mass</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Conditional luminosity function examples are kept on a separate page because
+they answer a different modeling question from ordinary luminosity functions.</p>
+<p>See the dedicated page for complete examples:</p>
+<p><a class="reference internal" href="conditional_luminosity_function.html"><span class="doc">conditional luminosity function</span></a></p>
+</section>
+<section id="photometric-corrections">
+<h2>Photometric corrections<a class="headerlink" href="#photometric-corrections" title="Link to this heading"><span>#</span></a></h2>
+<p>Use <a class="reference internal" href="../api/lfkit.html#lfkit.Corrections" title="lfkit.Corrections"><code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.Corrections</span></code></a> when you want to construct or evaluate
+photometric corrections.</p>
+<p>Correction callables can be passed into calculations that need k-corrections or
+evolution corrections. For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">number_density</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">redshift_density</span><span class="o">.</span><span class="n">integrated_number_density</span><span class="p">(</span>
+    <span class="n">redshift</span><span class="p">,</span>
+    <span class="n">m_lim</span><span class="o">=</span><span class="mf">24.0</span><span class="p">,</span>
+    <span class="n">m_bright</span><span class="o">=-</span><span class="mf">24.0</span><span class="p">,</span>
+    <span class="n">luminosity_distance_mpc_fn</span><span class="o">=</span><span class="n">luminosity_distance_mpc</span><span class="p">,</span>
+    <span class="n">k_correction_fn</span><span class="o">=</span><span class="n">k_correction</span><span class="p">,</span>
+    <span class="n">e_correction_fn</span><span class="o">=</span><span class="n">e_correction</span><span class="p">,</span>
+    <span class="n">n_m</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The magnitude convention used by LFKit is:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[M = m - \mu - K + E,\]</div>
+</div>
+<p>or equivalently,</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[m = M + \mu + K - E.\]</div>
+</div>
+<p>See the correction-specific pages for complete examples:</p>
+<p><a class="reference internal" href="kcorrect_examples.html"><span class="doc">kcorrect examples</span></a></p>
+<p><a class="reference internal" href="poggianti_examples.html"><span class="doc">Poggianti (1997) examples</span></a></p>
+</section>
+<section id="model-discovery">
+<h2>Model discovery<a class="headerlink" href="#model-discovery" title="Link to this heading"><span>#</span></a></h2>
+<p>LFKit provides methods for inspecting available model names. These are useful in
+notebooks, examples, and validation scripts.</p>
+<p>For ordinary luminosity functions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">LuminosityFunction</span>
+
+<span class="n">LuminosityFunction</span><span class="o">.</span><span class="n">available_models</span><span class="p">()</span>
+<span class="n">LuminosityFunction</span><span class="o">.</span><span class="n">available_from_m_models</span><span class="p">()</span>
+<span class="n">LuminosityFunction</span><span class="o">.</span><span class="n">available_parameter_models</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>For conditional luminosity functions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConditionalLuminosityFunction</span>
+
+<span class="n">ConditionalLuminosityFunction</span><span class="o">.</span><span class="n">available_models</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>See the dedicated page for complete examples:</p>
+<p><a class="reference internal" href="model_registry.html"><span class="doc"> Available luminosity function models</span></a></p>
+</section>
+<section id="next-steps">
+<h2>Next steps<a class="headerlink" href="#next-steps" title="Link to this heading"><span>#</span></a></h2>
+<p>If you are new to LFKit, start with the luminosity function examples page and
+then move to the calculation that matches your use case:</p>
+<ul class="simple">
+<li><p>use <a class="reference internal" href="magnitude_integrals.html"><span class="doc"> Luminosity function magnitude integrals</span></a> for intrinsic LF integrals,</p></li>
+<li><p>use <a class="reference internal" href="catalog_completeness.html"><span class="doc">catalog completeness</span></a> for survey magnitude limits,</p></li>
+<li><p>use <a class="reference internal" href="redshift_density.html"><span class="doc"> LF-weighted redshift density</span></a> for LF-weighted redshift trends,</p></li>
+<li><p>use <a class="reference internal" href="magnitudes_and_luminosities.html"><span class="doc"> Magnitudes and luminosities</span></a> for conversions and diagnostics,</p></li>
+<li><p>use <a class="reference internal" href="kcorrect_examples.html"><span class="doc">kcorrect examples</span></a> or <a class="reference internal" href="poggianti_examples.html"><span class="doc">Poggianti (1997) examples</span></a> when corrections are
+needed.</p></li>
+</ul>
+</section>
 </section>
 
         </article>
@@ -334,23 +851,23 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="api_overview.html">
+          <a class="next-page" href="luminosity_function_models.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"> API overview</div>
+                <div class="title"> Luminosity function models</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../about/lf_overview.html">
+          <a class="prev-page" href="../about/photometry_overview.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"> Luminosity Functions</div>
+                <div class="title"> Photometry Overview</div>
                 
               </div>
             </a>
@@ -372,8 +889,41 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#"> Examples</a><ul>
+<li><a class="reference internal" href="#start-here">Start here</a></li>
+<li><a class="reference internal" href="#main-api-areas">Main API areas</a></li>
+<li><a class="reference internal" href="#which-tool-do-i-need">Which tool do I need?</a></li>
+<li><a class="reference internal" href="#basic-workflow">Basic workflow</a></li>
+<li><a class="reference internal" href="#grouped-methods">Grouped methods</a></li>
+<li><a class="reference internal" href="#example-pages">Example pages</a></li>
+<li><a class="reference internal" href="#luminosity-function-models">Luminosity function models</a></li>
+<li><a class="reference internal" href="#magnitude-integrals">Magnitude integrals</a></li>
+<li><a class="reference internal" href="#completeness-calculations">Completeness calculations</a></li>
+<li><a class="reference internal" href="#redshift-density-calculations">Redshift-density calculations</a></li>
+<li><a class="reference internal" href="#magnitude-and-luminosity-conversions">Magnitude and luminosity conversions</a></li>
+<li><a class="reference internal" href="#conditional-luminosity-functions">Conditional luminosity functions</a></li>
+<li><a class="reference internal" href="#photometric-corrections">Photometric corrections</a></li>
+<li><a class="reference internal" href="#model-discovery">Model discovery</a></li>
+<li><a class="reference internal" href="#next-steps">Next steps</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
@@ -385,5 +935,6 @@
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f16c4c56"></script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>
 </html>

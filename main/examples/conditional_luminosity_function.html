@@ -216,17 +216,16 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
-<ul class="current">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html"> Installation</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../about/index.html"> About LFKit</a><input aria-label="Toggle navigation of  About LFKit" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../about/corr_overview.html"> Photometric Corrections</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../about/lf_overview.html"> Luminosity Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/corrections_overview.html"> Photometric Corrections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/photometry_overview.html"> Photometry Overview</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html"> Examples</a><input aria-label="Toggle navigation of  Examples" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="api_overview.html"> API overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="luminosity_function_models.html"> Luminosity function models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="magnitude_integrals.html"> Luminosity-function magnitude integrals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="magnitude_integrals.html"> Luminosity function magnitude integrals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="magnitudes_and_luminosities.html"> Magnitudes and luminosities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="redshift_density.html"> LF-weighted redshift density</a></li>
 <li class="toctree-l2"><a class="reference internal" href="catalog_completeness.html"> Catalog completeness</a></li>
@@ -285,6 +284,9 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../citation.html"> Citation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html"> Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html"> License</a></li>
 </ul>
 
 </div>
@@ -326,19 +328,30 @@
           <section id="lfkitlogo-conditional-luminosity-functions">
 <h1><a class="reference internal" href="../_images/lfkit_logo-icon.png"><img alt="LFKit logo" src="../_images/lfkit_logo-icon.png" style="width: 50px;" /></a> Conditional luminosity functions<a class="headerlink" href="#lfkitlogo-conditional-luminosity-functions" title="Link to this heading"><span>#</span></a></h1>
 <p>This page shows how to evaluate conditional luminosity functions with LFKit’s
-public API.</p>
+public API. A conditional luminosity function describes the abundance of
+galaxies as a function of absolute magnitude while allowing the model to depend
+on another variable.</p>
 <p>A conditional luminosity function has the form <span class="math notranslate nohighlight">\(\Phi(M \mid x)\)</span>, where
-<span class="math notranslate nohighlight">\(M\)</span> is absolute magnitude and <span class="math notranslate nohighlight">\(x\)</span> is an external conditioning
-variable. The conditioning variable is generic: it can represent redshift, halo
-mass, environment, galaxy type, richness, stellar mass, or another quantity.</p>
+<span class="math notranslate nohighlight">\(M\)</span> is absolute magnitude and <span class="math notranslate nohighlight">\(x\)</span> is the conditioning variable. The
+quantity</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\Phi(M \mid x)\,dM\]</div>
+</div>
+<p>is the number density of galaxies with absolute magnitudes between <span class="math notranslate nohighlight">\(M\)</span>
+and <span class="math notranslate nohighlight">\(M+dM\)</span> at fixed <span class="math notranslate nohighlight">\(x\)</span>. The conditioning variable is generic: it
+can represent redshift, halo mass, environment, galaxy type, richness, stellar
+mass, or another quantity.</p>
 <p>LFKit exposes conditional luminosity functions through
 <a class="reference internal" href="../api/lfkit.html#lfkit.ConditionalLuminosityFunction" title="lfkit.ConditionalLuminosityFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.ConditionalLuminosityFunction</span></code></a>. Each constructor returns a
 <a class="reference internal" href="../api/lfkit.html#lfkit.LuminosityFunction" title="lfkit.LuminosityFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.LuminosityFunction</span></code></a> object, so the resulting model can be
 evaluated with <code class="docutils literal notranslate"><span class="pre">lf.phi</span></code> and integrated with the usual <code class="docutils literal notranslate"><span class="pre">lf.integrals</span></code>
 namespace.</p>
-<p>The examples below use redshift as the conditioning variable because it is a
-natural choice for luminosity function evolution. The same API can be used with
-any other conditioning variable by replacing <code class="docutils literal notranslate"><span class="pre">z</span></code> with the desired quantity.</p>
+<p>The examples below use redshift as the conditioning variable because this is
+the most common use case for luminosity function evolution. In that case,
+<span class="math notranslate nohighlight">\(\Phi(M \mid z)\)</span> describes how the magnitude distribution of galaxies
+changes with redshift. The same API can be used with any other conditioning
+variable by replacing <code class="docutils literal notranslate"><span class="pre">z</span></code> with the desired quantity.</p>
 <p>The examples include:</p>
 <ul class="simple">
 <li><p>a conditional Schechter luminosity function,</p></li>
@@ -356,12 +369,16 @@ function. For example, if the amplitudes are supplied in
 of <span class="math notranslate nohighlight">\({\rm Mpc}^{-3}\,{\rm mag}^{-1}\)</span>.</p>
 <section id="conditional-schechter-luminosity-function">
 <h2>Conditional Schechter luminosity function<a class="headerlink" href="#conditional-schechter-luminosity-function" title="Link to this heading"><span>#</span></a></h2>
-<p>A conditional Schechter luminosity function allows the Schechter parameters to
-depend on an external variable.</p>
-<p>This example makes the normalization and characteristic magnitude depend on
-redshift. The faint-end slope is kept fixed. At each redshift, the model is
-still a Schechter luminosity function, but the curve evolves smoothly with the
-conditioning variable.</p>
+<p>A conditional Schechter luminosity function is a Schechter model whose
+parameters depend on an external variable. Instead of using one fixed
+normalization, characteristic magnitude, and faint-end slope, the model can let
+one or more of these quantities vary with the condition.</p>
+<p>This example uses redshift as the condition. The normalization
+<span class="math notranslate nohighlight">\(\phi_\star(z)\)</span> and characteristic magnitude <span class="math notranslate nohighlight">\(M_\star(z)\)</span> evolve
+with redshift, while the faint-end slope <span class="math notranslate nohighlight">\(\alpha\)</span> is kept fixed. Each
+curve is therefore a Schechter luminosity function at one redshift. Comparing
+the curves shows how the abundance and bright-end turnover shift as the
+population evolves.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
@@ -373,10 +390,14 @@ conditioning variable.</p>
 <span class="n">TITLE_SIZE</span> <span class="o">=</span> <span class="mi">17</span>
 <span class="n">LEGEND_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
 
-<span class="n">colors</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.72</span><span class="p">,</span> <span class="mf">0.96</span><span class="p">))</span>
-
 <span class="n">absolute_mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">24.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">14.0</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
 <span class="n">redshifts</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">]</span>
+
+<span class="n">colors</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span>
+    <span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span>
+    <span class="nb">len</span><span class="p">(</span><span class="n">redshifts</span><span class="p">),</span>
+    <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">),</span>
+<span class="p">)</span>
 
 <span class="n">lf</span> <span class="o">=</span> <span class="n">ConditionalLuminosityFunction</span><span class="o">.</span><span class="n">schechter</span><span class="p">(</span>
     <span class="n">phi_star</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="mf">1.0e-3</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">z</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.8</span><span class="p">,</span>
@@ -399,6 +420,7 @@ conditioning variable.</p>
     <span class="p">)</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">1.0e-8</span><span class="p">,</span> <span class="mf">1.0e-1</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">invert_xaxis</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Absolute magnitude $M$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span>
@@ -412,7 +434,7 @@ conditioning variable.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/90dd83f690ec25e2249659513c3ae224/conditional_luminosity_function-1.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/ba9537e9fe57f7d8a42ed613114b06e9/conditional_luminosity_function-1.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-1.png"><img alt="../_images/conditional_luminosity_function-1.png" class="plot-directive" src="../_images/conditional_luminosity_function-1.png" style="width: 520px;" />
 </a>
@@ -420,10 +442,13 @@ conditioning variable.</p>
 </section>
 <section id="conditional-schechter-surface">
 <h2>Conditional Schechter surface<a class="headerlink" href="#conditional-schechter-surface" title="Link to this heading"><span>#</span></a></h2>
-<p>The same model can be shown across the full magnitude-redshift plane.</p>
+<p>The same conditional Schechter model can be evaluated over the full
+magnitude-redshift plane rather than at a few selected redshifts.</p>
 <p>The filled colour scale shows <span class="math notranslate nohighlight">\(\log_{10}\Phi(M \mid z)\)</span>. The contours
-mark constant abundance levels. This is a useful diagnostic for checking that
-the conditional model behaves smoothly across the region where it will be used.</p>
+mark constant abundance levels. This view is useful for checking the global
+behaviour of the model: smooth contours indicate that the parameter evolution
+produces a smooth luminosity function, while abrupt features would signal a
+problem with the chosen parameterization or redshift dependence.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
@@ -445,7 +470,7 @@ the conditional model behaves smoothly across the region where it will be used.<
     <span class="n">alpha</span><span class="o">=-</span><span class="mf">1.1</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">phi</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">phi</span><span class="p">(</span><span class="n">mag_grid</span><span class="p">,</span> <span class="n">z_grid</span><span class="p">)</span>
+<span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">lf</span><span class="o">.</span><span class="n">phi</span><span class="p">(</span><span class="n">mag_grid</span><span class="p">,</span> <span class="n">z_grid</span><span class="p">),</span> <span class="mf">1.0e-8</span><span class="p">,</span> <span class="mf">1.0e-1</span><span class="p">)</span>
 <span class="n">log_phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.2</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">))</span>
@@ -465,7 +490,8 @@ the conditional model behaves smoothly across the region where it will be used.<
     <span class="n">log_phi</span><span class="p">,</span>
     <span class="n">levels</span><span class="o">=</span><span class="n">contour_levels</span><span class="p">,</span>
     <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
-    <span class="n">linewidths</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span>
+    <span class="n">linewidths</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+    <span class="n">linestyles</span><span class="o">=</span><span class="s2">&quot;solid&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">contours</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">TICK_SIZE</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$10^{</span><span class="si">%.0f</span><span class="s2">}$&quot;</span><span class="p">)</span>
 
@@ -486,7 +512,7 @@ the conditional model behaves smoothly across the region where it will be used.<
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/e516234b1a90310e3f5aaee2352e2af4/conditional_luminosity_function-2.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/1218e45242066bd4fa3ee5e278d6fe91/conditional_luminosity_function-2.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-2.png"><img alt="../_images/conditional_luminosity_function-2.png" class="plot-directive" src="../_images/conditional_luminosity_function-2.png" style="width: 560px;" />
 </a>
@@ -494,11 +520,15 @@ the conditional model behaves smoothly across the region where it will be used.<
 </section>
 <section id="conditional-schechter-model-with-lfkit-parameter-models">
 <h2>Conditional Schechter model with LFKit parameter models<a class="headerlink" href="#conditional-schechter-model-with-lfkit-parameter-models" title="Link to this heading"><span>#</span></a></h2>
-<p>LFKit can also evaluate conditional Schechter models using its registered
-parameter models. This is useful when the desired dependence follows one of the
-standard LFKit parameterizations.</p>
+<p>LFKit can also build conditional Schechter models from its registered parameter
+models. This is useful when the desired evolution follows one of the standard
+forms already available in LFKit, rather than being written manually as a
+callable.</p>
 <p>Here, the normalization and characteristic magnitude evolve with the
-conditioning variable, while the faint-end slope is constant.</p>
+conditioning variable, while the faint-end slope is constant. The result is
+equivalent in spirit to the previous example, but the parameter evolution is
+defined through named LFKit models. This makes the model easier to reproduce,
+configure, and document.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
@@ -510,10 +540,14 @@ conditioning variable, while the faint-end slope is constant.</p>
 <span class="n">TITLE_SIZE</span> <span class="o">=</span> <span class="mi">17</span>
 <span class="n">LEGEND_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
 
-<span class="n">colors</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.26</span><span class="p">))</span>
-
 <span class="n">absolute_mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">24.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">14.0</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
 <span class="n">redshifts</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">]</span>
+
+<span class="n">colors</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span>
+    <span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span>
+    <span class="nb">len</span><span class="p">(</span><span class="n">redshifts</span><span class="p">),</span>
+    <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">),</span>
+<span class="p">)</span>
 
 <span class="n">lf</span> <span class="o">=</span> <span class="n">ConditionalLuminosityFunction</span><span class="o">.</span><span class="n">evolving_schechter</span><span class="p">(</span>
     <span class="n">phi_model</span><span class="o">=</span><span class="s2">&quot;linear_p&quot;</span><span class="p">,</span>
@@ -539,6 +573,7 @@ conditioning variable, while the faint-end slope is constant.</p>
     <span class="p">)</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">1.0e-8</span><span class="p">,</span> <span class="mf">1.0e-1</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">invert_xaxis</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Absolute magnitude $M$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span>
@@ -552,7 +587,7 @@ conditioning variable, while the faint-end slope is constant.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/4eb63458be00a620ceb531bb8c33c57c/conditional_luminosity_function-3.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/f8ab51d1f6c298aa58ca6ba65c8e2cf2/conditional_luminosity_function-3.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-3.png"><img alt="../_images/conditional_luminosity_function-3.png" class="plot-directive" src="../_images/conditional_luminosity_function-3.png" style="width: 520px;" />
 </a>
@@ -560,11 +595,14 @@ conditioning variable, while the faint-end slope is constant.</p>
 </section>
 <section id="lognormal-conditional-component">
 <h2>Lognormal conditional component<a class="headerlink" href="#lognormal-conditional-component" title="Link to this heading"><span>#</span></a></h2>
-<p>A narrow lognormal component can represent a population concentrated around a
-characteristic luminosity at fixed condition.</p>
-<p>This example uses a mean absolute magnitude that becomes brighter with
-redshift. The scatter is fixed, so the peak shifts while retaining a similar
-width.</p>
+<p>A lognormal conditional component describes a population concentrated around a
+characteristic luminosity at fixed condition. In magnitude space, this appears
+as a relatively narrow feature centred on a mean absolute magnitude.</p>
+<p>This example lets the mean absolute magnitude become brighter with redshift,
+while the scatter is fixed. The peak therefore shifts to brighter magnitudes as
+redshift increases, but the width of the component remains similar. This kind
+of component is useful for representing a population with a preferred luminosity
+scale rather than a broad Schechter-like faint-end tail.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
@@ -576,10 +614,14 @@ width.</p>
 <span class="n">TITLE_SIZE</span> <span class="o">=</span> <span class="mi">17</span>
 <span class="n">LEGEND_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
 
-<span class="n">colors</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.72</span><span class="p">,</span> <span class="mf">0.96</span><span class="p">))</span>
-
 <span class="n">absolute_mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">24.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">16.0</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
 <span class="n">redshifts</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">]</span>
+
+<span class="n">colors</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span>
+    <span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span>
+    <span class="nb">len</span><span class="p">(</span><span class="n">redshifts</span><span class="p">),</span>
+    <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">),</span>
+<span class="p">)</span>
 
 <span class="n">lf</span> <span class="o">=</span> <span class="n">ConditionalLuminosityFunction</span><span class="o">.</span><span class="n">lognormal</span><span class="p">(</span>
     <span class="n">mean_absolute_mag</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="o">-</span><span class="mf">20.8</span> <span class="o">-</span> <span class="mf">0.6</span> <span class="o">*</span> <span class="p">(</span><span class="n">z</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">),</span>
@@ -602,6 +644,7 @@ width.</p>
     <span class="p">)</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">1.0e-8</span><span class="p">,</span> <span class="mf">1.0e-1</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">invert_xaxis</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Absolute magnitude $M$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span>
@@ -616,7 +659,7 @@ width.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/aa909a14d4f8ce97279a04c4c6457a6a/conditional_luminosity_function-4.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/3657117be4a98e209538ddbe6d3f4739/conditional_luminosity_function-4.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-4.png"><img alt="../_images/conditional_luminosity_function-4.png" class="plot-directive" src="../_images/conditional_luminosity_function-4.png" style="width: 520px;" />
 </a>
@@ -624,9 +667,13 @@ width.</p>
 </section>
 <section id="modified-schechter-conditional-component">
 <h2>Modified Schechter conditional component<a class="headerlink" href="#modified-schechter-conditional-component" title="Link to this heading"><span>#</span></a></h2>
-<p>The modified Schechter component uses a squared exponential cutoff in luminosity
-ratio. It is broader than the lognormal component and contributes over a wider
-range of faint magnitudes.</p>
+<p>The modified Schechter component is Schechter-like at the faint end but uses a
+different cutoff at high luminosity. Instead of the standard exponential cutoff,
+it has a broader cutoff controlled by the luminosity ratio.</p>
+<p>This example lets the normalization, characteristic magnitude, and faint-end
+slope vary with redshift. The model therefore changes both in amplitude and in
+shape. This is useful when a standard Schechter function is too restrictive,
+especially for populations whose bright end falls off more gradually.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
@@ -638,10 +685,14 @@ range of faint magnitudes.</p>
 <span class="n">TITLE_SIZE</span> <span class="o">=</span> <span class="mi">17</span>
 <span class="n">LEGEND_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
 
-<span class="n">colors</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.26</span><span class="p">))</span>
-
 <span class="n">absolute_mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">24.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">14.0</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
 <span class="n">redshifts</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">]</span>
+
+<span class="n">colors</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span>
+    <span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span>
+    <span class="nb">len</span><span class="p">(</span><span class="n">redshifts</span><span class="p">),</span>
+    <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">),</span>
+<span class="p">)</span>
 
 <span class="n">lf</span> <span class="o">=</span> <span class="n">ConditionalLuminosityFunction</span><span class="o">.</span><span class="n">modified_schechter</span><span class="p">(</span>
     <span class="n">phi_star</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="mf">1.2e-3</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">z</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">,</span>
@@ -664,6 +715,7 @@ range of faint magnitudes.</p>
     <span class="p">)</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">1.0e-8</span><span class="p">,</span> <span class="mf">1.0e-1</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">invert_xaxis</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Absolute magnitude $M$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span>
@@ -678,7 +730,7 @@ range of faint magnitudes.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/db102eb0cee1e8b28d2ef7aa62a8017f/conditional_luminosity_function-5.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/e0d02b3c3d621866a956129704cabc36/conditional_luminosity_function-5.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-5.png"><img alt="../_images/conditional_luminosity_function-5.png" class="plot-directive" src="../_images/conditional_luminosity_function-5.png" style="width: 520px;" />
 </a>
@@ -686,11 +738,14 @@ range of faint magnitudes.</p>
 </section>
 <section id="standard-modified-and-lognormal-component-shapes">
 <h2>Standard, modified, and lognormal component shapes<a class="headerlink" href="#standard-modified-and-lognormal-component-shapes" title="Link to this heading"><span>#</span></a></h2>
-<p>It is useful to compare the component shapes at fixed condition. The standard
-Schechter form has the usual exponential cutoff in luminosity ratio. The
-modified Schechter component uses a squared exponential cutoff. The lognormal
-component is localized around a mean luminosity and is useful for narrow
-populations.</p>
+<p>It is useful to compare the component shapes at fixed condition before combining
+them into more complicated models. This separates differences in functional
+form from differences caused by redshift or halo-mass evolution.</p>
+<p>The standard Schechter form has a power-law faint end and an exponential
+bright-end cutoff. The modified Schechter component has a broader bright-end
+shape. The lognormal component is localized around a characteristic luminosity.
+Together, these examples show the kinds of galaxy populations each component is
+best suited to describe.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
@@ -702,7 +757,9 @@ populations.</p>
 <span class="n">TITLE_SIZE</span> <span class="o">=</span> <span class="mi">17</span>
 <span class="n">LEGEND_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
 
-<span class="n">colors</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.08</span><span class="p">,</span> <span class="mf">0.92</span><span class="p">))</span>
+<span class="n">colors_blue</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="n">colors_red</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))</span>
+<span class="n">colors_all</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
 
 <span class="n">absolute_mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">24.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">14.0</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>
 <span class="n">z_value</span> <span class="o">=</span> <span class="mf">0.6</span>
@@ -736,25 +793,26 @@ populations.</p>
     <span class="n">absolute_mag</span><span class="p">,</span>
     <span class="n">phi_schechter</span><span class="p">,</span>
     <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">colors_blue</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
     <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Standard Schechter&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
     <span class="n">absolute_mag</span><span class="p">,</span>
     <span class="n">phi_modified</span><span class="p">,</span>
     <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">colors_red</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
     <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Modified Schechter&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
     <span class="n">absolute_mag</span><span class="p">,</span>
     <span class="n">phi_lognormal</span><span class="p">,</span>
     <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">colors_all</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
     <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Lognormal&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">1.0e-8</span><span class="p">,</span> <span class="mf">1.0e-1</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">invert_xaxis</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Absolute magnitude $M$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span>
@@ -769,19 +827,23 @@ populations.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/374118aede3dc6cac4fa1d56d020a6ba/conditional_luminosity_function-6.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/8c608f3e1db31b9b7d338202bb5cf193/conditional_luminosity_function-6.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-6.png"><img alt="../_images/conditional_luminosity_function-6.png" class="plot-directive" src="../_images/conditional_luminosity_function-6.png" style="width: 520px;" />
 </a>
 </figure>
 </section>
-<section id="two-component-conditional-luminosity-function">
-<h2>Two-component conditional luminosity function<a class="headerlink" href="#two-component-conditional-luminosity-function" title="Link to this heading"><span>#</span></a></h2>
+<section id="two-component-conditional-lf">
+<h2>Two-component conditional LF<a class="headerlink" href="#two-component-conditional-lf" title="Link to this heading"><span>#</span></a></h2>
 <p>The lognormal and modified Schechter components can be combined into a
-two-component conditional luminosity function.</p>
+two-component conditional luminosity function. This is useful when one component
+is intended to describe a relatively narrow population and the other describes a
+broader luminosity distribution.</p>
 <p>This plot separates the lognormal component, the modified Schechter component,
-and their sum at a fixed redshift. This is a useful way to check which component
-dominates different magnitude ranges.</p>
+and their sum at a fixed redshift. The comparison shows which component
+dominates different magnitude ranges. In this example, the lognormal component
+is concentrated near its characteristic magnitude, while the modified Schechter
+component contributes over a wider range of magnitudes.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
@@ -793,9 +855,9 @@ dominates different magnitude ranges.</p>
 <span class="n">TITLE_SIZE</span> <span class="o">=</span> <span class="mi">17</span>
 <span class="n">LEGEND_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
 
-<span class="n">colors_blue</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.72</span><span class="p">,</span> <span class="mf">0.96</span><span class="p">))</span>
-<span class="n">colors_red</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.26</span><span class="p">))</span>
-<span class="n">total_color</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">colors_blue</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">colors_red</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">colors_blue</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="n">colors_red</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))</span>
+<span class="n">colors_all</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
 
 <span class="n">absolute_mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">24.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">14.0</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
 <span class="n">z_value</span> <span class="o">=</span> <span class="mf">0.6</span>
@@ -846,11 +908,12 @@ dominates different magnitude ranges.</p>
     <span class="n">absolute_mag</span><span class="p">,</span>
     <span class="n">total_phi</span><span class="p">,</span>
     <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="n">total_color</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">colors_all</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
     <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Two-component total&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">1.0e-8</span><span class="p">,</span> <span class="mf">1.0e-1</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">invert_xaxis</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Absolute magnitude $M$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span>
@@ -864,7 +927,7 @@ dominates different magnitude ranges.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/58d3f96ee73e7a9fc4639377264da46d/conditional_luminosity_function-7.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/1a559ccaf632e249521c03126e92e3f7/conditional_luminosity_function-7.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-7.png"><img alt="../_images/conditional_luminosity_function-7.png" class="plot-directive" src="../_images/conditional_luminosity_function-7.png" style="width: 520px;" />
 </a>
@@ -872,9 +935,14 @@ dominates different magnitude ranges.</p>
 </section>
 <section id="two-component-evolution">
 <h2>Two-component evolution<a class="headerlink" href="#two-component-evolution" title="Link to this heading"><span>#</span></a></h2>
-<p>The two-component conditional luminosity function can be evaluated across
-several redshifts. This example shows how the full model changes when both
+<p>The two-component conditional luminosity function can also be evaluated at
+several redshifts. This shows how the total population changes when both
 components depend on the conditioning variable.</p>
+<p>Each curve is the sum of the lognormal and modified Schechter components at one
+redshift. Changes in the curves reflect the combined evolution of the component
+amplitudes, characteristic magnitudes, and faint-end behaviour. This plot is a
+compact way to check whether the full conditional model evolves in the expected
+direction.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
@@ -886,10 +954,14 @@ components depend on the conditioning variable.</p>
 <span class="n">TITLE_SIZE</span> <span class="o">=</span> <span class="mi">17</span>
 <span class="n">LEGEND_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
 
-<span class="n">colors</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.72</span><span class="p">,</span> <span class="mf">0.96</span><span class="p">))</span>
-
 <span class="n">absolute_mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">24.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">14.0</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
 <span class="n">redshifts</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">]</span>
+
+<span class="n">colors</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span>
+    <span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span>
+    <span class="nb">len</span><span class="p">(</span><span class="n">redshifts</span><span class="p">),</span>
+    <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">),</span>
+<span class="p">)</span>
 
 <span class="n">lf</span> <span class="o">=</span> <span class="n">ConditionalLuminosityFunction</span><span class="o">.</span><span class="n">two_component</span><span class="p">(</span>
     <span class="n">lognormal_mean_absolute_mag</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="o">-</span><span class="mf">20.8</span> <span class="o">-</span> <span class="mf">0.6</span> <span class="o">*</span> <span class="p">(</span><span class="n">z</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">),</span>
@@ -915,6 +987,7 @@ components depend on the conditioning variable.</p>
     <span class="p">)</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">1.0e-8</span><span class="p">,</span> <span class="mf">1.0e-1</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">invert_xaxis</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Absolute magnitude $M$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span>
@@ -929,7 +1002,7 @@ components depend on the conditioning variable.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/02b189f7029a32e92fc577f04598d7de/conditional_luminosity_function-8.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/8b44b7697bc64453fbc64f75fa3a8869/conditional_luminosity_function-8.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-8.png"><img alt="../_images/conditional_luminosity_function-8.png" class="plot-directive" src="../_images/conditional_luminosity_function-8.png" style="width: 520px;" />
 </a>
@@ -938,10 +1011,20 @@ components depend on the conditioning variable.</p>
 <section id="integrated-conditional-number-density">
 <h2>Integrated conditional number density<a class="headerlink" href="#integrated-conditional-number-density" title="Link to this heading"><span>#</span></a></h2>
 <p>A conditional luminosity function can be integrated over absolute magnitude at
-each value of the conditioning variable.</p>
-<p>Because conditional constructors return normal LFKit luminosity function
-objects, the same <code class="docutils literal notranslate"><span class="pre">lf.integrals</span></code> namespace can be used here. The result shows
-how the selected number density changes with redshift.</p>
+each value of the conditioning variable. The result is an integrated number
+density,</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[n(x) = \int_{M_{\rm bright}}^{M_{\rm faint}} \Phi(M \mid x)\,\mathrm{d}M.\]</div>
+</div>
+<p>For redshift as the conditioning variable, this gives the number density of
+galaxies inside the chosen magnitude range as a function of redshift. Because
+conditional constructors return normal LFKit luminosity function objects, the
+same <code class="docutils literal notranslate"><span class="pre">lf.integrals</span></code> namespace can be used here.</p>
+<p>This example integrates the lognormal component, the modified Schechter
+component, and the full two-component model. The total number density is the sum
+of the two components, while the individual curves show how much each component
+contributes.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
@@ -953,9 +1036,9 @@ how the selected number density changes with redshift.</p>
 <span class="n">TITLE_SIZE</span> <span class="o">=</span> <span class="mi">17</span>
 <span class="n">LEGEND_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
 
-<span class="n">colors_blue</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.72</span><span class="p">,</span> <span class="mf">0.96</span><span class="p">))</span>
-<span class="n">colors_red</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.26</span><span class="p">))</span>
-<span class="n">total_color</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">colors_blue</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">colors_red</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">colors_blue</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="n">colors_red</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))</span>
+<span class="n">colors_all</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
 
 <span class="n">redshift</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span>
 
@@ -1021,11 +1104,12 @@ how the selected number density changes with redshift.</p>
     <span class="n">redshift</span><span class="p">,</span>
     <span class="n">n_total</span><span class="p">,</span>
     <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="n">total_color</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">colors_all</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
     <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Two-component total&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">1.0e-4</span><span class="p">,</span> <span class="mf">1.0e-1</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Redshift $z$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Integrated number density [$\mathrm</span><span class="si">{Mpc}</span><span class="s2">^{-3}$]&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Integrated conditional LF over $-24 \leq M \leq -14$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">TITLE_SIZE</span><span class="p">)</span>
@@ -1035,7 +1119,7 @@ how the selected number density changes with redshift.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/8c33b6798cf2d3bc1ec6cb04dd082230/conditional_luminosity_function-9.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/329ba2f973c91f8349bfa328e384a028/conditional_luminosity_function-9.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-9.png"><img alt="../_images/conditional_luminosity_function-9.png" class="plot-directive" src="../_images/conditional_luminosity_function-9.png" style="width: 520px;" />
 </a>
@@ -1044,11 +1128,18 @@ how the selected number density changes with redshift.</p>
 <section id="component-fractions">
 <h2>Component fractions<a class="headerlink" href="#component-fractions" title="Link to this heading"><span>#</span></a></h2>
 <p>The relative contribution of each component can be summarized as a fraction of
-the integrated two-component luminosity function.</p>
+the integrated two-component luminosity function. For components
+<span class="math notranslate nohighlight">\(n_1(z)\)</span> and <span class="math notranslate nohighlight">\(n_2(z)\)</span>, the corresponding fractions are</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[f_1(z) = \frac{n_1(z)}{n_1(z) + n_2(z)}, \qquad
+f_2(z) = \frac{n_2(z)}{n_1(z) + n_2(z)}.\]</div>
+</div>
 <p>This example computes the integrated lognormal and modified Schechter
-components with <code class="docutils literal notranslate"><span class="pre">lf.integrals.number_density</span></code>. This is a compact diagnostic
-for checking whether the selected population is dominated by the lognormal
-component, the modified Schechter component, or a mixture of both.</p>
+components with <code class="docutils literal notranslate"><span class="pre">lf.integrals.number_density</span></code>. The resulting fractions show
+whether the selected population is dominated by the narrow lognormal component,
+the broader modified Schechter component, or a mixture of both. This is often
+easier to interpret than comparing raw number densities alone.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
@@ -1060,8 +1151,8 @@ component, the modified Schechter component, or a mixture of both.</p>
 <span class="n">TITLE_SIZE</span> <span class="o">=</span> <span class="mi">17</span>
 <span class="n">LEGEND_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
 
-<span class="n">colors_blue</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.72</span><span class="p">,</span> <span class="mf">0.96</span><span class="p">))</span>
-<span class="n">colors_red</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.26</span><span class="p">))</span>
+<span class="n">colors_blue</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="n">colors_red</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))</span>
 
 <span class="n">redshift</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span>
 
@@ -1123,7 +1214,7 @@ component, the modified Schechter component, or a mixture of both.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/f0679b05ae7851a0798b95bd136e0447/conditional_luminosity_function-10.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/defe51322e47d38ef93eb2b8ef9b21db/conditional_luminosity_function-10.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-10.png"><img alt="../_images/conditional_luminosity_function-10.png" class="plot-directive" src="../_images/conditional_luminosity_function-10.png" style="width: 520px;" />
 </a>
@@ -1132,11 +1223,13 @@ component, the modified Schechter component, or a mixture of both.</p>
 <section id="two-component-lf-surface">
 <h2>Two-component LF surface<a class="headerlink" href="#two-component-lf-surface" title="Link to this heading"><span>#</span></a></h2>
 <p>The full two-component conditional luminosity function can be shown as a
-surface in the magnitude-redshift plane.</p>
+surface in the magnitude-redshift plane. This combines the component structure
+and the redshift evolution in a single diagnostic plot.</p>
 <p>The filled colour scale shows <span class="math notranslate nohighlight">\(\log_{10}\Phi_{\rm total}(M \mid z)\)</span>.
 The contours mark constant abundance levels. This view is useful for checking
 whether the narrow component, broad component, and redshift dependence combine
-smoothly.</p>
+smoothly across the full domain. It also makes it easier to identify where the
+model predicts the largest abundance of galaxies.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
@@ -1161,7 +1254,7 @@ smoothly.</p>
     <span class="n">modified_alpha</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.05</span> <span class="o">-</span> <span class="mf">0.10</span> <span class="o">*</span> <span class="n">z</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">phi</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">phi</span><span class="p">(</span><span class="n">mag_grid</span><span class="p">,</span> <span class="n">z_grid</span><span class="p">)</span>
+<span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">lf</span><span class="o">.</span><span class="n">phi</span><span class="p">(</span><span class="n">mag_grid</span><span class="p">,</span> <span class="n">z_grid</span><span class="p">),</span> <span class="mf">1.0e-8</span><span class="p">,</span> <span class="mf">1.0e-1</span><span class="p">)</span>
 <span class="n">log_phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.2</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">))</span>
@@ -1181,7 +1274,8 @@ smoothly.</p>
     <span class="n">log_phi</span><span class="p">,</span>
     <span class="n">levels</span><span class="o">=</span><span class="n">contour_levels</span><span class="p">,</span>
     <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
-    <span class="n">linewidths</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span>
+    <span class="n">linewidths</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+    <span class="n">linestyles</span><span class="o">=</span><span class="s2">&quot;solid&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">contours</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">TICK_SIZE</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$10^{</span><span class="si">%.0f</span><span class="s2">}$&quot;</span><span class="p">)</span>
 
@@ -1202,7 +1296,7 @@ smoothly.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/7209b19e32d4bef7755b6496efb6a6ad/conditional_luminosity_function-11.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/23d10210f88806861e68ab8e0f63d393/conditional_luminosity_function-11.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-11.png"><img alt="../_images/conditional_luminosity_function-11.png" class="plot-directive" src="../_images/conditional_luminosity_function-11.png" style="width: 560px;" />
 </a>
@@ -1212,9 +1306,12 @@ smoothly.</p>
 <h2>Halo-mass conditional luminosity function<a class="headerlink" href="#halo-mass-conditional-luminosity-function" title="Link to this heading"><span>#</span></a></h2>
 <p>The conditioning variable does not need to be redshift. In halo-model
 applications, a conditional luminosity function is often written as
-<span class="math notranslate nohighlight">\(\Phi(M \mid M_h)\)</span>, where <span class="math notranslate nohighlight">\(M_h\)</span> is halo mass.</p>
-<p>This example uses log halo mass as the conditioning variable and lets the
-lognormal mean magnitude become brighter in more massive halos.</p>
+<span class="math notranslate nohighlight">\(\Phi(M \mid M_h)\)</span>, where <span class="math notranslate nohighlight">\(M_h\)</span> is halo mass. This describes the
+luminosity distribution of galaxies hosted by halos of a given mass.</p>
+<p>This example uses log halo mass as the conditioning variable. The lognormal
+mean magnitude becomes brighter in more massive halos, and the amplitude also
+increases with halo mass. The interpretation is that more massive halos host
+brighter and more abundant galaxies in this toy model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
@@ -1226,10 +1323,14 @@ lognormal mean magnitude become brighter in more massive halos.</p>
 <span class="n">TITLE_SIZE</span> <span class="o">=</span> <span class="mi">17</span>
 <span class="n">LEGEND_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
 
-<span class="n">colors</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.08</span><span class="p">,</span> <span class="mf">0.92</span><span class="p">))</span>
-
 <span class="n">absolute_mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">24.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">16.0</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>
 <span class="n">log_halo_masses</span> <span class="o">=</span> <span class="p">[</span><span class="mf">11.5</span><span class="p">,</span> <span class="mf">12.0</span><span class="p">,</span> <span class="mf">12.5</span><span class="p">,</span> <span class="mf">13.0</span><span class="p">]</span>
+
+<span class="n">colors</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span>
+    <span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span>
+    <span class="nb">len</span><span class="p">(</span><span class="n">log_halo_masses</span><span class="p">),</span>
+    <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">),</span>
+<span class="p">)</span>
 
 <span class="n">lf</span> <span class="o">=</span> <span class="n">ConditionalLuminosityFunction</span><span class="o">.</span><span class="n">lognormal</span><span class="p">(</span>
     <span class="n">mean_absolute_mag</span><span class="o">=</span><span class="k">lambda</span> <span class="n">log_mh</span><span class="p">:</span> <span class="o">-</span><span class="mf">20.0</span> <span class="o">-</span> <span class="mf">0.8</span> <span class="o">*</span> <span class="p">(</span><span class="n">log_mh</span> <span class="o">-</span> <span class="mf">12.0</span><span class="p">),</span>
@@ -1252,6 +1353,7 @@ lognormal mean magnitude become brighter in more massive halos.</p>
     <span class="p">)</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">1.0e-8</span><span class="p">,</span> <span class="mf">1.0e-1</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">invert_xaxis</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Absolute magnitude $M$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span>
@@ -1265,7 +1367,7 @@ lognormal mean magnitude become brighter in more massive halos.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/43e8fa893effbcf3cbf9fbec9544e13b/conditional_luminosity_function-12.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/2a7825d24ce232391ee37a194406d323/conditional_luminosity_function-12.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-12.png"><img alt="../_images/conditional_luminosity_function-12.png" class="plot-directive" src="../_images/conditional_luminosity_function-12.png" style="width: 520px;" />
 </a>
@@ -1273,13 +1375,25 @@ lognormal mean magnitude become brighter in more massive halos.</p>
 </section>
 <section id="mean-luminosity-ratio-from-a-conditional-luminosity-function">
 <h2>Mean luminosity ratio from a conditional luminosity function<a class="headerlink" href="#mean-luminosity-ratio-from-a-conditional-luminosity-function" title="Link to this heading"><span>#</span></a></h2>
-<p>Weighted integrals can be used to compute positive luminosity-weighted summary
-statistics of a conditional luminosity function. For example, the mean
-luminosity ratio relative to a reference magnitude is</p>
-<p><span class="math notranslate nohighlight">\(\langle L/L_{\rm ref} \rangle(x) =
-\int (L/L_{\rm ref}) \Phi(M \mid x)\,dM / \int \Phi(M \mid x)\,dM\)</span>.</p>
+<p>Weighted integrals can be used to compute luminosity-weighted summary
+statistics of a conditional luminosity function. Instead of only counting
+galaxies, the integral can weight each magnitude by a physically meaningful
+quantity.</p>
+<p>For example, the mean luminosity ratio relative to a reference magnitude is</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\left\langle \frac{L}{L_{\rm ref}} \right\rangle(x)
+=
+\frac{
+\int (L/L_{\rm ref}) \Phi(M \mid x)\,\mathrm{d}M
+}{
+\int \Phi(M \mid x)\,\mathrm{d}M
+}.\]</div>
+</div>
 <p>This example uses the <code class="docutils literal notranslate"><span class="pre">lf.integrals</span></code> namespace on a two-component conditional
-luminosity function.</p>
+luminosity function. The numerator is a luminosity-weighted integral and the
+denominator is the number density. Their ratio gives the average luminosity of
+the selected population relative to the chosen reference luminosity.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
@@ -1327,7 +1441,7 @@ luminosity function.</p>
     <span class="n">redshift</span><span class="p">,</span>
     <span class="n">mean_luminosity_ratio</span><span class="p">,</span>
     <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">))[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))[</span><span class="mi">1</span><span class="p">],</span>
 <span class="p">)</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Redshift $z$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
@@ -1338,7 +1452,7 @@ luminosity function.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/4af048698ebacba5d78695ce6426a1ba/conditional_luminosity_function-13.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/4499c37d557719a07b8f9b32fcfdad1e/conditional_luminosity_function-13.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-13.png"><img alt="../_images/conditional_luminosity_function-13.png" class="plot-directive" src="../_images/conditional_luminosity_function-13.png" style="width: 520px;" />
 </a>
@@ -1348,10 +1462,12 @@ luminosity function.</p>
 <h2>Selection-limited conditional number density<a class="headerlink" href="#selection-limited-conditional-number-density" title="Link to this heading"><span>#</span></a></h2>
 <p>The LFKit API can integrate a conditional luminosity function over finite
 magnitude bounds. This is useful for survey-like selections where only galaxies
-brighter than a limiting absolute magnitude contribute to the selected sample.</p>
+brighter than a limiting absolute magnitude contribute to the observed sample.</p>
 <p>Here, the limiting absolute magnitude becomes brighter with redshift. The
-example compares the full number density over a fixed magnitude range with the
-number density brighter than the redshift-dependent limit.</p>
+example compares the full number density over a fixed reference magnitude range
+with the number density brighter than the redshift-dependent limit. The gap
+between the two curves shows how much of the luminosity function is excluded by
+the selection.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
@@ -1390,7 +1506,8 @@ number density brighter than the redshift-dependent limit.</p>
     <span class="n">n_m</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">colors</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.12</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">))</span>
+<span class="n">colors_blue</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="n">colors_red</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">))</span>
 
@@ -1398,18 +1515,19 @@ number density brighter than the redshift-dependent limit.</p>
     <span class="n">redshift</span><span class="p">,</span>
     <span class="n">n_total</span><span class="p">,</span>
     <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">colors_blue</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
     <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Full magnitude range&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
     <span class="n">redshift</span><span class="p">,</span>
     <span class="n">n_selected</span><span class="p">,</span>
     <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">colors_red</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
     <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Brighter than limit&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">1.0e-4</span><span class="p">,</span> <span class="mf">1.0e-1</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Redshift $z$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span>
     <span class="sa">r</span><span class="s2">&quot;Integrated number density [$\mathrm</span><span class="si">{Mpc}</span><span class="s2">^{-3}$]&quot;</span><span class="p">,</span>
@@ -1422,7 +1540,7 @@ number density brighter than the redshift-dependent limit.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/162bcee78dec5918f768da13a198d4f9/conditional_luminosity_function-14.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/08a6ea73df31fc34c6aa963cc4beccd5/conditional_luminosity_function-14.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-14.png"><img alt="../_images/conditional_luminosity_function-14.png" class="plot-directive" src="../_images/conditional_luminosity_function-14.png" style="width: 520px;" />
 </a>
@@ -1432,7 +1550,21 @@ number density brighter than the redshift-dependent limit.</p>
 <h2>Selection fraction<a class="headerlink" href="#selection-fraction" title="Link to this heading"><span>#</span></a></h2>
 <p>The selected fraction is the ratio between the number density brighter than the
 redshift-dependent limiting magnitude and the number density over the full
-reference magnitude range.</p>
+reference magnitude range,</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[f_{\rm selected}(z)
+=
+\frac{
+n(M_{\rm bright} \leq M \leq M_{\rm lim}(z))
+}{
+n(M_{\rm bright} \leq M \leq M_{\rm faint})
+}.\]</div>
+</div>
+<p>This diagnostic compresses the selection effect into a number between zero and
+one. Values close to one mean that most of the reference luminosity function is
+included by the selection. Smaller values mean that the limiting magnitude
+removes a larger fraction of the population.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
@@ -1472,7 +1604,7 @@ reference magnitude range.</p>
 
 <span class="n">selected_fraction</span> <span class="o">=</span> <span class="n">n_selected</span> <span class="o">/</span> <span class="n">n_total</span>
 
-<span class="n">color</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.72</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">color</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">))</span>
 
@@ -1487,7 +1619,7 @@ reference magnitude range.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/c64243fb91c1ccae4fbb118feb7232f3/conditional_luminosity_function-15.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/795cfc3e6f078fbb2f6f64b45fd88131/conditional_luminosity_function-15.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-15.png"><img alt="../_images/conditional_luminosity_function-15.png" class="plot-directive" src="../_images/conditional_luminosity_function-15.png" style="width: 520px;" />
 </a>
@@ -1557,7 +1689,7 @@ reference magnitude range.</p>
 <li><a class="reference internal" href="#lognormal-conditional-component">Lognormal conditional component</a></li>
 <li><a class="reference internal" href="#modified-schechter-conditional-component">Modified Schechter conditional component</a></li>
 <li><a class="reference internal" href="#standard-modified-and-lognormal-component-shapes">Standard, modified, and lognormal component shapes</a></li>
-<li><a class="reference internal" href="#two-component-conditional-luminosity-function">Two-component conditional luminosity function</a></li>
+<li><a class="reference internal" href="#two-component-conditional-lf">Two-component conditional LF</a></li>
 <li><a class="reference internal" href="#two-component-evolution">Two-component evolution</a></li>
 <li><a class="reference internal" href="#integrated-conditional-number-density">Integrated conditional number density</a></li>
 <li><a class="reference internal" href="#component-fractions">Component fractions</a></li>

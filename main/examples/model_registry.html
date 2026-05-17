@@ -216,17 +216,16 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
-<ul class="current">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html"> Installation</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../about/index.html"> About LFKit</a><input aria-label="Toggle navigation of  About LFKit" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../about/corr_overview.html"> Photometric Corrections</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../about/lf_overview.html"> Luminosity Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/corrections_overview.html"> Photometric Corrections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/photometry_overview.html"> Photometry Overview</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html"> Examples</a><input aria-label="Toggle navigation of  Examples" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="api_overview.html"> API overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="luminosity_function_models.html"> Luminosity function models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="magnitude_integrals.html"> Luminosity-function magnitude integrals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="magnitude_integrals.html"> Luminosity function magnitude integrals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="magnitudes_and_luminosities.html"> Magnitudes and luminosities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="redshift_density.html"> LF-weighted redshift density</a></li>
 <li class="toctree-l2"><a class="reference internal" href="catalog_completeness.html"> Catalog completeness</a></li>
@@ -285,6 +284,9 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../citation.html"> Citation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html"> Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html"> License</a></li>
 </ul>
 
 </div>
@@ -339,7 +341,7 @@ valid model names without looking through the implementation modules.</p>
 </div>
 </section>
 <section id="available-apparent-magnitude-models">
-<h2>Available apparent-magnitude models<a class="headerlink" href="#available-apparent-magnitude-models" title="Link to this heading"><span>#</span></a></h2>
+<h2>Available apparent magnitude models<a class="headerlink" href="#available-apparent-magnitude-models" title="Link to this heading"><span>#</span></a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">LuminosityFunction</span>
 
 <span class="n">LuminosityFunction</span><span class="o">.</span><span class="n">available_from_m_models</span><span class="p">()</span>
@@ -430,7 +432,7 @@ valid model names without looking through the implementation modules.</p>
             <ul>
 <li><a class="reference internal" href="#"> Available luminosity function models</a><ul>
 <li><a class="reference internal" href="#available-luminosity-function-models">Available luminosity function models</a></li>
-<li><a class="reference internal" href="#available-apparent-magnitude-models">Available apparent-magnitude models</a></li>
+<li><a class="reference internal" href="#available-apparent-magnitude-models">Available apparent magnitude models</a></li>
 <li><a class="reference internal" href="#available-parameter-models">Available parameter models</a></li>
 <li><a class="reference internal" href="#typical-use">Typical use</a></li>
 </ul>
