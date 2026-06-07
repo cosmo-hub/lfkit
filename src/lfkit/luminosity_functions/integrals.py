@@ -1,4 +1,4 @@
-r"""Luminosity-function integration utilities.
+"""Luminosity-function integration utilities.
 
 This module provides generic numerical integrals of luminosity function
 callables over finite absolute magnitude ranges.
@@ -11,14 +11,21 @@ where ``absolute_mag`` and ``z`` are NumPy arrays that can be broadcast
 together. This keeps the integration machinery independent of any specific
 luminosity function parameterization, catalog selection, or cosmology backend.
 
+The helper ``_bind_lf`` converts model functions with fixed parameters into
+this common callable form. Static luminosity functions that do not depend on
+redshift can be wrapped with ``_bind_static_lf``.
+
 These helpers are intentionally generic. Catalog completeness, LF-dependent
-redshift densities, luminosity-density calculations, and selection-weighted
-integrals can all call this module instead of duplicating magnitude-grid logic.
+redshift densities, luminosity-density calculations, selection fractions, and
+selection-weighted integrals can all call this module instead of duplicating
+magnitude-grid logic.
 """
 
 from __future__ import annotations
 
 from collections.abc import Callable
+from functools import wraps
+from typing import Any
 
 import numpy as np
 
@@ -41,7 +48,105 @@ __all__ = [
     "mean_luminosity",
     "cumulative_number_density",
     "magnitude_window_number_density",
+    "selection_fraction",
+    "cumulative_selection_function",
+    "luminosity_weight",
 ]
+
+__api_aliases__ = {
+    "integrated_number_density": "number_density",
+    "lf_weighted_integral": "weighted",
+    "selection_weighted_number_density": "selection_weighted_number_density",
+    "integrated_luminosity_density": "luminosity_density",
+    "mean_luminosity": "mean_luminosity",
+    "cumulative_number_density": "cumulative_number_density",
+    "magnitude_window_number_density": "magnitude_window_number_density",
+    "selection_fraction": "selection_fraction",
+    "cumulative_selection_function": "selection_function",
+    "luminosity_weight": "luminosity_weight",
+}
+
+
+def _bind_lf(
+    model_fn: Callable[..., FloatArray],
+    /,
+    **params: Any,
+) -> LuminosityFunction:
+    """Bind parameters to a redshift-dependent LF model.
+
+    This converts a model function with signature approximately
+
+    ``model_fn(absolute_mag, z, **params)``
+
+    into the common integration signature
+
+    ``lf(absolute_mag, z)``.
+
+    Args:
+        model_fn: Luminosity-function model callable.
+        **params: Parameters passed to ``model_fn`` every time it is evaluated.
+
+    Returns:
+        Callable with signature ``lf(absolute_mag, z)``.
+
+    Examples:
+        >>> lf = _bind_lf(
+        ...     evolving_schechter,
+        ...     phi_model="linear_p",
+        ...     phi_kwargs={"phi0": 1e-3, "p": 1.0},
+        ...     m_star_model="linear_q",
+        ...     m_star_kwargs={"m0": -21.0, "q": 1.0},
+        ...     alpha_model="constant",
+        ...     alpha_kwargs={"alpha0": -0.9},
+        ... )
+    """
+
+    @wraps(model_fn)
+    def lf(absolute_mag: FloatArray, z: FloatArray) -> FloatArray:
+        return np.asarray(model_fn(absolute_mag, z, **params), dtype=float)
+
+    return lf
+
+
+def _bind_static_lf(
+    model_fn: Callable[..., FloatArray],
+    /,
+    **params: Any,
+) -> LuminosityFunction:
+    """Bind parameters to a redshift-independent LF model.
+
+    This converts a static model function with signature approximately
+
+    ``model_fn(absolute_mag, **params)``
+
+    into the common integration signature
+
+    ``lf(absolute_mag, z)``.
+
+    The redshift argument is accepted but ignored. This lets static and
+    evolving luminosity functions use the same integration API.
+
+    Args:
+        model_fn: Redshift-independent luminosity-function model callable.
+        **params: Parameters passed to ``model_fn`` every time it is evaluated.
+
+    Returns:
+        Callable with signature ``lf(absolute_mag, z)``.
+
+    Examples:
+        >>> lf = _bind_static_lf(
+        ...     schechter,
+        ...     phi_star=1e-3,
+        ...     m_star=-21.0,
+        ...     alpha=-0.9,
+        ... )
+    """
+
+    @wraps(model_fn)
+    def lf(absolute_mag: FloatArray, _z: FloatArray) -> FloatArray:
+        return np.asarray(model_fn(absolute_mag, **params), dtype=float)
+
+    return lf
 
 
 def integrated_number_density(
@@ -91,7 +196,7 @@ def lf_weighted_integral(
     weight_fn: Callable[[FloatArray, FloatArray], FloatArray],
     n_m: int = 512,
 ) -> FloatArray:
-    r"""Return a weighted luminosity function integral.
+    r"""Return a weighted luminosity-function integral.
 
     This computes
 
@@ -164,6 +269,40 @@ def selection_weighted_number_density(
     )
 
 
+def luminosity_weight(
+    absolute_mag: FloatInput,
+    _z: FloatInput | None = None,
+    *,
+    m_reference: float = 0.0,
+) -> FloatArray:
+    r"""Return relative luminosity weights for absolute magnitudes.
+
+    This evaluates
+
+    .. math::
+
+        L(M) / L_{\mathrm{ref}} =
+        10^{-0.4(M - M_{\mathrm{ref}})}.
+
+    Args:
+        absolute_mag: Absolute magnitude value(s).
+        _z: Optional redshift argument, accepted for compatibility with
+            weight callables of signature ``weight_fn(M, z)``.
+        m_reference: Reference absolute magnitude defining the luminosity unit.
+
+    Returns:
+        NumPy array of relative luminosity weights.
+    """
+    if not np.isfinite(m_reference):
+        raise ValueError("m_reference must be finite.")
+
+    absolute_mag_arr = validate_array(absolute_mag, name="absolute_mag")
+    weight = 10.0 ** (-0.4 * (absolute_mag_arr - m_reference))
+    weight = np.clip(weight, 1e-300, 1e300)
+
+    return np.asarray(weight, dtype=float)
+
+
 def integrated_luminosity_density(
     z: FloatInput,
     lf: LuminosityFunction,
@@ -202,22 +341,23 @@ def integrated_luminosity_density(
         NumPy array of luminosity densities in units of the reference
         luminosity.
     """
-    if not np.isfinite(m_reference):
-        raise ValueError("m_reference must be finite.")
 
-    def luminosity_weight(
+    def weight_fn(
         absolute_mag: FloatArray,
-        _redshift: FloatArray,
+        redshift: FloatArray,
     ) -> FloatArray:
-        """Return relative luminosity weights for absolute magnitudes."""
-        return np.asarray(10.0 ** (-0.4 * (absolute_mag - m_reference)), dtype=float)
+        return luminosity_weight(
+            absolute_mag,
+            redshift,
+            m_reference=m_reference,
+        )
 
     return lf_weighted_integral(
         z,
         lf,
         m_bright=m_bright,
         m_faint=m_faint,
-        weight_fn=luminosity_weight,
+        weight_fn=weight_fn,
         n_m=n_m,
     )
 
@@ -256,7 +396,7 @@ def mean_luminosity(
         NumPy array of mean luminosities. Entries are zero where the integrated
         number density is zero.
     """
-    luminosity_density = integrated_luminosity_density(
+    luminosity_density_arr = integrated_luminosity_density(
         z,
         lf,
         m_bright=m_bright,
@@ -264,7 +404,7 @@ def mean_luminosity(
         m_reference=m_reference,
         n_m=n_m,
     )
-    number_density = integrated_number_density(
+    number_density_arr = integrated_number_density(
         z,
         lf,
         m_bright=m_bright,
@@ -272,7 +412,7 @@ def mean_luminosity(
         n_m=n_m,
     )
 
-    return safe_divide(luminosity_density, number_density)
+    return safe_divide(luminosity_density_arr, number_density_arr)
 
 
 def cumulative_number_density(
@@ -342,6 +482,142 @@ def cumulative_number_density(
         m_upper=m_upper,
         n_m=n_m,
     )
+
+
+def selection_fraction(
+    z: FloatInput,
+    lf: LuminosityFunction,
+    *,
+    m_selected_bright: FloatInput,
+    m_selected_faint: FloatInput,
+    m_total_bright: FloatInput,
+    m_total_faint: FloatInput,
+    n_m: int = 512,
+) -> FloatArray:
+    r"""Return the fraction of LF number density inside a selected window.
+
+    This computes
+
+    .. math::
+
+        f_{\mathrm{sel}}(z) =
+        \frac{
+            \int_{M_{\mathrm{sel,bright}}}^{M_{\mathrm{sel,faint}}}
+            \phi(M,z)\,dM
+        }{
+            \int_{M_{\mathrm{tot,bright}}}^{M_{\mathrm{tot,faint}}}
+            \phi(M,z)\,dM
+        }.
+
+    This is the generic numerical analogue of model-specific analytic
+    selection functions. It works for any luminosity-function callable with
+    signature ``lf(M, z)``.
+
+    Args:
+        z: Redshift value or array-like of redshift values.
+        lf: Luminosity-function callable with signature ``lf(M, z)``.
+        m_selected_bright: Bright bound of the selected magnitude window.
+        m_selected_faint: Faint bound of the selected magnitude window.
+        m_total_bright: Bright bound of the reference total window.
+        m_total_faint: Faint bound of the reference total window.
+        n_m: Number of magnitude-grid points used for each integral.
+
+    Returns:
+        NumPy array of selected fractions. Entries are zero where the total
+        number density is zero.
+    """
+    selected = integrated_number_density(
+        z,
+        lf,
+        m_bright=m_selected_bright,
+        m_faint=m_selected_faint,
+        n_m=n_m,
+    )
+    total = integrated_number_density(
+        z,
+        lf,
+        m_bright=m_total_bright,
+        m_faint=m_total_faint,
+        n_m=n_m,
+    )
+
+    return safe_divide(selected, total)
+
+
+def cumulative_selection_function(
+    z: FloatInput,
+    lf: LuminosityFunction,
+    *,
+    m_threshold: FloatInput,
+    m_bright: FloatInput,
+    m_faint: FloatInput,
+    brighter_than: bool = True,
+    n_m: int = 512,
+) -> FloatArray:
+    r"""Return the cumulative LF selection fraction around a threshold.
+
+    This computes the cumulative number density brighter or fainter than a
+    threshold divided by the total number density in the supplied reference
+    magnitude range.
+
+    If ``brighter_than`` is True,
+
+    .. math::
+
+        S(z) =
+        \frac{
+            \int_{M_{\mathrm{bright}}}^{\min(M_{\mathrm{thr}},M_{\mathrm{faint}})}
+            \phi(M,z)\,dM
+        }{
+            \int_{M_{\mathrm{bright}}}^{M_{\mathrm{faint}}}
+            \phi(M,z)\,dM
+        }.
+
+    If ``brighter_than`` is False,
+
+    .. math::
+
+        S(z) =
+        \frac{
+            \int_{\max(M_{\mathrm{thr}},M_{\mathrm{bright}})}^{M_{\mathrm{faint}}}
+            \phi(M,z)\,dM
+        }{
+            \int_{M_{\mathrm{bright}}}^{M_{\mathrm{faint}}}
+            \phi(M,z)\,dM
+        }.
+
+    Args:
+        z: Redshift value or array-like of redshift values.
+        lf: Luminosity-function callable with signature ``lf(M, z)``.
+        m_threshold: Absolute magnitude threshold.
+        m_bright: Bright absolute magnitude bound of the reference window.
+        m_faint: Faint absolute magnitude bound of the reference window.
+        brighter_than: If True, return the brighter-than-threshold fraction.
+            If False, return the fainter-than-threshold fraction.
+        n_m: Number of magnitude-grid points used for each integral.
+
+    Returns:
+        NumPy array of cumulative selection fractions. Entries are zero where
+        the total number density is zero.
+    """
+    selected = cumulative_number_density(
+        z,
+        lf,
+        m_threshold=m_threshold,
+        m_bright=m_bright,
+        m_faint=m_faint,
+        brighter_than=brighter_than,
+        n_m=n_m,
+    )
+    total = integrated_number_density(
+        z,
+        lf,
+        m_bright=m_bright,
+        m_faint=m_faint,
+        n_m=n_m,
+    )
+
+    return safe_divide(selected, total)
 
 
 def magnitude_window_number_density(

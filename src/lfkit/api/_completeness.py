@@ -5,13 +5,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from lfkit.api._expose import expose_lf_function
-from lfkit.photometry.catalog_completeness import (
-    absolute_magnitude_limit,
-    catalog_completeness_fraction,
-    missing_number_density,
-    observed_number_density,
-    out_of_catalog_fraction,
-)
+from lfkit.luminosity_functions import completeness as lf_completeness
 
 if TYPE_CHECKING:
     from lfkit.api.luminosity_function import LuminosityFunction
@@ -28,24 +22,19 @@ class LFCompletenessAPI:
         self.lf = lf
 
 
-_COMPLETENESS_METHODS = {
-    "observed_number_density": observed_number_density,
-    "missing_number_density": missing_number_density,
-    "catalog_fraction": catalog_completeness_fraction,
-    "out_of_catalog_fraction": out_of_catalog_fraction,
-}
+for function_name in lf_completeness.__all__:
+    function = getattr(lf_completeness, function_name)
 
+    if function_name == "absolute_magnitude_limit":
+        setattr(LFCompletenessAPI, function_name, staticmethod(function))
+        continue
 
-for method_name, function in _COMPLETENESS_METHODS.items():
     setattr(
         LFCompletenessAPI,
-        method_name,
+        function_name,
         expose_lf_function(
             function,
             lf_arg_position=None,
             lf_arg_name="lf",
         ),
     )
-
-
-LFCompletenessAPI.absolute_magnitude_limit = staticmethod(absolute_magnitude_limit)

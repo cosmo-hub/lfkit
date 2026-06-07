@@ -4,7 +4,7 @@ import numpy as np
 import pytest
 
 from lfkit.photometry.luminosities import  luminosity_ratio
-from lfkit.photometry.luminosity_function import (
+from lfkit.luminosity_functions.models.schechter import (
     schechter,
     evolving_schechter,
     double_schechter,

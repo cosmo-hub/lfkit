@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from lfkit.api._expose import expose_lf_function
-from lfkit.photometry.lf_redshift_density import (
+from lfkit.luminosity_functions.redshift_density import (
     lf_integrated_number_density,
     lf_weighted_redshift_density,
 )

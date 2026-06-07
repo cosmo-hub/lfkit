@@ -3,7 +3,7 @@
 import numpy as np
 import pytest
 
-import lfkit.photometry.catalog_completeness as cc
+import lfkit.luminosity_functions.completeness as cc
 
 
 def constant_lf(m_abs: np.ndarray, z: np.ndarray) -> np.ndarray:
@@ -236,7 +236,7 @@ def test_missing_number_density_rejects_invalid_magnitude_range() -> None:
         )
 
 
-def test_catalog_completeness_fraction_returns_observed_fraction(
+def test_catalog_fraction_returns_observed_fraction(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """Tests that catalog completeness returns observed over total density."""
@@ -246,7 +246,7 @@ def test_catalog_completeness_fraction_returns_observed_fraction(
         lambda *args, **kwargs: np.array([-21.0, -19.0]),
     )
 
-    result = cc.catalog_completeness_fraction(
+    result = cc.catalog_fraction(
         object(),
         [0.1, 0.2],
         constant_lf,
@@ -306,7 +306,7 @@ def test_observed_number_density_accepts_scalar_redshift(
     assert result == pytest.approx(3.0)
 
 
-def test_catalog_completeness_fraction_returns_zero_for_zero_total_density(
+def test_catalog_fraction_returns_zero_for_zero_total_density(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """Tests that completeness is zero when total density is zero."""
@@ -320,7 +320,7 @@ def test_catalog_completeness_fraction_returns_zero_for_zero_total_density(
         lambda *args, **kwargs: np.array([-21.0, -19.0]),
     )
 
-    result = cc.catalog_completeness_fraction(
+    result = cc.catalog_fraction(
         object(),
         [0.1, 0.2],
         zero_lf,
@@ -343,7 +343,7 @@ def test_completeness_and_out_of_catalog_fractions_sum_to_one(
         lambda *args, **kwargs: np.array([-21.0, -19.0]),
     )
 
-    completeness = cc.catalog_completeness_fraction(
+    completeness = cc.catalog_fraction(
         object(),
         [0.1, 0.2],
         constant_lf,

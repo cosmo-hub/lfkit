@@ -1,24 +1,19 @@
-lfkit.corrections package
-=========================
-
-Submodules
-----------
-
-.. toctree::
-   :maxdepth: 2
-
-   lfkit.corrections.color_anchors
-   lfkit.corrections.filters
-   lfkit.corrections.kcorrect_backend
-   lfkit.corrections.kcorrect_from_color
-   lfkit.corrections.kcorrect_grids
-   lfkit.corrections.poggianti1997
-   lfkit.corrections.responses
-
-Module contents
----------------
+lfkit.corrections
+=================
 
 .. automodule:: lfkit.corrections
-   :members:
-   :show-inheritance:
-   :undoc-members:
+
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   color_anchors
+   filters
+   kcorrect_backend
+   kcorrect_from_color
+   kcorrect_grids
+   poggianti1997
+   responses

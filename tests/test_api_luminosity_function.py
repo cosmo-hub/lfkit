@@ -7,13 +7,16 @@ physics, which is covered by the lower-level photometry tests.
 
 from __future__ import annotations
 
-import numpy as np
+import inspect
 import pytest
+
+import numpy as np
 
 import pyccl as ccl
 
 from lfkit.api._expose import expose_lf_function
 from lfkit.api.luminosity_function import LuminosityFunction
+from lfkit.luminosity_functions.registry import LF_MODELS
 
 
 def make_test_cosmology():
@@ -404,18 +407,92 @@ def test_luminosities_namespace_exposes_expected_methods():
         alpha=-1.1,
     )
 
-    expected = [
+    expected_methods = [
         "ratio",
         "ratio_from_magnitudes",
         "magnitude_difference_from_ratio",
         "weight_from_magnitude",
         "from_magnitude",
-        "schechter_cumulative_number_density",
-        "schechter_luminosity_density",
-        "schechter_mean_luminosity",
-        "sample_schechter",
-        "schechter_selection",
     ]
 
-    for name in expected:
+    for name in expected_methods:
         assert callable(getattr(lf.luminosities, name))
+
+
+def test_integrals_namespace_exposes_expected_methods():
+    lf = LuminosityFunction.schechter(
+        phi_star=1.0e-3,
+        m_star=-20.5,
+        alpha=-1.1,
+    )
+
+    expected_methods = [
+        "number_density",
+        "weighted",
+        "selection_weighted_number_density",
+        "luminosity_density",
+        "mean_luminosity",
+        "cumulative_number_density",
+        "magnitude_window_number_density",
+        "selection_fraction",
+        "selection_function",
+        "luminosity_weight",
+    ]
+
+    for name in expected_methods:
+        assert callable(getattr(lf.integrals, name))
+
+
+def _minimal_parameter_payload(function):
+    payload = {}
+
+    for name, parameter in inspect.signature(function).parameters.items():
+        if name in {"absolute_mag", "z"}:
+            continue
+
+        if parameter.default is not inspect.Parameter.empty:
+            continue
+
+        if "phi" in name:
+            payload[name] = 1.0e-3
+        elif "m_star" in name or "mag" in name:
+            payload[name] = -20.5
+        elif name in {"alpha", "beta"}:
+            payload[name] = -1.1
+        elif "sigma" in name:
+            payload[name] = 0.2
+        elif "amplitude" in name:
+            payload[name] = 1.0
+        elif "fraction" in name:
+            payload[name] = 0.5
+        elif name == "m_transition":
+            payload[name] = -19.5
+        else:
+            pytest.skip(f"No test default for required parameter {name!r}")
+
+    return payload
+
+
+@pytest.mark.parametrize("model_name", sorted(LF_MODELS))
+def test_registered_luminosity_function_models_expose_generic_integrals(model_name):
+    model_spec = LF_MODELS[model_name]
+
+    lf = getattr(LuminosityFunction, model_name)(
+        **_minimal_parameter_payload(model_spec.function)
+    )
+
+    expected_methods = [
+        "number_density",
+        "weighted",
+        "selection_weighted_number_density",
+        "luminosity_density",
+        "mean_luminosity",
+        "cumulative_number_density",
+        "magnitude_window_number_density",
+        "selection_fraction",
+        "selection_function",
+        "luminosity_weight",
+    ]
+
+    for name in expected_methods:
+        assert callable(getattr(lf.integrals, name))

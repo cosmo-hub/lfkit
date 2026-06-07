@@ -1,7 +1,17 @@
-lfkit.corrections.filters module
-================================
+lfkit.corrections.filters
+=========================
 
 .. automodule:: lfkit.corrections.filters
-   :members:
-   :show-inheritance:
-   :undoc-members:
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      list_supported
+      make_response_map
+      normalize_band
+      normalize_filterset
+      resolve_response_name
+      validate_coverage
+   

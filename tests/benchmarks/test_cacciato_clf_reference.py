@@ -14,10 +14,10 @@ For more information, see https://arxiv.org/abs/1207.0503.
 import numpy as np
 import pytest
 
-from lfkit.photometry.conditional_lf_models import (
-    lognormal_conditional_lf,
-    modified_schechter_conditional_lf,
-    two_component_conditional_lf,
+from lfkit.luminosity_functions.conditional_models import (
+    conditional_lognormal_lf,
+    conditional_modified_schechter,
+    conditional_two_component_lf,
 )
 from lfkit.photometry.luminosities import magnitude_difference_from_luminosity_ratio
 
@@ -106,7 +106,7 @@ def test_cacciato_central_lognormal_matches_reference_formula() -> None:
         gamma2=0.245,
     )
 
-    result = lognormal_conditional_lf(
+    result = conditional_lognormal_lf(
         absolute_mag=absolute_mag,
         condition=log_halo_mass,
         mean_absolute_mag=mean_absolute_mag,
@@ -146,7 +146,7 @@ def test_cacciato_satellite_modified_schechter_matches_reference_formula() -> No
         b2=-0.217,
     )
 
-    result = modified_schechter_conditional_lf(
+    result = conditional_modified_schechter(
         absolute_mag=absolute_mag,
         condition=log_halo_mass,
         phi_star=phi_star,
@@ -184,7 +184,7 @@ def test_cacciato_central_satellite_matches_sum_of_components() -> None:
         b2=-0.217,
     )
 
-    result = two_component_conditional_lf(
+    result = conditional_two_component_lf(
         absolute_mag=absolute_mag,
         condition=log_halo_mass,
         lognormal_mean_absolute_mag=central_mag,

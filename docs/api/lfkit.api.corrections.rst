@@ -1,7 +1,12 @@
-lfkit.api.corrections module
-============================
+lfkit.api.corrections
+=====================
 
 .. automodule:: lfkit.api.corrections
-   :members:
-   :show-inheritance:
-   :undoc-members:
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Corrections
+   

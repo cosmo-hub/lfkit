@@ -3,7 +3,7 @@
 import numpy as np
 import pytest
 
-import lfkit.photometry.lf_integrals as li
+import lfkit.luminosity_functions.integrals as li
 
 
 def constant_lf(m_abs: np.ndarray, z: np.ndarray) -> np.ndarray:
@@ -604,3 +604,213 @@ def test_magnitude_window_number_density_applies_k_and_e_corrections() -> None:
     )
 
     np.testing.assert_allclose(result, np.array([5.5, 5.5]))
+
+
+def test_luminosity_weight_matches_expected_scaling() -> None:
+    """Tests that luminosity weights follow the expected magnitude scaling."""
+    magnitudes = np.array([0.0, 2.5, 5.0])
+    result = li.luminosity_weight(magnitudes)
+    expected = np.array([1.0, 0.1, 0.01])
+    np.testing.assert_allclose(result, expected)
+
+
+def test_luminosity_weight_respects_reference_magnitude() -> None:
+    """Tests that the reference magnitude shifts the luminosity zero-point."""
+    result = li.luminosity_weight(
+        np.array([1.0, 2.0]),
+        m_reference=1.0,
+    )
+    expected = np.array([1.0, 10.0 ** (-0.4)])
+    np.testing.assert_allclose(result, expected)
+
+
+def test_luminosity_weight_rejects_nonfinite_reference() -> None:
+    """Tests that non-finite luminosity-weight references raise ValueError."""
+    with pytest.raises(ValueError, match="m_reference must be finite"):
+        li.luminosity_weight(-20.0, m_reference=np.nan)
+
+
+def test_selection_fraction_returns_selected_over_total_density() -> None:
+    """Tests that selection fraction returns selected density over total density."""
+    result = li.selection_fraction(
+        [0.1, 0.2],
+        constant_lf,
+        m_selected_bright=-22.0,
+        m_selected_faint=-18.0,
+        m_total_bright=-24.0,
+        m_total_faint=-18.0,
+        n_m=64,
+    )
+
+    np.testing.assert_allclose(result, np.array([4.0 / 6.0, 4.0 / 6.0]))
+
+
+def test_selection_fraction_supports_redshift_dependent_bounds() -> None:
+    """Tests that selection fraction supports redshift-dependent windows."""
+    result = li.selection_fraction(
+        [0.1, 0.2, 0.3],
+        constant_lf,
+        m_selected_bright=np.array([-23.0, -22.0, -21.0]),
+        m_selected_faint=-18.0,
+        m_total_bright=-24.0,
+        m_total_faint=-18.0,
+        n_m=64,
+    )
+
+    np.testing.assert_allclose(result, np.array([5.0 / 6.0, 4.0 / 6.0, 3.0 / 6.0]))
+
+
+def test_selection_fraction_returns_zero_for_zero_total_density() -> None:
+    """Tests that selection fraction is zero when total density is zero."""
+    result = li.selection_fraction(
+        [0.1, 0.2],
+        zero_lf,
+        m_selected_bright=-22.0,
+        m_selected_faint=-18.0,
+        m_total_bright=-24.0,
+        m_total_faint=-18.0,
+        n_m=64,
+    )
+
+    np.testing.assert_allclose(result, np.array([0.0, 0.0]))
+
+
+def test_cumulative_selection_function_brighter_than_threshold() -> None:
+    """Tests that brighter-than selection equals cumulative over total density."""
+    result = li.cumulative_selection_function(
+        [0.1, 0.2],
+        constant_lf,
+        m_threshold=-21.0,
+        m_bright=-24.0,
+        m_faint=-18.0,
+        brighter_than=True,
+        n_m=64,
+    )
+
+    np.testing.assert_allclose(result, np.array([0.5, 0.5]))
+
+
+def test_cumulative_selection_function_fainter_than_threshold() -> None:
+    """Tests that fainter-than selection equals cumulative over total density."""
+    result = li.cumulative_selection_function(
+        [0.1, 0.2],
+        constant_lf,
+        m_threshold=-21.0,
+        m_bright=-24.0,
+        m_faint=-18.0,
+        brighter_than=False,
+        n_m=64,
+    )
+
+    np.testing.assert_allclose(result, np.array([0.5, 0.5]))
+
+
+def test_cumulative_selection_function_is_one_for_faint_brighter_than_cut() -> None:
+    """Tests that brighter-than selection is one for a cut past the faint bound."""
+    result = li.cumulative_selection_function(
+        [0.1, 0.2],
+        constant_lf,
+        m_threshold=-17.0,
+        m_bright=-24.0,
+        m_faint=-18.0,
+        brighter_than=True,
+        n_m=64,
+    )
+
+    np.testing.assert_allclose(result, np.array([1.0, 1.0]))
+
+
+def test_cumulative_selection_function_is_zero_for_bright_brighter_than_cut() -> None:
+    """Tests that brighter-than selection is zero for a cut past the bright bound."""
+    result = li.cumulative_selection_function(
+        [0.1, 0.2],
+        constant_lf,
+        m_threshold=-25.0,
+        m_bright=-24.0,
+        m_faint=-18.0,
+        brighter_than=True,
+        n_m=64,
+    )
+
+    np.testing.assert_allclose(result, np.array([0.0, 0.0]))
+
+
+def test_cumulative_selection_function_supports_array_thresholds() -> None:
+    """Tests that cumulative selection supports redshift-dependent thresholds."""
+    result = li.cumulative_selection_function(
+        [0.1, 0.2, 0.3],
+        constant_lf,
+        m_threshold=np.array([-22.0, -21.0, -20.0]),
+        m_bright=-24.0,
+        m_faint=-18.0,
+        brighter_than=True,
+        n_m=64,
+    )
+
+    np.testing.assert_allclose(result, np.array([2.0 / 6.0, 3.0 / 6.0, 4.0 / 6.0]))
+
+
+def test_cumulative_selection_function_returns_zero_for_zero_total_density() -> None:
+    """Tests that cumulative selection is zero when total density is zero."""
+    result = li.cumulative_selection_function(
+        [0.1, 0.2],
+        zero_lf,
+        m_threshold=-21.0,
+        m_bright=-24.0,
+        m_faint=-18.0,
+        brighter_than=True,
+        n_m=64,
+    )
+
+    np.testing.assert_allclose(result, np.array([0.0, 0.0]))
+
+
+def test_private_bind_static_lf_wraps_redshift_independent_model() -> None:
+    """Tests that static LF binding ignores redshift and preserves parameters."""
+
+    def static_model(m_abs: np.ndarray, *, amplitude: float) -> np.ndarray:
+        """Return a static constant LF."""
+        return amplitude * np.ones_like(m_abs, dtype=float)
+
+    lf = li._bind_static_lf(static_model, amplitude=3.0)
+
+    result = li.integrated_number_density(
+        [0.1, 0.2],
+        lf,
+        m_bright=-24.0,
+        m_faint=-18.0,
+        n_m=64,
+    )
+
+    np.testing.assert_allclose(result, np.array([18.0, 18.0]))
+
+
+def test_private_bind_lf_wraps_redshift_dependent_model() -> None:
+    """Tests that LF binding passes redshift and preserves parameters."""
+
+    def evolving_model(
+        m_abs: np.ndarray,
+        z: np.ndarray,
+        *,
+        amplitude: float,
+    ) -> np.ndarray:
+        """Return a redshift-dependent constant LF."""
+        return amplitude * (1.0 + z) * np.ones_like(m_abs, dtype=float)
+
+    lf = li._bind_lf(evolving_model, amplitude=2.0)
+
+    result = li.integrated_number_density(
+        [0.0, 1.0],
+        lf,
+        m_bright=-24.0,
+        m_faint=-18.0,
+        n_m=64,
+    )
+
+    np.testing.assert_allclose(result, np.array([12.0, 24.0]))
+
+
+def test_api_aliases_cover_public_exports() -> None:
+    """Tests that public integral functions are included in API aliases."""
+    missing_aliases = set(li.__all__) - set(li.__api_aliases__)
+    assert missing_aliases == set()

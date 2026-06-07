@@ -25,7 +25,7 @@ from collections.abc import Callable
 
 import numpy as np
 
-from lfkit.photometry.lf_integrals import integrated_number_density
+from lfkit.luminosity_functions.integrals import integrated_number_density
 from lfkit.photometry.magnitudes import absolute_magnitude_from_luminosity_distance
 from lfkit.utils.evaluators import (
     evaluate_non_negative_redshift_callable,

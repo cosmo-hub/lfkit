@@ -2,8 +2,8 @@
    :alt: LFKit logo
    :width: 50px
 
-|lfkitlogo| Luminosity function magnitude integrals
-===================================================
+|lfkitlogo| Magnitude integrals
+===============================
 
 This page shows how to integrate a bound
 :class:`lfkit.LuminosityFunction` over absolute magnitude.

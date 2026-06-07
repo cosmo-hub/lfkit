@@ -3,7 +3,7 @@
 import numpy as np
 import pytest
 
-import lfkit.photometry.lf_redshift_density as lfrd
+import lfkit.luminosity_functions.redshift_density as lfrd
 
 
 M_LIM = 26.0

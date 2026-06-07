@@ -3,7 +3,7 @@
 import numpy as np
 import pytest
 
-from lfkit.photometry.conditional_lf_integrals import (
+from lfkit.luminosity_functions.conditional_integrals import (
     evaluate_conditional_luminosity_function,
     integrate_conditional_luminosity_function,
     integrate_weighted_conditional_luminosity_function,

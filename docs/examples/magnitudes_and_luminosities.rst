@@ -5,8 +5,8 @@
 |lfkitlogo| Magnitudes and luminosities
 =======================================
 
-This page shows magnitude and luminosity helper examples for
-:class:`lfkit.LuminosityFunction`.
+This page shows the public magnitude and luminosity helper namespaces attached
+to :class:`lfkit.LuminosityFunction`.
 
 The examples use the ``lf.magnitudes`` and ``lf.luminosities`` namespaces, plus
 :meth:`lfkit.LuminosityFunction.phi_from_m` for evaluating a luminosity function

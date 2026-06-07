@@ -25,9 +25,8 @@ mass, or another quantity.
 
 LFKit exposes conditional luminosity functions through
 :class:`lfkit.ConditionalLuminosityFunction`. Each constructor returns a
-:class:`lfkit.LuminosityFunction` object, so the resulting model can be
-evaluated with ``lf.phi`` and integrated with the usual ``lf.integrals``
-namespace.
+luminosity-function object that can be evaluated with
+``lf.phi`` and integrated through the usual ``lf.integrals`` namespace.
 
 The examples below use redshift as the conditioning variable because this is
 the most common use case for luminosity function evolution. In that case,
@@ -38,7 +37,7 @@ variable by replacing ``z`` with the desired quantity.
 The examples include:
 
 * a conditional Schechter luminosity function,
-* a conditional Schechter model using LFKit parameter models,
+* a conditional Schechter model using callable parameter evolution,
 * a lognormal component,
 * a modified Schechter-like component,
 * a two-component lognormal plus modified-Schechter model,
@@ -205,19 +204,15 @@ problem with the chosen parameterization or redshift dependence.
    plt.tight_layout()
 
 
-Conditional Schechter model with LFKit parameter models
--------------------------------------------------------
+Conditional Schechter model with callable parameter evolution
+-------------------------------------------------------------
 
-LFKit can also build conditional Schechter models from its registered parameter
-models. This is useful when the desired evolution follows one of the standard
-forms already available in LFKit, rather than being written manually as a
-callable.
+LFKit can build conditional Schechter models by passing callables for any
+parameter that should depend on the conditioning variable.
 
-Here, the normalization and characteristic magnitude evolve with the
-conditioning variable, while the faint-end slope is constant. The result is
-equivalent in spirit to the previous example, but the parameter evolution is
-defined through named LFKit models. This makes the model easier to reproduce,
-configure, and document.
+Here, the normalization and characteristic magnitude evolve with redshift, while
+the faint-end slope is constant. This makes the model easy to write directly
+without using a separate named parameter model.
 
 .. plot::
    :include-source: True
@@ -243,13 +238,10 @@ configure, and document.
        cmap_range=(0.0, 0.2),
    )
 
-   lf = ConditionalLuminosityFunction.evolving_schechter(
-       phi_model="linear_p",
-       phi_kwargs={"phi_0_star": 1.0e-3, "p": 0.7},
-       m_star_model="linear_q",
-       m_star_kwargs={"m_0_star": -20.5, "q": 0.8, "z_ref": 0.1},
-       alpha_model="constant",
-       alpha_kwargs={"alpha": -1.1},
+   lf = ConditionalLuminosityFunction.schechter(
+       phi_star=lambda z: 1.0e-3 * (1.0 + z) ** 0.7,
+       m_star=lambda z: -20.5 - 0.8 * (z - 0.1),
+       alpha=-1.1,
    )
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
@@ -274,7 +266,7 @@ configure, and document.
        r"$\Phi(M \mid z)$ [$\mathrm{Mpc}^{-3}\,\mathrm{mag}^{-1}$]",
        fontsize=LABEL_SIZE,
    )
-   ax.set_title("Conditional evolving Schechter model", fontsize=TITLE_SIZE)
+   ax.set_title("Conditional Schechter model", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
    ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="best")
 

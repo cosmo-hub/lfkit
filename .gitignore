@@ -1,14 +1,19 @@
-.idea
-*__pycache__
+.idea/
+__pycache__/
+*.py[cod]
 logs/
 plots_tests/
-*.egg-info
-venv
-build
-dist
-.tox
-.cache
-docs/_build
+venv/
+.tox/
+.cache/
+
+docs/_build/
+docs/_generated/
+
+*.egg-info/
+.eggs/
+build/
+dist/
 
 # Notebooks
 *.ipynb
@@ -17,6 +22,7 @@ notebooks/
 notebooks/plots/*.png
 notebooks/plots/*.pdf
 notebooks/logs/
-docs/_generated/
+
 unused/
 src/lfkit/_version.py
+.DS_Store

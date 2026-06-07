@@ -22,7 +22,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from lfkit.photometry.lf_integrals import (
+from lfkit.luminosity_functions.integrals import (
     integrated_number_density as _integrated_number_density,
 )
 from lfkit.photometry.magnitudes import absolute_magnitude
@@ -39,7 +39,7 @@ __all__ = [
     "absolute_magnitude_limit",
     "observed_number_density",
     "missing_number_density",
-    "catalog_completeness_fraction",
+    "catalog_fraction",
     "out_of_catalog_fraction",
 ]
 
@@ -221,7 +221,7 @@ def missing_number_density(
     )
 
 
-def catalog_completeness_fraction(
+def catalog_fraction(
     cosmo_obj: Cosmology,
     z: FloatInput,
     lf: LuminosityFunction,
@@ -326,7 +326,7 @@ def out_of_catalog_fraction(
     Returns:
         NumPy array of out-of-catalog fractions.
     """
-    completeness = catalog_completeness_fraction(
+    completeness = catalog_fraction(
         cosmo_obj,
         z,
         lf,

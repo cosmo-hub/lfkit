@@ -14,10 +14,10 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from lfkit.photometry.conditional_lf_models import (
-    lognormal_conditional_lf,
-    modified_schechter_conditional_lf,
-    two_component_conditional_lf,
+from lfkit.luminosity_functions.conditional_models import (
+    conditional_lognormal_lf,
+    conditional_modified_schechter,
+    conditional_two_component_lf,
 )
 from lfkit.photometry.luminosities import (
     magnitude_difference_from_luminosity_ratio,
@@ -147,7 +147,7 @@ def test_lfkit_cacciato_central_occupation_matches_luminosity_reference() -> Non
 
     central_mag = magnitude_from_luminosity_ratio(cacciato_lc(halo_mass))
 
-    lfkit_clf = lognormal_conditional_lf(
+    lfkit_clf = conditional_lognormal_lf(
         absolute_mag=magnitude_grid.reshape(1, -1),
         condition=np.log10(halo_mass).reshape(-1, 1),
         mean_absolute_mag=central_mag.reshape(-1, 1),
@@ -183,7 +183,7 @@ def test_lfkit_cacciato_satellite_occupation_matches_luminosity_reference() -> N
     satellite_m_star = central_mag + magnitude_difference_from_luminosity_ratio(0.562)
     phi_star = cacciato_phi_star_satellite(halo_mass)
 
-    lfkit_clf = modified_schechter_conditional_lf(
+    lfkit_clf = conditional_modified_schechter(
         absolute_mag=magnitude_grid.reshape(1, -1),
         condition=np.log10(halo_mass).reshape(-1, 1),
         phi_star=phi_star.reshape(-1, 1),
@@ -226,7 +226,7 @@ def test_lfkit_cacciato_total_occupation_matches_luminosity_reference() -> None:
     central_mag = magnitude_from_luminosity_ratio(cacciato_lc(halo_mass))
     phi_star = cacciato_phi_star_satellite(halo_mass)
 
-    lfkit_clf = two_component_conditional_lf(
+    lfkit_clf = conditional_two_component_lf(
         absolute_mag=magnitude_grid.reshape(1, -1),
         condition=np.log10(halo_mass).reshape(-1, 1),
         lognormal_mean_absolute_mag=central_mag.reshape(-1, 1),

@@ -7,8 +7,8 @@ from importlib.resources import files
 import numpy as np
 import pyccl as ccl
 
-from lfkit.photometry.catalog_completeness import (
-    catalog_completeness_fraction,
+from lfkit.luminosity_functions.completeness import (
+    catalog_fraction,
     missing_number_density,
     observed_number_density,
     out_of_catalog_fraction,
@@ -73,7 +73,7 @@ def test_completeness_fraction_on_fake_catalog_redshifts() -> None:
 
     z = np.asarray(catalog["z"], dtype=float)
 
-    completeness = catalog_completeness_fraction(
+    completeness = catalog_fraction(
         cosmo,
         z,
         toy_luminosity_function,
@@ -96,7 +96,7 @@ def test_observed_and_missing_fractions_sum_to_one() -> None:
 
     z = np.asarray(catalog["z"], dtype=float)
 
-    completeness = catalog_completeness_fraction(
+    completeness = catalog_fraction(
         cosmo,
         z,
         toy_luminosity_function,
@@ -130,7 +130,7 @@ def test_deeper_catalog_limit_increases_completeness() -> None:
 
     z = np.asarray(catalog["z"], dtype=float)
 
-    shallow = catalog_completeness_fraction(
+    shallow = catalog_fraction(
         cosmo,
         z,
         toy_luminosity_function,
@@ -139,7 +139,7 @@ def test_deeper_catalog_limit_increases_completeness() -> None:
         m_faint=-14.0,
         n_m=1024,
     )
-    deep = catalog_completeness_fraction(
+    deep = catalog_fraction(
         cosmo,
         z,
         toy_luminosity_function,
