@@ -3,13 +3,13 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="lfkit.corrections.responses module" href="lfkit.corrections.responses.html"><link rel="prev" title="lfkit.corrections.kcorrect_grids module" href="lfkit.corrections.kcorrect_grids.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="lfkit.corrections.responses" href="lfkit.corrections.responses.html"><link rel="prev" title="lfkit.corrections.kcorrect_grids" href="lfkit.corrections.kcorrect_grids.html">
         <link rel="canonical" href="https://cosmology-kit.github.io/lfkit/api/lfkit.corrections.poggianti1997.html">
         <link rel="prefetch" href="../_static/logos/lfkit_logo-icon.png" as="image">
         <link rel="prefetch" href="../_static/logos/lfkit_logo-icon.png" as="image">
 
     <link rel="shortcut icon" href="../_static/lfkit_logo-icon.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
-        <title>lfkit.corrections.poggianti1997 module - LFKit Documentation</title>
+        <title>lfkit.corrections.poggianti1997 - LFKit Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
@@ -194,7 +194,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -224,62 +224,125 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../examples/index.html"> Examples</a><input aria-label="Toggle navigation of  Examples" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../examples/luminosity_function_models.html"> Luminosity function models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples/magnitude_integrals.html"> Luminosity function magnitude integrals</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../examples/lf_models/index.html"> Luminosity function models</a><input aria-label="Toggle navigation of  Luminosity function models" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/lf_models/model_registry.html"> Available luminosity function models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/lf_models/schechter_models.html"> Schechter family models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/lf_models/gaussian_models.html"> Gaussian-like models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/lf_models/power_law_models.html"> Power-law models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/lf_models/composite_models.html"> Composite models</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/conditional_luminosity_function.html"> Conditional luminosity functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/magnitude_integrals.html"> Magnitude integrals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/magnitudes_and_luminosities.html"> Magnitudes and luminosities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/redshift_density.html"> LF-weighted redshift density</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/catalog_completeness.html"> Catalog completeness</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples/conditional_luminosity_function.html"> Conditional luminosity functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples/model_registry.html"> Available luminosity function models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/kcorrect_examples.html">kcorrect examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/poggianti_examples.html">Poggianti (1997) examples</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l2 current has-children"><a class="reference internal" href="lfkit.html">lfkit package</a><input aria-label="Toggle navigation of lfkit package" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l3 has-children"><a class="reference internal" href="lfkit.api.html">lfkit.api package</a><input aria-label="Toggle navigation of lfkit.api package" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.api.conditional_luminosity_function.html">lfkit.api.conditional_luminosity_function module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.api.corrections.html">lfkit.api.corrections module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.api.luminosity_function.html">lfkit.api.luminosity_function module</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API reference</a><input aria-label="Toggle navigation of API reference" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2 current has-children"><a class="reference internal" href="lfkit.html">lfkit</a><input aria-label="Toggle navigation of lfkit" checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l3 has-children"><a class="reference internal" href="lfkit.api.html">lfkit.api</a><input aria-label="Toggle navigation of lfkit.api" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.api.conditional_luminosity_function.html">lfkit.api.conditional_luminosity_function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.api.corrections.html">lfkit.api.corrections</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.api.luminosity_function.html">lfkit.api.luminosity_function</a></li>
 </ul>
 </li>
-<li class="toctree-l3 current has-children"><a class="reference internal" href="lfkit.corrections.html">lfkit.corrections package</a><input aria-label="Toggle navigation of lfkit.corrections package" checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.color_anchors.html">lfkit.corrections.color_anchors module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.filters.html">lfkit.corrections.filters module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.kcorrect_backend.html">lfkit.corrections.kcorrect_backend module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.kcorrect_from_color.html">lfkit.corrections.kcorrect_from_color module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.kcorrect_grids.html">lfkit.corrections.kcorrect_grids module</a></li>
-<li class="toctree-l4 current current-page"><a class="current reference internal" href="#">lfkit.corrections.poggianti1997 module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.responses.html">lfkit.corrections.responses module</a></li>
+<li class="toctree-l3 current has-children"><a class="reference internal" href="lfkit.corrections.html">lfkit.corrections</a><input aria-label="Toggle navigation of lfkit.corrections" checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.color_anchors.html">lfkit.corrections.color_anchors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.filters.html">lfkit.corrections.filters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.kcorrect_backend.html">lfkit.corrections.kcorrect_backend</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.kcorrect_from_color.html">lfkit.corrections.kcorrect_from_color</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.kcorrect_grids.html">lfkit.corrections.kcorrect_grids</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">lfkit.corrections.poggianti1997</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.responses.html">lfkit.corrections.responses</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="lfkit.cosmo.html">lfkit.cosmo package</a><input aria-label="Toggle navigation of lfkit.cosmo package" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.cosmo.cosmology.html">lfkit.cosmo.cosmology module</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="lfkit.cosmo.html">lfkit.cosmo</a><input aria-label="Toggle navigation of lfkit.cosmo" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.cosmo.cosmology.html">lfkit.cosmo.cosmology</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="lfkit.photometry.html">lfkit.photometry package</a><input aria-label="Toggle navigation of lfkit.photometry package" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.catalog_completeness.html">lfkit.photometry.catalog_completeness module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.conditional_lf_integrals.html">lfkit.photometry.conditional_lf_integrals module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.conditional_lf_models.html">lfkit.photometry.conditional_lf_models module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.lf_integrals.html">lfkit.photometry.lf_integrals module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.lf_parameter_models.html">lfkit.photometry.lf_parameter_models module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.lf_redshift_density.html">lfkit.photometry.lf_redshift_density module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.luminosities.html">lfkit.photometry.luminosities module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.luminosity_function.html">lfkit.photometry.luminosity_function module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.magnitudes.html">lfkit.photometry.magnitudes module</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="lfkit.luminosity_functions.html">lfkit.luminosity_functions</a><input aria-label="Toggle navigation of lfkit.luminosity_functions" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.completeness.html">lfkit.luminosity_functions.completeness</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.conditional_integrals.html">lfkit.luminosity_functions.conditional_integrals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.conditional_models.html">lfkit.luminosity_functions.conditional_models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.integrals.html">lfkit.luminosity_functions.integrals</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="lfkit.luminosity_functions.models.html">lfkit.luminosity_functions.models</a><input aria-label="Toggle navigation of lfkit.luminosity_functions.models" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="lfkit.luminosity_functions.models.composite.html">lfkit.luminosity_functions.models.composite</a></li>
+<li class="toctree-l5"><a class="reference internal" href="lfkit.luminosity_functions.models.gaussian.html">lfkit.luminosity_functions.models.gaussian</a></li>
+<li class="toctree-l5"><a class="reference internal" href="lfkit.luminosity_functions.models.modifiers.html">lfkit.luminosity_functions.models.modifiers</a></li>
+<li class="toctree-l5"><a class="reference internal" href="lfkit.luminosity_functions.models.power_law.html">lfkit.luminosity_functions.models.power_law</a></li>
+<li class="toctree-l5"><a class="reference internal" href="lfkit.luminosity_functions.models.schechter.html">lfkit.luminosity_functions.models.schechter</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="lfkit.utils.html">lfkit.utils package</a><input aria-label="Toggle navigation of lfkit.utils package" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.download_poggianti97_data.html">lfkit.utils.download_poggianti97_data module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.evaluators.html">lfkit.utils.evaluators module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.integrators.html">lfkit.utils.integrators module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.interpolation.html">lfkit.utils.interpolation module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.io.html">lfkit.utils.io module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.types.html">lfkit.utils.types module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.units.html">lfkit.utils.units module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.validators.html">lfkit.utils.validators module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.parameter_models.html">lfkit.luminosity_functions.parameter_models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.redshift_density.html">lfkit.luminosity_functions.redshift_density</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.registry.html">lfkit.luminosity_functions.registry</a></li>
 </ul>
 </li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="lfkit.photometry.html">lfkit.photometry</a><input aria-label="Toggle navigation of lfkit.photometry" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.luminosities.html">lfkit.photometry.luminosities</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.magnitudes.html">lfkit.photometry.magnitudes</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="lfkit.utils.html">lfkit.utils</a><input aria-label="Toggle navigation of lfkit.utils" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.download_poggianti97_data.html">lfkit.utils.download_poggianti97_data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.evaluators.html">lfkit.utils.evaluators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.integrators.html">lfkit.utils.integrators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.interpolation.html">lfkit.utils.interpolation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.io.html">lfkit.utils.io</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.types.html">lfkit.utils.types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.units.html">lfkit.utils.units</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.validators.html">lfkit.utils.validators</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="lfkit.api.html">lfkit.api</a><input aria-label="Toggle navigation of lfkit.api" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.api.conditional_luminosity_function.html">lfkit.api.conditional_luminosity_function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.api.corrections.html">lfkit.api.corrections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.api.luminosity_function.html">lfkit.api.luminosity_function</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lfkit.api.luminosity_function.html">lfkit.api.luminosity_function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lfkit.api.conditional_luminosity_function.html">lfkit.api.conditional_luminosity_function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lfkit.api.corrections.html">lfkit.api.corrections</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="lfkit.luminosity_functions.html">lfkit.luminosity_functions</a><input aria-label="Toggle navigation of lfkit.luminosity_functions" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.luminosity_functions.completeness.html">lfkit.luminosity_functions.completeness</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.luminosity_functions.conditional_integrals.html">lfkit.luminosity_functions.conditional_integrals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.luminosity_functions.conditional_models.html">lfkit.luminosity_functions.conditional_models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.luminosity_functions.integrals.html">lfkit.luminosity_functions.integrals</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="lfkit.luminosity_functions.models.html">lfkit.luminosity_functions.models</a><input aria-label="Toggle navigation of lfkit.luminosity_functions.models" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.models.composite.html">lfkit.luminosity_functions.models.composite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.models.gaussian.html">lfkit.luminosity_functions.models.gaussian</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.models.modifiers.html">lfkit.luminosity_functions.models.modifiers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.models.power_law.html">lfkit.luminosity_functions.models.power_law</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.models.schechter.html">lfkit.luminosity_functions.models.schechter</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.luminosity_functions.parameter_models.html">lfkit.luminosity_functions.parameter_models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.luminosity_functions.redshift_density.html">lfkit.luminosity_functions.redshift_density</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.luminosity_functions.registry.html">lfkit.luminosity_functions.registry</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="lfkit.photometry.html">lfkit.photometry</a><input aria-label="Toggle navigation of lfkit.photometry" class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.photometry.luminosities.html">lfkit.photometry.luminosities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.photometry.magnitudes.html">lfkit.photometry.magnitudes</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current has-children"><a class="reference internal" href="lfkit.corrections.html">lfkit.corrections</a><input aria-label="Toggle navigation of lfkit.corrections" checked="" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="lfkit.corrections.color_anchors.html">lfkit.corrections.color_anchors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.corrections.filters.html">lfkit.corrections.filters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.corrections.kcorrect_backend.html">lfkit.corrections.kcorrect_backend</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.corrections.kcorrect_from_color.html">lfkit.corrections.kcorrect_from_color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.corrections.kcorrect_grids.html">lfkit.corrections.kcorrect_grids</a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">lfkit.corrections.poggianti1997</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.corrections.responses.html">lfkit.corrections.responses</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="lfkit.cosmo.html">lfkit.cosmo</a><input aria-label="Toggle navigation of lfkit.cosmo" class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.cosmo.cosmology.html">lfkit.cosmo.cosmology</a></li>
 </ul>
 </li>
 </ul>
@@ -320,13 +383,13 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
           <section id="module-lfkit.corrections.poggianti1997">
-<span id="lfkit-corrections-poggianti1997-module"></span><h1>lfkit.corrections.poggianti1997 module<a class="headerlink" href="#module-lfkit.corrections.poggianti1997" title="Link to this heading"><span>#</span></a></h1>
+<span id="lfkit-corrections-poggianti1997"></span><h1>lfkit.corrections.poggianti1997<a class="headerlink" href="#module-lfkit.corrections.poggianti1997" title="Link to this heading"><span>#</span></a></h1>
 <p>Poggianti (1997) k- and e-correction tables and interpolators.</p>
 <p>Loads Poggianti (1997) k- and e-correction curves from CSV tables, builds
 interpolators for those curves (PCHIP, Akima, or linear), and optionally remaps
@@ -334,245 +397,43 @@ the e-correction redshift grid to a target cosmology by matching lookback time.<
 <p>Table I/O and parsing live in <code class="docutils literal notranslate"><span class="pre">lfkit.utils.io</span></code>.
 Interpolation utilities live in <code class="docutils literal notranslate"><span class="pre">lfkit.utils.interpolation</span></code>.
 Unit conversions live in <code class="docutils literal notranslate"><span class="pre">lfkit.utils.units</span></code>.</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="lfkit.corrections.poggianti1997.available_pairs">
-<span class="sig-prename descclassname"><span class="pre">lfkit.corrections.poggianti1997.</span></span><span class="sig-name descname"><span class="pre">available_pairs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tab</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/corrections/poggianti1997.html#available_pairs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.corrections.poggianti1997.available_pairs" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>List usable (band -&gt; SEDs) pairs in a Poggianti-style table.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>tab</strong> (<em>ndarray</em>) – Structured array for a single correction table (k-corr or e-corr).</p></li>
-<li><p><strong>min_points</strong> (<em>int</em>) – Minimum number of samples required per extracted series.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Mapping from band label to a list of SED labels that have usable data.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dict[str, list[str]]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="lfkit.corrections.poggianti1997.describe_poggianti1997_available">
-<span class="sig-prename descclassname"><span class="pre">lfkit.corrections.poggianti1997.</span></span><span class="sig-name descname"><span class="pre">describe_poggianti1997_available</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">kcorr_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ecorr_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/corrections/poggianti1997.html#describe_poggianti1997_available"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.corrections.poggianti1997.describe_poggianti1997_available" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>Summarize available bands and SED columns in Poggianti CSV tables.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>kcorr_path</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>None</em>) – Optional path to <code class="docutils literal notranslate"><span class="pre">kcorr.csv</span></code>. If not provided, the
-packaged file is used.</p></li>
-<li><p><strong>ecorr_path</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>None</em>) – Optional path to <code class="docutils literal notranslate"><span class="pre">ecorr.csv</span></code>. If not provided, the
-packaged file is used.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;bands&quot;</span></code>: list of available band labels</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;seds&quot;</span></code>: list of available SED column labels</p></li>
-</ul>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A dictionary with keys <code class="docutils literal notranslate"><span class="pre">&quot;kcorr&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;ecorr&quot;</span></code>. Each contains</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="lfkit.corrections.poggianti1997.extract_sed_spectrum">
-<span class="sig-prename descclassname"><span class="pre">lfkit.corrections.poggianti1997.</span></span><span class="sig-name descname"><span class="pre">extract_sed_spectrum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sed_tab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sed_col</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/corrections/poggianti1997.html#extract_sed_spectrum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.corrections.poggianti1997.extract_sed_spectrum" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>Extract a Poggianti sed.csv column as (wave_A, flux) in rest frame.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>sed_tab</strong> (<em>ndarray</em>) – Table returned by lfkit.utils.io.load_vizier_csv for sed.csv.</p></li>
-<li><p><strong>sed_col</strong> (<em>str</em>) – Column name in sed.csv, e.g. “logF03”.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Wavelength grid in Å (sorted ascending).
-flux: Linear flux values (10**logF) on the same grid.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>wave_A</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If required columns are missing or sed_col not present.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="lfkit.corrections.poggianti1997.load_poggianti1997_tables">
-<span class="sig-prename descclassname"><span class="pre">lfkit.corrections.poggianti1997.</span></span><span class="sig-name descname"><span class="pre">load_poggianti1997_tables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">band</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'r'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'E'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kcorr_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ecorr_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/corrections/poggianti1997.html#load_poggianti1997_tables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.corrections.poggianti1997.load_poggianti1997_tables" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>Load Poggianti (1997) k- and e-correction curves for a band and SED.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>band</strong> (<em>str</em>) – Band/filter label in the tables (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;r&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;B&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;V&quot;</span></code>).</p></li>
-<li><p><strong>sed</strong> (<em>str</em>) – SED column label (e.g. <code class="docutils literal notranslate"><span class="pre">&quot;E&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;Sa&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;Sc&quot;</span></code>).</p></li>
-<li><p><strong>kcorr_path</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>None</em>) – Optional path to <code class="docutils literal notranslate"><span class="pre">kcorr.csv</span></code>. If not provided, the
-packaged file is used.</p></li>
-<li><p><strong>ecorr_path</strong> (<em>str</em><em> | </em><em>Path</em><em> | </em><em>None</em>) – Optional path to <code class="docutils literal notranslate"><span class="pre">ecorr.csv</span></code>. If not provided, the
-packaged file is used.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">z_k</span></code> and <code class="docutils literal notranslate"><span class="pre">kcorr</span></code> are the k-correction curve.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">z_e</span></code> and <code class="docutils literal notranslate"><span class="pre">ecorr</span></code> are the e-correction curve.</p></li>
-</ul>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Tuple <code class="docutils literal notranslate"><span class="pre">(z_k,</span> <span class="pre">kcorr,</span> <span class="pre">z_e,</span> <span class="pre">ecorr)</span></code></p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If the requested (band, sed) is not available or contains
-    insufficient usable samples.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="lfkit.corrections.poggianti1997.make_ecorr_interpolator">
-<span class="sig-prename descclassname"><span class="pre">lfkit.corrections.poggianti1997.</span></span><span class="sig-name descname"><span class="pre">make_ecorr_interpolator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z_e</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ecorr</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cosmo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zmap_zmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zmap_nz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4096</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pchip'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extrapolate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/corrections/poggianti1997.html#make_ecorr_interpolator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.corrections.poggianti1997.make_ecorr_interpolator" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>Create an interpolator for a Poggianti e-correction curve.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>z_e</strong> (<em>ndarray</em>) – Redshift samples for the e-correction table.</p></li>
-<li><p><strong>ecorr</strong> (<em>ndarray</em>) – E-correction values at <code class="docutils literal notranslate"><span class="pre">z_e</span></code>.</p></li>
-<li><p><strong>original_z</strong> (<em>bool</em>) – If True, interpret <code class="docutils literal notranslate"><span class="pre">z_e</span></code> as Poggianti (1997) redshifts.
-If False, remap <code class="docutils literal notranslate"><span class="pre">z_e</span></code> to the target cosmology via lookback time.</p></li>
-<li><p><strong>cosmo</strong> – Target cosmology used for the remapping when <code class="docutils literal notranslate"><span class="pre">original_z=False</span></code>.
-If not provided, lfkit’s default cosmology is used.</p></li>
-<li><p><strong>zmap_zmax</strong> (<em>float</em>) – Maximum redshift used to build the remapping inversion grid.</p></li>
-<li><p><strong>zmap_nz</strong> (<em>int</em>) – Number of samples used to build the remapping inversion grid.</p></li>
-<li><p><strong>method</strong> (<em>Literal</em><em>[</em><em>'pchip'</em><em>, </em><em>'akima'</em><em>, </em><em>'linear'</em><em>]</em>) – Interpolation method (<code class="docutils literal notranslate"><span class="pre">&quot;pchip&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;akima&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">&quot;linear&quot;</span></code>).</p></li>
-<li><p><strong>extrapolate</strong> (<em>bool</em>) – Whether to extrapolate beyond the tabulated domain.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An interpolator callable <code class="docutils literal notranslate"><span class="pre">E(z)</span></code>.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>PchipInterpolator</em> | <em>Akima1DInterpolator</em> | <em>Callable</em>[[<em>ndarray</em>], <em>ndarray</em>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="lfkit.corrections.poggianti1997.make_kcorr_interpolator">
-<span class="sig-prename descclassname"><span class="pre">lfkit.corrections.poggianti1997.</span></span><span class="sig-name descname"><span class="pre">make_kcorr_interpolator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z_k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kcorr</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pchip'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extrapolate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tail</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/corrections/poggianti1997.html#make_kcorr_interpolator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.corrections.poggianti1997.make_kcorr_interpolator" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>Create an interpolator for a Poggianti k-correction curve.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>z_k</strong> (<em>ndarray</em>) – Redshift samples for the k-correction table.</p></li>
-<li><p><strong>kcorr</strong> (<em>ndarray</em>) – K-correction values at <code class="docutils literal notranslate"><span class="pre">z_k</span></code>.</p></li>
-<li><p><strong>method</strong> (<em>Literal</em><em>[</em><em>'pchip'</em><em>, </em><em>'akima'</em><em>, </em><em>'linear'</em><em>]</em>) – Interpolation method (<code class="docutils literal notranslate"><span class="pre">&quot;pchip&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;akima&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">&quot;linear&quot;</span></code>).</p></li>
-<li><p><strong>extrapolate</strong> (<em>bool</em>) – Whether to allow evaluation outside the tabulated range.</p></li>
-<li><p><strong>z_end</strong> (<em>float</em>) – Redshift endpoint for the optional high-z tail.</p></li>
-<li><p><strong>tail</strong> (<em>bool</em>) – Whether to append a linear high-z tail out to <code class="docutils literal notranslate"><span class="pre">z_end</span></code>.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An interpolator callable <code class="docutils literal notranslate"><span class="pre">K(z)</span></code>.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>PchipInterpolator</em> | <em>Akima1DInterpolator</em> | <em>Callable</em>[[<em>ndarray</em>], <em>ndarray</em>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="lfkit.corrections.poggianti1997.poggianti1997_lookback_time_gyr">
-<span class="sig-prename descclassname"><span class="pre">lfkit.corrections.poggianti1997.</span></span><span class="sig-name descname"><span class="pre">poggianti1997_lookback_time_gyr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/corrections/poggianti1997.html#poggianti1997_lookback_time_gyr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.corrections.poggianti1997.poggianti1997_lookback_time_gyr" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>Return lookback time in the Poggianti (1997) cosmology.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>z</strong> (<em>ndarray</em><em> | </em><em>float</em>) – Redshift value(s).</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Lookback time to each redshift (relative to z=0), in Gyr.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>ndarray</em></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="lfkit.corrections.poggianti1997.poggianti1997_time_since_bb_gyr">
-<span class="sig-prename descclassname"><span class="pre">lfkit.corrections.poggianti1997.</span></span><span class="sig-name descname"><span class="pre">poggianti1997_time_since_bb_gyr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/corrections/poggianti1997.html#poggianti1997_time_since_bb_gyr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.corrections.poggianti1997.poggianti1997_time_since_bb_gyr" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>Return cosmic time since the Big Bang in the Poggianti (1997) cosmology.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>z</strong> (<em>ndarray</em><em> | </em><em>float</em>) – Redshift value(s).</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Cosmic time since the Big Bang at each redshift, in Gyr.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>ndarray</em></p>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
-<p>This uses the decelerating cosmology assumed by Poggianti (1997)
-(q0 = 0.225, H0 = 50 km/s/Mpc). It is intended for lookback-time
-matching when remapping e-about to a different cosmology.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="lfkit.corrections.poggianti1997.poggianti1997_to_accelerating_redshift">
-<span class="sig-prename descclassname"><span class="pre">lfkit.corrections.poggianti1997.</span></span><span class="sig-name descname"><span class="pre">poggianti1997_to_accelerating_redshift</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z_dec</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">cosmo_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4096</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/corrections/poggianti1997.html#poggianti1997_to_accelerating_redshift"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.corrections.poggianti1997.poggianti1997_to_accelerating_redshift" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>Map Poggianti (1997) redshifts to a target cosmology via lookback time.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>z_dec</strong> (<em>ndarray</em><em> | </em><em>float</em>) – Redshift value(s) in the Poggianti (1997) cosmology.</p></li>
-<li><p><strong>cosmo_obj</strong> – Target cosmology used to compute lookback times.</p></li>
-<li><p><strong>zmax</strong> (<em>float</em>) – Maximum redshift used to build the inversion grid.</p></li>
-<li><p><strong>nz</strong> (<em>int</em>) – Number of samples used to build the inversion grid.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Redshift value(s) in the target cosmology with matched lookback time.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>ndarray</em></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="lfkit.corrections.poggianti1997.z_from_lookback_time">
-<span class="sig-prename descclassname"><span class="pre">lfkit.corrections.poggianti1997.</span></span><span class="sig-name descname"><span class="pre">z_from_lookback_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cosmo_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_lb_gyr</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">zmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nz</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4096</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/corrections/poggianti1997.html#z_from_lookback_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.corrections.poggianti1997.z_from_lookback_time" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>Invert lookback time to redshift using a precomputed interpolation grid.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>cosmo_obj</strong> – Cosmology object accepted by <code class="docutils literal notranslate"><span class="pre">lookback_time_gyr</span></code>.</p></li>
-<li><p><strong>t_lb_gyr</strong> (<em>ndarray</em><em> | </em><em>float</em>) – Lookback time value(s) in Gyr.</p></li>
-<li><p><strong>zmax</strong> (<em>float</em>) – Maximum redshift used to build the inversion grid.</p></li>
-<li><p><strong>nz</strong> (<em>int</em>) – Number of samples used to build the inversion grid.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Redshift value(s) corresponding to <code class="docutils literal notranslate"><span class="pre">t_lb_gyr</span></code>.</p>
-</dd>
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If requested lookback times fall outside the grid range.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>ndarray</em></p>
-</dd>
-</dl>
-</dd></dl>
-
+<p class="rubric">Functions</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">available_pairs</span></code>(tab, *[, min_points])</p></td>
+<td><p>List usable (band -&gt; SEDs) pairs in a Poggianti-style table.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">describe_poggianti1997_available</span></code>(*[, ...])</p></td>
+<td><p>Summarize available bands and SED columns in Poggianti CSV tables.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_sed_spectrum</span></code>(sed_tab, sed_col)</p></td>
+<td><p>Extract a Poggianti sed.csv column as (wave_A, flux) in rest frame.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_poggianti1997_tables</span></code>(*[, band, sed, ...])</p></td>
+<td><p>Load Poggianti (1997) k- and e-correction curves for a band and SED.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_ecorr_interpolator</span></code>(z_e, ecorr, *, ...)</p></td>
+<td><p>Create an interpolator for a Poggianti e-correction curve.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_kcorr_interpolator</span></code>(z_k, kcorr, *[, ...])</p></td>
+<td><p>Create an interpolator for a Poggianti k-correction curve.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">poggianti1997_lookback_time_gyr</span></code>(z)</p></td>
+<td><p>Return lookback time in the Poggianti (1997) cosmology.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">poggianti1997_time_since_bb_gyr</span></code>(z)</p></td>
+<td><p>Return cosmic time since the Big Bang in the Poggianti (1997) cosmology.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">poggianti1997_to_accelerating_redshift</span></code>(...)</p></td>
+<td><p>Map Poggianti (1997) redshifts to a target cosmology via lookback time.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">z_from_lookback_time</span></code>(cosmo_obj, t_lb_gyr, *)</p></td>
+<td><p>Invert lookback time to redshift using a precomputed interpolation grid.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
 
         </article>
@@ -585,7 +446,7 @@ matching when remapping e-about to a different cosmology.</p>
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">lfkit.corrections.responses module</div>
+                <div class="title">lfkit.corrections.responses</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -596,7 +457,7 @@ matching when remapping e-about to a different cosmology.</p>
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">lfkit.corrections.kcorrect_grids module</div>
+                <div class="title">lfkit.corrections.kcorrect_grids</div>
                 
               </div>
             </a>
@@ -618,36 +479,8 @@ matching when remapping e-about to a different cosmology.</p>
         
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
       
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            On this page
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">lfkit.corrections.poggianti1997 module</a><ul>
-<li><a class="reference internal" href="#lfkit.corrections.poggianti1997.available_pairs"><code class="docutils literal notranslate"><span class="pre">available_pairs()</span></code></a></li>
-<li><a class="reference internal" href="#lfkit.corrections.poggianti1997.describe_poggianti1997_available"><code class="docutils literal notranslate"><span class="pre">describe_poggianti1997_available()</span></code></a></li>
-<li><a class="reference internal" href="#lfkit.corrections.poggianti1997.extract_sed_spectrum"><code class="docutils literal notranslate"><span class="pre">extract_sed_spectrum()</span></code></a></li>
-<li><a class="reference internal" href="#lfkit.corrections.poggianti1997.load_poggianti1997_tables"><code class="docutils literal notranslate"><span class="pre">load_poggianti1997_tables()</span></code></a></li>
-<li><a class="reference internal" href="#lfkit.corrections.poggianti1997.make_ecorr_interpolator"><code class="docutils literal notranslate"><span class="pre">make_ecorr_interpolator()</span></code></a></li>
-<li><a class="reference internal" href="#lfkit.corrections.poggianti1997.make_kcorr_interpolator"><code class="docutils literal notranslate"><span class="pre">make_kcorr_interpolator()</span></code></a></li>
-<li><a class="reference internal" href="#lfkit.corrections.poggianti1997.poggianti1997_lookback_time_gyr"><code class="docutils literal notranslate"><span class="pre">poggianti1997_lookback_time_gyr()</span></code></a></li>
-<li><a class="reference internal" href="#lfkit.corrections.poggianti1997.poggianti1997_time_since_bb_gyr"><code class="docutils literal notranslate"><span class="pre">poggianti1997_time_since_bb_gyr()</span></code></a></li>
-<li><a class="reference internal" href="#lfkit.corrections.poggianti1997.poggianti1997_to_accelerating_redshift"><code class="docutils literal notranslate"><span class="pre">poggianti1997_to_accelerating_redshift()</span></code></a></li>
-<li><a class="reference internal" href="#lfkit.corrections.poggianti1997.z_from_lookback_time"><code class="docutils literal notranslate"><span class="pre">z_from_lookback_time()</span></code></a></li>
-</ul>
-</li>
-</ul>
-
-          </div>
-        </div>
-      </div>
       
       
     </aside>

@@ -1,7 +1,12 @@
-lfkit.corrections.color\_anchors module
-=======================================
+lfkit.corrections.color\_anchors
+================================
 
 .. automodule:: lfkit.corrections.color_anchors
-   :members:
-   :show-inheritance:
-   :undoc-members:
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      fit_coeffs_from_bandcolor
+   

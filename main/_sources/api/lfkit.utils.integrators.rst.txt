@@ -1,7 +1,13 @@
-lfkit.utils.integrators module
-==============================
+lfkit.utils.integrators
+=======================
 
 .. automodule:: lfkit.utils.integrators
-   :members:
-   :show-inheritance:
-   :undoc-members:
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      integrate_between_variable_bounds
+      safe_divide
+   

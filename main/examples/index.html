@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Luminosity function models" href="luminosity_function_models.html"><link rel="prev" title="Photometry Overview" href="../about/photometry_overview.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Luminosity function models" href="lf_models/index.html"><link rel="prev" title="Photometry Overview" href="../about/photometry_overview.html">
         <link rel="canonical" href="https://cosmology-kit.github.io/lfkit/examples/index.html">
         <link rel="prefetch" href="../_static/logos/lfkit_logo-icon.png" as="image">
         <link rel="prefetch" href="../_static/logos/lfkit_logo-icon.png" as="image">
@@ -224,62 +224,125 @@
 </ul>
 </li>
 <li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#"> Examples</a><input aria-label="Toggle navigation of  Examples" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="luminosity_function_models.html"> Luminosity function models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="magnitude_integrals.html"> Luminosity function magnitude integrals</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="lf_models/index.html"> Luminosity function models</a><input aria-label="Toggle navigation of  Luminosity function models" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="lf_models/model_registry.html"> Available luminosity function models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lf_models/schechter_models.html"> Schechter family models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lf_models/gaussian_models.html"> Gaussian-like models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lf_models/power_law_models.html"> Power-law models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lf_models/composite_models.html"> Composite models</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="conditional_luminosity_function.html"> Conditional luminosity functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="magnitude_integrals.html"> Magnitude integrals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="magnitudes_and_luminosities.html"> Magnitudes and luminosities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="redshift_density.html"> LF-weighted redshift density</a></li>
 <li class="toctree-l2"><a class="reference internal" href="catalog_completeness.html"> Catalog completeness</a></li>
-<li class="toctree-l2"><a class="reference internal" href="conditional_luminosity_function.html"> Conditional luminosity functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="model_registry.html"> Available luminosity function models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kcorrect_examples.html">kcorrect examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="poggianti_examples.html">Poggianti (1997) examples</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../api/lfkit.html">lfkit package</a><input aria-label="Toggle navigation of lfkit package" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.api.html">lfkit.api package</a><input aria-label="Toggle navigation of lfkit.api package" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.api.conditional_luminosity_function.html">lfkit.api.conditional_luminosity_function module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.api.corrections.html">lfkit.api.corrections module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.api.luminosity_function.html">lfkit.api.luminosity_function module</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/lfkit.html">lfkit</a><input aria-label="Toggle navigation of lfkit" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.api.html">lfkit.api</a><input aria-label="Toggle navigation of lfkit.api" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.api.conditional_luminosity_function.html">lfkit.api.conditional_luminosity_function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.api.corrections.html">lfkit.api.corrections</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.api.luminosity_function.html">lfkit.api.luminosity_function</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.corrections.html">lfkit.corrections package</a><input aria-label="Toggle navigation of lfkit.corrections package" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.color_anchors.html">lfkit.corrections.color_anchors module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.filters.html">lfkit.corrections.filters module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.kcorrect_backend.html">lfkit.corrections.kcorrect_backend module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.kcorrect_from_color.html">lfkit.corrections.kcorrect_from_color module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.kcorrect_grids.html">lfkit.corrections.kcorrect_grids module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.poggianti1997.html">lfkit.corrections.poggianti1997 module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.responses.html">lfkit.corrections.responses module</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.corrections.html">lfkit.corrections</a><input aria-label="Toggle navigation of lfkit.corrections" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.color_anchors.html">lfkit.corrections.color_anchors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.filters.html">lfkit.corrections.filters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.kcorrect_backend.html">lfkit.corrections.kcorrect_backend</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.kcorrect_from_color.html">lfkit.corrections.kcorrect_from_color</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.kcorrect_grids.html">lfkit.corrections.kcorrect_grids</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.poggianti1997.html">lfkit.corrections.poggianti1997</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.responses.html">lfkit.corrections.responses</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.cosmo.html">lfkit.cosmo package</a><input aria-label="Toggle navigation of lfkit.cosmo package" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.cosmo.cosmology.html">lfkit.cosmo.cosmology module</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.cosmo.html">lfkit.cosmo</a><input aria-label="Toggle navigation of lfkit.cosmo" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.cosmo.cosmology.html">lfkit.cosmo.cosmology</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.photometry.html">lfkit.photometry package</a><input aria-label="Toggle navigation of lfkit.photometry package" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.catalog_completeness.html">lfkit.photometry.catalog_completeness module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.conditional_lf_integrals.html">lfkit.photometry.conditional_lf_integrals module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.conditional_lf_models.html">lfkit.photometry.conditional_lf_models module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.lf_integrals.html">lfkit.photometry.lf_integrals module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.lf_parameter_models.html">lfkit.photometry.lf_parameter_models module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.lf_redshift_density.html">lfkit.photometry.lf_redshift_density module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.luminosities.html">lfkit.photometry.luminosities module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.luminosity_function.html">lfkit.photometry.luminosity_function module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.magnitudes.html">lfkit.photometry.magnitudes module</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.luminosity_functions.html">lfkit.luminosity_functions</a><input aria-label="Toggle navigation of lfkit.luminosity_functions" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.luminosity_functions.completeness.html">lfkit.luminosity_functions.completeness</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.luminosity_functions.conditional_integrals.html">lfkit.luminosity_functions.conditional_integrals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.luminosity_functions.conditional_models.html">lfkit.luminosity_functions.conditional_models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.luminosity_functions.integrals.html">lfkit.luminosity_functions.integrals</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/lfkit.luminosity_functions.models.html">lfkit.luminosity_functions.models</a><input aria-label="Toggle navigation of lfkit.luminosity_functions.models" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../api/lfkit.luminosity_functions.models.composite.html">lfkit.luminosity_functions.models.composite</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/lfkit.luminosity_functions.models.gaussian.html">lfkit.luminosity_functions.models.gaussian</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/lfkit.luminosity_functions.models.modifiers.html">lfkit.luminosity_functions.models.modifiers</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/lfkit.luminosity_functions.models.power_law.html">lfkit.luminosity_functions.models.power_law</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/lfkit.luminosity_functions.models.schechter.html">lfkit.luminosity_functions.models.schechter</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.utils.html">lfkit.utils package</a><input aria-label="Toggle navigation of lfkit.utils package" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.download_poggianti97_data.html">lfkit.utils.download_poggianti97_data module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.evaluators.html">lfkit.utils.evaluators module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.integrators.html">lfkit.utils.integrators module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.interpolation.html">lfkit.utils.interpolation module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.io.html">lfkit.utils.io module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.types.html">lfkit.utils.types module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.units.html">lfkit.utils.units module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.validators.html">lfkit.utils.validators module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.luminosity_functions.parameter_models.html">lfkit.luminosity_functions.parameter_models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.luminosity_functions.redshift_density.html">lfkit.luminosity_functions.redshift_density</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.luminosity_functions.registry.html">lfkit.luminosity_functions.registry</a></li>
 </ul>
 </li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.photometry.html">lfkit.photometry</a><input aria-label="Toggle navigation of lfkit.photometry" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.luminosities.html">lfkit.photometry.luminosities</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.magnitudes.html">lfkit.photometry.magnitudes</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.utils.html">lfkit.utils</a><input aria-label="Toggle navigation of lfkit.utils" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.download_poggianti97_data.html">lfkit.utils.download_poggianti97_data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.evaluators.html">lfkit.utils.evaluators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.integrators.html">lfkit.utils.integrators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.interpolation.html">lfkit.utils.interpolation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.io.html">lfkit.utils.io</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.types.html">lfkit.utils.types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.units.html">lfkit.utils.units</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.validators.html">lfkit.utils.validators</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/lfkit.api.html">lfkit.api</a><input aria-label="Toggle navigation of lfkit.api" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.api.conditional_luminosity_function.html">lfkit.api.conditional_luminosity_function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.api.corrections.html">lfkit.api.corrections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.api.luminosity_function.html">lfkit.api.luminosity_function</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/lfkit.api.luminosity_function.html">lfkit.api.luminosity_function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/lfkit.api.conditional_luminosity_function.html">lfkit.api.conditional_luminosity_function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/lfkit.api.corrections.html">lfkit.api.corrections</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/lfkit.luminosity_functions.html">lfkit.luminosity_functions</a><input aria-label="Toggle navigation of lfkit.luminosity_functions" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.luminosity_functions.completeness.html">lfkit.luminosity_functions.completeness</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.luminosity_functions.conditional_integrals.html">lfkit.luminosity_functions.conditional_integrals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.luminosity_functions.conditional_models.html">lfkit.luminosity_functions.conditional_models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.luminosity_functions.integrals.html">lfkit.luminosity_functions.integrals</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.luminosity_functions.models.html">lfkit.luminosity_functions.models</a><input aria-label="Toggle navigation of lfkit.luminosity_functions.models" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.luminosity_functions.models.composite.html">lfkit.luminosity_functions.models.composite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.luminosity_functions.models.gaussian.html">lfkit.luminosity_functions.models.gaussian</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.luminosity_functions.models.modifiers.html">lfkit.luminosity_functions.models.modifiers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.luminosity_functions.models.power_law.html">lfkit.luminosity_functions.models.power_law</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.luminosity_functions.models.schechter.html">lfkit.luminosity_functions.models.schechter</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.luminosity_functions.parameter_models.html">lfkit.luminosity_functions.parameter_models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.luminosity_functions.redshift_density.html">lfkit.luminosity_functions.redshift_density</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.luminosity_functions.registry.html">lfkit.luminosity_functions.registry</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/lfkit.photometry.html">lfkit.photometry</a><input aria-label="Toggle navigation of lfkit.photometry" class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.photometry.luminosities.html">lfkit.photometry.luminosities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.photometry.magnitudes.html">lfkit.photometry.magnitudes</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/lfkit.corrections.html">lfkit.corrections</a><input aria-label="Toggle navigation of lfkit.corrections" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.corrections.color_anchors.html">lfkit.corrections.color_anchors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.corrections.filters.html">lfkit.corrections.filters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.corrections.kcorrect_backend.html">lfkit.corrections.kcorrect_backend</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.corrections.kcorrect_from_color.html">lfkit.corrections.kcorrect_from_color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.corrections.kcorrect_grids.html">lfkit.corrections.kcorrect_grids</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.corrections.poggianti1997.html">lfkit.corrections.poggianti1997</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.corrections.responses.html">lfkit.corrections.responses</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/lfkit.cosmo.html">lfkit.cosmo</a><input aria-label="Toggle navigation of lfkit.cosmo" class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.cosmo.cosmology.html">lfkit.cosmo.cosmology</a></li>
 </ul>
 </li>
 </ul>
@@ -338,7 +401,7 @@ redshift-density trends, and magnitude or luminosity conversions.</p>
 </div>
 <section id="start-here">
 <h2>Start here<a class="headerlink" href="#start-here" title="Link to this heading"><span>#</span></a></h2>
-<p>For ordinary luminosity functions, start with <a class="reference internal" href="../api/lfkit.html#lfkit.LuminosityFunction" title="lfkit.LuminosityFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.LuminosityFunction</span></code></a>:</p>
+<p>For ordinary luminosity functions, start with <code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.LuminosityFunction</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">LuminosityFunction</span>
 
 <span class="n">lf</span> <span class="o">=</span> <span class="n">LuminosityFunction</span><span class="o">.</span><span class="n">schechter</span><span class="p">(</span>
@@ -354,12 +417,53 @@ redshift-density trends, and magnitude or luminosity conversions.</p>
 model is created, the same object can be used for direct evaluation, magnitude
 integrals, survey completeness calculations, redshift-density calculations, and
 diagnostic conversions.</p>
-<p>Photometric corrections are exposed separately through <a class="reference internal" href="../api/lfkit.html#lfkit.Corrections" title="lfkit.Corrections"><code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.Corrections</span></code></a>:</p>
+<p>Photometric corrections are exposed separately through <code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.Corrections</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">Corrections</span>
 </pre></div>
 </div>
 <p>Correction functions can be passed into calculations that need k-corrections,
 evolution corrections, or other magnitude corrections.</p>
+</section>
+<section id="registered-model-constructors">
+<h2>Registered model constructors<a class="headerlink" href="#registered-model-constructors" title="Link to this heading"><span>#</span></a></h2>
+<p>LFKit model constructors are generated from the model registry. This means that
+ordinary luminosity functions and conditional luminosity functions use the same
+registered model names whenever a model supports both APIs.</p>
+<p>For example, an ordinary Schechter luminosity function is built with
+<code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.LuminosityFunction</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">LuminosityFunction</span>
+
+<span class="n">lf</span> <span class="o">=</span> <span class="n">LuminosityFunction</span><span class="o">.</span><span class="n">schechter</span><span class="p">(</span>
+    <span class="n">phi_star</span><span class="o">=</span><span class="mf">1.0e-3</span><span class="p">,</span>
+    <span class="n">m_star</span><span class="o">=-</span><span class="mf">20.5</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=-</span><span class="mf">1.1</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">phi</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">phi</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The conditional version uses the same registered model name through
+<code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.ConditionalLuminosityFunction</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">lfkit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConditionalLuminosityFunction</span>
+
+<span class="n">clf</span> <span class="o">=</span> <span class="n">ConditionalLuminosityFunction</span><span class="o">.</span><span class="n">schechter</span><span class="p">(</span>
+    <span class="n">phi_star</span><span class="o">=</span><span class="k">lambda</span> <span class="n">condition</span><span class="p">:</span> <span class="mf">1.0e-3</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">condition</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">m_star</span><span class="o">=</span><span class="k">lambda</span> <span class="n">condition</span><span class="p">:</span> <span class="o">-</span><span class="mf">20.5</span> <span class="o">-</span> <span class="mf">0.4</span> <span class="o">*</span> <span class="n">condition</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=-</span><span class="mf">1.1</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">phi</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">phi</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">condition</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In the conditional case, the second argument to <code class="docutils literal notranslate"><span class="pre">phi</span></code> is the conditioning
+variable. It can represent redshift, halo mass, stellar mass, SFR, environment,
+richness, or any other quantity chosen by the user. Callable parameters are
+evaluated at that condition, while non-callable parameters are kept fixed.</p>
+<p>Available registered models can be inspected directly:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">LuminosityFunction</span><span class="o">.</span><span class="n">available_models</span><span class="p">()</span>
+<span class="n">ConditionalLuminosityFunction</span><span class="o">.</span><span class="n">available_models</span><span class="p">()</span>
+</pre></div>
+</div>
 </section>
 <section id="main-api-areas">
 <h2>Main API areas<a class="headerlink" href="#main-api-areas" title="Link to this heading"><span>#</span></a></h2>
@@ -392,12 +496,12 @@ evolution corrections, or other magnitude corrections.</p>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Evaluate or compare luminosity function models</p></td>
-<td><p><a class="reference internal" href="../api/lfkit.html#lfkit.LuminosityFunction" title="lfkit.LuminosityFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.LuminosityFunction</span></code></a></p></td>
-<td><p><a class="reference internal" href="luminosity_function_models.html"><span class="doc">luminosity function models</span></a></p></td>
+<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.LuminosityFunction</span></code></p></td>
+<td><p><a class="reference internal" href="lf_models/index.html"><span class="doc">luminosity function models</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>Integrate a luminosity function over absolute magnitude</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">lf.integrals</span></code></p></td>
-<td><p><a class="reference internal" href="magnitude_integrals.html"><span class="doc"> Luminosity function magnitude integrals</span></a></p></td>
+<td><p><a class="reference internal" href="magnitude_integrals.html"><span class="doc"> Magnitude integrals</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p>Convert between apparent magnitude, absolute magnitude, and luminosity distance</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">lf.magnitudes</span></code></p></td>
@@ -420,16 +524,16 @@ evolution corrections, or other magnitude corrections.</p>
 <td><p><a class="reference internal" href="conditional_luminosity_function.html"><span class="doc">conditional luminosity function</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>Use k-corrections from the kcorrect backend</p></td>
-<td><p><a class="reference internal" href="../api/lfkit.html#lfkit.Corrections" title="lfkit.Corrections"><code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.Corrections</span></code></a></p></td>
+<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.Corrections</span></code></p></td>
 <td><p><a class="reference internal" href="kcorrect_examples.html"><span class="doc">kcorrect examples</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p>Use Poggianti correction tables</p></td>
-<td><p><a class="reference internal" href="../api/lfkit.html#lfkit.Corrections" title="lfkit.Corrections"><code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.Corrections</span></code></a></p></td>
+<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.Corrections</span></code></p></td>
 <td><p><a class="reference internal" href="poggianti_examples.html"><span class="doc">Poggianti (1997) examples</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>Inspect available model names</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">available_models()</span></code> methods</p></td>
-<td><p><a class="reference internal" href="model_registry.html"><span class="doc"> Available luminosity function models</span></a></p></td>
+<td><p><a class="reference internal" href="lf_models/model_registry.html"><span class="doc"> Available luminosity function models</span></a></p></td>
 </tr>
 </tbody>
 </table>
@@ -537,7 +641,7 @@ including evolving models and model surfaces.</p>
 <div class="sd-card-footer docutils">
 <p class="sd-card-text"><em>API:</em> <code class="docutils literal notranslate"><span class="pre">LuminosityFunction</span></code></p>
 </div>
-<a class="sd-stretched-link sd-hide-link-text reference internal" href="luminosity_function_models.html"><span class="doc"> Luminosity function models</span></a></div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="lf_models/index.html"><span class="doc"> Luminosity function models</span></a></div>
 </div>
 <div class="sd-col sd-d-flex-row docutils">
 <div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-md sd-card-hover docutils">
@@ -551,7 +655,7 @@ selection-weighted integrals over absolute magnitude.</p>
 <div class="sd-card-footer docutils">
 <p class="sd-card-text"><em>API:</em> <code class="docutils literal notranslate"><span class="pre">lf.integrals</span></code></p>
 </div>
-<a class="sd-stretched-link sd-hide-link-text reference internal" href="magnitude_integrals.html"><span class="doc"> Luminosity function magnitude integrals</span></a></div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="magnitude_integrals.html"><span class="doc"> Magnitude integrals</span></a></div>
 </div>
 <div class="sd-col sd-d-flex-row docutils">
 <div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-md sd-card-hover docutils">
@@ -621,7 +725,7 @@ and conditional luminosity functions.</p>
 <div class="sd-card-footer docutils">
 <p class="sd-card-text"><em>API:</em> <code class="docutils literal notranslate"><span class="pre">available_models()</span></code></p>
 </div>
-<a class="sd-stretched-link sd-hide-link-text reference internal" href="model_registry.html"><span class="doc"> Available luminosity function models</span></a></div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="lf_models/model_registry.html"><span class="doc"> Available luminosity function models</span></a></div>
 </div>
 <div class="sd-col sd-d-flex-row docutils">
 <div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-md sd-card-hover docutils">
@@ -656,7 +760,7 @@ galaxy-type-dependent workflows.</p>
 </section>
 <section id="luminosity-function-models">
 <h2>Luminosity function models<a class="headerlink" href="#luminosity-function-models" title="Link to this heading"><span>#</span></a></h2>
-<p>Use <a class="reference internal" href="../api/lfkit.html#lfkit.LuminosityFunction" title="lfkit.LuminosityFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.LuminosityFunction</span></code></a> for ordinary luminosity function models.</p>
+<p>Use <code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.LuminosityFunction</span></code> for ordinary luminosity function models.</p>
 <p>For a standard Schechter model:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lf</span> <span class="o">=</span> <span class="n">LuminosityFunction</span><span class="o">.</span><span class="n">schechter</span><span class="p">(</span>
     <span class="n">phi_star</span><span class="o">=</span><span class="mf">1.0e-3</span><span class="p">,</span>
@@ -673,7 +777,7 @@ galaxy-type-dependent workflows.</p>
 </div>
 <p>The luminosity function examples page shows how to compare models, evaluate
 evolving parameters, and visualize luminosity function behavior:</p>
-<p><a class="reference internal" href="luminosity_function_models.html"><span class="doc">luminosity function models</span></a></p>
+<p><a class="reference internal" href="lf_models/index.html"><span class="doc">luminosity function models</span></a></p>
 </section>
 <section id="magnitude-integrals">
 <h2>Magnitude integrals<a class="headerlink" href="#magnitude-integrals" title="Link to this heading"><span>#</span></a></h2>
@@ -691,7 +795,7 @@ absolute magnitude range.</p>
 <p>Other useful quantities include luminosity density, mean luminosity, and
 selection-weighted number density.</p>
 <p>See the dedicated page for complete examples:</p>
-<p><a class="reference internal" href="magnitude_integrals.html"><span class="doc"> Luminosity function magnitude integrals</span></a></p>
+<p><a class="reference internal" href="magnitude_integrals.html"><span class="doc"> Magnitude integrals</span></a></p>
 </section>
 <section id="completeness-calculations">
 <h2>Completeness calculations<a class="headerlink" href="#completeness-calculations" title="Link to this heading"><span>#</span></a></h2>
@@ -781,7 +885,7 @@ they answer a different modeling question from ordinary luminosity functions.</p
 </section>
 <section id="photometric-corrections">
 <h2>Photometric corrections<a class="headerlink" href="#photometric-corrections" title="Link to this heading"><span>#</span></a></h2>
-<p>Use <a class="reference internal" href="../api/lfkit.html#lfkit.Corrections" title="lfkit.Corrections"><code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.Corrections</span></code></a> when you want to construct or evaluate
+<p>Use <code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.Corrections</span></code> when you want to construct or evaluate
 photometric corrections.</p>
 <p>Correction callables can be passed into calculations that need k-corrections or
 evolution corrections. For example:</p>
@@ -829,14 +933,14 @@ notebooks, examples, and validation scripts.</p>
 </pre></div>
 </div>
 <p>See the dedicated page for complete examples:</p>
-<p><a class="reference internal" href="model_registry.html"><span class="doc"> Available luminosity function models</span></a></p>
+<p><a class="reference internal" href="lf_models/model_registry.html"><span class="doc"> Available luminosity function models</span></a></p>
 </section>
 <section id="next-steps">
 <h2>Next steps<a class="headerlink" href="#next-steps" title="Link to this heading"><span>#</span></a></h2>
 <p>If you are new to LFKit, start with the luminosity function examples page and
 then move to the calculation that matches your use case:</p>
 <ul class="simple">
-<li><p>use <a class="reference internal" href="magnitude_integrals.html"><span class="doc"> Luminosity function magnitude integrals</span></a> for intrinsic LF integrals,</p></li>
+<li><p>use <a class="reference internal" href="magnitude_integrals.html"><span class="doc"> Magnitude integrals</span></a> for intrinsic LF integrals,</p></li>
 <li><p>use <a class="reference internal" href="catalog_completeness.html"><span class="doc">catalog completeness</span></a> for survey magnitude limits,</p></li>
 <li><p>use <a class="reference internal" href="redshift_density.html"><span class="doc"> LF-weighted redshift density</span></a> for LF-weighted redshift trends,</p></li>
 <li><p>use <a class="reference internal" href="magnitudes_and_luminosities.html"><span class="doc"> Magnitudes and luminosities</span></a> for conversions and diagnostics,</p></li>
@@ -851,7 +955,7 @@ needed.</p></li>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="luminosity_function_models.html">
+          <a class="next-page" href="lf_models/index.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
@@ -903,6 +1007,7 @@ needed.</p></li>
             <ul>
 <li><a class="reference internal" href="#"> Examples</a><ul>
 <li><a class="reference internal" href="#start-here">Start here</a></li>
+<li><a class="reference internal" href="#registered-model-constructors">Registered model constructors</a></li>
 <li><a class="reference internal" href="#main-api-areas">Main API areas</a></li>
 <li><a class="reference internal" href="#which-tool-do-i-need">Which tool do I need?</a></li>
 <li><a class="reference internal" href="#basic-workflow">Basic workflow</a></li>

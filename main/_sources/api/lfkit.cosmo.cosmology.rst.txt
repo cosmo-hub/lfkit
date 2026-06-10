@@ -1,7 +1,17 @@
-lfkit.cosmo.cosmology module
-============================
+lfkit.cosmo.cosmology
+=====================
 
 .. automodule:: lfkit.cosmo.cosmology
-   :members:
-   :show-inheritance:
-   :undoc-members:
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      comoving_distance_mpc
+      cosmo_object
+      differential_comoving_volume
+      distance_modulus
+      lookback_time_gyr
+      luminosity_distance_mpc
+   

@@ -1,7 +1,12 @@
-lfkit.api.luminosity\_function module
-=====================================
+lfkit.api.luminosity\_function
+==============================
 
 .. automodule:: lfkit.api.luminosity_function
-   :members:
-   :show-inheritance:
-   :undoc-members:
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      LuminosityFunction
+   

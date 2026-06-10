@@ -1,22 +1,18 @@
-lfkit package
-=============
-
-Subpackages
------------
-
-.. toctree::
-   :maxdepth: 2
-
-   lfkit.api
-   lfkit.corrections
-   lfkit.cosmo
-   lfkit.photometry
-   lfkit.utils
-
-Module contents
----------------
+﻿lfkit
+=====
 
 .. automodule:: lfkit
-   :members:
-   :show-inheritance:
-   :undoc-members:
+
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   api
+   corrections
+   cosmo
+   luminosity_functions
+   photometry
+   utils

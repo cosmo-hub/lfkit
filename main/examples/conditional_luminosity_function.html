@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Available luminosity function models" href="model_registry.html"><link rel="prev" title="Catalog completeness" href="catalog_completeness.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="Magnitude integrals" href="magnitude_integrals.html"><link rel="prev" title="Composite models" href="lf_models/composite_models.html">
         <link rel="canonical" href="https://cosmology-kit.github.io/lfkit/examples/conditional_luminosity_function.html">
         <link rel="prefetch" href="../_static/logos/lfkit_logo-icon.png" as="image">
         <link rel="prefetch" href="../_static/logos/lfkit_logo-icon.png" as="image">
@@ -224,62 +224,125 @@
 </ul>
 </li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html"> Examples</a><input aria-label="Toggle navigation of  Examples" checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="luminosity_function_models.html"> Luminosity function models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="magnitude_integrals.html"> Luminosity function magnitude integrals</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="lf_models/index.html"> Luminosity function models</a><input aria-label="Toggle navigation of  Luminosity function models" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="lf_models/model_registry.html"> Available luminosity function models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lf_models/schechter_models.html"> Schechter family models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lf_models/gaussian_models.html"> Gaussian-like models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lf_models/power_law_models.html"> Power-law models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lf_models/composite_models.html"> Composite models</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#"> Conditional luminosity functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="magnitude_integrals.html"> Magnitude integrals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="magnitudes_and_luminosities.html"> Magnitudes and luminosities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="redshift_density.html"> LF-weighted redshift density</a></li>
 <li class="toctree-l2"><a class="reference internal" href="catalog_completeness.html"> Catalog completeness</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#"> Conditional luminosity functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="model_registry.html"> Available luminosity function models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kcorrect_examples.html">kcorrect examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="poggianti_examples.html">Poggianti (1997) examples</a></li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../api/lfkit.html">lfkit package</a><input aria-label="Toggle navigation of lfkit package" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.api.html">lfkit.api package</a><input aria-label="Toggle navigation of lfkit.api package" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.api.conditional_luminosity_function.html">lfkit.api.conditional_luminosity_function module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.api.corrections.html">lfkit.api.corrections module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.api.luminosity_function.html">lfkit.api.luminosity_function module</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api/index.html">API reference</a><input aria-label="Toggle navigation of API reference" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/lfkit.html">lfkit</a><input aria-label="Toggle navigation of lfkit" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.api.html">lfkit.api</a><input aria-label="Toggle navigation of lfkit.api" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.api.conditional_luminosity_function.html">lfkit.api.conditional_luminosity_function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.api.corrections.html">lfkit.api.corrections</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.api.luminosity_function.html">lfkit.api.luminosity_function</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.corrections.html">lfkit.corrections package</a><input aria-label="Toggle navigation of lfkit.corrections package" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.color_anchors.html">lfkit.corrections.color_anchors module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.filters.html">lfkit.corrections.filters module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.kcorrect_backend.html">lfkit.corrections.kcorrect_backend module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.kcorrect_from_color.html">lfkit.corrections.kcorrect_from_color module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.kcorrect_grids.html">lfkit.corrections.kcorrect_grids module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.poggianti1997.html">lfkit.corrections.poggianti1997 module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.responses.html">lfkit.corrections.responses module</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.corrections.html">lfkit.corrections</a><input aria-label="Toggle navigation of lfkit.corrections" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.color_anchors.html">lfkit.corrections.color_anchors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.filters.html">lfkit.corrections.filters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.kcorrect_backend.html">lfkit.corrections.kcorrect_backend</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.kcorrect_from_color.html">lfkit.corrections.kcorrect_from_color</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.kcorrect_grids.html">lfkit.corrections.kcorrect_grids</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.poggianti1997.html">lfkit.corrections.poggianti1997</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.corrections.responses.html">lfkit.corrections.responses</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.cosmo.html">lfkit.cosmo package</a><input aria-label="Toggle navigation of lfkit.cosmo package" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.cosmo.cosmology.html">lfkit.cosmo.cosmology module</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.cosmo.html">lfkit.cosmo</a><input aria-label="Toggle navigation of lfkit.cosmo" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.cosmo.cosmology.html">lfkit.cosmo.cosmology</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.photometry.html">lfkit.photometry package</a><input aria-label="Toggle navigation of lfkit.photometry package" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.catalog_completeness.html">lfkit.photometry.catalog_completeness module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.conditional_lf_integrals.html">lfkit.photometry.conditional_lf_integrals module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.conditional_lf_models.html">lfkit.photometry.conditional_lf_models module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.lf_integrals.html">lfkit.photometry.lf_integrals module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.lf_parameter_models.html">lfkit.photometry.lf_parameter_models module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.lf_redshift_density.html">lfkit.photometry.lf_redshift_density module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.luminosities.html">lfkit.photometry.luminosities module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.luminosity_function.html">lfkit.photometry.luminosity_function module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.magnitudes.html">lfkit.photometry.magnitudes module</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.luminosity_functions.html">lfkit.luminosity_functions</a><input aria-label="Toggle navigation of lfkit.luminosity_functions" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.luminosity_functions.completeness.html">lfkit.luminosity_functions.completeness</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.luminosity_functions.conditional_integrals.html">lfkit.luminosity_functions.conditional_integrals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.luminosity_functions.conditional_models.html">lfkit.luminosity_functions.conditional_models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.luminosity_functions.integrals.html">lfkit.luminosity_functions.integrals</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../api/lfkit.luminosity_functions.models.html">lfkit.luminosity_functions.models</a><input aria-label="Toggle navigation of lfkit.luminosity_functions.models" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../api/lfkit.luminosity_functions.models.composite.html">lfkit.luminosity_functions.models.composite</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/lfkit.luminosity_functions.models.gaussian.html">lfkit.luminosity_functions.models.gaussian</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/lfkit.luminosity_functions.models.modifiers.html">lfkit.luminosity_functions.models.modifiers</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/lfkit.luminosity_functions.models.power_law.html">lfkit.luminosity_functions.models.power_law</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../api/lfkit.luminosity_functions.models.schechter.html">lfkit.luminosity_functions.models.schechter</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.utils.html">lfkit.utils package</a><input aria-label="Toggle navigation of lfkit.utils package" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.download_poggianti97_data.html">lfkit.utils.download_poggianti97_data module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.evaluators.html">lfkit.utils.evaluators module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.integrators.html">lfkit.utils.integrators module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.interpolation.html">lfkit.utils.interpolation module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.io.html">lfkit.utils.io module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.types.html">lfkit.utils.types module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.units.html">lfkit.utils.units module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.validators.html">lfkit.utils.validators module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.luminosity_functions.parameter_models.html">lfkit.luminosity_functions.parameter_models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.luminosity_functions.redshift_density.html">lfkit.luminosity_functions.redshift_density</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.luminosity_functions.registry.html">lfkit.luminosity_functions.registry</a></li>
 </ul>
 </li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.photometry.html">lfkit.photometry</a><input aria-label="Toggle navigation of lfkit.photometry" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.luminosities.html">lfkit.photometry.luminosities</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.photometry.magnitudes.html">lfkit.photometry.magnitudes</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.utils.html">lfkit.utils</a><input aria-label="Toggle navigation of lfkit.utils" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.download_poggianti97_data.html">lfkit.utils.download_poggianti97_data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.evaluators.html">lfkit.utils.evaluators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.integrators.html">lfkit.utils.integrators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.interpolation.html">lfkit.utils.interpolation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.io.html">lfkit.utils.io</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.types.html">lfkit.utils.types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.units.html">lfkit.utils.units</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.utils.validators.html">lfkit.utils.validators</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/lfkit.api.html">lfkit.api</a><input aria-label="Toggle navigation of lfkit.api" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.api.conditional_luminosity_function.html">lfkit.api.conditional_luminosity_function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.api.corrections.html">lfkit.api.corrections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.api.luminosity_function.html">lfkit.api.luminosity_function</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/lfkit.api.luminosity_function.html">lfkit.api.luminosity_function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/lfkit.api.conditional_luminosity_function.html">lfkit.api.conditional_luminosity_function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/lfkit.api.corrections.html">lfkit.api.corrections</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/lfkit.luminosity_functions.html">lfkit.luminosity_functions</a><input aria-label="Toggle navigation of lfkit.luminosity_functions" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.luminosity_functions.completeness.html">lfkit.luminosity_functions.completeness</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.luminosity_functions.conditional_integrals.html">lfkit.luminosity_functions.conditional_integrals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.luminosity_functions.conditional_models.html">lfkit.luminosity_functions.conditional_models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.luminosity_functions.integrals.html">lfkit.luminosity_functions.integrals</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../api/lfkit.luminosity_functions.models.html">lfkit.luminosity_functions.models</a><input aria-label="Toggle navigation of lfkit.luminosity_functions.models" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.luminosity_functions.models.composite.html">lfkit.luminosity_functions.models.composite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.luminosity_functions.models.gaussian.html">lfkit.luminosity_functions.models.gaussian</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.luminosity_functions.models.modifiers.html">lfkit.luminosity_functions.models.modifiers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.luminosity_functions.models.power_law.html">lfkit.luminosity_functions.models.power_law</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/lfkit.luminosity_functions.models.schechter.html">lfkit.luminosity_functions.models.schechter</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.luminosity_functions.parameter_models.html">lfkit.luminosity_functions.parameter_models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.luminosity_functions.redshift_density.html">lfkit.luminosity_functions.redshift_density</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.luminosity_functions.registry.html">lfkit.luminosity_functions.registry</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/lfkit.photometry.html">lfkit.photometry</a><input aria-label="Toggle navigation of lfkit.photometry" class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.photometry.luminosities.html">lfkit.photometry.luminosities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.photometry.magnitudes.html">lfkit.photometry.magnitudes</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/lfkit.corrections.html">lfkit.corrections</a><input aria-label="Toggle navigation of lfkit.corrections" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.corrections.color_anchors.html">lfkit.corrections.color_anchors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.corrections.filters.html">lfkit.corrections.filters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.corrections.kcorrect_backend.html">lfkit.corrections.kcorrect_backend</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.corrections.kcorrect_from_color.html">lfkit.corrections.kcorrect_from_color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.corrections.kcorrect_grids.html">lfkit.corrections.kcorrect_grids</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.corrections.poggianti1997.html">lfkit.corrections.poggianti1997</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.corrections.responses.html">lfkit.corrections.responses</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../api/lfkit.cosmo.html">lfkit.cosmo</a><input aria-label="Toggle navigation of lfkit.cosmo" class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/lfkit.cosmo.cosmology.html">lfkit.cosmo.cosmology</a></li>
 </ul>
 </li>
 </ul>
@@ -343,10 +406,9 @@ and <span class="math notranslate nohighlight">\(M+dM\)</span> at fixed <span cl
 can represent redshift, halo mass, environment, galaxy type, richness, stellar
 mass, or another quantity.</p>
 <p>LFKit exposes conditional luminosity functions through
-<a class="reference internal" href="../api/lfkit.html#lfkit.ConditionalLuminosityFunction" title="lfkit.ConditionalLuminosityFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.ConditionalLuminosityFunction</span></code></a>. Each constructor returns a
-<a class="reference internal" href="../api/lfkit.html#lfkit.LuminosityFunction" title="lfkit.LuminosityFunction"><code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.LuminosityFunction</span></code></a> object, so the resulting model can be
-evaluated with <code class="docutils literal notranslate"><span class="pre">lf.phi</span></code> and integrated with the usual <code class="docutils literal notranslate"><span class="pre">lf.integrals</span></code>
-namespace.</p>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">lfkit.ConditionalLuminosityFunction</span></code>. Each constructor returns a
+luminosity-function object that can be evaluated with
+<code class="docutils literal notranslate"><span class="pre">lf.phi</span></code> and integrated through the usual <code class="docutils literal notranslate"><span class="pre">lf.integrals</span></code> namespace.</p>
 <p>The examples below use redshift as the conditioning variable because this is
 the most common use case for luminosity function evolution. In that case,
 <span class="math notranslate nohighlight">\(\Phi(M \mid z)\)</span> describes how the magnitude distribution of galaxies
@@ -355,9 +417,8 @@ variable by replacing <code class="docutils literal notranslate"><span class="pr
 <p>The examples include:</p>
 <ul class="simple">
 <li><p>a conditional Schechter luminosity function,</p></li>
-<li><p>a conditional Schechter model using LFKit parameter models,</p></li>
+<li><p>a conditional Schechter model using callable parameter evolution,</p></li>
 <li><p>a lognormal component,</p></li>
-<li><p>a modified Schechter-like component,</p></li>
 <li><p>a two-component lognormal plus modified-Schechter model,</p></li>
 <li><p>integrated number densities and component fractions,</p></li>
 <li><p>a halo-mass conditional example,</p></li>
@@ -434,7 +495,7 @@ population evolves.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/ba9537e9fe57f7d8a42ed613114b06e9/conditional_luminosity_function-1.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/df2c0b8b607370e40698ee76e0a5e517/conditional_luminosity_function-1.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-1.png"><img alt="../_images/conditional_luminosity_function-1.png" class="plot-directive" src="../_images/conditional_luminosity_function-1.png" style="width: 520px;" />
 </a>
@@ -512,23 +573,25 @@ problem with the chosen parameterization or redshift dependence.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/1218e45242066bd4fa3ee5e278d6fe91/conditional_luminosity_function-2.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/6d188bbdc1ed7f74214cbf483004ea5c/conditional_luminosity_function-2.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-2.png"><img alt="../_images/conditional_luminosity_function-2.png" class="plot-directive" src="../_images/conditional_luminosity_function-2.png" style="width: 560px;" />
 </a>
 </figure>
 </section>
-<section id="conditional-schechter-model-with-lfkit-parameter-models">
-<h2>Conditional Schechter model with LFKit parameter models<a class="headerlink" href="#conditional-schechter-model-with-lfkit-parameter-models" title="Link to this heading"><span>#</span></a></h2>
-<p>LFKit can also build conditional Schechter models from its registered parameter
-models. This is useful when the desired evolution follows one of the standard
-forms already available in LFKit, rather than being written manually as a
-callable.</p>
-<p>Here, the normalization and characteristic magnitude evolve with the
-conditioning variable, while the faint-end slope is constant. The result is
-equivalent in spirit to the previous example, but the parameter evolution is
-defined through named LFKit models. This makes the model easier to reproduce,
-configure, and document.</p>
+<section id="toy-sfr-conditioned-schechter-luminosity-function">
+<h2>Toy SFR-conditioned Schechter luminosity function<a class="headerlink" href="#toy-sfr-conditioned-schechter-luminosity-function" title="Link to this heading"><span>#</span></a></h2>
+<p>The conditioning variable does not have to be redshift. The same conditional
+Schechter API can be used with any external galaxy or environment property. For
+example, one can write a luminosity function conditioned on star-formation rate,</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\Phi(M \mid \mathrm{SFR}).\]</div>
+</div>
+<p>In this case, each value of <code class="docutils literal notranslate"><span class="pre">sfr</span></code> selects a different Schechter luminosity
+function. The example below is a toy model where galaxies with larger
+star-formation rates have a brighter characteristic magnitude and a larger
+normalization.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
@@ -541,35 +604,32 @@ configure, and document.</p>
 <span class="n">LEGEND_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
 
 <span class="n">absolute_mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">24.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">14.0</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
-<span class="n">redshifts</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">]</span>
+<span class="n">sfr_values</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">]</span>
 
 <span class="n">colors</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span>
     <span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span>
-    <span class="nb">len</span><span class="p">(</span><span class="n">redshifts</span><span class="p">),</span>
+    <span class="nb">len</span><span class="p">(</span><span class="n">sfr_values</span><span class="p">),</span>
     <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">),</span>
 <span class="p">)</span>
 
-<span class="n">lf</span> <span class="o">=</span> <span class="n">ConditionalLuminosityFunction</span><span class="o">.</span><span class="n">evolving_schechter</span><span class="p">(</span>
-    <span class="n">phi_model</span><span class="o">=</span><span class="s2">&quot;linear_p&quot;</span><span class="p">,</span>
-    <span class="n">phi_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;phi_0_star&quot;</span><span class="p">:</span> <span class="mf">1.0e-3</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="mf">0.7</span><span class="p">},</span>
-    <span class="n">m_star_model</span><span class="o">=</span><span class="s2">&quot;linear_q&quot;</span><span class="p">,</span>
-    <span class="n">m_star_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;m_0_star&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">20.5</span><span class="p">,</span> <span class="s2">&quot;q&quot;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span> <span class="s2">&quot;z_ref&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">},</span>
-    <span class="n">alpha_model</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">,</span>
-    <span class="n">alpha_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.1</span><span class="p">},</span>
+<span class="n">lf</span> <span class="o">=</span> <span class="n">ConditionalLuminosityFunction</span><span class="o">.</span><span class="n">schechter</span><span class="p">(</span>
+    <span class="n">phi_star</span><span class="o">=</span><span class="k">lambda</span> <span class="n">sfr</span><span class="p">:</span> <span class="mf">8.0e-4</span> <span class="o">*</span> <span class="p">(</span><span class="n">sfr</span> <span class="o">/</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.35</span><span class="p">,</span>
+    <span class="n">m_star</span><span class="o">=</span><span class="k">lambda</span> <span class="n">sfr</span><span class="p">:</span> <span class="o">-</span><span class="mf">20.2</span> <span class="o">-</span> <span class="mf">0.7</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">sfr</span> <span class="o">/</span> <span class="mf">1.0</span><span class="p">),</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="k">lambda</span> <span class="n">sfr</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.05</span> <span class="o">-</span> <span class="mf">0.08</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">sfr</span> <span class="o">/</span> <span class="mf">1.0</span><span class="p">),</span>
 <span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">))</span>
 
-<span class="k">for</span> <span class="n">z_value</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">redshifts</span><span class="p">,</span> <span class="n">colors</span><span class="p">):</span>
-    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">z_value</span><span class="p">)</span>
-    <span class="n">phi</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">phi</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">sfr_value</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">sfr_values</span><span class="p">,</span> <span class="n">colors</span><span class="p">):</span>
+    <span class="n">sfr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">sfr_value</span><span class="p">)</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">phi</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">sfr</span><span class="p">)</span>
 
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
         <span class="n">absolute_mag</span><span class="p">,</span>
         <span class="n">phi</span><span class="p">,</span>
         <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
         <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
-        <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$z=</span><span class="si">{</span><span class="n">z_value</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$\mathrm</span><span class="se">{{</span><span class="s2">SFR</span><span class="se">}}</span><span class="s2">=</span><span class="si">{</span><span class="n">sfr_value</span><span class="si">}</span><span class="s2">\ M_\odot\,\mathrm</span><span class="se">{{</span><span class="s2">yr</span><span class="se">}}</span><span class="s2">^</span><span class="se">{{</span><span class="s2">-1</span><span class="se">}}</span><span class="s2">$&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
@@ -577,17 +637,18 @@ configure, and document.</p>
 <span class="n">ax</span><span class="o">.</span><span class="n">invert_xaxis</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Absolute magnitude $M$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span>
-    <span class="sa">r</span><span class="s2">&quot;$\Phi(M \mid z)$ [$\mathrm</span><span class="si">{Mpc}</span><span class="s2">^{-3}\,\mathrm</span><span class="si">{mag}</span><span class="s2">^{-1}$]&quot;</span><span class="p">,</span>
+    <span class="sa">r</span><span class="s2">&quot;$\Phi(M \mid \mathrm</span><span class="si">{SFR}</span><span class="s2">)$ &quot;</span>
+    <span class="sa">r</span><span class="s2">&quot;[$\mathrm</span><span class="si">{Mpc}</span><span class="s2">^{-3}\,\mathrm</span><span class="si">{mag}</span><span class="s2">^{-1}$]&quot;</span><span class="p">,</span>
     <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Conditional evolving Schechter model&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">TITLE_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;SFR-conditioned Schechter LF&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">TITLE_SIZE</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="n">TICK_SIZE</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LEGEND_SIZE</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/f8ab51d1f6c298aa58ca6ba65c8e2cf2/conditional_luminosity_function-3.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/a3aa0c956e59f603fdf379280f42c651/conditional_luminosity_function-3.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-3.png"><img alt="../_images/conditional_luminosity_function-3.png" class="plot-directive" src="../_images/conditional_luminosity_function-3.png" style="width: 520px;" />
 </a>
@@ -659,21 +720,20 @@ scale rather than a broad Schechter-like faint-end tail.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/3657117be4a98e209538ddbe6d3f4739/conditional_luminosity_function-4.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/013fe14f13e537e33125109ae3ad9247/conditional_luminosity_function-4.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-4.png"><img alt="../_images/conditional_luminosity_function-4.png" class="plot-directive" src="../_images/conditional_luminosity_function-4.png" style="width: 520px;" />
 </a>
 </figure>
 </section>
-<section id="modified-schechter-conditional-component">
-<h2>Modified Schechter conditional component<a class="headerlink" href="#modified-schechter-conditional-component" title="Link to this heading"><span>#</span></a></h2>
-<p>The modified Schechter component is Schechter-like at the faint end but uses a
-different cutoff at high luminosity. Instead of the standard exponential cutoff,
-it has a broader cutoff controlled by the luminosity ratio.</p>
-<p>This example lets the normalization, characteristic magnitude, and faint-end
-slope vary with redshift. The model therefore changes both in amplitude and in
-shape. This is useful when a standard Schechter function is too restrictive,
-especially for populations whose bright end falls off more gradually.</p>
+<section id="double-schechter-conditional-component">
+<h2>Double Schechter conditional component<a class="headerlink" href="#double-schechter-conditional-component" title="Link to this heading"><span>#</span></a></h2>
+<p>The double Schechter component combines two Schechter-like terms with a shared
+characteristic magnitude. This gives more flexibility than a single Schechter
+function because the two components can have different normalizations and
+faint-end slopes.</p>
+<p>This example lets both component normalizations and slopes vary with redshift.
+The model therefore changes both in amplitude and in shape.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
@@ -694,10 +754,10 @@ especially for populations whose bright end falls off more gradually.</p>
     <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">),</span>
 <span class="p">)</span>
 
-<span class="n">lf</span> <span class="o">=</span> <span class="n">ConditionalLuminosityFunction</span><span class="o">.</span><span class="n">modified_schechter</span><span class="p">(</span>
+<span class="n">lf</span> <span class="o">=</span> <span class="n">ConditionalLuminosityFunction</span><span class="o">.</span><span class="n">schechter</span><span class="p">(</span>
     <span class="n">phi_star</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="mf">1.2e-3</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">z</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">m_star</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="o">-</span><span class="mf">19.9</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">z</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">),</span>
-    <span class="n">alpha</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.05</span> <span class="o">-</span> <span class="mf">0.10</span> <span class="o">*</span> <span class="n">z</span><span class="p">,</span>
+    <span class="n">m_star</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="o">-</span><span class="mf">20.3</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">z</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">),</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.15</span> <span class="o">-</span> <span class="mf">0.10</span> <span class="o">*</span> <span class="n">z</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">))</span>
@@ -705,32 +765,25 @@ especially for populations whose bright end falls off more gradually.</p>
 <span class="k">for</span> <span class="n">z_value</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">redshifts</span><span class="p">,</span> <span class="n">colors</span><span class="p">):</span>
     <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">z_value</span><span class="p">)</span>
     <span class="n">phi</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">phi</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
-
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-        <span class="n">absolute_mag</span><span class="p">,</span>
-        <span class="n">phi</span><span class="p">,</span>
-        <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-        <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
-        <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$z=</span><span class="si">{</span><span class="n">z_value</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">rf</span><span class="s2">&quot;$z=</span><span class="si">{</span><span class="n">z_value</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">)</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">1.0e-8</span><span class="p">,</span> <span class="mf">1.0e-1</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">invert_xaxis</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Absolute magnitude $M$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span>
-    <span class="sa">r</span><span class="s2">&quot;$\Phi_{\rm modSch}(M \mid z)$ &quot;</span>
+    <span class="sa">r</span><span class="s2">&quot;$\Phi_{\rm double}(M \mid z)$ &quot;</span>
     <span class="sa">r</span><span class="s2">&quot;[$\mathrm</span><span class="si">{Mpc}</span><span class="s2">^{-3}\,\mathrm</span><span class="si">{mag}</span><span class="s2">^{-1}$]&quot;</span><span class="p">,</span>
     <span class="n">fontsize</span><span class="o">=</span><span class="n">LABEL_SIZE</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Modified Schechter conditional LF component&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">TITLE_SIZE</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Double Schechter conditional LF component&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">TITLE_SIZE</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="n">TICK_SIZE</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">LEGEND_SIZE</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/e0d02b3c3d621866a956129704cabc36/conditional_luminosity_function-5.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/b025f5bdaeb2e7a18348d9de07787cb2/conditional_luminosity_function-5.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-5.png"><img alt="../_images/conditional_luminosity_function-5.png" class="plot-directive" src="../_images/conditional_luminosity_function-5.png" style="width: 520px;" />
 </a>
@@ -771,10 +824,10 @@ best suited to describe.</p>
     <span class="n">alpha</span><span class="o">=-</span><span class="mf">1.1</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">modified_lf</span> <span class="o">=</span> <span class="n">ConditionalLuminosityFunction</span><span class="o">.</span><span class="n">modified_schechter</span><span class="p">(</span>
+<span class="n">modified_lf</span> <span class="o">=</span> <span class="n">ConditionalLuminosityFunction</span><span class="o">.</span><span class="n">schechter</span><span class="p">(</span>
     <span class="n">phi_star</span><span class="o">=</span><span class="mf">1.0e-3</span><span class="p">,</span>
     <span class="n">m_star</span><span class="o">=-</span><span class="mf">20.5</span><span class="p">,</span>
-    <span class="n">alpha</span><span class="o">=-</span><span class="mf">1.1</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=-</span><span class="mf">1.25</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">lognormal_lf</span> <span class="o">=</span> <span class="n">ConditionalLuminosityFunction</span><span class="o">.</span><span class="n">lognormal</span><span class="p">(</span>
@@ -801,7 +854,7 @@ best suited to describe.</p>
     <span class="n">phi_modified</span><span class="p">,</span>
     <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
     <span class="n">color</span><span class="o">=</span><span class="n">colors_red</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Modified Schechter&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Double Schechter&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
     <span class="n">absolute_mag</span><span class="p">,</span>
@@ -827,7 +880,7 @@ best suited to describe.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/8c608f3e1db31b9b7d338202bb5cf193/conditional_luminosity_function-6.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/1b00c04902ed77d6f58f3d841c23654f/conditional_luminosity_function-6.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-6.png"><img alt="../_images/conditional_luminosity_function-6.png" class="plot-directive" src="../_images/conditional_luminosity_function-6.png" style="width: 520px;" />
 </a>
@@ -835,15 +888,14 @@ best suited to describe.</p>
 </section>
 <section id="two-component-conditional-lf">
 <h2>Two-component conditional LF<a class="headerlink" href="#two-component-conditional-lf" title="Link to this heading"><span>#</span></a></h2>
-<p>The lognormal and modified Schechter components can be combined into a
-two-component conditional luminosity function. This is useful when one component
-is intended to describe a relatively narrow population and the other describes a
-broader luminosity distribution.</p>
-<p>This plot separates the lognormal component, the modified Schechter component,
-and their sum at a fixed redshift. The comparison shows which component
-dominates different magnitude ranges. In this example, the lognormal component
-is concentrated near its characteristic magnitude, while the modified Schechter
-component contributes over a wider range of magnitudes.</p>
+<p>The built-in two-component conditional luminosity function combines a
+lognormal component with a broader Schechter-like component. This is useful
+when one component is intended to describe a relatively narrow population and
+the other describes a broader luminosity distribution.</p>
+<p>This plot compares the lognormal component with the full two-component model at
+a fixed redshift. The comparison shows where the narrow component contributes
+most strongly and where the full model receives additional contribution from
+the broader component.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
@@ -856,7 +908,6 @@ component contributes over a wider range of magnitudes.</p>
 <span class="n">LEGEND_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
 
 <span class="n">colors_blue</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
-<span class="n">colors_red</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))</span>
 <span class="n">colors_all</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
 
 <span class="n">absolute_mag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">24.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">14.0</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
@@ -869,12 +920,6 @@ component contributes over a wider range of magnitudes.</p>
     <span class="n">amplitude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="mf">8.0e-4</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">z</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.4</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">modified_lf</span> <span class="o">=</span> <span class="n">ConditionalLuminosityFunction</span><span class="o">.</span><span class="n">modified_schechter</span><span class="p">(</span>
-    <span class="n">phi_star</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="mf">1.2e-3</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">z</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">m_star</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="o">-</span><span class="mf">19.9</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">z</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">),</span>
-    <span class="n">alpha</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.05</span> <span class="o">-</span> <span class="mf">0.10</span> <span class="o">*</span> <span class="n">z</span><span class="p">,</span>
-<span class="p">)</span>
-
 <span class="n">total_lf</span> <span class="o">=</span> <span class="n">ConditionalLuminosityFunction</span><span class="o">.</span><span class="n">two_component</span><span class="p">(</span>
     <span class="n">lognormal_mean_absolute_mag</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="o">-</span><span class="mf">20.8</span> <span class="o">-</span> <span class="mf">0.6</span> <span class="o">*</span> <span class="p">(</span><span class="n">z</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">),</span>
     <span class="n">lognormal_sigma_log_luminosity</span><span class="o">=</span><span class="mf">0.18</span><span class="p">,</span>
@@ -885,7 +930,6 @@ component contributes over a wider range of magnitudes.</p>
 <span class="p">)</span>
 
 <span class="n">lognormal_phi</span> <span class="o">=</span> <span class="n">lognormal_lf</span><span class="o">.</span><span class="n">phi</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
-<span class="n">modified_phi</span> <span class="o">=</span> <span class="n">modified_lf</span><span class="o">.</span><span class="n">phi</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
 <span class="n">total_phi</span> <span class="o">=</span> <span class="n">total_lf</span><span class="o">.</span><span class="n">phi</span><span class="p">(</span><span class="n">absolute_mag</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">))</span>
@@ -896,13 +940,6 @@ component contributes over a wider range of magnitudes.</p>
     <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
     <span class="n">color</span><span class="o">=</span><span class="n">colors_blue</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
     <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Lognormal component&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-    <span class="n">absolute_mag</span><span class="p">,</span>
-    <span class="n">modified_phi</span><span class="p">,</span>
-    <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="n">colors_red</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Modified Schechter component&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
     <span class="n">absolute_mag</span><span class="p">,</span>
@@ -927,7 +964,7 @@ component contributes over a wider range of magnitudes.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/1a559ccaf632e249521c03126e92e3f7/conditional_luminosity_function-7.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/1fc6a43a6c9190d9f0261e9ebf4cc1d2/conditional_luminosity_function-7.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-7.png"><img alt="../_images/conditional_luminosity_function-7.png" class="plot-directive" src="../_images/conditional_luminosity_function-7.png" style="width: 520px;" />
 </a>
@@ -1002,7 +1039,7 @@ direction.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/8b44b7697bc64453fbc64f75fa3a8869/conditional_luminosity_function-8.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/67e6e79ae67879fdc8baf01890055974/conditional_luminosity_function-8.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-8.png"><img alt="../_images/conditional_luminosity_function-8.png" class="plot-directive" src="../_images/conditional_luminosity_function-8.png" style="width: 520px;" />
 </a>
@@ -1021,10 +1058,9 @@ density,</p>
 galaxies inside the chosen magnitude range as a function of redshift. Because
 conditional constructors return normal LFKit luminosity function objects, the
 same <code class="docutils literal notranslate"><span class="pre">lf.integrals</span></code> namespace can be used here.</p>
-<p>This example integrates the lognormal component, the modified Schechter
-component, and the full two-component model. The total number density is the sum
-of the two components, while the individual curves show how much each component
-contributes.</p>
+<p>This example integrates the lognormal component and the full two-component
+model. The gap between the curves shows the contribution from the broader
+component in the two-component model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
@@ -1037,7 +1073,6 @@ contributes.</p>
 <span class="n">LEGEND_SIZE</span> <span class="o">=</span> <span class="mi">15</span>
 
 <span class="n">colors_blue</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
-<span class="n">colors_red</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))</span>
 <span class="n">colors_all</span> <span class="o">=</span> <span class="n">cmr</span><span class="o">.</span><span class="n">take_cmap_colors</span><span class="p">(</span><span class="s2">&quot;cmr.guppy&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">cmap_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
 
 <span class="n">redshift</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span>
@@ -1046,12 +1081,6 @@ contributes.</p>
     <span class="n">mean_absolute_mag</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="o">-</span><span class="mf">20.8</span> <span class="o">-</span> <span class="mf">0.6</span> <span class="o">*</span> <span class="p">(</span><span class="n">z</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">),</span>
     <span class="n">sigma_log_luminosity</span><span class="o">=</span><span class="mf">0.18</span><span class="p">,</span>
     <span class="n">amplitude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="mf">8.0e-4</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">z</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.4</span><span class="p">,</span>
-<span class="p">)</span>
-
-<span class="n">modified_lf</span> <span class="o">=</span> <span class="n">ConditionalLuminosityFunction</span><span class="o">.</span><span class="n">modified_schechter</span><span class="p">(</span>
-    <span class="n">phi_star</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="mf">1.2e-3</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">z</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">m_star</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="o">-</span><span class="mf">19.9</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">z</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">),</span>
-    <span class="n">alpha</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.05</span> <span class="o">-</span> <span class="mf">0.10</span> <span class="o">*</span> <span class="n">z</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">total_lf</span> <span class="o">=</span> <span class="n">ConditionalLuminosityFunction</span><span class="o">.</span><span class="n">two_component</span><span class="p">(</span>
@@ -1064,13 +1093,6 @@ contributes.</p>
 <span class="p">)</span>
 
 <span class="n">n_lognormal</span> <span class="o">=</span> <span class="n">lognormal_lf</span><span class="o">.</span><span class="n">integrals</span><span class="o">.</span><span class="n">number_density</span><span class="p">(</span>
-    <span class="n">redshift</span><span class="p">,</span>
-    <span class="n">m_bright</span><span class="o">=-</span><span class="mf">24.0</span><span class="p">,</span>
-    <span class="n">m_faint</span><span class="o">=-</span><span class="mf">14.0</span><span class="p">,</span>
-    <span class="n">n_m</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
-<span class="p">)</span>
-
-<span class="n">n_modified</span> <span class="o">=</span> <span class="n">modified_lf</span><span class="o">.</span><span class="n">integrals</span><span class="o">.</span><span class="n">number_density</span><span class="p">(</span>
     <span class="n">redshift</span><span class="p">,</span>
     <span class="n">m_bright</span><span class="o">=-</span><span class="mf">24.0</span><span class="p">,</span>
     <span class="n">m_faint</span><span class="o">=-</span><span class="mf">14.0</span><span class="p">,</span>
@@ -1095,13 +1117,6 @@ contributes.</p>
 <span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
     <span class="n">redshift</span><span class="p">,</span>
-    <span class="n">n_modified</span><span class="p">,</span>
-    <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="n">colors_red</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Modified Schechter component&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-    <span class="n">redshift</span><span class="p">,</span>
     <span class="n">n_total</span><span class="p">,</span>
     <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
     <span class="n">color</span><span class="o">=</span><span class="n">colors_all</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
@@ -1119,7 +1134,7 @@ contributes.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/329ba2f973c91f8349bfa328e384a028/conditional_luminosity_function-9.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/2446bd5fac22d3a711afb6d974499ad2/conditional_luminosity_function-9.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-9.png"><img alt="../_images/conditional_luminosity_function-9.png" class="plot-directive" src="../_images/conditional_luminosity_function-9.png" style="width: 520px;" />
 </a>
@@ -1127,19 +1142,15 @@ contributes.</p>
 </section>
 <section id="component-fractions">
 <h2>Component fractions<a class="headerlink" href="#component-fractions" title="Link to this heading"><span>#</span></a></h2>
-<p>The relative contribution of each component can be summarized as a fraction of
-the integrated two-component luminosity function. For components
-<span class="math notranslate nohighlight">\(n_1(z)\)</span> and <span class="math notranslate nohighlight">\(n_2(z)\)</span>, the corresponding fractions are</p>
+<p>The relative contribution of the lognormal component can be summarized as a
+fraction of the integrated two-component luminosity function,</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
-\[f_1(z) = \frac{n_1(z)}{n_1(z) + n_2(z)}, \qquad
-f_2(z) = \frac{n_2(z)}{n_1(z) + n_2(z)}.\]</div>
+\[f_{\rm lognormal}(z) = \frac{n_{\rm lognormal}(z)}{n_{\rm total}(z)}.\]</div>
 </div>
-<p>This example computes the integrated lognormal and modified Schechter
-components with <code class="docutils literal notranslate"><span class="pre">lf.integrals.number_density</span></code>. The resulting fractions show
-whether the selected population is dominated by the narrow lognormal component,
-the broader modified Schechter component, or a mixture of both. This is often
-easier to interpret than comparing raw number densities alone.</p>
+<p>The remaining fraction is the contribution from the broader component in the
+two-component model. This is often easier to interpret than comparing raw
+number densities alone.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cmasher</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmr</span>
@@ -1162,10 +1173,13 @@ easier to interpret than comparing raw number densities alone.</p>
     <span class="n">amplitude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="mf">8.0e-4</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">z</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.4</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">modified_lf</span> <span class="o">=</span> <span class="n">ConditionalLuminosityFunction</span><span class="o">.</span><span class="n">modified_schechter</span><span class="p">(</span>
-    <span class="n">phi_star</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="mf">1.2e-3</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">z</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">m_star</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="o">-</span><span class="mf">19.9</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">z</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">),</span>
-    <span class="n">alpha</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.05</span> <span class="o">-</span> <span class="mf">0.10</span> <span class="o">*</span> <span class="n">z</span><span class="p">,</span>
+<span class="n">total_lf</span> <span class="o">=</span> <span class="n">ConditionalLuminosityFunction</span><span class="o">.</span><span class="n">two_component</span><span class="p">(</span>
+    <span class="n">lognormal_mean_absolute_mag</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="o">-</span><span class="mf">20.8</span> <span class="o">-</span> <span class="mf">0.6</span> <span class="o">*</span> <span class="p">(</span><span class="n">z</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">),</span>
+    <span class="n">lognormal_sigma_log_luminosity</span><span class="o">=</span><span class="mf">0.18</span><span class="p">,</span>
+    <span class="n">lognormal_amplitude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="mf">8.0e-4</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">z</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.4</span><span class="p">,</span>
+    <span class="n">modified_phi_star</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="mf">1.2e-3</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">z</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">modified_m_star</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="o">-</span><span class="mf">19.9</span> <span class="o">-</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">z</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">),</span>
+    <span class="n">modified_alpha</span><span class="o">=</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="o">-</span><span class="mf">1.05</span> <span class="o">-</span> <span class="mf">0.10</span> <span class="o">*</span> <span class="n">z</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">n_lognormal</span> <span class="o">=</span> <span class="n">lognormal_lf</span><span class="o">.</span><span class="n">integrals</span><span class="o">.</span><span class="n">number_density</span><span class="p">(</span>
@@ -1175,17 +1189,15 @@ easier to interpret than comparing raw number densities alone.</p>
     <span class="n">n_m</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">n_modified</span> <span class="o">=</span> <span class="n">modified_lf</span><span class="o">.</span><span class="n">integrals</span><span class="o">.</span><span class="n">number_density</span><span class="p">(</span>
+<span class="n">n_total</span> <span class="o">=</span> <span class="n">total_lf</span><span class="o">.</span><span class="n">integrals</span><span class="o">.</span><span class="n">number_density</span><span class="p">(</span>
     <span class="n">redshift</span><span class="p">,</span>
     <span class="n">m_bright</span><span class="o">=-</span><span class="mf">24.0</span><span class="p">,</span>
     <span class="n">m_faint</span><span class="o">=-</span><span class="mf">14.0</span><span class="p">,</span>
     <span class="n">n_m</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">n_total</span> <span class="o">=</span> <span class="n">n_lognormal</span> <span class="o">+</span> <span class="n">n_modified</span>
-
 <span class="n">lognormal_fraction</span> <span class="o">=</span> <span class="n">n_lognormal</span> <span class="o">/</span> <span class="n">n_total</span>
-<span class="n">modified_fraction</span> <span class="o">=</span> <span class="n">n_modified</span> <span class="o">/</span> <span class="n">n_total</span>
+<span class="n">broad_fraction</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">lognormal_fraction</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">))</span>
 
@@ -1198,10 +1210,10 @@ easier to interpret than comparing raw number densities alone.</p>
 <span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
     <span class="n">redshift</span><span class="p">,</span>
-    <span class="n">modified_fraction</span><span class="p">,</span>
+    <span class="n">broad_fraction</span><span class="p">,</span>
     <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
     <span class="n">color</span><span class="o">=</span><span class="n">colors_red</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Modified Schechter fraction&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Broad component fraction&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">)</span>
@@ -1214,7 +1226,7 @@ easier to interpret than comparing raw number densities alone.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/defe51322e47d38ef93eb2b8ef9b21db/conditional_luminosity_function-10.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/96ab4f80d33f2630826d2851c9e04afd/conditional_luminosity_function-10.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-10.png"><img alt="../_images/conditional_luminosity_function-10.png" class="plot-directive" src="../_images/conditional_luminosity_function-10.png" style="width: 520px;" />
 </a>
@@ -1296,7 +1308,7 @@ model predicts the largest abundance of galaxies.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/23d10210f88806861e68ab8e0f63d393/conditional_luminosity_function-11.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/0266fc7536d0cdddfc612e7e3ff66c9f/conditional_luminosity_function-11.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-11.png"><img alt="../_images/conditional_luminosity_function-11.png" class="plot-directive" src="../_images/conditional_luminosity_function-11.png" style="width: 560px;" />
 </a>
@@ -1367,7 +1379,7 @@ brighter and more abundant galaxies in this toy model.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/2a7825d24ce232391ee37a194406d323/conditional_luminosity_function-12.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/8d859a006bfa4bd0806249cd0d958e49/conditional_luminosity_function-12.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-12.png"><img alt="../_images/conditional_luminosity_function-12.png" class="plot-directive" src="../_images/conditional_luminosity_function-12.png" style="width: 520px;" />
 </a>
@@ -1452,7 +1464,7 @@ the selected population relative to the chosen reference luminosity.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/4499c37d557719a07b8f9b32fcfdad1e/conditional_luminosity_function-13.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/ea9a99b409498d8b740bff353c70038a/conditional_luminosity_function-13.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-13.png"><img alt="../_images/conditional_luminosity_function-13.png" class="plot-directive" src="../_images/conditional_luminosity_function-13.png" style="width: 520px;" />
 </a>
@@ -1540,7 +1552,7 @@ the selection.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/08a6ea73df31fc34c6aa963cc4beccd5/conditional_luminosity_function-14.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/0526601bef0228b53f2209f971ade480/conditional_luminosity_function-14.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-14.png"><img alt="../_images/conditional_luminosity_function-14.png" class="plot-directive" src="../_images/conditional_luminosity_function-14.png" style="width: 520px;" />
 </a>
@@ -1619,7 +1631,7 @@ removes a larger fraction of the population.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../_downloads/795cfc3e6f078fbb2f6f64b45fd88131/conditional_luminosity_function-15.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../_downloads/5141e9765617eb167076332002e10464/conditional_luminosity_function-15.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../_images/conditional_luminosity_function-15.png"><img alt="../_images/conditional_luminosity_function-15.png" class="plot-directive" src="../_images/conditional_luminosity_function-15.png" style="width: 520px;" />
 </a>
@@ -1632,23 +1644,23 @@ removes a larger fraction of the population.</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="model_registry.html">
+          <a class="next-page" href="magnitude_integrals.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"> Available luminosity function models</div>
+                <div class="title"> Magnitude integrals</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="catalog_completeness.html">
+          <a class="prev-page" href="lf_models/composite_models.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"> Catalog completeness</div>
+                <div class="title"> Composite models</div>
                 
               </div>
             </a>
@@ -1685,9 +1697,9 @@ removes a larger fraction of the population.</p>
 <li><a class="reference internal" href="#"> Conditional luminosity functions</a><ul>
 <li><a class="reference internal" href="#conditional-schechter-luminosity-function">Conditional Schechter luminosity function</a></li>
 <li><a class="reference internal" href="#conditional-schechter-surface">Conditional Schechter surface</a></li>
-<li><a class="reference internal" href="#conditional-schechter-model-with-lfkit-parameter-models">Conditional Schechter model with LFKit parameter models</a></li>
+<li><a class="reference internal" href="#toy-sfr-conditioned-schechter-luminosity-function">Toy SFR-conditioned Schechter luminosity function</a></li>
 <li><a class="reference internal" href="#lognormal-conditional-component">Lognormal conditional component</a></li>
-<li><a class="reference internal" href="#modified-schechter-conditional-component">Modified Schechter conditional component</a></li>
+<li><a class="reference internal" href="#double-schechter-conditional-component">Double Schechter conditional component</a></li>
 <li><a class="reference internal" href="#standard-modified-and-lognormal-component-shapes">Standard, modified, and lognormal component shapes</a></li>
 <li><a class="reference internal" href="#two-component-conditional-lf">Two-component conditional LF</a></li>
 <li><a class="reference internal" href="#two-component-evolution">Two-component evolution</a></li>

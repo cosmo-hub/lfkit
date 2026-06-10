@@ -3,13 +3,13 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="lfkit.utils.types module" href="lfkit.utils.types.html"><link rel="prev" title="lfkit.utils.interpolation module" href="lfkit.utils.interpolation.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="lfkit.utils.types" href="lfkit.utils.types.html"><link rel="prev" title="lfkit.utils.interpolation" href="lfkit.utils.interpolation.html">
         <link rel="canonical" href="https://cosmology-kit.github.io/lfkit/api/lfkit.utils.io.html">
         <link rel="prefetch" href="../_static/logos/lfkit_logo-icon.png" as="image">
         <link rel="prefetch" href="../_static/logos/lfkit_logo-icon.png" as="image">
 
     <link rel="shortcut icon" href="../_static/lfkit_logo-icon.png"><!-- Generated with Sphinx 8.2.3 and Furo 2025.12.19 -->
-        <title>lfkit.utils.io module - LFKit Documentation</title>
+        <title>lfkit.utils.io - LFKit Documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
@@ -194,7 +194,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -224,62 +224,125 @@
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../examples/index.html"> Examples</a><input aria-label="Toggle navigation of  Examples" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../examples/luminosity_function_models.html"> Luminosity function models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples/magnitude_integrals.html"> Luminosity function magnitude integrals</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../examples/lf_models/index.html"> Luminosity function models</a><input aria-label="Toggle navigation of  Luminosity function models" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/lf_models/model_registry.html"> Available luminosity function models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/lf_models/schechter_models.html"> Schechter family models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/lf_models/gaussian_models.html"> Gaussian-like models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/lf_models/power_law_models.html"> Power-law models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/lf_models/composite_models.html"> Composite models</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/conditional_luminosity_function.html"> Conditional luminosity functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/magnitude_integrals.html"> Magnitude integrals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/magnitudes_and_luminosities.html"> Magnitudes and luminosities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/redshift_density.html"> LF-weighted redshift density</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/catalog_completeness.html"> Catalog completeness</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples/conditional_luminosity_function.html"> Conditional luminosity functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples/model_registry.html"> Available luminosity function models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/kcorrect_examples.html">kcorrect examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/poggianti_examples.html">Poggianti (1997) examples</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API Reference</a><input aria-label="Toggle navigation of API Reference" checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l2 current has-children"><a class="reference internal" href="lfkit.html">lfkit package</a><input aria-label="Toggle navigation of lfkit package" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l3 has-children"><a class="reference internal" href="lfkit.api.html">lfkit.api package</a><input aria-label="Toggle navigation of lfkit.api package" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.api.conditional_luminosity_function.html">lfkit.api.conditional_luminosity_function module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.api.corrections.html">lfkit.api.corrections module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.api.luminosity_function.html">lfkit.api.luminosity_function module</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API reference</a><input aria-label="Toggle navigation of API reference" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2 current has-children"><a class="reference internal" href="lfkit.html">lfkit</a><input aria-label="Toggle navigation of lfkit" checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l3 has-children"><a class="reference internal" href="lfkit.api.html">lfkit.api</a><input aria-label="Toggle navigation of lfkit.api" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.api.conditional_luminosity_function.html">lfkit.api.conditional_luminosity_function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.api.corrections.html">lfkit.api.corrections</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.api.luminosity_function.html">lfkit.api.luminosity_function</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="lfkit.corrections.html">lfkit.corrections package</a><input aria-label="Toggle navigation of lfkit.corrections package" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.color_anchors.html">lfkit.corrections.color_anchors module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.filters.html">lfkit.corrections.filters module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.kcorrect_backend.html">lfkit.corrections.kcorrect_backend module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.kcorrect_from_color.html">lfkit.corrections.kcorrect_from_color module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.kcorrect_grids.html">lfkit.corrections.kcorrect_grids module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.poggianti1997.html">lfkit.corrections.poggianti1997 module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.responses.html">lfkit.corrections.responses module</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="lfkit.corrections.html">lfkit.corrections</a><input aria-label="Toggle navigation of lfkit.corrections" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.color_anchors.html">lfkit.corrections.color_anchors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.filters.html">lfkit.corrections.filters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.kcorrect_backend.html">lfkit.corrections.kcorrect_backend</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.kcorrect_from_color.html">lfkit.corrections.kcorrect_from_color</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.kcorrect_grids.html">lfkit.corrections.kcorrect_grids</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.poggianti1997.html">lfkit.corrections.poggianti1997</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.corrections.responses.html">lfkit.corrections.responses</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="lfkit.cosmo.html">lfkit.cosmo package</a><input aria-label="Toggle navigation of lfkit.cosmo package" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.cosmo.cosmology.html">lfkit.cosmo.cosmology module</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="lfkit.cosmo.html">lfkit.cosmo</a><input aria-label="Toggle navigation of lfkit.cosmo" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.cosmo.cosmology.html">lfkit.cosmo.cosmology</a></li>
 </ul>
 </li>
-<li class="toctree-l3 has-children"><a class="reference internal" href="lfkit.photometry.html">lfkit.photometry package</a><input aria-label="Toggle navigation of lfkit.photometry package" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.catalog_completeness.html">lfkit.photometry.catalog_completeness module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.conditional_lf_integrals.html">lfkit.photometry.conditional_lf_integrals module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.conditional_lf_models.html">lfkit.photometry.conditional_lf_models module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.lf_integrals.html">lfkit.photometry.lf_integrals module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.lf_parameter_models.html">lfkit.photometry.lf_parameter_models module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.lf_redshift_density.html">lfkit.photometry.lf_redshift_density module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.luminosities.html">lfkit.photometry.luminosities module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.luminosity_function.html">lfkit.photometry.luminosity_function module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.magnitudes.html">lfkit.photometry.magnitudes module</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="lfkit.luminosity_functions.html">lfkit.luminosity_functions</a><input aria-label="Toggle navigation of lfkit.luminosity_functions" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.completeness.html">lfkit.luminosity_functions.completeness</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.conditional_integrals.html">lfkit.luminosity_functions.conditional_integrals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.conditional_models.html">lfkit.luminosity_functions.conditional_models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.integrals.html">lfkit.luminosity_functions.integrals</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="lfkit.luminosity_functions.models.html">lfkit.luminosity_functions.models</a><input aria-label="Toggle navigation of lfkit.luminosity_functions.models" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="lfkit.luminosity_functions.models.composite.html">lfkit.luminosity_functions.models.composite</a></li>
+<li class="toctree-l5"><a class="reference internal" href="lfkit.luminosity_functions.models.gaussian.html">lfkit.luminosity_functions.models.gaussian</a></li>
+<li class="toctree-l5"><a class="reference internal" href="lfkit.luminosity_functions.models.modifiers.html">lfkit.luminosity_functions.models.modifiers</a></li>
+<li class="toctree-l5"><a class="reference internal" href="lfkit.luminosity_functions.models.power_law.html">lfkit.luminosity_functions.models.power_law</a></li>
+<li class="toctree-l5"><a class="reference internal" href="lfkit.luminosity_functions.models.schechter.html">lfkit.luminosity_functions.models.schechter</a></li>
 </ul>
 </li>
-<li class="toctree-l3 current has-children"><a class="reference internal" href="lfkit.utils.html">lfkit.utils package</a><input aria-label="Toggle navigation of lfkit.utils package" checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.download_poggianti97_data.html">lfkit.utils.download_poggianti97_data module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.evaluators.html">lfkit.utils.evaluators module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.integrators.html">lfkit.utils.integrators module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.interpolation.html">lfkit.utils.interpolation module</a></li>
-<li class="toctree-l4 current current-page"><a class="current reference internal" href="#">lfkit.utils.io module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.types.html">lfkit.utils.types module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.units.html">lfkit.utils.units module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.validators.html">lfkit.utils.validators module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.parameter_models.html">lfkit.luminosity_functions.parameter_models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.redshift_density.html">lfkit.luminosity_functions.redshift_density</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.registry.html">lfkit.luminosity_functions.registry</a></li>
 </ul>
 </li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="lfkit.photometry.html">lfkit.photometry</a><input aria-label="Toggle navigation of lfkit.photometry" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.luminosities.html">lfkit.photometry.luminosities</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.photometry.magnitudes.html">lfkit.photometry.magnitudes</a></li>
+</ul>
+</li>
+<li class="toctree-l3 current has-children"><a class="reference internal" href="lfkit.utils.html">lfkit.utils</a><input aria-label="Toggle navigation of lfkit.utils" checked="" class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.download_poggianti97_data.html">lfkit.utils.download_poggianti97_data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.evaluators.html">lfkit.utils.evaluators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.integrators.html">lfkit.utils.integrators</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.interpolation.html">lfkit.utils.interpolation</a></li>
+<li class="toctree-l4 current current-page"><a class="current reference internal" href="#">lfkit.utils.io</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.types.html">lfkit.utils.types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.units.html">lfkit.utils.units</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.utils.validators.html">lfkit.utils.validators</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="lfkit.api.html">lfkit.api</a><input aria-label="Toggle navigation of lfkit.api" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.api.conditional_luminosity_function.html">lfkit.api.conditional_luminosity_function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.api.corrections.html">lfkit.api.corrections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.api.luminosity_function.html">lfkit.api.luminosity_function</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="lfkit.api.luminosity_function.html">lfkit.api.luminosity_function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lfkit.api.conditional_luminosity_function.html">lfkit.api.conditional_luminosity_function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lfkit.api.corrections.html">lfkit.api.corrections</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="lfkit.luminosity_functions.html">lfkit.luminosity_functions</a><input aria-label="Toggle navigation of lfkit.luminosity_functions" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.luminosity_functions.completeness.html">lfkit.luminosity_functions.completeness</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.luminosity_functions.conditional_integrals.html">lfkit.luminosity_functions.conditional_integrals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.luminosity_functions.conditional_models.html">lfkit.luminosity_functions.conditional_models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.luminosity_functions.integrals.html">lfkit.luminosity_functions.integrals</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="lfkit.luminosity_functions.models.html">lfkit.luminosity_functions.models</a><input aria-label="Toggle navigation of lfkit.luminosity_functions.models" class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.models.composite.html">lfkit.luminosity_functions.models.composite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.models.gaussian.html">lfkit.luminosity_functions.models.gaussian</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.models.modifiers.html">lfkit.luminosity_functions.models.modifiers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.models.power_law.html">lfkit.luminosity_functions.models.power_law</a></li>
+<li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.models.schechter.html">lfkit.luminosity_functions.models.schechter</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.luminosity_functions.parameter_models.html">lfkit.luminosity_functions.parameter_models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.luminosity_functions.redshift_density.html">lfkit.luminosity_functions.redshift_density</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.luminosity_functions.registry.html">lfkit.luminosity_functions.registry</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="lfkit.photometry.html">lfkit.photometry</a><input aria-label="Toggle navigation of lfkit.photometry" class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.photometry.luminosities.html">lfkit.photometry.luminosities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.photometry.magnitudes.html">lfkit.photometry.magnitudes</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="lfkit.corrections.html">lfkit.corrections</a><input aria-label="Toggle navigation of lfkit.corrections" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.corrections.color_anchors.html">lfkit.corrections.color_anchors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.corrections.filters.html">lfkit.corrections.filters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.corrections.kcorrect_backend.html">lfkit.corrections.kcorrect_backend</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.corrections.kcorrect_from_color.html">lfkit.corrections.kcorrect_from_color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.corrections.kcorrect_grids.html">lfkit.corrections.kcorrect_grids</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.corrections.poggianti1997.html">lfkit.corrections.poggianti1997</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.corrections.responses.html">lfkit.corrections.responses</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="lfkit.cosmo.html">lfkit.cosmo</a><input aria-label="Toggle navigation of lfkit.cosmo" class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="lfkit.cosmo.cosmology.html">lfkit.cosmo.cosmology</a></li>
 </ul>
 </li>
 </ul>
@@ -320,13 +383,13 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
           <section id="module-lfkit.utils.io">
-<span id="lfkit-utils-io-module"></span><h1>lfkit.utils.io module<a class="headerlink" href="#module-lfkit.utils.io" title="Link to this heading"><span>#</span></a></h1>
+<span id="lfkit-utils-io"></span><h1>lfkit.utils.io<a class="headerlink" href="#module-lfkit.utils.io" title="Link to this heading"><span>#</span></a></h1>
 <p>I/O utilities for packaged Poggianti (1997) correction tables.</p>
 <p>This module provides helpers to:
 - locate Poggianti (1997) CSV files shipped as package data
@@ -335,151 +398,34 @@
 - extract validated (z, y) series for a given (band, sed)</p>
 <p>The functions here are intentionally limited to file/resource access and table
 parsing.</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="lfkit.utils.io.available_from_table">
-<span class="sig-prename descclassname"><span class="pre">lfkit.utils.io.</span></span><span class="sig-name descname"><span class="pre">available_from_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tab</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/utils/io.html#available_from_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.utils.io.available_from_table" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>Return available band labels and SED columns in a Poggianti-style table.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>tab</strong> (<em>ndarray</em>) – Structured array loaded from a Poggianti VizieR CSV.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">bands</span></code> are unique values from the <code class="docutils literal notranslate"><span class="pre">Filt</span></code> column (sorted)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">seds</span></code> are SED column names excluding metadata columns</p></li>
-</ul>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A tuple <code class="docutils literal notranslate"><span class="pre">(bands,</span> <span class="pre">seds)</span></code> where</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValueError</strong> – If required columns are missing.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="lfkit.utils.io.available_pairs">
-<span class="sig-prename descclassname"><span class="pre">lfkit.utils.io.</span></span><span class="sig-name descname"><span class="pre">available_pairs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tab</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/utils/io.html#available_pairs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.utils.io.available_pairs" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>List usable (band -&gt; SEDs) pairs in a Poggianti-style table.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>tab</strong> (<em>ndarray</em>) – Structured array for a single correction table (k-corr or e-corr).</p></li>
-<li><p><strong>min_points</strong> (<em>int</em>) – Minimum number of samples required per extracted series.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Mapping from band label to a list of SED labels that have usable data.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dict[str, list[str]]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="lfkit.utils.io.extract_series">
-<span class="sig-prename descclassname"><span class="pre">lfkit.utils.io.</span></span><span class="sig-name descname"><span class="pre">extract_series</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tab</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">band</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/utils/io.html#extract_series"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.utils.io.extract_series" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>Extract a validated (z, y) correction curve for a band and SED.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>tab</strong> (<em>ndarray</em>) – Structured array for a single correction table (k-corr or e-corr).</p></li>
-<li><p><strong>band</strong> (<em>str</em>) – Band label to select from the <code class="docutils literal notranslate"><span class="pre">Filt</span></code> column.</p></li>
-<li><p><strong>sed</strong> (<em>str</em>) – SED column name to extract.</p></li>
-<li><p><strong>min_points</strong> (<em>int</em>) – Minimum number of points required after cleaning.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A tuple <code class="docutils literal notranslate"><span class="pre">(z,</span> <span class="pre">y)</span></code> where <code class="docutils literal notranslate"><span class="pre">z</span></code> is strictly increasing and <code class="docutils literal notranslate"><span class="pre">y</span></code> is the
-corresponding correction values.</p>
-</dd>
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If the band/SED is not present, has no finite values, or
-    does not contain enough usable samples.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>tuple[<em>ndarray</em>, <em>ndarray</em>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="lfkit.utils.io.load_kcorr_package">
-<span class="sig-prename descclassname"><span class="pre">lfkit.utils.io.</span></span><span class="sig-name descname"><span class="pre">load_kcorr_package</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/utils/io.html#load_kcorr_package"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.utils.io.load_kcorr_package" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>Load a saved .npz package created by save_kcorr_package.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>path</strong> (<em>str</em><em> | </em><em>Path</em>)</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>dict[str, <em>Any</em>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="lfkit.utils.io.load_vizier_csv">
-<span class="sig-prename descclassname"><span class="pre">lfkit.utils.io.</span></span><span class="sig-name descname"><span class="pre">load_vizier_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/utils/io.html#load_vizier_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.utils.io.load_vizier_csv" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>Load a VizieR CSV file into a NumPy structured array.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>path</strong> (<em>str</em><em> | </em><em>Path</em>) – Path to a CSV file written with column headers.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A NumPy structured array with named columns.</p>
-</dd>
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ValueError</strong> – If the CSV cannot be read as a headered table.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>ndarray</em></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="lfkit.utils.io.resolve_packaged_csv">
-<span class="sig-prename descclassname"><span class="pre">lfkit.utils.io.</span></span><span class="sig-name descname"><span class="pre">resolve_packaged_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">pkg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lfkit.data.poggianti1997'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/utils/io.html#resolve_packaged_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.utils.io.resolve_packaged_csv" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>Resolve a packaged CSV resource to a concrete filesystem path.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<em>str</em>) – Filename within the package data directory (e.g. <code class="docutils literal notranslate"><span class="pre">kcorr.csv</span></code>).</p></li>
-<li><p><strong>pkg</strong> (<em>str</em>) – Package path containing the data resources.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A concrete filesystem path to the resource.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>Path</em></p>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
-<p>When running from a wheel, resources may not exist as real files.
-<code class="docutils literal notranslate"><span class="pre">importlib.resources.as_file</span></code> provides a temporary path-like view.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="lfkit.utils.io.save_kcorr_package">
-<span class="sig-prename descclassname"><span class="pre">lfkit.utils.io.</span></span><span class="sig-name descname"><span class="pre">save_kcorr_package</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/lfkit/utils/io.html#save_kcorr_package"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lfkit.utils.io.save_kcorr_package" title="Link to this definition"><span>#</span></a></dt>
-<dd><p>Save the generated package to .npz (portable, fast).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>pkg</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>)</p></li>
-<li><p><strong>path</strong> (<em>str</em><em> | </em><em>Path</em>)</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
-</dd>
-</dl>
-</dd></dl>
-
+<p class="rubric">Functions</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">available_from_table</span></code>(tab)</p></td>
+<td><p>Return available band labels and SED columns in a Poggianti-style table.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">available_pairs</span></code>(tab, *[, min_points])</p></td>
+<td><p>List usable (band -&gt; SEDs) pairs in a Poggianti-style table.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_series</span></code>(tab, *, band, sed[, min_points])</p></td>
+<td><p>Extract a validated (z, y) correction curve for a band and SED.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_kcorr_package</span></code>(path)</p></td>
+<td><p>Load a saved .npz package created by save_kcorr_package.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_vizier_csv</span></code>(path)</p></td>
+<td><p>Load a VizieR CSV file into a NumPy structured array.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">resolve_packaged_csv</span></code>(name, *[, pkg])</p></td>
+<td><p>Resolve a packaged CSV resource to a concrete filesystem path.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_kcorr_package</span></code>(pkg, path)</p></td>
+<td><p>Save the generated package to .npz (portable, fast).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
 
         </article>
@@ -492,7 +438,7 @@ corresponding correction values.</p>
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">lfkit.utils.types module</div>
+                <div class="title">lfkit.utils.types</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -503,7 +449,7 @@ corresponding correction values.</p>
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">lfkit.utils.interpolation module</div>
+                <div class="title">lfkit.utils.interpolation</div>
                 
               </div>
             </a>
@@ -525,33 +471,8 @@ corresponding correction values.</p>
         
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
       
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            On this page
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">lfkit.utils.io module</a><ul>
-<li><a class="reference internal" href="#lfkit.utils.io.available_from_table"><code class="docutils literal notranslate"><span class="pre">available_from_table()</span></code></a></li>
-<li><a class="reference internal" href="#lfkit.utils.io.available_pairs"><code class="docutils literal notranslate"><span class="pre">available_pairs()</span></code></a></li>
-<li><a class="reference internal" href="#lfkit.utils.io.extract_series"><code class="docutils literal notranslate"><span class="pre">extract_series()</span></code></a></li>
-<li><a class="reference internal" href="#lfkit.utils.io.load_kcorr_package"><code class="docutils literal notranslate"><span class="pre">load_kcorr_package()</span></code></a></li>
-<li><a class="reference internal" href="#lfkit.utils.io.load_vizier_csv"><code class="docutils literal notranslate"><span class="pre">load_vizier_csv()</span></code></a></li>
-<li><a class="reference internal" href="#lfkit.utils.io.resolve_packaged_csv"><code class="docutils literal notranslate"><span class="pre">resolve_packaged_csv()</span></code></a></li>
-<li><a class="reference internal" href="#lfkit.utils.io.save_kcorr_package"><code class="docutils literal notranslate"><span class="pre">save_kcorr_package()</span></code></a></li>
-</ul>
-</li>
-</ul>
-
-          </div>
-        </div>
-      </div>
       
       
     </aside>
