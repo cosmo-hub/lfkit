@@ -14,7 +14,6 @@ from lfkit.api._namespaces import (
     LFMagnitudesAPI,
     LFRedshiftDensityAPI,
 )
-from lfkit.luminosity_functions.models.modifiers import apply_luminosity_cutoff
 from lfkit.luminosity_functions.parameter_models import (
     available_lf_parameter_models,
     evaluate_lf_parameters,
@@ -333,6 +332,7 @@ class LuminosityFunction:
 
 def _make_lf_constructor(model_name: str):
     """Create a classmethod constructor for a registered LF model."""
+
     @classmethod
     def constructor(
         cls,
