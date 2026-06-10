@@ -203,15 +203,21 @@ problem with the chosen parameterization or redshift dependence.
    plt.tight_layout()
 
 
-Conditional Schechter model with callable parameter evolution
--------------------------------------------------------------
+Toy SFR-conditioned Schechter luminosity function
+-------------------------------------------------
 
-LFKit can build conditional Schechter models by passing callables for any
-parameter that should depend on the conditioning variable.
+The conditioning variable does not have to be redshift. The same conditional
+Schechter API can be used with any external galaxy or environment property. For
+example, one can write a luminosity function conditioned on star-formation rate,
 
-Here, the normalization and characteristic magnitude evolve with redshift, while
-the faint-end slope is constant. This makes the model easy to write directly
-without using a separate named parameter model.
+.. math::
+
+   \Phi(M \mid \mathrm{SFR}).
+
+In this case, each value of ``sfr`` selects a different Schechter luminosity
+function. The example below is a toy model where galaxies with larger
+star-formation rates have a brighter characteristic magnitude and a larger
+normalization.
 
 .. plot::
    :include-source: True
@@ -229,32 +235,32 @@ without using a separate named parameter model.
    LEGEND_SIZE = 15
 
    absolute_mag = np.linspace(-24.0, -14.0, 500)
-   redshifts = [0.1, 0.6, 1.1]
+   sfr_values = [0.3, 1.0, 3.0, 10.0]
 
    colors = cmr.take_cmap_colors(
        "cmr.guppy",
-       len(redshifts),
+       len(sfr_values),
        cmap_range=(0.0, 0.2),
    )
 
    lf = ConditionalLuminosityFunction.schechter(
-       phi_star=lambda z: 1.0e-3 * (1.0 + z) ** 0.7,
-       m_star=lambda z: -20.5 - 0.8 * (z - 0.1),
-       alpha=-1.1,
+       phi_star=lambda sfr: 8.0e-4 * (sfr / 1.0) ** 0.35,
+       m_star=lambda sfr: -20.2 - 0.7 * np.log10(sfr / 1.0),
+       alpha=lambda sfr: -1.05 - 0.08 * np.log10(sfr / 1.0),
    )
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
-   for z_value, color in zip(redshifts, colors):
-       z = np.full_like(absolute_mag, z_value)
-       phi = lf.phi(absolute_mag, z)
+   for sfr_value, color in zip(sfr_values, colors):
+       sfr = np.full_like(absolute_mag, sfr_value)
+       phi = lf.phi(absolute_mag, sfr)
 
        ax.plot(
            absolute_mag,
            phi,
            lw=3,
            color=color,
-           label=rf"$z={z_value}$",
+           label=rf"$\mathrm{{SFR}}={sfr_value}\ M_\odot\,\mathrm{{yr}}^{{-1}}$",
        )
 
    ax.set_yscale("log")
@@ -262,10 +268,11 @@ without using a separate named parameter model.
    ax.invert_xaxis()
    ax.set_xlabel("Absolute magnitude $M$", fontsize=LABEL_SIZE)
    ax.set_ylabel(
-       r"$\Phi(M \mid z)$ [$\mathrm{Mpc}^{-3}\,\mathrm{mag}^{-1}$]",
+       r"$\Phi(M \mid \mathrm{SFR})$ "
+       r"[$\mathrm{Mpc}^{-3}\,\mathrm{mag}^{-1}$]",
        fontsize=LABEL_SIZE,
    )
-   ax.set_title("Conditional Schechter model", fontsize=TITLE_SIZE)
+   ax.set_title("SFR-conditioned Schechter LF", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
    ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="best")
 

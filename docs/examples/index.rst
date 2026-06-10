@@ -19,11 +19,11 @@ redshift-density trends, and magnitude or luminosity conversions.
    :hidden:
 
    lf_models/index
+   conditional_luminosity_function
    magnitude_integrals
    magnitudes_and_luminosities
    redshift_density
    catalog_completeness
-   conditional_luminosity_function
    kcorrect_examples
    poggianti_examples
 
@@ -58,6 +58,55 @@ Photometric corrections are exposed separately through :class:`lfkit.Corrections
 
 Correction functions can be passed into calculations that need k-corrections,
 evolution corrections, or other magnitude corrections.
+
+Registered model constructors
+-----------------------------
+
+LFKit model constructors are generated from the model registry. This means that
+ordinary luminosity functions and conditional luminosity functions use the same
+registered model names whenever a model supports both APIs.
+
+For example, an ordinary Schechter luminosity function is built with
+:class:`lfkit.LuminosityFunction`:
+
+.. code-block:: python
+
+   from lfkit import LuminosityFunction
+
+   lf = LuminosityFunction.schechter(
+       phi_star=1.0e-3,
+       m_star=-20.5,
+       alpha=-1.1,
+   )
+
+   phi = lf.phi(absolute_mag)
+
+The conditional version uses the same registered model name through
+:class:`lfkit.ConditionalLuminosityFunction`:
+
+.. code-block:: python
+
+   from lfkit import ConditionalLuminosityFunction
+
+   clf = ConditionalLuminosityFunction.schechter(
+       phi_star=lambda condition: 1.0e-3 * (1.0 + condition) ** 0.5,
+       m_star=lambda condition: -20.5 - 0.4 * condition,
+       alpha=-1.1,
+   )
+
+   phi = clf.phi(absolute_mag, condition)
+
+In the conditional case, the second argument to ``phi`` is the conditioning
+variable. It can represent redshift, halo mass, stellar mass, SFR, environment,
+richness, or any other quantity chosen by the user. Callable parameters are
+evaluated at that condition, while non-callable parameters are kept fixed.
+
+Available registered models can be inspected directly:
+
+.. code-block:: python
+
+   LuminosityFunction.available_models()
+   ConditionalLuminosityFunction.available_models()
 
 
 Main API areas
