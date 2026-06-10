@@ -1,7 +1,12 @@
-lfkit.corrections.kcorrect\_backend module
-==========================================
+lfkit.corrections.kcorrect\_backend
+===================================
 
 .. automodule:: lfkit.corrections.kcorrect_backend
-   :members:
-   :show-inheritance:
-   :undoc-members:
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      build_kcorrect
+   

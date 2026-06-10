@@ -11,16 +11,31 @@ satellite modified-Schechter, and central-plus-satellite behaviour.
 For more information, see https://arxiv.org/abs/1207.0503.
 """
 
+from __future__ import annotations
+
+from functools import partial
+
 import numpy as np
 import pytest
 
-from lfkit.photometry.conditional_lf_models import (
-    lognormal_conditional_lf,
-    modified_schechter_conditional_lf,
-    two_component_conditional_lf,
-)
+from lfkit.luminosity_functions.conditional_models import conditionalize_lf_model
+from lfkit.luminosity_functions.models.modifiers import apply_luminosity_cutoff
+from lfkit.luminosity_functions.registry import get_conditional_lf_model, get_lf_model
 from lfkit.photometry.luminosities import magnitude_difference_from_luminosity_ratio
 
+
+conditional_lognormal_lf = get_conditional_lf_model("lognormal").function
+conditional_two_component_lf = get_conditional_lf_model("two_component").function
+
+modified_schechter = partial(
+    apply_luminosity_cutoff,
+    base_lf=get_lf_model("schechter").function,
+    cutoff_power=2.0,
+    cutoff_amplitude=1.0,
+)
+modified_schechter.__name__ = "modified_schechter"
+
+conditional_modified_schechter = conditionalize_lf_model(modified_schechter)
 
 pytestmark = pytest.mark.benchmark
 
@@ -106,7 +121,7 @@ def test_cacciato_central_lognormal_matches_reference_formula() -> None:
         gamma2=0.245,
     )
 
-    result = lognormal_conditional_lf(
+    result = conditional_lognormal_lf(
         absolute_mag=absolute_mag,
         condition=log_halo_mass,
         mean_absolute_mag=mean_absolute_mag,
@@ -146,7 +161,7 @@ def test_cacciato_satellite_modified_schechter_matches_reference_formula() -> No
         b2=-0.217,
     )
 
-    result = modified_schechter_conditional_lf(
+    result = conditional_modified_schechter(
         absolute_mag=absolute_mag,
         condition=log_halo_mass,
         phi_star=phi_star,
@@ -184,7 +199,7 @@ def test_cacciato_central_satellite_matches_sum_of_components() -> None:
         b2=-0.217,
     )
 
-    result = two_component_conditional_lf(
+    result = conditional_two_component_lf(
         absolute_mag=absolute_mag,
         condition=log_halo_mass,
         lognormal_mean_absolute_mag=central_mag,

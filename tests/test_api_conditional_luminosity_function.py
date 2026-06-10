@@ -21,53 +21,13 @@ def test_conditional_schechter_constructor_delegates_to_luminosity_function():
     )
 
     assert isinstance(lf, LuminosityFunction)
-    assert lf.model == "conditional_schechter"
+    assert lf.model == "schechter"
     assert lf.parameters_dict == {
         "phi_star": 1.0e-3,
         "m_star": -20.5,
         "alpha": -1.1,
     }
     assert lf.meta == {"source": "test"}
-
-
-def test_conditional_evolving_schechter_constructor_delegates_to_luminosity_function():
-    lf = ConditionalLuminosityFunction.evolving_schechter(
-        phi_model="linear_p",
-        phi_kwargs={"phi_star0": 1.0e-3, "p": 0.2},
-        m_star_model="linear_q",
-        m_star_kwargs={"m_star0": -20.5, "q": 0.5},
-        alpha_model="constant",
-        alpha_kwargs={"value": -1.1},
-        meta={"source": "test"},
-    )
-
-    assert isinstance(lf, LuminosityFunction)
-    assert lf.model == "conditional_evolving_schechter"
-    assert lf.parameters_dict == {
-        "phi_model": "linear_p",
-        "phi_kwargs": {"phi_star0": 1.0e-3, "p": 0.2},
-        "m_star_model": "linear_q",
-        "m_star_kwargs": {"m_star0": -20.5, "q": 0.5},
-        "alpha_model": "constant",
-        "alpha_kwargs": {"value": -1.1},
-    }
-    assert lf.meta == {"source": "test"}
-
-
-def test_conditional_evolving_schechter_constructor_uses_empty_default_kwargs():
-    lf = ConditionalLuminosityFunction.evolving_schechter()
-
-    assert isinstance(lf, LuminosityFunction)
-    assert lf.model == "conditional_evolving_schechter"
-    assert lf.parameters_dict == {
-        "phi_model": "linear_p",
-        "phi_kwargs": {},
-        "m_star_model": "linear_q",
-        "m_star_kwargs": {},
-        "alpha_model": "constant",
-        "alpha_kwargs": {},
-    }
-    assert lf.meta == {}
 
 
 def test_conditional_double_schechter_constructor_delegates_to_luminosity_function():
@@ -81,7 +41,7 @@ def test_conditional_double_schechter_constructor_delegates_to_luminosity_functi
     )
 
     assert isinstance(lf, LuminosityFunction)
-    assert lf.model == "conditional_double_schechter"
+    assert lf.model == "double_schechter"
     assert lf.parameters_dict == {
         "phi_star": 1.0e-3,
         "m_star": -20.5,
@@ -101,7 +61,7 @@ def test_lognormal_constructor_delegates_to_luminosity_function():
     )
 
     assert isinstance(lf, LuminosityFunction)
-    assert lf.model == "lognormal_conditional_lf"
+    assert lf.model == "lognormal"
     assert lf.parameters_dict == {
         "mean_absolute_mag": -20.5,
         "sigma_log_luminosity": 0.2,
@@ -117,7 +77,7 @@ def test_lognormal_constructor_uses_default_amplitude():
     )
 
     assert isinstance(lf, LuminosityFunction)
-    assert lf.model == "lognormal_conditional_lf"
+    assert lf.model == "lognormal"
     assert lf.parameters_dict == {
         "mean_absolute_mag": -20.5,
         "sigma_log_luminosity": 0.2,
@@ -126,22 +86,10 @@ def test_lognormal_constructor_uses_default_amplitude():
     assert lf.meta == {}
 
 
-def test_modified_schechter_constructor_delegates_to_luminosity_function():
-    lf = ConditionalLuminosityFunction.modified_schechter(
-        phi_star=1.0e-3,
-        m_star=-20.5,
-        alpha=-1.1,
-        meta={"source": "test"},
-    )
+def test_modified_schechter_constructor_is_not_registered() -> None:
+    """Tests modified Schechter is not exposed as a standalone conditional model."""
 
-    assert isinstance(lf, LuminosityFunction)
-    assert lf.model == "modified_schechter_conditional_lf"
-    assert lf.parameters_dict == {
-        "phi_star": 1.0e-3,
-        "m_star": -20.5,
-        "alpha": -1.1,
-    }
-    assert lf.meta == {"source": "test"}
+    assert not hasattr(ConditionalLuminosityFunction, "modified_schechter")
 
 
 def test_two_component_constructor_delegates_to_luminosity_function():
@@ -157,7 +105,7 @@ def test_two_component_constructor_delegates_to_luminosity_function():
     )
 
     assert isinstance(lf, LuminosityFunction)
-    assert lf.model == "two_component_conditional_lf"
+    assert lf.model == "two_component"
     assert lf.parameters_dict == {
         "lognormal_mean_absolute_mag": -21.0,
         "lognormal_sigma_log_luminosity": 0.2,
@@ -179,7 +127,7 @@ def test_two_component_constructor_uses_default_optional_parameters():
     )
 
     assert isinstance(lf, LuminosityFunction)
-    assert lf.model == "two_component_conditional_lf"
+    assert lf.model == "two_component"
     assert lf.parameters_dict == {
         "lognormal_mean_absolute_mag": -21.0,
         "lognormal_sigma_log_luminosity": 0.2,

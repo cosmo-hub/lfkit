@@ -1,7 +1,14 @@
-lfkit.utils.validators module
-=============================
+lfkit.utils.validators
+======================
 
 .. automodule:: lfkit.utils.validators
-   :members:
-   :show-inheritance:
-   :undoc-members:
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      validate_array
+      validate_luminosity_distance
+      validate_magnitude_range
+   

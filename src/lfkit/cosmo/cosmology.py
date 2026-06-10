@@ -33,7 +33,7 @@ __all__ = (
     "differential_comoving_volume",
 )
 
-C_KM_S = 299792.458
+C_KM_S = 299792.458  # speed of light in vacuum in km/s
 
 
 def cosmo_object(

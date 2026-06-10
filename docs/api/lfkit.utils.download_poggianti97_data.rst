@@ -1,7 +1,12 @@
-lfkit.utils.download\_poggianti97\_data module
-==============================================
+lfkit.utils.download\_poggianti97\_data
+=======================================
 
 .. automodule:: lfkit.utils.download_poggianti97_data
-   :members:
-   :show-inheritance:
-   :undoc-members:
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      main
+   

@@ -1,18 +1,13 @@
-lfkit.cosmo package
-===================
-
-Submodules
-----------
-
-.. toctree::
-   :maxdepth: 2
-
-   lfkit.cosmo.cosmology
-
-Module contents
----------------
+lfkit.cosmo
+===========
 
 .. automodule:: lfkit.cosmo
-   :members:
-   :show-inheritance:
-   :undoc-members:
+
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   cosmology

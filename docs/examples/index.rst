@@ -18,13 +18,12 @@ redshift-density trends, and magnitude or luminosity conversions.
    :maxdepth: 1
    :hidden:
 
-   luminosity_function_models
+   lf_models/index
+   conditional_luminosity_function
    magnitude_integrals
    magnitudes_and_luminosities
    redshift_density
    catalog_completeness
-   conditional_luminosity_function
-   model_registry
    kcorrect_examples
    poggianti_examples
 
@@ -60,6 +59,55 @@ Photometric corrections are exposed separately through :class:`lfkit.Corrections
 Correction functions can be passed into calculations that need k-corrections,
 evolution corrections, or other magnitude corrections.
 
+Registered model constructors
+-----------------------------
+
+LFKit model constructors are generated from the model registry. This means that
+ordinary luminosity functions and conditional luminosity functions use the same
+registered model names whenever a model supports both APIs.
+
+For example, an ordinary Schechter luminosity function is built with
+:class:`lfkit.LuminosityFunction`:
+
+.. code-block:: python
+
+   from lfkit import LuminosityFunction
+
+   lf = LuminosityFunction.schechter(
+       phi_star=1.0e-3,
+       m_star=-20.5,
+       alpha=-1.1,
+   )
+
+   phi = lf.phi(absolute_mag)
+
+The conditional version uses the same registered model name through
+:class:`lfkit.ConditionalLuminosityFunction`:
+
+.. code-block:: python
+
+   from lfkit import ConditionalLuminosityFunction
+
+   clf = ConditionalLuminosityFunction.schechter(
+       phi_star=lambda condition: 1.0e-3 * (1.0 + condition) ** 0.5,
+       m_star=lambda condition: -20.5 - 0.4 * condition,
+       alpha=-1.1,
+   )
+
+   phi = clf.phi(absolute_mag, condition)
+
+In the conditional case, the second argument to ``phi`` is the conditioning
+variable. It can represent redshift, halo mass, stellar mass, SFR, environment,
+richness, or any other quantity chosen by the user. Callable parameters are
+evaluated at that condition, while non-callable parameters are kept fixed.
+
+Available registered models can be inspected directly:
+
+.. code-block:: python
+
+   LuminosityFunction.available_models()
+   ConditionalLuminosityFunction.available_models()
+
 
 Main API areas
 --------------
@@ -88,7 +136,7 @@ Which tool do I need?
      - Example page
    * - Evaluate or compare luminosity function models
      - :class:`lfkit.LuminosityFunction`
-     - :doc:`luminosity function models <luminosity_function_models>`
+     - :doc:`luminosity function models <lf_models/index>`
    * - Integrate a luminosity function over absolute magnitude
      - ``lf.integrals``
      - :doc:`magnitude_integrals`
@@ -115,7 +163,7 @@ Which tool do I need?
      - :doc:`poggianti_examples`
    * - Inspect available model names
      - ``available_models()`` methods
-     - :doc:`model_registry`
+     - :doc:`lf_models/model_registry`
 
 
 Basic workflow
@@ -205,7 +253,7 @@ The examples are split by topic so that each page stays focused.
    :gutter: 2
 
    .. grid-item-card::
-      :link: luminosity_function_models
+      :link: lf_models/index
       :link-type: doc
       :shadow: md
 
@@ -283,7 +331,7 @@ The examples are split by topic so that each page stays focused.
       *API:* ``ConditionalLuminosityFunction``
 
    .. grid-item-card::
-      :link: model_registry
+      :link: lf_models/model_registry
       :link-type: doc
       :shadow: md
 
@@ -348,7 +396,7 @@ For an evolving model, pass redshift when evaluating the model:
 The luminosity function examples page shows how to compare models, evaluate
 evolving parameters, and visualize luminosity function behavior:
 
-:doc:`luminosity function models <luminosity_function_models>`
+:doc:`luminosity function models <lf_models/index>`
 
 
 Magnitude integrals
@@ -559,7 +607,7 @@ For conditional luminosity functions:
 
 See the dedicated page for complete examples:
 
-:doc:`model_registry`
+:doc:`lf_models/model_registry`
 
 
 Next steps

@@ -1,7 +1,12 @@
-lfkit.corrections.kcorrect\_from\_color module
-==============================================
+lfkit.corrections.kcorrect\_from\_color
+=======================================
 
 .. automodule:: lfkit.corrections.kcorrect_from_color
-   :members:
-   :show-inheritance:
-   :undoc-members:
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      kcorrect_from_bandcolor
+   

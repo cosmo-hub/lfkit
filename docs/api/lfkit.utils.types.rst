@@ -1,7 +1,6 @@
-lfkit.utils.types module
-========================
+lfkit.utils.types
+=================
 
 .. automodule:: lfkit.utils.types
-   :members:
-   :show-inheritance:
-   :undoc-members:
+
+   
