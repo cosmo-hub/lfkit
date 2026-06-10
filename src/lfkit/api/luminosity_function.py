@@ -58,12 +58,12 @@ class LuminosityFunction:
 
     Examples:
         >>> lf = LuminosityFunction(
-        ...     model="schechter_models.rst",
+        ...     model="schechter",
         ...     parameters={"phi_star": 1e-3, "m_star": -20.5, "alpha": -1.1},
         ... )
         >>> phi = lf.phi(absolute_mag=-20.0)
 
-        >>> lf = LuminosityFunction.schechter_models.rst(
+        >>> lf = LuminosityFunction.schechter(
         ...     phi_star=1e-3,
         ...     m_star=-20.5,
         ...     alpha=-1.1,

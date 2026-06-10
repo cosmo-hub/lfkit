@@ -135,7 +135,7 @@ def _bind_static_lf(
 
     Examples:
         >>> lf = _bind_static_lf(
-        ...     schechter_models.rst,
+        ...     schechter,
         ...     phi_star=1e-3,
         ...     m_star=-21.0,
         ...     alpha=-0.9,

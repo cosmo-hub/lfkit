@@ -30,7 +30,7 @@ class ConditionalLuminosityFunction(LuminosityFunction):
 
     Examples:
         >>> clf = ConditionalLuminosityFunction(
-        ...     model="schechter_models.rst",
+        ...     model="schechter",
         ...     parameters={"phi_star": 1e-3, "m_star": -20.5, "alpha": -1.1},
         ... )
         >>> phi = clf.phi(absolute_mag=-20.0, condition=0.5)

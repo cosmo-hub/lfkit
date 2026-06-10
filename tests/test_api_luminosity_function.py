@@ -312,9 +312,9 @@ def test_unsupported_phi_from_m_model_raises_clear_error():
 
 
 def test_available_model_helpers_return_public_model_names():
-    assert "schechter_models.rst" in LuminosityFunction.available_models()
+    assert "schechter" in LuminosityFunction.available_models()
     assert "evolving_schechter" in LuminosityFunction.available_models()
-    assert "schechter_models.rst" in LuminosityFunction.available_from_m_models()
+    assert "schechter" in LuminosityFunction.available_from_m_models()
 
 
 def test_available_parameter_models_returns_grouped_registry_names():

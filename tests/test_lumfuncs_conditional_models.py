@@ -8,7 +8,7 @@ from lfkit.luminosity_functions.models.schechter import double_schechter, schech
 from lfkit.luminosity_functions.registry import get_conditional_lf_model
 
 
-conditional_schechter = get_conditional_lf_model("schechter_models.rst").function
+conditional_schechter = get_conditional_lf_model("schechter").function
 conditional_double_schechter = get_conditional_lf_model("double_schechter").function
 conditional_lognormal_lf = get_conditional_lf_model("lognormal").function
 conditional_two_component_lf = get_conditional_lf_model("two_component").function

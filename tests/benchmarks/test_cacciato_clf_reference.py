@@ -29,7 +29,7 @@ conditional_two_component_lf = get_conditional_lf_model("two_component").functio
 
 modified_schechter = partial(
     apply_luminosity_cutoff,
-    base_lf=get_lf_model("schechter_models.rst").function,
+    base_lf=get_lf_model("schechter").function,
     cutoff_power=2.0,
     cutoff_amplitude=1.0,
 )

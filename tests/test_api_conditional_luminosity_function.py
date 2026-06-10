@@ -21,7 +21,7 @@ def test_conditional_schechter_constructor_delegates_to_luminosity_function():
     )
 
     assert isinstance(lf, LuminosityFunction)
-    assert lf.model == "schechter_models.rst"
+    assert lf.model == "schechter"
     assert lf.parameters_dict == {
         "phi_star": 1.0e-3,
         "m_star": -20.5,
