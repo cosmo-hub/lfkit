@@ -40,6 +40,11 @@ __all__ = [
     "lf_weighted_redshift_density",
 ]
 
+__api_aliases__ = {
+    "lf_integrated_number_density": "integrated_number_density",
+    "lf_weighted_redshift_density": "weighted",
+}
+
 
 def lf_integrated_number_density(
     z: FloatInput,

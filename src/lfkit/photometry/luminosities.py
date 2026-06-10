@@ -31,6 +31,14 @@ __all__ = (
     "luminosity_from_magnitude",
 )
 
+__api_aliases__ = {
+    "luminosity_ratio": "ratio",
+    "luminosity_ratio_from_magnitudes": "ratio_from_magnitudes",
+    "magnitude_difference_from_luminosity_ratio": "magnitude_difference_from_ratio",
+    "luminosity_weight_from_magnitude": "weight_from_magnitude",
+    "luminosity_from_magnitude": "from_magnitude",
+}
+
 
 def luminosity_ratio(
     absolute_mag: FloatInput,

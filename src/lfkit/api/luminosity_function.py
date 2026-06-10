@@ -7,12 +7,15 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from lfkit.api._completeness import LFCompletenessAPI
-from lfkit.api._integrals import LFIntegralsAPI
-from lfkit.api._luminosities import LFLuminositiesAPI
-from lfkit.api._magnitudes import LFMagnitudesAPI
-from lfkit.api._redshift_density import LFRedshiftDensityAPI
-from lfkit.luminosity_functions.models.parameter_models import (
+from lfkit.api._namespaces import (
+    LFCompletenessAPI,
+    LFIntegralsAPI,
+    LFLuminositiesAPI,
+    LFMagnitudesAPI,
+    LFRedshiftDensityAPI,
+)
+from lfkit.luminosity_functions.models.modifiers import apply_luminosity_cutoff
+from lfkit.luminosity_functions.parameter_models import (
     available_lf_parameter_models,
     evaluate_lf_parameters,
     register_alpha_model,
@@ -22,6 +25,8 @@ from lfkit.luminosity_functions.models.parameter_models import (
 from lfkit.luminosity_functions.registry import (
     LF_FROM_M_MODELS,
     LF_MODELS,
+    get_lf_from_m_model,
+    get_lf_model,
 )
 from lfkit.utils.types import (
     Cosmology,
@@ -40,7 +45,32 @@ __all__ = ["LuminosityFunction"]
 
 
 class LuminosityFunction:
-    """User-facing wrapper for luminosity function evaluation."""
+    """User-facing wrapper for luminosity function evaluation.
+
+    A luminosity function describes the number density of galaxies as a
+    function of absolute magnitude. This class stores a registered LF model and
+    its parameters, then exposes a consistent user-facing interface for model
+    evaluation, apparent-magnitude evaluation, integrals, completeness
+    calculations, redshift-density calculations, and magnitude/luminosity
+    conversions.
+
+    Instances can be created either with the generic constructor or with
+    automatically generated model constructors.
+
+    Examples:
+        >>> lf = LuminosityFunction(
+        ...     model="schechter_models.rst",
+        ...     parameters={"phi_star": 1e-3, "m_star": -20.5, "alpha": -1.1},
+        ... )
+        >>> phi = lf.phi(absolute_mag=-20.0)
+
+        >>> lf = LuminosityFunction.schechter_models.rst(
+        ...     phi_star=1e-3,
+        ...     m_star=-20.5,
+        ...     alpha=-1.1,
+        ... )
+        >>> phi = lf.phi(absolute_mag=[-21.0, -20.0, -19.0])
+    """
 
     def __init__(
         self,
@@ -49,6 +79,13 @@ class LuminosityFunction:
         parameters: Mapping[str, object],
         meta: Mapping[str, object] | None = None,
     ) -> None:
+        """Create a luminosity function object.
+
+        Args:
+            model: Name of a registered luminosity function model.
+            parameters: Model parameters passed to the registered LF function.
+            meta: Optional metadata stored on the luminosity function object.
+        """
         self.model = str(model)
         self.parameters_dict = dict(parameters)
         self.meta = {} if meta is None else dict(meta)
@@ -60,19 +97,32 @@ class LuminosityFunction:
         self.magnitudes = LFMagnitudesAPI()
 
     def phi(
-            self,
-            absolute_mag: FloatInput,
-            z: FloatInput | None = None,
+        self,
+        absolute_mag: FloatInput,
+        z: FloatInput | None = None,
     ) -> FloatArray:
-        """Evaluate the luminosity function in absolute magnitude space."""
-        try:
-            model_spec = LF_MODELS[self.model]
-        except KeyError as exc:
-            raise ValueError(
-                f"Unsupported luminosity function model '{self.model}'."
-            ) from exc
+        """Evaluate the luminosity function in absolute-magnitude space.
+
+        Args:
+            absolute_mag: Absolute magnitude value or array.
+            z: Optional redshift value or array. This is required only for
+                registered models whose parameters evolve with redshift.
+
+        Returns:
+            Luminosity function evaluated at ``absolute_mag``. For redshift-
+            dependent models, the result is evaluated at ``absolute_mag`` and
+            ``z``.
+
+        Raises:
+            ValueError: If the model is not registered, or if ``z`` is required
+                by the selected model but not provided.
+        """
+        model_spec = get_lf_model(self.model)
 
         absolute_mag_arr = np.asarray(absolute_mag, dtype=float)
+
+        if hasattr(self, "_custom_phi"):
+            return self._custom_phi(absolute_mag_arr, z)
 
         if model_spec.requires_z:
             if z is None:
@@ -100,14 +150,28 @@ class LuminosityFunction:
         h: float | None = None,
         corrections: Corrections | None = None,
     ) -> FloatArray:
-        """Evaluate the luminosity function from apparent magnitudes."""
-        try:
-            function = LF_FROM_M_MODELS[self.model]
-        except KeyError as exc:
-            raise ValueError(
-                f"phi_from_m is not defined for luminosity function model "
-                f"'{self.model}'."
-            ) from exc
+        """Evaluate the luminosity function from apparent magnitudes.
+
+        This converts apparent magnitude to absolute magnitude using the
+        supplied cosmology and redshift, then evaluates the registered LF model.
+
+        Args:
+            cosmo_obj: Cosmology object used for the distance conversion.
+            z: Redshift value or array.
+            apparent_mag: Apparent magnitude value or array.
+            h: Optional dimensionless Hubble parameter override.
+            corrections: Optional correction object with ``k(z)`` and ``e(z)``
+                methods.
+
+        Returns:
+            Luminosity function evaluated at the absolute magnitudes implied by
+            ``apparent_mag`` and ``z``.
+
+        Raises:
+            ValueError: If the selected LF model does not provide a
+                ``phi_from_m`` evaluator.
+        """
+        function = get_lf_from_m_model(self.model)
 
         k_corr, e_corr = self._correction_values(corrections, z)
 
@@ -125,7 +189,17 @@ class LuminosityFunction:
         self,
         z: FloatInput,
     ) -> tuple[FloatArray, FloatArray, FloatArray]:
-        """Evaluate evolving Schechter parameters at redshift."""
+        """Evaluate evolving Schechter parameters at redshift.
+
+        Args:
+            z: Redshift value or array.
+
+        Returns:
+            Tuple containing ``phi_star(z)``, ``m_star(z)``, and ``alpha(z)``.
+
+        Raises:
+            ValueError: If the current model is not ``"evolving_schechter"``.
+        """
         if self.model != "evolving_schechter":
             raise ValueError("parameters(z) is only defined for evolving_schechter.")
 
@@ -138,6 +212,45 @@ class LuminosityFunction:
         """Return this object as an ``lf(M, z)`` callable."""
         return lambda absolute_mag, z: self.phi(absolute_mag, z)
 
+    def with_luminosity_cutoff(
+        self,
+        *,
+        m_star: float | None = None,
+        cutoff_power: float = 2.0,
+        cutoff_amplitude: float = 1.0,
+        meta: Mapping[str, object] | None = None,
+    ) -> LuminosityFunction:
+        """Return a copy of this luminosity function with a luminosity cutoff."""
+        cutoff_m_star = (
+            self.parameters_dict["m_star"]
+            if m_star is None and "m_star" in self.parameters_dict
+            else m_star
+        )
+
+        if cutoff_m_star is None:
+            raise ValueError(
+                "m_star must be supplied when the base luminosity function "
+                "does not have an m_star parameter."
+            )
+
+        new = LuminosityFunction(
+            model=self.model,
+            parameters=self.parameters_dict,
+            meta={**self.meta, **({} if meta is None else dict(meta))},
+        )
+
+        def modified_phi(
+            absolute_mag: FloatInput,
+            z: FloatInput | None = None,
+        ) -> FloatArray:
+            absolute_mag_arr = np.asarray(absolute_mag, dtype=float)
+            x = self.luminosities.ratio(absolute_mag_arr, cutoff_m_star)
+            modifier = np.exp(-cutoff_amplitude * x**cutoff_power)
+            return self.phi(absolute_mag_arr, z) * modifier
+
+        new._custom_phi = modified_phi
+        return new
+
     @staticmethod
     def available_models() -> list[str]:
         """Return luminosity function model names available through the API."""
@@ -145,12 +258,17 @@ class LuminosityFunction:
 
     @staticmethod
     def available_from_m_models() -> list[str]:
-        """Return models that support apparent magnitude evaluation."""
+        """Return models that support apparent-magnitude evaluation."""
         return sorted(LF_FROM_M_MODELS)
 
     @staticmethod
     def available_parameter_models() -> dict[str, list[str]]:
-        """Return available LF parameter evolution models."""
+        """Return available LF parameter evolution models.
+
+        Returns:
+            Dictionary mapping each LF parameter name to the registered
+            evolution models available for that parameter.
+        """
         return available_lf_parameter_models()
 
     @staticmethod
@@ -160,7 +278,13 @@ class LuminosityFunction:
         *,
         overwrite: bool = False,
     ) -> None:
-        """Register a phi-star evolution model."""
+        """Register a ``phi_star`` evolution model.
+
+        Args:
+            name: Name used to identify the parameter model.
+            model: Callable or parameter model object.
+            overwrite: Whether to replace an existing model with the same name.
+        """
         register_phi_star_model(name, model, overwrite=overwrite)
 
     @staticmethod
@@ -170,7 +294,13 @@ class LuminosityFunction:
         *,
         overwrite: bool = False,
     ) -> None:
-        """Register an M-star evolution model."""
+        """Register an ``m_star`` evolution model.
+
+        Args:
+            name: Name used to identify the parameter model.
+            model: Callable or parameter model object.
+            overwrite: Whether to replace an existing model with the same name.
+        """
         register_m_star_model(name, model, overwrite=overwrite)
 
     @staticmethod
@@ -180,7 +310,13 @@ class LuminosityFunction:
         *,
         overwrite: bool = False,
     ) -> None:
-        """Register an alpha evolution model."""
+        """Register an ``alpha`` evolution model.
+
+        Args:
+            name: Name used to identify the parameter model.
+            model: Callable or parameter model object.
+            overwrite: Whether to replace an existing model with the same name.
+        """
         register_alpha_model(name, model, overwrite=overwrite)
 
     @staticmethod
@@ -197,7 +333,6 @@ class LuminosityFunction:
 
 def _make_lf_constructor(model_name: str):
     """Create a classmethod constructor for a registered LF model."""
-
     @classmethod
     def constructor(
         cls,
@@ -205,6 +340,7 @@ def _make_lf_constructor(model_name: str):
         meta: Mapping[str, object] | None = None,
         **parameters: Any,
     ) -> LuminosityFunction:
+        """Create a luminosity function from model parameters."""
         return cls(
             model=model_name,
             parameters=_clean_parameters(parameters),
@@ -213,13 +349,40 @@ def _make_lf_constructor(model_name: str):
 
     constructor.__name__ = model_name
     constructor.__qualname__ = f"LuminosityFunction.{model_name}"
-    constructor.__doc__ = f"Create a ``{model_name}`` luminosity function."
+    constructor.__doc__ = f"""Create a ``{model_name}`` luminosity function.
+
+The keyword arguments are passed to the registered low-level LF model.
+Required model parameters must be supplied by the user. Optional model
+parameters use their low-level defaults unless explicitly provided.
+
+Args:
+    meta: Optional metadata stored on the luminosity function object.
+    **parameters: Parameters passed to the registered LF model.
+
+Returns:
+    LuminosityFunction: Configured luminosity function.
+
+Examples:
+    >>> lf = LuminosityFunction.{model_name}(...)
+    >>> phi = lf.phi(absolute_mag=-20.0)
+"""
 
     return constructor
 
 
 def _clean_parameters(parameters: Mapping[str, Any]) -> dict[str, Any]:
-    """Normalize constructor keyword arguments before storing them."""
+    """Normalize constructor keyword arguments before storing them.
+
+    ``None`` values for keyword arguments ending in ``"_kwargs"`` are converted
+    to empty dictionaries. This keeps optional nested configuration arguments
+    convenient for users while storing a predictable parameter dictionary.
+
+    Args:
+        parameters: Raw constructor keyword arguments.
+
+    Returns:
+        Normalized parameter dictionary.
+    """
     return {
         key: {} if value is None and key.endswith("_kwargs") else value
         for key, value in parameters.items()

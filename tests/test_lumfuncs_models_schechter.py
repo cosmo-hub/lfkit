@@ -14,14 +14,14 @@ from lfkit.luminosity_functions.models.schechter import (
 
 
 def test_schechter_positive_output():
-    """Tests that schechter returns positive values for valid inputs."""
+    """Tests that schechter_models.rst returns positive values for valid inputs."""
     M = np.linspace(-22, -18, 10)
     phi = schechter(M, phi_star=1e-3, m_star=-20.0, alpha=-1.2)
     assert np.all(phi >= 0)
 
 
 def test_schechter_zero_phi_star_warning():
-    """Tests that schechter warns when phi_star is zero."""
+    """Tests that schechter_models.rst warns when phi_star is zero."""
     M = np.array([-20.0])
     with pytest.warns(UserWarning):
         phi = schechter(M, phi_star=0.0, m_star=-20.0, alpha=-1.0)
@@ -29,14 +29,14 @@ def test_schechter_zero_phi_star_warning():
 
 
 def test_schechter_negative_phi_star_error():
-    """Tests that schechter raises for negative phi_star."""
+    """Tests that schechter_models.rst raises for negative phi_star."""
     M = np.array([-20.0])
     with pytest.raises(ValueError):
         schechter(M, phi_star=-1.0, m_star=-20.0, alpha=-1.0)
 
 
 def test_evolving_schechter_matches_constant_case():
-    """Tests that evolving_schechter reduces to schechter for constant models."""
+    """Tests that evolving_schechter reduces to schechter_models.rst for constant models."""
     M = np.array([-20.0])
     z = np.array([0.5])
 
@@ -152,7 +152,7 @@ def test_schechter_cumulative_evolving_invalid_model():
 
 
 def test_schechter_broadcasting_scalar_params():
-    """Tests that schechter broadcasts scalar parameters over array magnitudes."""
+    """Tests that schechter_models.rst broadcasts scalar parameters over array magnitudes."""
     M = np.array([-22.0, -21.0, -20.0])
     phi = schechter(M, phi_star=1e-3, m_star=-20.0, alpha=-1.0)
 
@@ -237,7 +237,7 @@ def test_double_schechter_transition_effect():
 
 
 def test_schechter_extreme_magnitudes_finite():
-    """Tests that schechter remains finite for extreme magnitudes."""
+    """Tests that schechter_models.rst remains finite for extreme magnitudes."""
     M = np.array([-30.0, -10.0])
     phi = schechter(M, phi_star=1e-3, m_star=-20.0, alpha=-1.0)
 

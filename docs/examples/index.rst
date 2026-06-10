@@ -18,13 +18,12 @@ redshift-density trends, and magnitude or luminosity conversions.
    :maxdepth: 1
    :hidden:
 
-   luminosity_function_models
+   lf_models/index
    magnitude_integrals
    magnitudes_and_luminosities
    redshift_density
    catalog_completeness
    conditional_luminosity_function
-   model_registry
    kcorrect_examples
    poggianti_examples
 
@@ -88,7 +87,7 @@ Which tool do I need?
      - Example page
    * - Evaluate or compare luminosity function models
      - :class:`lfkit.LuminosityFunction`
-     - :doc:`luminosity function models <luminosity_function_models>`
+     - :doc:`luminosity function models <lf_models/index>`
    * - Integrate a luminosity function over absolute magnitude
      - ``lf.integrals``
      - :doc:`magnitude_integrals`
@@ -115,7 +114,7 @@ Which tool do I need?
      - :doc:`poggianti_examples`
    * - Inspect available model names
      - ``available_models()`` methods
-     - :doc:`model_registry`
+     - :doc:`lf_models/model_registry`
 
 
 Basic workflow
@@ -205,7 +204,7 @@ The examples are split by topic so that each page stays focused.
    :gutter: 2
 
    .. grid-item-card::
-      :link: luminosity_function_models
+      :link: lf_models/index
       :link-type: doc
       :shadow: md
 
@@ -283,7 +282,7 @@ The examples are split by topic so that each page stays focused.
       *API:* ``ConditionalLuminosityFunction``
 
    .. grid-item-card::
-      :link: model_registry
+      :link: lf_models/model_registry
       :link-type: doc
       :shadow: md
 
@@ -348,7 +347,7 @@ For an evolving model, pass redshift when evaluating the model:
 The luminosity function examples page shows how to compare models, evaluate
 evolving parameters, and visualize luminosity function behavior:
 
-:doc:`luminosity function models <luminosity_function_models>`
+:doc:`luminosity function models <lf_models/index>`
 
 
 Magnitude integrals
@@ -559,7 +558,7 @@ For conditional luminosity functions:
 
 See the dedicated page for complete examples:
 
-:doc:`model_registry`
+:doc:`lf_models/model_registry`
 
 
 Next steps

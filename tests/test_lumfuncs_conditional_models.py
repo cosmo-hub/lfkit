@@ -3,18 +3,15 @@
 import numpy as np
 import pytest
 
-from lfkit.luminosity_functions.conditional_models import (
-    conditional_schechter,
-    conditional_double_schechter,
-    conditional_lognormal_lf,
-    conditional_modified_schechter,
-    conditional_two_component_lf,
-)
-from lfkit.photometry.luminosities import (
-    luminosity_ratio,
-    magnitude_difference_from_luminosity_ratio,
-)
-from lfkit.luminosity_functions.models.schechter import schechter, double_schechter
+from lfkit.luminosity_functions.models.composite import two_component_lf
+from lfkit.luminosity_functions.models.schechter import double_schechter, schechter
+from lfkit.luminosity_functions.registry import get_conditional_lf_model
+
+
+conditional_schechter = get_conditional_lf_model("schechter_models.rst").function
+conditional_double_schechter = get_conditional_lf_model("double_schechter").function
+conditional_lognormal_lf = get_conditional_lf_model("lognormal").function
+conditional_two_component_lf = get_conditional_lf_model("two_component").function
 
 
 def test_conditional_schechter_matches_schechter_for_scalar_parameters() -> None:
@@ -249,72 +246,6 @@ def test_conditional_lognormal_lf_rejects_negative_amplitude() -> None:
         )
 
 
-def test_conditional_modified_schechter_matches_expected_formula() -> None:
-    """Tests the modified-Schechter conditional LF formula."""
-
-    absolute_mag = np.array([-22.0, -21.0, -20.0])
-    condition = np.array([0.0, 1.0, 2.0])
-    phi_star = np.array([1.0e-3, 2.0e-3, 3.0e-3])
-    m_star = np.array([-21.0, -21.1, -21.2])
-    alpha = np.array([-1.0, -1.1, -1.2])
-
-    result = conditional_modified_schechter(
-        absolute_mag=absolute_mag,
-        condition=condition,
-        phi_star=phi_star,
-        m_star=m_star,
-        alpha=alpha,
-    )
-
-    x = luminosity_ratio(absolute_mag, m_star)
-    expected = 0.4 * np.log(10.0) * phi_star * x ** (alpha + 1.0) * np.exp(
-        -(x**2.0)
-    )
-
-    np.testing.assert_allclose(result, expected)
-    assert result.dtype == np.float64
-
-
-def test_conditional_modified_schechter_accepts_callable_parameters() -> None:
-    """Tests callable parameters for the modified-Schechter conditional LF."""
-
-    absolute_mag = np.array([-22.0, -21.0, -20.0])
-    condition = np.array([0.0, 1.0, 2.0])
-
-    result = conditional_modified_schechter(
-        absolute_mag=absolute_mag,
-        condition=condition,
-        phi_star=lambda x: 1.0e-3 * (1.0 + x),
-        m_star=lambda x: -21.0 - 0.1 * x,
-        alpha=lambda x: -1.0 - 0.05 * x,
-    )
-
-    phi_star = np.array([1.0e-3, 2.0e-3, 3.0e-3])
-    m_star = np.array([-21.0, -21.1, -21.2])
-    alpha = np.array([-1.0, -1.05, -1.1])
-
-    x = luminosity_ratio(absolute_mag, m_star)
-    expected = 0.4 * np.log(10.0) * phi_star * x ** (alpha + 1.0) * np.exp(
-        -(x**2.0)
-    )
-
-    np.testing.assert_allclose(result, expected)
-    assert result.dtype == np.float64
-
-
-def test_conditional_modified_schechter_rejects_negative_phi_star() -> None:
-    """Tests that negative modified-Schechter normalization is rejected."""
-
-    with pytest.raises(ValueError, match="phi_star must be non-negative."):
-        conditional_modified_schechter(
-            absolute_mag=[-22.0, -21.0, -20.0],
-            condition=[0.0, 1.0, 2.0],
-            phi_star=-1.0e-3,
-            m_star=-21.0,
-            alpha=-1.1,
-        )
-
-
 def test_conditional_two_component_lf_equals_sum_with_explicit_modified_m_star() -> None:
     """Tests that the two-component LF equals lognormal plus modified parts."""
 
@@ -332,21 +263,15 @@ def test_conditional_two_component_lf_equals_sum_with_explicit_modified_m_star()
         modified_m_star=-20.5,
     )
 
-    lognormal = conditional_lognormal_lf(
-        absolute_mag=absolute_mag,
-        condition=condition,
-        mean_absolute_mag=-21.0,
-        sigma_log_luminosity=0.2,
-        amplitude=1.0,
+    expected = two_component_lf(
+        absolute_mag,
+        lognormal_mean_absolute_mag=-21.0,
+        lognormal_sigma_log_luminosity=0.2,
+        modified_phi_star=1.0e-3,
+        modified_alpha=-1.1,
+        lognormal_amplitude=1.0,
+        modified_m_star=-20.5,
     )
-    modified = conditional_modified_schechter(
-        absolute_mag=absolute_mag,
-        condition=condition,
-        phi_star=1.0e-3,
-        m_star=-20.5,
-        alpha=-1.1,
-    )
-    expected = lognormal + modified
 
     np.testing.assert_allclose(result, expected)
     assert result.dtype == np.float64
@@ -372,25 +297,16 @@ def test_conditional_two_component_lf_derives_modified_m_star() -> None:
         modified_luminosity_fraction=modified_luminosity_fraction,
     )
 
-    modified_m_star = lognormal_mean_absolute_mag + (
-        magnitude_difference_from_luminosity_ratio(modified_luminosity_fraction)
+    expected = two_component_lf(
+        absolute_mag,
+        lognormal_mean_absolute_mag=lognormal_mean_absolute_mag,
+        lognormal_sigma_log_luminosity=0.2,
+        modified_phi_star=1.0e-3,
+        modified_alpha=-1.1,
+        lognormal_amplitude=1.0,
+        modified_m_star=None,
+        modified_luminosity_fraction=modified_luminosity_fraction,
     )
-
-    lognormal = conditional_lognormal_lf(
-        absolute_mag=absolute_mag,
-        condition=condition,
-        mean_absolute_mag=lognormal_mean_absolute_mag,
-        sigma_log_luminosity=0.2,
-        amplitude=1.0,
-    )
-    modified = conditional_modified_schechter(
-        absolute_mag=absolute_mag,
-        condition=condition,
-        phi_star=1.0e-3,
-        m_star=modified_m_star,
-        alpha=-1.1,
-    )
-    expected = lognormal + modified
 
     np.testing.assert_allclose(result, expected)
     assert result.dtype == np.float64

@@ -10,5 +10,8 @@ lfkit.luminosity\_functions.models
    :toctree:
    :recursive:
 
-   parameter_models
+   composite
+   gaussian
+   modifiers
+   power_law
    schechter

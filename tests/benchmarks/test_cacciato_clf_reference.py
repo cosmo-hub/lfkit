@@ -11,16 +11,31 @@ satellite modified-Schechter, and central-plus-satellite behaviour.
 For more information, see https://arxiv.org/abs/1207.0503.
 """
 
+from __future__ import annotations
+
+from functools import partial
+
 import numpy as np
 import pytest
 
-from lfkit.luminosity_functions.conditional_models import (
-    conditional_lognormal_lf,
-    conditional_modified_schechter,
-    conditional_two_component_lf,
-)
+from lfkit.luminosity_functions.conditional_models import conditionalize_lf_model
+from lfkit.luminosity_functions.models.modifiers import apply_luminosity_cutoff
+from lfkit.luminosity_functions.registry import get_conditional_lf_model, get_lf_model
 from lfkit.photometry.luminosities import magnitude_difference_from_luminosity_ratio
 
+
+conditional_lognormal_lf = get_conditional_lf_model("lognormal").function
+conditional_two_component_lf = get_conditional_lf_model("two_component").function
+
+modified_schechter = partial(
+    apply_luminosity_cutoff,
+    base_lf=get_lf_model("schechter_models.rst").function,
+    cutoff_power=2.0,
+    cutoff_amplitude=1.0,
+)
+modified_schechter.__name__ = "modified_schechter"
+
+conditional_modified_schechter = conditionalize_lf_model(modified_schechter)
 
 pytestmark = pytest.mark.benchmark
 

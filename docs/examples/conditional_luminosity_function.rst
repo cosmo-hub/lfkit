@@ -39,7 +39,6 @@ The examples include:
 * a conditional Schechter luminosity function,
 * a conditional Schechter model using callable parameter evolution,
 * a lognormal component,
-* a modified Schechter-like component,
 * a two-component lognormal plus modified-Schechter model,
 * integrated number densities and component fractions,
 * a halo-mass conditional example,
@@ -346,17 +345,16 @@ scale rather than a broad Schechter-like faint-end tail.
    plt.tight_layout()
 
 
-Modified Schechter conditional component
-----------------------------------------
+Double Schechter conditional component
+--------------------------------------
 
-The modified Schechter component is Schechter-like at the faint end but uses a
-different cutoff at high luminosity. Instead of the standard exponential cutoff,
-it has a broader cutoff controlled by the luminosity ratio.
+The double Schechter component combines two Schechter-like terms with a shared
+characteristic magnitude. This gives more flexibility than a single Schechter
+function because the two components can have different normalizations and
+faint-end slopes.
 
-This example lets the normalization, characteristic magnitude, and faint-end
-slope vary with redshift. The model therefore changes both in amplitude and in
-shape. This is useful when a standard Schechter function is too restrictive,
-especially for populations whose bright end falls off more gradually.
+This example lets both component normalizations and slopes vary with redshift.
+The model therefore changes both in amplitude and in shape.
 
 .. plot::
    :include-source: True
@@ -382,10 +380,10 @@ especially for populations whose bright end falls off more gradually.
        cmap_range=(0.0, 0.2),
    )
 
-   lf = ConditionalLuminosityFunction.modified_schechter(
+   lf = ConditionalLuminosityFunction.schechter(
        phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
-       m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
-       alpha=lambda z: -1.05 - 0.10 * z,
+       m_star=lambda z: -20.3 - 0.5 * (z - 0.1),
+       alpha=lambda z: -1.15 - 0.10 * z,
    )
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
@@ -393,25 +391,18 @@ especially for populations whose bright end falls off more gradually.
    for z_value, color in zip(redshifts, colors):
        z = np.full_like(absolute_mag, z_value)
        phi = lf.phi(absolute_mag, z)
-
-       ax.plot(
-           absolute_mag,
-           phi,
-           lw=3,
-           color=color,
-           label=rf"$z={z_value}$",
-       )
+       ax.plot(absolute_mag, phi, lw=3, color=color, label=rf"$z={z_value}$")
 
    ax.set_yscale("log")
    ax.set_ylim(1.0e-8, 1.0e-1)
    ax.invert_xaxis()
    ax.set_xlabel("Absolute magnitude $M$", fontsize=LABEL_SIZE)
    ax.set_ylabel(
-       r"$\Phi_{\rm modSch}(M \mid z)$ "
+       r"$\Phi_{\rm double}(M \mid z)$ "
        r"[$\mathrm{Mpc}^{-3}\,\mathrm{mag}^{-1}$]",
        fontsize=LABEL_SIZE,
    )
-   ax.set_title("Modified Schechter conditional LF component", fontsize=TITLE_SIZE)
+   ax.set_title("Double Schechter conditional LF component", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
    ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="best")
 
@@ -460,10 +451,10 @@ best suited to describe.
        alpha=-1.1,
    )
 
-   modified_lf = ConditionalLuminosityFunction.modified_schechter(
+   modified_lf = ConditionalLuminosityFunction.schechter(
        phi_star=1.0e-3,
        m_star=-20.5,
-       alpha=-1.1,
+       alpha=-1.25,
    )
 
    lognormal_lf = ConditionalLuminosityFunction.lognormal(
@@ -490,7 +481,7 @@ best suited to describe.
        phi_modified,
        lw=3,
        color=colors_red[1],
-       label="Modified Schechter",
+       label="Double Schechter",
    )
    ax.plot(
        absolute_mag,
@@ -517,18 +508,17 @@ best suited to describe.
 
 
 Two-component conditional LF
----------------------------------------------
+----------------------------
 
-The lognormal and modified Schechter components can be combined into a
-two-component conditional luminosity function. This is useful when one component
-is intended to describe a relatively narrow population and the other describes a
-broader luminosity distribution.
+The built-in two-component conditional luminosity function combines a
+lognormal component with a broader Schechter-like component. This is useful
+when one component is intended to describe a relatively narrow population and
+the other describes a broader luminosity distribution.
 
-This plot separates the lognormal component, the modified Schechter component,
-and their sum at a fixed redshift. The comparison shows which component
-dominates different magnitude ranges. In this example, the lognormal component
-is concentrated near its characteristic magnitude, while the modified Schechter
-component contributes over a wider range of magnitudes.
+This plot compares the lognormal component with the full two-component model at
+a fixed redshift. The comparison shows where the narrow component contributes
+most strongly and where the full model receives additional contribution from
+the broader component.
 
 .. plot::
    :include-source: True
@@ -546,7 +536,6 @@ component contributes over a wider range of magnitudes.
    LEGEND_SIZE = 15
 
    colors_blue = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.8, 1.0))
-   colors_red = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.0, 0.2))
    colors_all = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.0, 1.0))
 
    absolute_mag = np.linspace(-24.0, -14.0, 500)
@@ -559,12 +548,6 @@ component contributes over a wider range of magnitudes.
        amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
    )
 
-   modified_lf = ConditionalLuminosityFunction.modified_schechter(
-       phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
-       m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
-       alpha=lambda z: -1.05 - 0.10 * z,
-   )
-
    total_lf = ConditionalLuminosityFunction.two_component(
        lognormal_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
        lognormal_sigma_log_luminosity=0.18,
@@ -575,7 +558,6 @@ component contributes over a wider range of magnitudes.
    )
 
    lognormal_phi = lognormal_lf.phi(absolute_mag, z)
-   modified_phi = modified_lf.phi(absolute_mag, z)
    total_phi = total_lf.phi(absolute_mag, z)
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
@@ -586,13 +568,6 @@ component contributes over a wider range of magnitudes.
        lw=3,
        color=colors_blue[1],
        label="Lognormal component",
-   )
-   ax.plot(
-       absolute_mag,
-       modified_phi,
-       lw=3,
-       color=colors_red[1],
-       label="Modified Schechter component",
    )
    ax.plot(
        absolute_mag,
@@ -709,10 +684,9 @@ galaxies inside the chosen magnitude range as a function of redshift. Because
 conditional constructors return normal LFKit luminosity function objects, the
 same ``lf.integrals`` namespace can be used here.
 
-This example integrates the lognormal component, the modified Schechter
-component, and the full two-component model. The total number density is the sum
-of the two components, while the individual curves show how much each component
-contributes.
+This example integrates the lognormal component and the full two-component
+model. The gap between the curves shows the contribution from the broader
+component in the two-component model.
 
 .. plot::
    :include-source: True
@@ -730,7 +704,6 @@ contributes.
    LEGEND_SIZE = 15
 
    colors_blue = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.8, 1.0))
-   colors_red = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.0, 0.2))
    colors_all = cmr.take_cmap_colors("cmr.guppy", 3, cmap_range=(0.0, 1.0))
 
    redshift = np.linspace(0.05, 1.5, 180)
@@ -739,12 +712,6 @@ contributes.
        mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
        sigma_log_luminosity=0.18,
        amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
-   )
-
-   modified_lf = ConditionalLuminosityFunction.modified_schechter(
-       phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
-       m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
-       alpha=lambda z: -1.05 - 0.10 * z,
    )
 
    total_lf = ConditionalLuminosityFunction.two_component(
@@ -757,13 +724,6 @@ contributes.
    )
 
    n_lognormal = lognormal_lf.integrals.number_density(
-       redshift,
-       m_bright=-24.0,
-       m_faint=-14.0,
-       n_m=800,
-   )
-
-   n_modified = modified_lf.integrals.number_density(
        redshift,
        m_bright=-24.0,
        m_faint=-14.0,
@@ -788,13 +748,6 @@ contributes.
    )
    ax.plot(
        redshift,
-       n_modified,
-       lw=3,
-       color=colors_red[1],
-       label="Modified Schechter component",
-   )
-   ax.plot(
-       redshift,
        n_total,
        lw=3,
        color=colors_all[1],
@@ -815,20 +768,16 @@ contributes.
 Component fractions
 -------------------
 
-The relative contribution of each component can be summarized as a fraction of
-the integrated two-component luminosity function. For components
-:math:`n_1(z)` and :math:`n_2(z)`, the corresponding fractions are
+The relative contribution of the lognormal component can be summarized as a
+fraction of the integrated two-component luminosity function,
 
 .. math::
 
-   f_1(z) = \frac{n_1(z)}{n_1(z) + n_2(z)}, \qquad
-   f_2(z) = \frac{n_2(z)}{n_1(z) + n_2(z)}.
+   f_{\rm lognormal}(z) = \frac{n_{\rm lognormal}(z)}{n_{\rm total}(z)}.
 
-This example computes the integrated lognormal and modified Schechter
-components with ``lf.integrals.number_density``. The resulting fractions show
-whether the selected population is dominated by the narrow lognormal component,
-the broader modified Schechter component, or a mixture of both. This is often
-easier to interpret than comparing raw number densities alone.
+The remaining fraction is the contribution from the broader component in the
+two-component model. This is often easier to interpret than comparing raw
+number densities alone.
 
 .. plot::
    :include-source: True
@@ -856,10 +805,13 @@ easier to interpret than comparing raw number densities alone.
        amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
    )
 
-   modified_lf = ConditionalLuminosityFunction.modified_schechter(
-       phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
-       m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
-       alpha=lambda z: -1.05 - 0.10 * z,
+   total_lf = ConditionalLuminosityFunction.two_component(
+       lognormal_mean_absolute_mag=lambda z: -20.8 - 0.6 * (z - 0.1),
+       lognormal_sigma_log_luminosity=0.18,
+       lognormal_amplitude=lambda z: 8.0e-4 * (1.0 + z) ** 0.4,
+       modified_phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
+       modified_m_star=lambda z: -19.9 - 0.5 * (z - 0.1),
+       modified_alpha=lambda z: -1.05 - 0.10 * z,
    )
 
    n_lognormal = lognormal_lf.integrals.number_density(
@@ -869,17 +821,15 @@ easier to interpret than comparing raw number densities alone.
        n_m=800,
    )
 
-   n_modified = modified_lf.integrals.number_density(
+   n_total = total_lf.integrals.number_density(
        redshift,
        m_bright=-24.0,
        m_faint=-14.0,
        n_m=800,
    )
 
-   n_total = n_lognormal + n_modified
-
    lognormal_fraction = n_lognormal / n_total
-   modified_fraction = n_modified / n_total
+   broad_fraction = 1.0 - lognormal_fraction
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))
 
@@ -892,10 +842,10 @@ easier to interpret than comparing raw number densities alone.
    )
    ax.plot(
        redshift,
-       modified_fraction,
+       broad_fraction,
        lw=3,
        color=colors_red[1],
-       label="Modified Schechter fraction",
+       label="Broad component fraction",
    )
 
    ax.set_ylim(-0.05, 1.05)

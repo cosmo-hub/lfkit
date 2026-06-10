@@ -15,24 +15,9 @@ from typing import Any
 
 import numpy as np
 
-from lfkit.luminosity_functions.models.schechter import (
-    double_schechter,
-    lognormal_lf,
-    modified_schechter,
-    schechter,
-    two_component_lf,
-)
+from lfkit.luminosity_functions._discovery import iter_model_functions
 from lfkit.utils.types import FloatArray, FloatInput
 from lfkit.utils.validators import validate_array
-
-__all__ = [
-    "conditionalize_lf_model",
-    "conditional_schechter",
-    "conditional_double_schechter",
-    "conditional_lognormal_lf",
-    "conditional_modified_schechter",
-    "conditional_two_component_lf",
-]
 
 
 def conditionalize_lf_model(
@@ -68,11 +53,9 @@ def conditionalize_lf_model(
     return conditional_model
 
 
-conditional_schechter = conditionalize_lf_model(schechter)
-conditional_double_schechter = conditionalize_lf_model(double_schechter)
-conditional_lognormal_lf = conditionalize_lf_model(lognormal_lf)
-conditional_modified_schechter = conditionalize_lf_model(modified_schechter)
-conditional_two_component_lf = conditionalize_lf_model(two_component_lf)
+def _conditional_model_name(name: str) -> str:
+    """Return conditional wrapper name for an LF model."""
+    return f"conditional_{name}"
 
 
 def _validate_lf_output(
@@ -87,3 +70,14 @@ def _validate_lf_output(
         raise ValueError(f"{name} returned negative values, which are not allowed.")
 
     return np.asarray(phi_arr, dtype=np.float64)
+
+
+__all__ = ["conditionalize_lf_model"]
+
+for _name, _function in iter_model_functions().items():
+    if _name.endswith("_from_m"):
+        continue
+
+    _conditional_name = _conditional_model_name(_name)
+    globals()[_conditional_name] = conditionalize_lf_model(_function)
+    __all__.append(_conditional_name)

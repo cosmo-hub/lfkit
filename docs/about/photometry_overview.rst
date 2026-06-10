@@ -40,7 +40,7 @@ distance, and sometimes additional photometric corrections.
 
 For worked examples of the LFKit public API, see the dedicated example pages:
 
-- :doc:`../examples/luminosity_function_models`
+- :doc:`../examples/lf_models/index`
 - :doc:`../examples/magnitudes_and_luminosities`
 - :doc:`../examples/magnitude_integrals`
 - :doc:`../examples/redshift_density`

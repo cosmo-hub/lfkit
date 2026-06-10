@@ -5,7 +5,7 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
-from lfkit.luminosity_functions.models.parameter_models import (
+from lfkit.luminosity_functions.parameter_models import (
     ALPHA_MODELS,
     M_STAR_MODELS,
     PHI_STAR_MODELS,

@@ -21,7 +21,7 @@ def test_conditional_schechter_constructor_delegates_to_luminosity_function():
     )
 
     assert isinstance(lf, LuminosityFunction)
-    assert lf.model == "schechter"
+    assert lf.model == "schechter_models.rst"
     assert lf.parameters_dict == {
         "phi_star": 1.0e-3,
         "m_star": -20.5,
@@ -86,22 +86,10 @@ def test_lognormal_constructor_uses_default_amplitude():
     assert lf.meta == {}
 
 
-def test_modified_schechter_constructor_delegates_to_luminosity_function():
-    lf = ConditionalLuminosityFunction.modified_schechter(
-        phi_star=1.0e-3,
-        m_star=-20.5,
-        alpha=-1.1,
-        meta={"source": "test"},
-    )
+def test_modified_schechter_constructor_is_not_registered() -> None:
+    """Tests modified Schechter is not exposed as a standalone conditional model."""
 
-    assert isinstance(lf, LuminosityFunction)
-    assert lf.model == "modified_schechter"
-    assert lf.parameters_dict == {
-        "phi_star": 1.0e-3,
-        "m_star": -20.5,
-        "alpha": -1.1,
-    }
-    assert lf.meta == {"source": "test"}
+    assert not hasattr(ConditionalLuminosityFunction, "modified_schechter")
 
 
 def test_two_component_constructor_delegates_to_luminosity_function():

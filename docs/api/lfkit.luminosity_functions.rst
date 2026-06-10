@@ -15,5 +15,6 @@ lfkit.luminosity\_functions
    conditional_models
    integrals
    models
+   parameter_models
    redshift_density
    registry

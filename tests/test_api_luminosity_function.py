@@ -14,7 +14,7 @@ import numpy as np
 
 import pyccl as ccl
 
-from lfkit.api._expose import expose_lf_function
+from lfkit.api._namespaces import expose_lf_function
 from lfkit.api.luminosity_function import LuminosityFunction
 from lfkit.luminosity_functions.registry import LF_MODELS
 
@@ -296,7 +296,7 @@ def test_unsupported_model_raises_clear_error():
         parameters={},
     )
 
-    with pytest.raises(ValueError, match="Unsupported luminosity function model"):
+    with pytest.raises(ValueError, match="Unknown luminosity-function model"):
         lf.phi(-20.0, 0.5)
 
 
@@ -312,9 +312,9 @@ def test_unsupported_phi_from_m_model_raises_clear_error():
 
 
 def test_available_model_helpers_return_public_model_names():
-    assert "schechter" in LuminosityFunction.available_models()
+    assert "schechter_models.rst" in LuminosityFunction.available_models()
     assert "evolving_schechter" in LuminosityFunction.available_models()
-    assert "schechter" in LuminosityFunction.available_from_m_models()
+    assert "schechter_models.rst" in LuminosityFunction.available_from_m_models()
 
 
 def test_available_parameter_models_returns_grouped_registry_names():

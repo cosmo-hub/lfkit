@@ -30,6 +30,14 @@ __all__ = [
     "apparent_magnitude_from_luminosity_distance",
 ]
 
+__api_aliases__ = {
+    "total_magnitude_correction": "correction",
+    "absolute_magnitude": "absolute",
+    "absolute_magnitude_from_luminosity_distance": "absolute_from_luminosity_distance",
+    "apparent_magnitude": "apparent",
+    "apparent_magnitude_from_luminosity_distance": "apparent_from_luminosity_distance",
+}
+
 
 def total_magnitude_correction(
     *,

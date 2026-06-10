@@ -54,11 +54,8 @@ import warnings
 import numpy as np
 from scipy.special import gammaincc, gamma
 
-from lfkit.luminosity_functions.models.parameter_models import evaluate_lf_parameters
-from lfkit.photometry.luminosities import (
-    luminosity_ratio,
-    magnitude_difference_from_luminosity_ratio,
-)
+from lfkit.luminosity_functions.parameter_models import evaluate_lf_parameters
+from lfkit.photometry.luminosities import luminosity_ratio
 from lfkit.photometry.magnitudes import absolute_magnitude
 from lfkit.utils.types import Cosmology, FloatArray, FloatInput, ParameterValue
 from lfkit.utils.validators import validate_array
@@ -73,9 +70,6 @@ __all__ = [
     "double_schechter_from_m",
     "schechter_cumulative",
     "schechter_cumulative_evolving",
-    "lognormal_lf",
-    "modified_schechter",
-    "two_component_lf",
 ]
 
 
@@ -711,126 +705,3 @@ def schechter_cumulative_evolving(
 
     n_total = np.asarray(phi_star * total_gamma, dtype=float)
     return np.asarray(n_total - n_brighter, dtype=float)
-
-
-def lognormal_lf(
-    absolute_mag: FloatInput,
-    *,
-    mean_absolute_mag: ParameterValue,
-    sigma_log_luminosity: ParameterValue,
-    amplitude: ParameterValue = 1.0,
-) -> FloatArray:
-    """Return a lognormal luminosity function in magnitude space."""
-    absolute_mag_arr = validate_array(absolute_mag, name="absolute_mag")
-    mean_absolute_mag_arr = validate_array(
-        mean_absolute_mag,
-        name="mean_absolute_mag",
-    )
-    sigma_log_luminosity_arr = validate_array(
-        sigma_log_luminosity,
-        name="sigma_log_luminosity",
-    )
-    amplitude_arr = validate_array(amplitude, name="amplitude")
-
-    if np.any(sigma_log_luminosity_arr <= 0.0):
-        raise ValueError("sigma_log_luminosity must be positive.")
-
-    if np.any(amplitude_arr < 0.0):
-        raise ValueError("amplitude must be non-negative.")
-
-    delta_log_luminosity = -0.4 * (absolute_mag_arr - mean_absolute_mag_arr)
-
-    phi = (
-        amplitude_arr
-        * 0.4
-        / (np.sqrt(2.0 * np.pi) * sigma_log_luminosity_arr)
-        * np.exp(-0.5 * (delta_log_luminosity / sigma_log_luminosity_arr) ** 2.0)
-    )
-
-    return np.asarray(phi, dtype=float)
-
-
-def modified_schechter(
-    absolute_mag: FloatInput,
-    *,
-    phi_star: ParameterValue,
-    m_star: ParameterValue,
-    alpha: ParameterValue,
-) -> FloatArray:
-    """Return a modified Schechter luminosity function.
-
-    This uses a squared exponential cutoff in luminosity ratio instead of
-    the standard Schechter exponential cutoff.
-    """
-    absolute_mag_arr = validate_array(absolute_mag, name="absolute_mag")
-    phi_star_arr = validate_array(phi_star, name="phi_star")
-    alpha_arr = validate_array(alpha, name="alpha")
-
-    if np.any(phi_star_arr < 0.0):
-        raise ValueError("phi_star must be non-negative.")
-
-    x = luminosity_ratio(absolute_mag_arr, m_star)
-
-    phi = (
-        0.4
-        * np.log(10.0)
-        * phi_star_arr
-        * x ** (alpha_arr + 1.0)
-        * np.exp(-(x**2.0))
-    )
-
-    return np.asarray(phi, dtype=float)
-
-
-def two_component_lf(
-    absolute_mag: FloatInput,
-    *,
-    lognormal_mean_absolute_mag: ParameterValue,
-    lognormal_sigma_log_luminosity: ParameterValue,
-    modified_phi_star: ParameterValue,
-    modified_alpha: ParameterValue,
-    lognormal_amplitude: ParameterValue = 1.0,
-    modified_m_star: ParameterValue | None = None,
-    modified_luminosity_fraction: ParameterValue = 0.562,
-) -> FloatArray:
-    """Return the sum of lognormal and modified Schechter components."""
-    lognormal_mean_absolute_mag_arr = validate_array(
-        lognormal_mean_absolute_mag,
-        name="lognormal_mean_absolute_mag",
-    )
-
-    lognormal_phi = lognormal_lf(
-        absolute_mag,
-        mean_absolute_mag=lognormal_mean_absolute_mag_arr,
-        sigma_log_luminosity=lognormal_sigma_log_luminosity,
-        amplitude=lognormal_amplitude,
-    )
-
-    if modified_m_star is None:
-        modified_luminosity_fraction_arr = validate_array(
-            modified_luminosity_fraction,
-            name="modified_luminosity_fraction",
-        )
-
-        if np.any(modified_luminosity_fraction_arr <= 0.0):
-            raise ValueError("modified_luminosity_fraction must be positive.")
-
-        modified_m_star_arr = lognormal_mean_absolute_mag_arr + (
-            magnitude_difference_from_luminosity_ratio(
-                modified_luminosity_fraction_arr
-            )
-        )
-    else:
-        modified_m_star_arr = validate_array(
-            modified_m_star,
-            name="modified_m_star",
-        )
-
-    modified_phi = modified_schechter(
-        absolute_mag,
-        phi_star=modified_phi_star,
-        m_star=modified_m_star_arr,
-        alpha=modified_alpha,
-    )
-
-    return np.asarray(lognormal_phi + modified_phi, dtype=float)

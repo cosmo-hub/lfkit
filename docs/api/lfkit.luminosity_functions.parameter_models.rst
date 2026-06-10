@@ -1,7 +1,7 @@
-lfkit.luminosity\_functions.models.parameter\_models
-====================================================
+lfkit.luminosity\_functions.parameter\_models
+=============================================
 
-.. automodule:: lfkit.luminosity_functions.models.parameter_models
+.. automodule:: lfkit.luminosity_functions.parameter_models
 
    
    .. rubric:: Functions

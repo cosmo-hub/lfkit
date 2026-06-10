@@ -12,11 +12,8 @@ lfkit.luminosity\_functions.models.schechter
       double_schechter_from_m
       evolving_schechter
       evolving_schechter_from_m
-      lognormal_lf
-      modified_schechter
       schechter
       schechter_cumulative
       schechter_cumulative_evolving
       schechter_from_m
-      two_component_lf
    
