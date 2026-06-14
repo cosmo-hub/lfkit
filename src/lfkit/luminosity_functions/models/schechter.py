@@ -1,49 +1,17 @@
-r"""Luminosity function utilities for LFKit.
+r"""Schechter luminosity function models.
 
-This module provides simple standalone functions for evaluating
-common galaxy luminosity function parameterization.
+This module provides standalone functions for evaluating Schechter based
+luminosity function models in rest frame absolute magnitude space.
 
-All luminosity functions in this module are defined in rest-frame absolute
-magnitude space. Functions with names ending in ``_from_m`` are convenience
-wrappers that accept apparent magnitudes, convert them to absolute
-magnitudes, and then evaluate the luminosity function in absolute magnitude
-space.
+Functions with names ending in ``_from_m`` are convenience wrappers that accept
+apparent magnitude values, convert them to absolute magnitude values, and then
+evaluate the corresponding Schechter model.
 
 Implemented models:
-    - Standard Schechter LF in rest-frame absolute magnitudes
-    - Schechter LF with configurable redshift evolution of parameters
-    - Double-power-law Schechter LF in rest-frame absolute magnitudes
-
-The magnitude-space Schechter function is
-
-.. math::
-
-    \phi(M) = 0.4 \ln(10) \, \phi_\star \, x^{\alpha + 1} \exp(-x),
-
-where
-
-.. math::
-
-    x = 10^{-0.4 (M - M_\star)}.
-
-Redshift evolution is handled by separate helper functions for
-``phi_star(z)``, ``M_star(z)``, and ``alpha(z)``. Built-in options include
-constant evolution and common linearized forms such as
-
-.. math::
-
-    M_\star(z) = M_{0,\star} - q (z - z_{\mathrm{ref}})
-
-.. math::
-
-    \phi_\star(z) = \phi_{0,\star} \, 10^{0.4 p z}.
-
-For more information see The CNOC2 Field Galaxy Luminosity Function I:
-A Description of Luminosity Function Evolution by Lin et al. 1999
-(arXiv:9902249) or GAMA: ugriz galaxy luminosity functions by Loveday et al.
-(arXiv:1111.0166).
-
-All returned quantities are NumPy arrays of dtype float.
+    - Standard Schechter luminosity function
+    - Evolving Schechter luminosity function
+    - Double Schechter luminosity function
+    - Cumulative standard and evolving Schechter number densities
 """
 
 from __future__ import annotations
@@ -196,7 +164,7 @@ def double_schechter(
     beta: float,
     m_transition: ParameterValue,
 ) -> FloatArray:
-    r"""Return a double-power-law Schechter luminosity function in magnitude space.
+    r"""Return a double-power law Schechter luminosity function in magnitude space.
 
     This implements the Loveday/GAMA-style faint-end extension
 
@@ -465,7 +433,7 @@ def double_schechter_from_m(
     k_correction: ParameterValue | None = None,
     e_correction: ParameterValue | None = None,
 ) -> FloatArray:
-    r"""Return a double-power-law Schechter luminosity function from apparent magnitudes.
+    r"""Return a double-power law Schechter luminosity function from apparent magnitudes.
 
     This uses
 
@@ -566,7 +534,7 @@ def schechter_cumulative(
 
     Note:
         This analytic helper is provided only for the standard
-        Schechter form. The double-power-law case is not included
+        Schechter form. The double-power law case is not included
         here because it is usually cleaner to integrate numerically.
 
     Args:

@@ -23,7 +23,36 @@ def additive_lf(
     absolute_mag: FloatInput,
     *components: Callable[[FloatInput], FloatArray],
 ) -> FloatArray:
-    """Return the sum of multiple luminosity function components."""
+    r"""Return the sum of multiple luminosity function components.
+
+    This evaluates an additive mixture model,
+
+    .. math::
+
+        \phi_{\mathrm{tot}}(M) =
+        \sum_i \phi_i(M),
+
+    where each :math:`\phi_i(M)` is an independently defined luminosity
+    function component evaluated on the same absolute magnitude grid.
+
+    This helper is useful for building composite populations where different
+    physical or phenomenological components contribute to the same observed
+    luminosity function, for example a narrow central population plus a broader
+    satellite-like component.
+
+    Args:
+        absolute_mag: Absolute magnitude value(s).
+        *components: Callable luminosity function components. Each component
+            must accept ``absolute_mag`` and return values broadcastable to the
+            same shape.
+
+    Returns:
+        NumPy array containing the summed luminosity function evaluated at
+        ``absolute_mag``.
+
+    Raises:
+        ValueError: If no luminosity function components are provided.
+    """
     absolute_mag_arr = validate_array(absolute_mag, name="absolute_mag")
 
     if len(components) == 0:
@@ -48,7 +77,60 @@ def two_component_lf(
     modified_m_star: ParameterValue | None = None,
     modified_luminosity_fraction: ParameterValue = 0.562,
 ) -> FloatArray:
-    """Return the sum of lognormal and modified Schechter components."""
+    r"""Return a two-component luminosity function.
+
+    This model combines a lognormal component with a cutoff-modified Schechter
+    component,
+
+    .. math::
+
+        \phi_{\mathrm{tot}}(M) =
+        \phi_{\mathrm{lognormal}}(M)
+        + \phi_{\mathrm{mod}}(M).
+
+    The lognormal term describes a localized component peaked around
+    ``lognormal_mean_absolute_mag``. The modified Schechter term provides a
+    broader luminosity function component with a Schechter-like faint end and a
+    suppressed bright end.
+
+    If ``modified_m_star`` is not supplied, it is inferred from the lognormal
+    peak magnitude using
+
+    .. math::
+
+        M_{\star,\mathrm{mod}} =
+        M_{\mathrm{lognormal}} + \Delta M(f_L),
+
+    where :math:`f_L` is ``modified_luminosity_fraction`` and
+    :math:`\Delta M(f_L)` is the magnitude offset corresponding to that
+    luminosity ratio.
+
+    This is mainly a phenomenological composite model: the two terms should be
+    interpreted as flexible components of the total luminosity function rather
+    than as a unique physical decomposition.
+
+    Args:
+        absolute_mag: Absolute magnitude value(s).
+        lognormal_mean_absolute_mag: Mean absolute magnitude of the lognormal
+            component.
+        lognormal_sigma_log_luminosity: Width of the lognormal component in
+            log luminosity.
+        modified_phi_star: Normalization of the modified Schechter component.
+        modified_alpha: Faint-end slope of the modified Schechter component.
+        lognormal_amplitude: Amplitude of the lognormal component.
+        modified_m_star: Characteristic magnitude of the modified Schechter
+            component. If not provided, it is inferred from
+            ``modified_luminosity_fraction``.
+        modified_luminosity_fraction: Luminosity ratio used to infer
+            ``modified_m_star`` when it is not supplied.
+
+    Returns:
+        NumPy array containing the combined luminosity function evaluated at
+        ``absolute_mag``.
+
+    Raises:
+        ValueError: If ``modified_luminosity_fraction`` is not positive.
+    """
     lognormal_mean_absolute_mag_arr = validate_array(
         lognormal_mean_absolute_mag,
         name="lognormal_mean_absolute_mag",

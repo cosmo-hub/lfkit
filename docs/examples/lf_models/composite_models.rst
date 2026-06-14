@@ -5,7 +5,7 @@
 |lfkitlogo| Composite models
 =============================
 
-Composite models combine multiple luminosity-function components. They are
+Composite models combine multiple luminosity function components. They are
 useful when a population is better described as a mixture rather than by one
 single analytic shape.
 
@@ -83,7 +83,7 @@ function with a suppressed bright end.
 Luminosity cutoff modifier
 --------------------------
 
-A luminosity cutoff can be applied to an existing luminosity-function object.
+A luminosity cutoff can be applied to an existing luminosity function object.
 This keeps the base model unchanged and returns a new object whose
 :meth:`lfkit.LuminosityFunction.phi` values are multiplied by a bright-end
 cutoff.

@@ -1,4 +1,4 @@
-"""Automatic luminosity-function registries."""
+"""Automatic luminosity function registries."""
 
 from __future__ import annotations
 
@@ -12,7 +12,15 @@ from lfkit.luminosity_functions._discovery import iter_model_functions
 
 @dataclass(frozen=True)
 class LFModel:
-    """Description of a registered luminosity-function model."""
+    """Description of a registered luminosity function model.
+
+    Attributes:
+        name: Public model name.
+        function: Registered model callable.
+        independent_variable: Name of the first independent variable.
+        requires_z: Whether the model requires a second independent variable such
+            as redshift or condition.
+    """
 
     name: str
     function: Callable
@@ -25,7 +33,12 @@ def discover_lf_models() -> tuple[
     dict[str, LFModel],
     dict[str, Callable],
 ]:
-    """Discover LF models, conditional LF models, and apparent-magnitude evaluators."""
+    """Discover luminosity function registries.
+
+    Returns:
+        Tuple containing registered luminosity function models, conditional
+        luminosity function models, and apparent magnitude evaluators.
+    """
     lf_models: dict[str, LFModel] = {}
     conditional_lf_models: dict[str, LFModel] = {}
     from_m_models: dict[str, Callable] = {}
@@ -40,7 +53,12 @@ def _discover_models_package(
     lf_models: dict[str, LFModel],
     from_m_models: dict[str, Callable],
 ) -> None:
-    """Discover LF models from ``luminosity_functions.models``."""
+    """Discover luminosity function models from ``luminosity_functions.models``.
+
+    Args:
+        lf_models: Registry updated with discovered luminosity function models.
+        from_m_models: Registry updated with apparent magnitude evaluators.
+    """
     for name, obj in iter_model_functions().items():
         _register_lf_model(
             name,
@@ -54,7 +72,12 @@ def _discover_models_package(
 def _discover_conditional_models(
     conditional_lf_models: dict[str, LFModel],
 ) -> None:
-    """Discover conditional LF models."""
+    """Discover conditional luminosity function models.
+
+    Args:
+        conditional_lf_models: Registry updated with discovered conditional
+            luminosity function models.
+    """
     _register_module_lf_models(
         conditional_models,
         lf_models=conditional_lf_models,
@@ -71,7 +94,17 @@ def _register_lf_model(
     from_m_models: dict[str, Callable] | None,
     name_transform: Callable[[str], str] | None,
 ) -> None:
-    """Register one public LF function."""
+    """Register one public luminosity function callable.
+
+    Args:
+        name: Candidate function name.
+        obj: Candidate callable.
+        lf_models: Registry updated with luminosity function models.
+        from_m_models: Optional registry updated with apparent magnitude
+            evaluators.
+        name_transform: Optional callable used to convert function names to public
+            model names.
+    """
     if not callable(obj):
         return
 
@@ -108,7 +141,16 @@ def _register_module_lf_models(
     from_m_models: dict[str, Callable] | None,
     name_transform: Callable[[str], str] | None,
 ) -> None:
-    """Register public LF functions from one module."""
+    """Register public luminosity function callables from one module.
+
+    Args:
+        module: Module object with an ``__all__`` declaration.
+        lf_models: Registry updated with luminosity function models.
+        from_m_models: Optional registry updated with apparent magnitude
+            evaluators.
+        name_transform: Optional callable used to convert function names to public
+            model names.
+    """
     for name in getattr(module, "__all__", []):
         _register_lf_model(
             name,
@@ -120,7 +162,14 @@ def _register_module_lf_models(
 
 
 def _public_model_name(name: str) -> str:
-    """Return the public model name for LF functions."""
+    """Return the public model name for a luminosity function callable.
+
+    Args:
+        name: Function name to convert.
+
+    Returns:
+        Public model name with ``conditional_`` and ``_lf`` affixes removed.
+    """
     public_name = name
 
     if public_name.startswith("conditional_"):
@@ -135,7 +184,15 @@ def _public_model_name(name: str) -> str:
 def _requires_second_independent_variable(
     signature: inspect.Signature,
 ) -> bool:
-    """Return whether model needs a second positional independent variable."""
+    """Return whether a model requires a second independent variable.
+
+    Args:
+        signature: Function signature to inspect.
+
+    Returns:
+        ``True`` if the second positional argument is a supported independent
+        variable name, otherwise ``False``.
+    """
     params = list(signature.parameters.values())
 
     if len(params) < 2:
@@ -153,51 +210,94 @@ LF_MODELS, CONDITIONAL_LF_MODELS, LF_FROM_M_MODELS = discover_lf_models()
 
 
 def available_lf_models() -> tuple[str, ...]:
-    """Return available luminosity-function model names."""
+    """Return available luminosity function model names.
+
+    Returns:
+        Sorted tuple of registered luminosity function model names.
+    """
     return tuple(sorted(LF_MODELS))
 
 
 def available_conditional_lf_models() -> tuple[str, ...]:
-    """Return available conditional luminosity-function model names."""
+    """Return available conditional luminosity function model names.
+
+    Returns:
+        Sorted tuple of registered conditional luminosity function model names.
+    """
     return tuple(sorted(CONDITIONAL_LF_MODELS))
 
 
 def available_lf_from_m_models() -> tuple[str, ...]:
-    """Return LF models with apparent-magnitude evaluators."""
+    """Return luminosity function models with apparent magnitude evaluators.
+
+    Returns:
+        Sorted tuple of model names that provide apparent magnitude evaluators.
+    """
     return tuple(sorted(LF_FROM_M_MODELS))
 
 
 def get_lf_model(name: str) -> LFModel:
-    """Return a registered luminosity-function model."""
+    """Return a registered luminosity function model.
+
+    Args:
+        name: Name of the registered luminosity function model.
+
+    Returns:
+        Registered luminosity function model description.
+
+    Raises:
+        ValueError: If ``name`` is not registered.
+    """
     try:
         return LF_MODELS[name]
     except KeyError as exc:
         available = ", ".join(available_lf_models())
         raise ValueError(
-            f"Unknown luminosity-function model {name!r}. "
+            f"Unknown luminosity function model {name!r}. "
             f"Available models: {available}."
         ) from exc
 
 
 def get_conditional_lf_model(name: str) -> LFModel:
-    """Return a registered conditional luminosity-function model."""
+    """Return a registered conditional luminosity function model.
+
+    Args:
+        name: Name of the registered conditional luminosity function model.
+
+    Returns:
+        Registered conditional luminosity function model description.
+
+    Raises:
+        ValueError: If ``name`` is not registered.
+    """
     try:
         return CONDITIONAL_LF_MODELS[name]
     except KeyError as exc:
         available = ", ".join(available_conditional_lf_models())
         raise ValueError(
-            f"Unknown conditional luminosity-function model {name!r}. "
+            f"Unknown conditional luminosity function model {name!r}. "
             f"Available conditional models: {available}."
         ) from exc
 
 
 def get_lf_from_m_model(name: str) -> Callable:
-    """Return an apparent-magnitude LF evaluator."""
+    """Return an apparent magnitude luminosity function evaluator.
+
+    Args:
+        name: Name of the luminosity function model.
+
+    Returns:
+        Registered apparent magnitude evaluator.
+
+    Raises:
+        ValueError: If ``name`` does not have a registered apparent magnitude
+            evaluator.
+    """
     try:
         return LF_FROM_M_MODELS[name]
     except KeyError as exc:
         available = ", ".join(available_lf_from_m_models())
         raise ValueError(
-            f"phi_from_m is not defined for luminosity-function model {name!r}. "
+            f"phi_from_m is not defined for luminosity function model {name!r}. "
             f"Available models: {available}."
         ) from exc
