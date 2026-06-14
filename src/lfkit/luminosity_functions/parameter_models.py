@@ -1,14 +1,15 @@
-r"""Luminosity-function parameter evolution models for LFKit.
+r"""luminosity function parameter-evolution models for LFKit.
 
 This module provides helper functions for evaluating redshift-dependent
-luminosity function parameters such as ``phi_star(z)``, ``M_star(z)``,
-and ``alpha(z)``.
+luminosity function parameters such as ``phi_star(z)``, ``M_star(z)``, and
+``alpha(z)``.
 
-These helpers are used by the main luminosity function evaluators but do
-not evaluate the luminosity function themselves.
+These helpers are used by luminosity function models that allow parameter
+evolution with redshift. They evaluate only the parameters, not the full
+luminosity function.
 
-Built-in options include constant evolution and simple linearized forms
-commonly used in the literature.
+Built-in options include constant evolution and simple linear forms commonly
+used in luminosity function analyses.
 """
 
 from __future__ import annotations
@@ -47,19 +48,18 @@ def phi_star_constant(
 ) -> FloatArray:
     r"""Return a constant Schechter normalization over redshift.
 
-    This uses
+    This evaluates
 
     .. math::
 
-        \phi_\star(z) = \phi_\star.
+       \phi_\star(z) = \phi_\star.
 
     Args:
         z: Redshift value or array-like of redshift values.
         phi_star: Constant Schechter normalization.
 
     Returns:
-        NumPy array of Schechter normalization values with the same
-        broadcast shape as ``z``.
+        Schechter normalization evaluated at ``z`` with the same shape as ``z``.
     """
     z_arr = validate_array(z, name="z")
     return np.full_like(z_arr, fill_value=phi_star, dtype=float)
@@ -73,9 +73,11 @@ def phi_star_linear_p(
 ) -> FloatArray:
     r"""Return a Schechter normalization with density evolution.
 
-    This uses the common density-evolution form
+    This evaluates
 
-        \phi_\star(z) = \phi_{0,\star} \, 10^{0.4 p z}.
+    .. math::
+
+       \phi_\star(z) = \phi_{0,\star} 10^{0.4 p z}.
 
     Args:
         z: Redshift value or array-like of redshift values.
@@ -83,7 +85,7 @@ def phi_star_linear_p(
         p: Density-evolution parameter.
 
     Returns:
-        NumPy array of redshift-dependent Schechter normalization values.
+        Redshift-dependent Schechter normalization evaluated at ``z``.
     """
     z_arr = validate_array(z, name="z")
     return np.asarray(phi_0_star * 10.0 ** (0.4 * p * z_arr), dtype=float)
@@ -94,21 +96,20 @@ def m_star_constant(
     *,
     m_star: float,
 ) -> FloatArray:
-    r"""Return a constant characteristic magnitude over redshift
+    r"""Return a constant characteristic magnitude over redshift.
 
-    This uses
+    This evaluates
 
     .. math::
 
-        M_\star(z) = M_\star.
+       M_\star(z) = M_\star.
 
     Args:
         z: Redshift value or array-like of redshift values.
         m_star: Constant characteristic magnitude.
 
     Returns:
-        NumPy array of characteristic magnitudes with the same
-        broadcast shape as ``z``.
+        Characteristic magnitude evaluated at ``z`` with the same shape as ``z``.
     """
     z_arr = validate_array(z, name="z")
     return np.full_like(z_arr, fill_value=m_star, dtype=float)
@@ -123,11 +124,11 @@ def m_star_linear_q(
 ) -> FloatArray:
     r"""Return a characteristic magnitude with luminosity evolution.
 
-    This uses the common luminosity-evolution form
+    This evaluates
 
     .. math::
 
-        M_\star(z) = M_{0,\star} - q (z - z_{\mathrm{ref}}).
+       M_\star(z) = M_{0,\star} - q (z - z_{\mathrm{ref}}).
 
     Args:
         z: Redshift value or array-like of redshift values.
@@ -136,7 +137,7 @@ def m_star_linear_q(
         z_ref: Reference redshift.
 
     Returns:
-        NumPy array of redshift-dependent characteristic magnitudes.
+        Redshift-dependent characteristic magnitude evaluated at ``z``.
     """
     z_arr = validate_array(z, name="z")
     return np.asarray(m_0_star - q * (z_arr - z_ref), dtype=float)
@@ -149,19 +150,18 @@ def alpha_constant(
 ) -> FloatArray:
     r"""Return a constant faint-end slope over redshift.
 
-    This uses
+    This evaluates
 
     .. math::
 
-        \alpha(z) = \alpha.
+       \alpha(z) = \alpha.
 
     Args:
         z: Redshift value or array-like of redshift values.
         alpha: Constant faint-end slope.
 
     Returns:
-        NumPy array of faint-end slope values with the same
-        broadcast shape as ``z``.
+        Faint-end slope evaluated at ``z`` with the same shape as ``z``.
     """
     z_arr = validate_array(z, name="z")
     return np.full_like(z_arr, fill_value=alpha, dtype=float)
@@ -176,20 +176,20 @@ def alpha_linear(
 ) -> FloatArray:
     r"""Return a faint-end slope that varies linearly with redshift.
 
-    This uses
+    This evaluates
 
     .. math::
 
-        \alpha(z) = \alpha_0 + \alpha_1 (z - z_{\mathrm{ref}}).
+       \alpha(z) = \alpha_0 + \alpha_1 (z - z_{\mathrm{ref}}).
 
     Args:
         z: Redshift value or array-like of redshift values.
         alpha_0: Faint-end slope at the reference redshift.
-        alpha_1: Linear slope with redshift.
+        alpha_1: Linear redshift-evolution coefficient.
         z_ref: Reference redshift.
 
     Returns:
-        NumPy array of redshift-dependent faint-end slope values.
+        Redshift-dependent faint-end slope evaluated at ``z``.
     """
     z_arr = validate_array(z, name="z")
     return np.asarray(alpha_0 + alpha_1 * (z_arr - z_ref), dtype=float)
@@ -204,14 +204,12 @@ def get_parameter_model(
     r"""Return a registered luminosity function parameter model.
 
     Args:
-        model_name: Name of the requested model.
-        registry: Mapping from model names to model callables.
-        model_kind: Human-readable parameter kind used in error messages,
-            for example ``"phi_model"``, ``"m_star_model"``, or
-            ``"alpha_model"``.
+        model_name: Name of the requested parameter-evolution model.
+        registry: Mapping from model names to parameter-evolution callables.
+        model_kind: Human-readable parameter kind used in error messages.
 
     Returns:
-        Registered parameter-model callable.
+        Registered parameter-evolution callable.
 
     Raises:
         ValueError: If ``model_name`` is not present in ``registry``.
@@ -225,7 +223,11 @@ def get_parameter_model(
 
 
 def available_lf_parameter_models() -> dict[str, list[str]]:
-    """Return available luminosity function parameter evolution models."""
+    """Return available luminosity function parameter-evolution models.
+
+    Returns:
+        Dictionary mapping parameter names to sorted lists of registered model names.
+    """
     return {
         "phi_star": sorted(PHI_STAR_MODELS),
         "m_star": sorted(M_STAR_MODELS),
@@ -241,7 +243,20 @@ def _register_parameter_model(
     model_kind: str,
     overwrite: bool = False,
 ) -> None:
-    """Register a luminosity function parameter evolution model."""
+    """Register a luminosity function parameter-evolution model.
+
+    Args:
+        name: Name used to register the model.
+        model: Callable parameter-evolution model.
+        registry: Registry to update.
+        model_kind: Human-readable parameter kind used in error messages.
+        overwrite: If ``True``, replace an existing model with the same name.
+
+    Raises:
+        ValueError: If ``name`` is empty or already registered and
+            ``overwrite=False``.
+        TypeError: If ``model`` is not callable.
+    """
     if not name:
         raise ValueError(f"{model_kind} model name cannot be empty.")
 
@@ -263,7 +278,13 @@ def register_phi_star_model(
     *,
     overwrite: bool = False,
 ) -> None:
-    """Register a phi_star evolution model."""
+    """Register a ``phi_star`` evolution model.
+
+    Args:
+        name: Name used to register the model.
+        model: Callable accepting redshift and returning ``phi_star(z)``.
+        overwrite: If ``True``, replace an existing model with the same name.
+    """
     _register_parameter_model(
         name,
         model,
@@ -279,7 +300,13 @@ def register_m_star_model(
     *,
     overwrite: bool = False,
 ) -> None:
-    """Register an M_star evolution model."""
+    """Register an ``M_star`` evolution model.
+
+    Args:
+        name: Name used to register the model.
+        model: Callable accepting redshift and returning ``M_star(z)``.
+        overwrite: If ``True``, replace an existing model with the same name.
+    """
     _register_parameter_model(
         name,
         model,
@@ -295,7 +322,13 @@ def register_alpha_model(
     *,
     overwrite: bool = False,
 ) -> None:
-    """Register an alpha evolution model."""
+    """Register an ``alpha`` evolution model.
+
+    Args:
+        name: Name used to register the model.
+        model: Callable accepting redshift and returning ``alpha(z)``.
+        overwrite: If ``True``, replace an existing model with the same name.
+    """
     _register_parameter_model(
         name,
         model,
@@ -315,25 +348,22 @@ def evaluate_lf_parameters(
     alpha_model: str = "constant",
     alpha_kwargs: Mapping[str, ParameterValue] | None = None,
 ) -> tuple[FloatArray, FloatArray, FloatArray]:
-    r"""Evaluate evolving luminosity function parameters at redshift ``z``.
+    r"""Evaluate luminosity function parameters at redshift ``z``.
 
     Args:
         z: Redshift value or array-like of redshift values.
-        phi_model: Evolution model for ``phi_star``.
-        phi_kwargs: Keyword arguments passed to the selected
-            ``phi_star`` evolution model.
-        m_star_model: Evolution model for ``M_star``.
-        m_star_kwargs: Keyword arguments passed to the selected
-            ``M_star`` evolution model.
-        alpha_model: Evolution model for ``alpha``.
-        alpha_kwargs: Keyword arguments passed to the selected
-            ``alpha`` evolution model.
+        phi_model: Registered evolution model used for ``phi_star``.
+        phi_kwargs: Keyword arguments passed to the selected ``phi_star`` model.
+        m_star_model: Registered evolution model used for ``M_star``.
+        m_star_kwargs: Keyword arguments passed to the selected ``M_star`` model.
+        alpha_model: Registered evolution model used for ``alpha``.
+        alpha_kwargs: Keyword arguments passed to the selected ``alpha`` model.
 
     Returns:
         Tuple ``(phi_star, m_star, alpha)`` evaluated at ``z``.
 
     Raises:
-        ValueError: If an unsupported evolution model is requested.
+        ValueError: If an unsupported parameter-evolution model is requested.
     """
     z_arr = validate_array(z, name="z")
 

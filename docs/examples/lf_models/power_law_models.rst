@@ -13,7 +13,7 @@ a Schechter-like exponential cutoff.
 Single power law
 ----------------
 
-The single power-law model has one slope. In magnitude space, this gives a
+The single power law model has one slope. In magnitude space, this gives a
 straight-line trend when shown on a logarithmic :math:`\Phi(M)` axis.
 
 .. plot::
@@ -58,7 +58,7 @@ straight-line trend when shown on a logarithmic :math:`\Phi(M)` axis.
        r"$\Phi(M)$ [$\mathrm{Mpc}^{-3}\,\mathrm{mag}^{-1}$]",
        fontsize=LABEL_SIZE,
    )
-   ax.set_title("Single power-law luminosity functions", fontsize=TITLE_SIZE)
+   ax.set_title("Single power law luminosity functions", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
    ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="best")
    plt.tight_layout()
@@ -148,7 +148,7 @@ and faint sides need different behaviour without using a Schechter cutoff.
 Log-normalized power law
 ------------------------
 
-The log-normalized power-law model is the same power-law shape, but the
+The log-normalized power law model is the same power law shape, but the
 normalization is supplied as ``log_phi_star``. This is convenient for fitting
 or sampling applications where the normalization is naturally varied in
 logarithmic space.
@@ -199,7 +199,7 @@ logarithmic space.
        r"$\Phi(M)$ [$\mathrm{Mpc}^{-3}\,\mathrm{mag}^{-1}$]",
        fontsize=LABEL_SIZE,
    )
-   ax.set_title("Log-normalized power-law models", fontsize=TITLE_SIZE)
+   ax.set_title("Log-normalized power law models", fontsize=TITLE_SIZE)
    ax.tick_params(axis="both", labelsize=TICK_SIZE)
    ax.legend(frameon=True, fontsize=LEGEND_SIZE, loc="best")
    plt.tight_layout()

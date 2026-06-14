@@ -296,7 +296,7 @@ def test_unsupported_model_raises_clear_error():
         parameters={},
     )
 
-    with pytest.raises(ValueError, match="Unknown luminosity-function model"):
+    with pytest.raises(ValueError, match="Unknown luminosity function model"):
         lf.phi(-20.0, 0.5)
 
 

@@ -21,21 +21,13 @@ __all__ = ["ConditionalLuminosityFunction"]
 class ConditionalLuminosityFunction(LuminosityFunction):
     """User-facing wrapper for conditional luminosity function models.
 
-    A conditional luminosity function evaluates ``Phi(M | x)``, where
-    ``M`` is absolute magnitude and ``x`` is an external conditioning
-    variable such as redshift, halo mass, or another model-specific quantity.
+    A conditional luminosity function evaluates ``Phi(M | x)``, where ``M`` is
+    absolute magnitude and ``x`` is an external conditioning variable such as
+    redshift, halo mass, environment, richness, stellar mass, or another
+    model-specific quantity.
 
     Instances can be created either with the generic constructor or with
     automatically generated model constructors.
-
-    Examples:
-        >>> clf = ConditionalLuminosityFunction(
-        ...     model="schechter",
-        ...     parameters={"phi_star": 1e-3, "m_star": -20.5, "alpha": -1.1},
-        ... )
-        >>> phi = clf.phi(absolute_mag=-20.0, condition=0.5)
-
-        >>> ConditionalLuminosityFunction.available_models()
     """
 
     def phi(
@@ -47,16 +39,16 @@ class ConditionalLuminosityFunction(LuminosityFunction):
 
         Args:
             absolute_mag: Absolute magnitude value or array.
-            condition: Conditioning variable value or array. The meaning of
-                this variable depends on the selected conditional LF model.
+            condition: Conditioning variable value or array. The meaning of this
+                variable depends on the selected conditional luminosity function model.
 
         Returns:
             Conditional luminosity function evaluated at ``absolute_mag`` and
             ``condition``.
 
         Raises:
-            ValueError: If ``condition`` is not provided or the model is not
-                registered as a conditional luminosity function.
+            ValueError: If ``condition`` is not provided or the model is not registered
+                as a conditional luminosity function.
         """
         model_spec = get_conditional_lf_model(self.model)
 
@@ -74,7 +66,11 @@ class ConditionalLuminosityFunction(LuminosityFunction):
 
     @staticmethod
     def available_models() -> list[str]:
-        """Return conditional luminosity function model names."""
+        """Return registered conditional luminosity function model names.
+
+        Returns:
+            Sorted list of registered conditional luminosity function model names.
+        """
         return sorted(CONDITIONAL_LF_MODELS)
 
 
@@ -83,7 +79,15 @@ def _make_conditional_constructor(
     model_name: str,
     function: Any,
 ):
-    """Create a classmethod constructor from a registered conditional LF model."""
+    """Create a classmethod constructor from a registered conditional model.
+
+    Args:
+        model_name: Name of the registered conditional luminosity function model.
+        function: Registered low level conditional luminosity function callable.
+
+    Returns:
+        Classmethod constructor for ``ConditionalLuminosityFunction``.
+    """
     signature = inspect.signature(function)
 
     @classmethod
@@ -106,22 +110,23 @@ def _make_conditional_constructor(
     constructor.__name__ = model_name
     constructor.__qualname__ = f"ConditionalLuminosityFunction.{model_name}"
     constructor.__doc__ = f"""Create a ``{model_name}`` conditional luminosity function.
-
-The keyword arguments are inferred from the registered low-level model
-function. Required model parameters must be supplied by the user. Optional
-model parameters use their low-level defaults unless explicitly provided.
-
-Args:
-    meta: Optional metadata stored on the luminosity function object.
-    **parameters: Parameters passed to the registered conditional LF model.
-
-Returns:
-    ConditionalLuminosityFunction: Configured conditional luminosity function.
-
-Examples:
-    >>> clf = ConditionalLuminosityFunction.{model_name}(...)
-    >>> phi = clf.phi(absolute_mag=-20.0, condition=0.5)
-"""
+        
+        The keyword arguments are inferred from the registered low level model
+        function. Required model parameters must be supplied by the user. Optional
+        model parameters use their low level defaults unless explicitly provided.
+        
+        Args:
+            meta: Optional metadata stored on the luminosity function object.
+            **parameters: Parameters passed to the registered conditional luminosity
+                function model.
+        
+        Returns:
+            Configured conditional luminosity function.
+        
+        Examples:
+            >>> clf = ConditionalLuminosityFunction.{model_name}(...)
+            >>> phi = clf.phi(absolute_mag=-20.0, condition=0.5)
+        """
 
     return constructor
 
@@ -131,22 +136,23 @@ def _parameters_from_signature(
     signature: inspect.Signature,
     provided: Mapping[str, Any],
 ) -> dict[str, Any]:
-    """Build stored parameters using function defaults plus user values.
+    """Build stored parameters from a function signature and user values.
 
-    Independent variables such as ``absolute_mag`` and ``condition`` are not
-    stored as model parameters. They are supplied later when calling
+    Independent variables such as ``absolute_mag`` and ``condition`` are not stored
+    as model parameters. They are supplied later when calling
     :meth:`ConditionalLuminosityFunction.phi`.
 
     Args:
-        signature: Signature of the registered low-level conditional LF model.
+        signature: Signature of the registered low level conditional luminosity
+            function model.
         provided: User-supplied constructor keyword arguments.
 
     Returns:
-        Dictionary of model parameters to store on the API object.
+        Dictionary of model parameters stored on the API object.
 
     Raises:
         TypeError: If the user provides a keyword that is not accepted by the
-            registered low-level model function.
+            registered low level model function.
     """
     payload: dict[str, Any] = {}
 

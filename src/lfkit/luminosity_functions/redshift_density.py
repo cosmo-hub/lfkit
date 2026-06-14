@@ -1,19 +1,20 @@
-r"""Luminosity-function redshift-density utilities.
+r"""Luminosity function redshift density utilities.
 
 This module provides helpers for converting a luminosity function callable into
-an LF-integrated redshift-density curve.
+a redshift density curve.
 
-The core operation is
+The core operation integrates the luminosity function over the observable
+absolute magnitude range implied by an apparent magnitude limit,
 
-    n_lf(z) = int phi(M, z) dM
+.. math::
 
-over the observable absolute magnitude range implied by an apparent magnitude
-limit. A second helper multiplies this LF-integrated density by a user-supplied
-redshift or volume weight.
+   n_{\mathrm{LF}}(z) =
+   \int_{M_{\mathrm{bright}}}^{M_{\mathrm{lim}}(z)}
+   \phi(M, z)\,dM.
 
-The cosmology-dependent distance and volume pieces are supplied as callables.
-This keeps the interface independent of CCL, Astropy, or any other cosmology
-backend, which is useful for downstream packages such as Binny.
+A second helper multiplies this integrated number density by a user supplied
+redshift or volume weight. Distance and volume quantities are supplied as
+callables, keeping the interface independent of any cosmology backend.
 
 Magnitude corrections are supplied as scalar or array-like values evaluated on
 the same redshift grid.
@@ -94,6 +95,11 @@ def lf_integrated_number_density(
 
     Returns:
         NumPy array of LF-integrated number densities evaluated at ``z``.
+
+    Raises:
+        ValueError: If any redshift value is negative, if ``m_lim`` or
+            ``m_bright`` is not finite, if ``luminosity_distance_mpc_fn`` returns
+            invalid values, or if the magnitude integration bounds are invalid.
     """
     z_arr = validate_array(z, name="z")
 
@@ -182,6 +188,12 @@ def lf_weighted_redshift_density(
 
     Returns:
         NumPy array of LF-weighted redshift-density values.
+
+    Raises:
+        ValueError: If any redshift value is negative, if the luminosity function
+            number density cannot be evaluated, if ``volume_weight_fn`` returns
+            negative or non-finite values, or if normalization is requested but the
+            integral over redshift is not positive and finite.
     """
     z_arr = validate_array(z, name="z")
 
@@ -227,7 +239,21 @@ def _optional_correction_array(
     *,
     name: str,
 ) -> FloatArray:
-    """Return an optional scalar or array correction broadcast to redshift."""
+    """Return an optional correction broadcast to a redshift grid.
+
+    Args:
+        correction: Optional scalar or array-like correction value.
+        z: Redshift grid used as the target broadcast shape.
+        name: Correction name used in validation errors.
+
+    Returns:
+        Correction values broadcast to the shape of ``z``. If ``correction`` is
+        ``None``, returns zeros with the same shape as ``z``.
+
+    Raises:
+        ValueError: If ``correction`` is not scalar and cannot be broadcast to the
+            shape of ``z``.
+    """
     if correction is None:
         return np.zeros_like(z, dtype=float)
 

@@ -4,7 +4,9 @@ This module provides generic conditional wrappers around LFKit luminosity
 function models.
 
 A conditional luminosity function has the form ``Phi(M | x)``, where ``M`` is
-absolute magnitude and ``x`` is an external conditioning variable.
+absolute magnitude and ``x`` is an external conditioning variable. Callable
+model parameters are evaluated at ``x`` before the wrapped luminosity function
+is evaluated.
 """
 
 from __future__ import annotations
@@ -23,10 +25,18 @@ from lfkit.utils.validators import validate_array
 def conditionalize_lf_model(
     lf_model: Callable[..., FloatArray],
 ) -> Callable[..., FloatArray]:
-    """Return a conditional version of an LF model.
+    """Return a conditional version of a luminosity function model.
 
-    Keyword arguments that are callable are evaluated as functions of
-    ``condition``. Non-callable keyword arguments are passed through unchanged.
+    Callable keyword arguments are interpreted as parameter models and evaluated as
+    functions of ``condition``. Non-callable keyword arguments are passed through
+    unchanged.
+
+    Args:
+        lf_model: Luminosity function model to wrap.
+
+    Returns:
+        Conditional luminosity function model with signature
+        ``conditional_model(absolute_mag, condition, **kwargs)``.
     """
 
     @wraps(lf_model)
@@ -54,7 +64,14 @@ def conditionalize_lf_model(
 
 
 def _conditional_model_name(name: str) -> str:
-    """Return conditional wrapper name for an LF model."""
+    """Return the generated conditional wrapper name for a luminosity function model.
+
+    Args:
+        name: Base luminosity function model name.
+
+    Returns:
+        Conditional model name prefixed with ``"conditional_"``.
+    """
     return f"conditional_{name}"
 
 
@@ -63,7 +80,18 @@ def _validate_lf_output(
     *,
     name: str,
 ) -> FloatArray:
-    """Validate luminosity function model output."""
+    """Validate luminosity function model output.
+
+    Args:
+        phi: Luminosity function values returned by a model.
+        name: Model name used in validation errors.
+
+    Returns:
+        Validated luminosity function values as a float array.
+
+    Raises:
+        ValueError: If any luminosity function value is negative.
+    """
     phi_arr = validate_array(phi, name=name)
 
     if np.any(phi_arr < 0.0):

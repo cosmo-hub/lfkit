@@ -89,6 +89,10 @@ def _bind_lf(
     Returns:
         Callable with signature ``lf(absolute_mag, z)``.
 
+    Raises:
+        TypeError: If ``model_fn`` cannot be called with the supplied
+            parameters.
+
     Examples:
         >>> lf = _bind_lf(
         ...     evolving_schechter,
@@ -127,11 +131,15 @@ def _bind_static_lf(
     evolving luminosity functions use the same integration API.
 
     Args:
-        model_fn: Redshift-independent luminosity-function model callable.
+        model_fn: Redshift-independent luminosity function model callable.
         **params: Parameters passed to ``model_fn`` every time it is evaluated.
 
     Returns:
         Callable with signature ``lf(absolute_mag, z)``.
+
+    Raises:
+        TypeError: If ``model_fn`` cannot be called with the supplied
+            parameters.
 
     Examples:
         >>> lf = _bind_static_lf(
@@ -177,6 +185,10 @@ def integrated_number_density(
 
     Returns:
         NumPy array of number densities evaluated at ``z``.
+
+    Raises:
+        ValueError: If redshift values are negative or if the magnitude
+            bounds are invalid.
     """
     return _integrated_lf_between_bounds(
         z,
@@ -196,7 +208,7 @@ def lf_weighted_integral(
     weight_fn: Callable[[FloatArray, FloatArray], FloatArray],
     n_m: int = 512,
 ) -> FloatArray:
-    r"""Return a weighted luminosity-function integral.
+    r"""Return a weighted luminosity function integral.
 
     This computes
 
@@ -216,6 +228,10 @@ def lf_weighted_integral(
 
     Returns:
         NumPy array of weighted LF integrals evaluated at ``z``.
+
+    Raises:
+        ValueError: If redshift values are negative, if the magnitude
+            bounds are invalid, or if ``weight_fn`` returns invalid values.
     """
     return _integrated_lf_between_bounds(
         z,
@@ -258,6 +274,10 @@ def selection_weighted_number_density(
 
     Returns:
         NumPy array of selection-weighted number densities evaluated at ``z``.
+
+    Raises:
+        ValueError: If redshift values are negative, if the magnitude
+            bounds are invalid, or if ``selection_fn`` returns invalid values.
     """
     return lf_weighted_integral(
         z,
@@ -292,6 +312,9 @@ def luminosity_weight(
 
     Returns:
         NumPy array of relative luminosity weights.
+
+    Raises:
+        ValueError: If ``m_reference`` is not finite.
     """
     if not np.isfinite(m_reference):
         raise ValueError("m_reference must be finite.")
@@ -340,6 +363,10 @@ def integrated_luminosity_density(
     Returns:
         NumPy array of luminosity densities in units of the reference
         luminosity.
+
+    Raises:
+        ValueError: If ``m_reference`` is not finite, if redshift values are
+            negative, or if the magnitude bounds are invalid.
     """
 
     def weight_fn(
@@ -395,6 +422,10 @@ def mean_luminosity(
     Returns:
         NumPy array of mean luminosities. Entries are zero where the integrated
         number density is zero.
+
+    Raises:
+        ValueError: If ``m_reference`` is not finite, if redshift values are
+            negative, or if the magnitude bounds are invalid.
     """
     luminosity_density_arr = integrated_luminosity_density(
         z,
@@ -455,6 +486,10 @@ def cumulative_number_density(
 
     Returns:
         NumPy array of cumulative number densities evaluated at ``z``.
+
+    Raises:
+        ValueError: If redshift values are negative or if the magnitude
+            bounds are invalid.
     """
     z_arr = validate_array(z, name="z")
     m_threshold_arr = validate_array(m_threshold, name="m_threshold")
@@ -510,7 +545,7 @@ def selection_fraction(
         }.
 
     This is the generic numerical analogue of model-specific analytic
-    selection functions. It works for any luminosity-function callable with
+    selection functions. It works for any luminosity function callable with
     signature ``lf(M, z)``.
 
     Args:
@@ -525,6 +560,10 @@ def selection_fraction(
     Returns:
         NumPy array of selected fractions. Entries are zero where the total
         number density is zero.
+
+    Raises:
+        ValueError: If redshift values are negative or if any magnitude
+            window is invalid.
     """
     selected = integrated_number_density(
         z,
@@ -599,6 +638,10 @@ def cumulative_selection_function(
     Returns:
         NumPy array of cumulative selection fractions. Entries are zero where
         the total number density is zero.
+
+    Raises:
+        ValueError: If redshift values are negative or if the supplied
+            magnitude limits are invalid.
     """
     selected = cumulative_number_density(
         z,
@@ -709,7 +752,25 @@ def _resolve_magnitude_window_bound(
     e_correction_fn: Callable[[FloatArray], FloatArray] | None,
     bound_name: str,
 ) -> FloatArray:
-    r"""Return an absolute magnitude bound for a magnitude window."""
+    r"""Return an absolute magnitude bound for a magnitude window.
+
+    Args:
+        z: Redshift values.
+        absolute_mag: Absolute magnitude bound.
+        apparent_mag: Apparent magnitude bound.
+        luminosity_distance_mpc_fn: Callable returning luminosity distance in Mpc.
+        k_correction_fn: Optional K-correction callable.
+        e_correction_fn: Optional E-correction callable.
+        bound_name: Human-readable bound name used in error messages.
+
+    Returns:
+        Absolute magnitude bound evaluated at ``z``.
+
+    Raises:
+        ValueError: If neither or both of ``absolute_mag`` and
+            ``apparent_mag`` are supplied, or if an apparent magnitude bound is
+            supplied without ``luminosity_distance_mpc_fn``.
+    """
     if absolute_mag is None and apparent_mag is None:
         raise ValueError(
             f"Must provide either m_{bound_name} or apparent_m_{bound_name}."
@@ -773,7 +834,23 @@ def _integrated_lf_between_bounds(
     n_m: int,
     weight_fn: Callable[[FloatArray, FloatArray], FloatArray] | None = None,
 ) -> FloatArray:
-    r"""Return finite-range LF integral between magnitude bounds."""
+    r"""Return a finite-range luminosity function integral.
+
+    Args:
+        z: Redshift value or array.
+        lf: Luminosity function callable with signature ``lf(M, z)``.
+        m_lower: Lower magnitude bound.
+        m_upper: Upper magnitude bound.
+        n_m: Number of magnitude-grid points.
+        weight_fn: Optional weighting function.
+
+    Returns:
+        Luminosity function integral evaluated at ``z``.
+
+    Raises:
+        ValueError: If redshift values are negative or if the integration
+            bounds are invalid.
+    """
     z_arr = validate_array(z, name="z")
 
     if np.any(z_arr < 0.0):

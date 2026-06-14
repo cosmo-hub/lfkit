@@ -46,29 +46,14 @@ __all__ = ["LuminosityFunction"]
 class LuminosityFunction:
     """User-facing wrapper for luminosity function evaluation.
 
-    A luminosity function describes the number density of galaxies as a
-    function of absolute magnitude. This class stores a registered LF model and
-    its parameters, then exposes a consistent user-facing interface for model
-    evaluation, apparent-magnitude evaluation, integrals, completeness
-    calculations, redshift-density calculations, and magnitude/luminosity
-    conversions.
+    A luminosity function describes the number density of galaxies as a function of
+    absolute magnitude. This class stores a registered model and its parameters,
+    then exposes a consistent interface for model evaluation, apparent magnitude
+    evaluation, integrals, completeness calculations, redshift density
+    calculations, and magnitude or luminosity conversions.
 
     Instances can be created either with the generic constructor or with
     automatically generated model constructors.
-
-    Examples:
-        >>> lf = LuminosityFunction(
-        ...     model="schechter",
-        ...     parameters={"phi_star": 1e-3, "m_star": -20.5, "alpha": -1.1},
-        ... )
-        >>> phi = lf.phi(absolute_mag=-20.0)
-
-        >>> lf = LuminosityFunction.schechter(
-        ...     phi_star=1e-3,
-        ...     m_star=-20.5,
-        ...     alpha=-1.1,
-        ... )
-        >>> phi = lf.phi(absolute_mag=[-21.0, -20.0, -19.0])
     """
 
     def __init__(
@@ -82,7 +67,7 @@ class LuminosityFunction:
 
         Args:
             model: Name of a registered luminosity function model.
-            parameters: Model parameters passed to the registered LF function.
+            parameters: Model parameters passed to the registered model function.
             meta: Optional metadata stored on the luminosity function object.
         """
         self.model = str(model)
@@ -100,21 +85,20 @@ class LuminosityFunction:
         absolute_mag: FloatInput,
         z: FloatInput | None = None,
     ) -> FloatArray:
-        """Evaluate the luminosity function in absolute-magnitude space.
+        """Evaluate the luminosity function in absolute magnitude space.
 
         Args:
             absolute_mag: Absolute magnitude value or array.
-            z: Optional redshift value or array. This is required only for
-                registered models whose parameters evolve with redshift.
+            z: Optional redshift value or array. This is required only for registered
+                models whose parameters evolve with redshift.
 
         Returns:
-            Luminosity function evaluated at ``absolute_mag``. For redshift-
-            dependent models, the result is evaluated at ``absolute_mag`` and
-            ``z``.
+            Luminosity function evaluated at ``absolute_mag``. For redshift dependent
+            models, the result is evaluated at ``absolute_mag`` and ``z``.
 
         Raises:
-            ValueError: If the model is not registered, or if ``z`` is required
-                by the selected model but not provided.
+            ValueError: If the model is not registered, or if ``z`` is required by the
+                selected model but not provided.
         """
         model_spec = get_lf_model(self.model)
 
@@ -149,26 +133,25 @@ class LuminosityFunction:
         h: float | None = None,
         corrections: Corrections | None = None,
     ) -> FloatArray:
-        """Evaluate the luminosity function from apparent magnitudes.
+        """Evaluate the luminosity function from apparent magnitude values.
 
-        This converts apparent magnitude to absolute magnitude using the
-        supplied cosmology and redshift, then evaluates the registered LF model.
+        This converts apparent magnitude to absolute magnitude using the supplied
+        cosmology and redshift, then evaluates the registered model.
 
         Args:
             cosmo_obj: Cosmology object used for the distance conversion.
             z: Redshift value or array.
             apparent_mag: Apparent magnitude value or array.
             h: Optional dimensionless Hubble parameter override.
-            corrections: Optional correction object with ``k(z)`` and ``e(z)``
-                methods.
+            corrections: Optional correction object with ``k(z)`` and ``e(z)`` methods.
 
         Returns:
-            Luminosity function evaluated at the absolute magnitudes implied by
+            Luminosity function evaluated at the absolute magnitude values implied by
             ``apparent_mag`` and ``z``.
 
         Raises:
-            ValueError: If the selected LF model does not provide a
-                ``phi_from_m`` evaluator.
+            ValueError: If the selected model does not provide a ``phi_from_m``
+                evaluator.
         """
         function = get_lf_from_m_model(self.model)
 
@@ -219,7 +202,23 @@ class LuminosityFunction:
         cutoff_amplitude: float = 1.0,
         meta: Mapping[str, object] | None = None,
     ) -> LuminosityFunction:
-        """Return a copy of this luminosity function with a luminosity cutoff."""
+        """Return a copy of this luminosity function with a luminosity cutoff.
+
+        Args:
+            m_star: Characteristic magnitude used to define the luminosity ratio. If
+                not provided, ``self.parameters_dict["m_star"]`` is used when present.
+            cutoff_power: Power applied to the luminosity ratio in the exponential
+                cutoff.
+            cutoff_amplitude: Amplitude multiplying the cutoff term.
+            meta: Optional metadata merged into the returned luminosity function.
+
+        Returns:
+            New luminosity function object whose ``phi`` method includes the cutoff.
+
+        Raises:
+            ValueError: If ``m_star`` is not supplied and the base model does not store
+                an ``m_star`` parameter.
+        """
         cutoff_m_star = (
             self.parameters_dict["m_star"]
             if m_star is None and "m_star" in self.parameters_dict
@@ -252,12 +251,20 @@ class LuminosityFunction:
 
     @staticmethod
     def available_models() -> list[str]:
-        """Return luminosity function model names available through the API."""
+        """Return luminosity function model names available through the API.
+
+        Returns:
+            Sorted list of registered luminosity function model names.
+        """
         return sorted(LF_MODELS)
 
     @staticmethod
     def available_from_m_models() -> list[str]:
-        """Return models that support apparent-magnitude evaluation."""
+        """Return models that support apparent magnitude evaluation.
+
+        Returns:
+            Sorted list of registered models with ``phi_from_m`` evaluators.
+        """
         return sorted(LF_FROM_M_MODELS)
 
     @staticmethod
@@ -281,7 +288,7 @@ class LuminosityFunction:
 
         Args:
             name: Name used to identify the parameter model.
-            model: Callable or parameter model object.
+            model: Callable parameter model.
             overwrite: Whether to replace an existing model with the same name.
         """
         register_phi_star_model(name, model, overwrite=overwrite)
@@ -297,7 +304,7 @@ class LuminosityFunction:
 
         Args:
             name: Name used to identify the parameter model.
-            model: Callable or parameter model object.
+            model: Callable parameter model.
             overwrite: Whether to replace an existing model with the same name.
         """
         register_m_star_model(name, model, overwrite=overwrite)
@@ -313,7 +320,7 @@ class LuminosityFunction:
 
         Args:
             name: Name used to identify the parameter model.
-            model: Callable or parameter model object.
+            model: Callable parameter model.
             overwrite: Whether to replace an existing model with the same name.
         """
         register_alpha_model(name, model, overwrite=overwrite)
@@ -323,7 +330,16 @@ class LuminosityFunction:
         corrections: Corrections | None,
         z: FloatInput,
     ) -> tuple[FloatArray | None, FloatArray | None]:
-        """Evaluate optional correction values at redshift."""
+        """Evaluate optional correction values at redshift.
+
+        Args:
+            corrections: Optional correction object with ``k(z)`` and ``e(z)`` methods.
+            z: Redshift value or array.
+
+        Returns:
+            Tuple ``(k_correction, e_correction)`` evaluated at ``z``. If no correction
+            object is supplied, returns ``(None, None)``.
+        """
         if corrections is None:
             return None, None
 
@@ -331,7 +347,14 @@ class LuminosityFunction:
 
 
 def _make_lf_constructor(model_name: str):
-    """Create a classmethod constructor for a registered LF model."""
+    """Create a classmethod constructor for a registered luminosity function model.
+
+    Args:
+        model_name: Name of the registered luminosity function model.
+
+    Returns:
+        Classmethod constructor for ``LuminosityFunction``.
+    """
 
     @classmethod
     def constructor(
@@ -351,16 +374,16 @@ def _make_lf_constructor(model_name: str):
     constructor.__qualname__ = f"LuminosityFunction.{model_name}"
     constructor.__doc__ = f"""Create a ``{model_name}`` luminosity function.
 
-The keyword arguments are passed to the registered low-level LF model.
+The keyword arguments are passed to the registered low level model function.
 Required model parameters must be supplied by the user. Optional model
-parameters use their low-level defaults unless explicitly provided.
+parameters use their low level defaults unless explicitly provided.
 
 Args:
     meta: Optional metadata stored on the luminosity function object.
-    **parameters: Parameters passed to the registered LF model.
+    **parameters: Parameters passed to the registered luminosity function model.
 
 Returns:
-    LuminosityFunction: Configured luminosity function.
+    Configured luminosity function.
 
 Examples:
     >>> lf = LuminosityFunction.{model_name}(...)
@@ -373,8 +396,8 @@ Examples:
 def _clean_parameters(parameters: Mapping[str, Any]) -> dict[str, Any]:
     """Normalize constructor keyword arguments before storing them.
 
-    ``None`` values for keyword arguments ending in ``"_kwargs"`` are converted
-    to empty dictionaries. This keeps optional nested configuration arguments
+    ``None`` values for keyword arguments ending in ``"_kwargs"`` are converted to
+    empty dictionaries. This keeps optional nested configuration arguments
     convenient for users while storing a predictable parameter dictionary.
 
     Args:

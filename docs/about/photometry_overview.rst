@@ -202,7 +202,7 @@ Here:
 - :math:`\alpha` is the faint-end slope,
 - :math:`x` is the luminosity ratio :math:`L/L_\star` written in magnitude form.
 
-The parameter :math:`M_\star` marks the transition between the power-law part of
+The parameter :math:`M_\star` marks the transition between the power law part of
 the luminosity function and the exponential bright-end cutoff. The parameter
 :math:`\alpha` controls how rapidly the abundance rises toward fainter
 magnitudes. More negative values of :math:`\alpha` produce a steeper faint end.

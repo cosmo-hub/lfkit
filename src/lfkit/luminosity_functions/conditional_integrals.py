@@ -9,7 +9,7 @@ environment, galaxy type, richness, stellar mass, or any other quantity. This
 module does not implement HOD or halo-model machinery.
 
 The goal is to support conditional luminosity function evaluation and
-integration while keeping halo-model calculations outside LFKit.
+integration while keeping halo model calculations outside LFKit.
 """
 
 from __future__ import annotations
@@ -46,9 +46,8 @@ def evaluate_conditional_luminosity_function(
         absolute magnitudes and conditioning values.
 
     Raises:
-        ValueError: If the inputs contain non-finite values, or if the
-            evaluated conditional luminosity function contains non-finite or
-            negative values.
+        ValueError: If the inputs contain non-finite values, or if the evaluated
+            conditional luminosity function contains non-finite or negative values.
     """
     absolute_mag_arr = validate_array(absolute_mag, name="absolute_mag")
     condition_arr = validate_array(condition, name="condition")
@@ -86,8 +85,8 @@ def integrate_conditional_luminosity_function(
         Conditional luminosity function integrated over absolute magnitude.
 
     Raises:
-        ValueError: If the inputs contain invalid values, or if the evaluated
-            conditional luminosity function contains invalid values.
+        ValueError: If the inputs contain non-finite values, or if the evaluated
+            conditional luminosity function contains non-finite or negative values.
     """
     absolute_mag_arr = validate_array(absolute_mag, name="absolute_mag")
 
@@ -127,8 +126,9 @@ def integrate_weighted_conditional_luminosity_function(
         magnitude.
 
     Raises:
-        ValueError: If the inputs contain invalid values, or if the evaluated
-            conditional luminosity function or weights contain invalid values.
+        ValueError: If the inputs contain non-finite values, if the evaluated
+            conditional luminosity function contains non-finite or negative values,
+            or if the weights contain non-finite values.
     """
     absolute_mag_arr = validate_array(absolute_mag, name="absolute_mag")
     condition_arr = validate_array(condition, name="condition")

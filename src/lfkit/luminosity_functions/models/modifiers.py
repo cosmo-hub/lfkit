@@ -25,7 +25,27 @@ def apply_luminosity_cutoff(
     cutoff_amplitude: ParameterValue = 1.0,
     **base_lf_parameters: ParameterValue,
 ) -> FloatArray:
-    """Return a luminosity function multiplied by a luminosity-ratio cutoff."""
+    """Return a luminosity function multiplied by a luminosity ratio cutoff.
+
+    The modifier has the form ``exp(-A x**p)``, where ``x`` is the luminosity ratio
+    relative to ``m_star``, ``A`` is ``cutoff_amplitude``, and ``p`` is
+    ``cutoff_power``.
+
+    Args:
+        absolute_mag: Absolute magnitude value or array.
+        base_lf: Base luminosity function model to modify.
+        m_star: Characteristic magnitude used to compute the luminosity ratio.
+        cutoff_power: Positive power applied to the luminosity ratio.
+        cutoff_amplitude: Non-negative amplitude multiplying the cutoff term.
+        **base_lf_parameters: Parameters passed to ``base_lf``.
+
+    Returns:
+        Modified luminosity function evaluated at ``absolute_mag``.
+
+    Raises:
+        ValueError: If ``cutoff_power`` is not positive or if ``cutoff_amplitude``
+            is negative.
+    """
     absolute_mag_arr = validate_array(absolute_mag, name="absolute_mag")
     cutoff_power_arr = validate_array(cutoff_power, name="cutoff_power")
     cutoff_amplitude_arr = validate_array(

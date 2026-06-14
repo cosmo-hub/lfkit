@@ -120,20 +120,18 @@ commands = [
 ]
 
 [tool.tox.env.docs]
-description = "Build docs with Sphinx and doctest"
+description = "Build docs with Sphinx"
 extras = ["docs", "viz"]
 commands = [
   [
-    "sphinx-apidoc",
-    "-d", "2",
-    "-o", "{tox_root}/docs/api",
-    "{tox_root}/src/lfkit",
-    "--separate",
-    "--no-toc",
-    "-f",
+    "rm",
+    "-rf",
+    "{tox_root}/docs/_build",
+    "{tox_root}/docs/api/generated",
   ],
   [
     "sphinx-build",
+    "-E",
     "-c", "{tox_root}/docs",
     "-b", "{posargs:html}",
     "{tox_root}/docs",
@@ -144,27 +142,18 @@ commands = [
 
 [tool.tox.env.do]
 description = "Run doctests + html build and open local docs"
-recreate = true
 extras = ["docs", "viz"]
 allowlist_externals = ["open", "rm"]
 commands = [
   [
     "rm",
     "-rf",
-    "{tox_root}/docs/_build/doctest",
-    "{tox_root}/docs/_build/html",
-  ],
-  [
-    "sphinx-apidoc",
-    "-d", "2",
-    "-o", "{tox_root}/docs/api",
-    "{tox_root}/src/lfkit",
-    "--separate",
-    "--no-toc",
-    "-f",
+    "{tox_root}/docs/_build",
+    "{tox_root}/docs/api/generated",
   ],
   [
     "sphinx-build",
+    "-E",
     "-b", "doctest",
     "{tox_root}/docs",
     "{tox_root}/docs/_build/doctest",
@@ -172,6 +161,7 @@ commands = [
   ],
   [
     "sphinx-build",
+    "-E",
     "-b", "html",
     "{tox_root}/docs",
     "{tox_root}/docs/_build/html",
@@ -183,15 +173,13 @@ commands = [
 [tool.tox.env.docs-releases]
 description = "Build the documentation for lfkit releases using Sphinx"
 extras = ["docs", "viz"]
-allowlist_externals = ["cp"]
+allowlist_externals = ["cp", "rm"]
 commands = [
   [
-    "sphinx-apidoc",
-    "-d", "2",
-    "-o", "{tox_root}/docs/api",
-    "{tox_root}/src/lfkit",
-    "--separate",
-    "-f",
+    "rm",
+    "-rf",
+    "{tox_root}/docs/_build",
+    "{tox_root}/docs/api/generated",
   ],
   [
     "sphinx-multiversion",
