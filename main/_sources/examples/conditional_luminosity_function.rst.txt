@@ -25,7 +25,7 @@ mass, or another quantity.
 
 LFKit exposes conditional luminosity functions through
 :class:`lfkit.ConditionalLuminosityFunction`. Each constructor returns a
-luminosity-function object that can be evaluated with
+luminosity function object that can be evaluated with
 ``lf.phi`` and integrated through the usual ``lf.integrals`` namespace.
 
 The examples below use redshift as the conditioning variable because this is
@@ -127,7 +127,7 @@ population evolves.
 Conditional Schechter surface
 -----------------------------
 
-The same conditional Schechter model can be evaluated over the full
+The same conditional luminosity function model can be evaluated over the full
 magnitude-redshift plane rather than at a few selected redshifts.
 
 The filled colour scale shows :math:`\log_{10}\Phi(M \mid z)`. The contours
@@ -423,7 +423,7 @@ It is useful to compare the component shapes at fixed condition before combining
 them into more complicated models. This separates differences in functional
 form from differences caused by redshift or halo-mass evolution.
 
-The standard Schechter form has a power-law faint end and an exponential
+The standard Schechter form has a power law faint end and an exponential
 bright-end cutoff. The modified Schechter component has a broader bright-end
 shape. The lognormal component is localized around a characteristic luminosity.
 Together, these examples show the kinds of galaxy populations each component is

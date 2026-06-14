@@ -5,7 +5,7 @@
 |lfkitlogo| Schechter family models
 ===================================
 
-The Schechter family contains luminosity functions with a power-law faint end
+The Schechter family contains luminosity functions with a power law faint end
 and a bright-end cutoff. These models are commonly used when the abundance of
 faint galaxies rises approximately as a power law, while the most luminous
 galaxies are exponentially rare.
