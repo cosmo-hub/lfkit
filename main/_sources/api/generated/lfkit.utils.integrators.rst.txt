@@ -10,4 +10,5 @@ lfkit.utils.integrators
    
       integrate_between_variable_bounds
       safe_divide
+      safe_power10
    
