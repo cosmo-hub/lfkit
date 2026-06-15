@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="lfkit.luminosity_functions.parameter_models" href="lfkit.luminosity_functions.parameter_models.html"><link rel="prev" title="lfkit.luminosity_functions.models.power_law" href="lfkit.luminosity_functions.models.power_law.html">
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="lfkit.luminosity_functions.parameter_models" href="lfkit.luminosity_functions.parameter_models.html"><link rel="prev" title="lfkit.luminosity_functions.models.saunders" href="lfkit.luminosity_functions.models.saunders.html">
         <link rel="canonical" href="https://cosmology-kit.github.io/lfkit/api/generated/lfkit.luminosity_functions.models.schechter.html">
         <link rel="prefetch" href="../../_static/logos/lfkit_logo-icon.png" as="image">
         <link rel="prefetch" href="../../_static/logos/lfkit_logo-icon.png" as="image">
@@ -270,9 +270,12 @@
 <li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.integrals.html">lfkit.luminosity_functions.integrals</a></li>
 <li class="toctree-l4 current has-children"><a class="reference internal" href="lfkit.luminosity_functions.models.html">lfkit.luminosity_functions.models</a><input aria-label="Toggle navigation of lfkit.luminosity_functions.models" checked="" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
 <li class="toctree-l5"><a class="reference internal" href="lfkit.luminosity_functions.models.composite.html">lfkit.luminosity_functions.models.composite</a></li>
+<li class="toctree-l5"><a class="reference internal" href="lfkit.luminosity_functions.models.gamma.html">lfkit.luminosity_functions.models.gamma</a></li>
 <li class="toctree-l5"><a class="reference internal" href="lfkit.luminosity_functions.models.gaussian.html">lfkit.luminosity_functions.models.gaussian</a></li>
 <li class="toctree-l5"><a class="reference internal" href="lfkit.luminosity_functions.models.modifiers.html">lfkit.luminosity_functions.models.modifiers</a></li>
+<li class="toctree-l5"><a class="reference internal" href="lfkit.luminosity_functions.models.non_parametric.html">lfkit.luminosity_functions.models.non_parametric</a></li>
 <li class="toctree-l5"><a class="reference internal" href="lfkit.luminosity_functions.models.power_law.html">lfkit.luminosity_functions.models.power_law</a></li>
+<li class="toctree-l5"><a class="reference internal" href="lfkit.luminosity_functions.models.saunders.html">lfkit.luminosity_functions.models.saunders</a></li>
 <li class="toctree-l5 current current-page"><a class="current reference internal" href="#">lfkit.luminosity_functions.models.schechter</a></li>
 </ul>
 </li>
@@ -375,6 +378,12 @@ evaluate the corresponding Schechter model.</p>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">evolving_schechter_from_m</span></code>(cosmo_obj, z, ...)</p></td>
 <td><p>Return an evolving Schechter luminosity function from apparent magnitudes.</p></td>
 </tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">modified_schechter</span></code>(absolute_mag, *, ...)</p></td>
+<td><p>Return a modified Schechter luminosity function in magnitude space.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">multi_schechter</span></code>(absolute_mag, *, phi_stars, ...)</p></td>
+<td><p>Return a sum of Schechter luminosity function components.</p></td>
+</tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">schechter</span></code>(absolute_mag, *, phi_star, m_star, ...)</p></td>
 <td><p>Return the standard Schechter luminosity function in magnitude space.</p></td>
 </tr>
@@ -386,6 +395,9 @@ evaluate the corresponding Schechter model.</p>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">schechter_from_m</span></code>(cosmo_obj, z, apparent_mag, ...)</p></td>
 <td><p>Return the standard Schechter luminosity function from apparent magnitudes.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">truncated_schechter</span></code>(absolute_mag, *, ...[, ...])</p></td>
+<td><p>Return a Schechter luminosity function truncated outside magnitude limits.</p></td>
 </tr>
 </tbody>
 </table>
@@ -406,14 +418,14 @@ evaluate the corresponding Schechter model.</p>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="lfkit.luminosity_functions.models.power_law.html">
+          <a class="prev-page" href="lfkit.luminosity_functions.models.saunders.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">lfkit.luminosity_functions.models.power_law</div>
+                <div class="title">lfkit.luminosity_functions.models.saunders</div>
                 
               </div>
             </a>

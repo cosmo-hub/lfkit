@@ -11,7 +11,10 @@ lfkit.luminosity\_functions.models
    :recursive:
 
    composite
+   gamma
    gaussian
    modifiers
+   non_parametric
    power_law
+   saunders
    schechter

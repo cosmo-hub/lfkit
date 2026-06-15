@@ -270,9 +270,12 @@
 <li class="toctree-l4"><a class="reference internal" href="lfkit.luminosity_functions.integrals.html">lfkit.luminosity_functions.integrals</a></li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="lfkit.luminosity_functions.models.html">lfkit.luminosity_functions.models</a><input aria-label="Toggle navigation of lfkit.luminosity_functions.models" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="lfkit.luminosity_functions.models.composite.html">lfkit.luminosity_functions.models.composite</a></li>
+<li class="toctree-l5"><a class="reference internal" href="lfkit.luminosity_functions.models.gamma.html">lfkit.luminosity_functions.models.gamma</a></li>
 <li class="toctree-l5"><a class="reference internal" href="lfkit.luminosity_functions.models.gaussian.html">lfkit.luminosity_functions.models.gaussian</a></li>
 <li class="toctree-l5"><a class="reference internal" href="lfkit.luminosity_functions.models.modifiers.html">lfkit.luminosity_functions.models.modifiers</a></li>
+<li class="toctree-l5"><a class="reference internal" href="lfkit.luminosity_functions.models.non_parametric.html">lfkit.luminosity_functions.models.non_parametric</a></li>
 <li class="toctree-l5"><a class="reference internal" href="lfkit.luminosity_functions.models.power_law.html">lfkit.luminosity_functions.models.power_law</a></li>
+<li class="toctree-l5"><a class="reference internal" href="lfkit.luminosity_functions.models.saunders.html">lfkit.luminosity_functions.models.saunders</a></li>
 <li class="toctree-l5"><a class="reference internal" href="lfkit.luminosity_functions.models.schechter.html">lfkit.luminosity_functions.models.schechter</a></li>
 </ul>
 </li>
@@ -349,14 +352,29 @@
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
 <tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_2d_binned_grid</span></code>(x_bin_edges, ...[, ...])</p></td>
+<td><p>Return validated two-dimensional bin edges and bin values.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_2d_tabulated_grid</span></code>(x_grid, y_grid, ...)</p></td>
+<td><p>Return validated two-dimensional tabulated coordinates and values.</p></td>
+</tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_array</span></code>(x, *, name[, allow_negative])</p></td>
 <td><p>Return a finite float array.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_luminosity_distance</span></code>(...)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_binned_grid</span></code>(bin_edges, bin_values, ...)</p></td>
+<td><p>Return validated one-dimensional bin edges and bin values.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_luminosity_distance</span></code>(...)</p></td>
 <td><p>Return finite positive luminosity distances in Mpc.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_magnitude_range</span></code>(*, m_bright, m_faint)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_magnitude_range</span></code>(*, m_bright, m_faint)</p></td>
 <td><p>Validate bright and faint magnitude bounds.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_strictly_increasing_1d</span></code>(x, *, name)</p></td>
+<td><p>Return a finite strictly increasing one-dimensional float array.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_tabulated_grid</span></code>(coordinate_grid, ...)</p></td>
+<td><p>Return validated one-dimensional tabulated grid coordinates and values.</p></td>
 </tr>
 </tbody>
 </table>
