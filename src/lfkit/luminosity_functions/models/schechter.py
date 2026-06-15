@@ -213,8 +213,8 @@ def double_schechter(
     """
     absolute_mag = validate_array(absolute_mag, name="absolute_mag")
     phi_star_arr = validate_array(phi_star, name="phi_star")
-    alpha = float(alpha)
-    beta = float(beta)
+    alpha_arr = validate_array(alpha, name="alpha")
+    beta_arr = validate_array(beta, name="beta")
 
     if np.any(phi_star_arr == 0):
         warnings.warn(
@@ -225,10 +225,10 @@ def double_schechter(
     if np.any(phi_star_arr < 0):
         raise ValueError("phi_star must be non-negative.")
 
-    if not np.isfinite(alpha):
+    if np.any(~np.isfinite(alpha_arr)):
         raise ValueError("alpha must be finite.")
 
-    if not np.isfinite(beta):
+    if np.any(~np.isfinite(beta_arr)):
         raise ValueError("beta must be finite.")
 
     x = luminosity_ratio(absolute_mag, m_star)
@@ -238,10 +238,10 @@ def double_schechter(
     x_t = np.clip(x_t, 1e-300, None)
 
     prefactor = 0.4 * np.log(10.0) * phi_star_arr
-    modifier = 1.0 + (x / x_t) ** beta
+    modifier = 1.0 + (x / x_t) ** beta_arr
 
     return np.asarray(
-        prefactor * x ** (alpha + 1.0) * np.exp(-x) * modifier,
+        prefactor * x ** (alpha_arr + 1.0) * np.exp(-x) * modifier,
         dtype=float,
     )
 

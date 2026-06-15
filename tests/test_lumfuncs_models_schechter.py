@@ -362,12 +362,12 @@ def test_double_schechter_rejects_negative_phi_star() -> None:
 
 def test_double_schechter_rejects_nonfinite_beta() -> None:
     """Tests that double_schechter rejects non-finite beta."""
-    with pytest.raises(ValueError, match="beta must be finite"):
+    with pytest.raises(ValueError, match="beta contains NaN or infinite values"):
         double_schechter(
-            [-20.0],
-            phi_star=1e-3,
-            m_star=-20.0,
-            alpha=-1.0,
+            np.array([-20.0]),
+            phi_star=1.0e-3,
+            m_star=-20.5,
+            alpha=-1.1,
             beta=np.nan,
             m_transition=-18.0,
         )
