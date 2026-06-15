@@ -1,4 +1,4 @@
-"""Unit tests for ``lfkit.photometry.conditional_lf_integrals.py``."""
+"""Unit tests for ``lfkit.photometry.conditional_lf_integrals``."""
 
 import numpy as np
 import pytest
@@ -342,6 +342,93 @@ def test_integrate_weighted_conditional_lf_rejects_invalid_conditional_lf() -> N
         ValueError,
         match="conditional_lf returned negative values, which are not allowed.",
     ):
+        integrate_weighted_conditional_luminosity_function(
+            absolute_mag=[-22.0, -21.0, -20.0],
+            condition=1.0,
+            conditional_lf=conditional_lf,
+            weight=weight,
+        )
+
+
+def test_evaluate_conditional_lf_allows_zero_values() -> None:
+    """Tests that zero conditional LF values are allowed."""
+
+    def conditional_lf(absolute_mag, condition):
+        return np.zeros_like(absolute_mag, dtype=float)
+
+    result = evaluate_conditional_luminosity_function(
+        absolute_mag=[-22.0, -21.0, -20.0],
+        condition=1.0,
+        conditional_lf=conditional_lf,
+    )
+
+    np.testing.assert_allclose(result, np.zeros(3))
+
+
+def test_evaluate_conditional_lf_rejects_non_finite_broadcasted_condition() -> None:
+    """Tests that non-finite broadcasted condition arrays are rejected."""
+
+    def conditional_lf(absolute_mag, condition):
+        return np.ones((2, 3))
+
+    with pytest.raises(ValueError, match="condition contains NaN or infinite values."):
+        evaluate_conditional_luminosity_function(
+            absolute_mag=np.array([-22.0, -21.0, -20.0]),
+            condition=np.array([[1.0], [np.nan]]),
+            conditional_lf=conditional_lf,
+        )
+
+
+def test_integrate_conditional_lf_matches_constant_function_width() -> None:
+    """Tests integration of a constant conditional LF over magnitude width."""
+
+    absolute_mag = np.array([-23.0, -22.0, -21.0, -20.0])
+
+    def conditional_lf(absolute_mag, condition):
+        return 2.0 * np.ones_like(absolute_mag)
+
+    result = integrate_conditional_luminosity_function(
+        absolute_mag=absolute_mag,
+        condition=1.0,
+        conditional_lf=conditional_lf,
+    )
+
+    assert result == pytest.approx(6.0)
+
+
+def test_integrate_weighted_conditional_lf_accepts_scalar_weight() -> None:
+    """Tests that scalar weights broadcast over the conditional LF."""
+
+    absolute_mag = np.array([-22.0, -21.0, -20.0])
+
+    def conditional_lf(absolute_mag, condition):
+        return np.ones_like(absolute_mag)
+
+    def weight(absolute_mag, condition):
+        return 2.0
+
+    result = integrate_weighted_conditional_luminosity_function(
+        absolute_mag=absolute_mag,
+        condition=1.0,
+        conditional_lf=conditional_lf,
+        weight=weight,
+    )
+
+    expected = np.trapezoid(2.0 * np.ones_like(absolute_mag), x=absolute_mag)
+
+    assert result == pytest.approx(expected)
+
+
+def test_integrate_weighted_conditional_lf_rejects_nan_weight() -> None:
+    """Tests that NaN weights are rejected."""
+
+    def conditional_lf(absolute_mag, condition):
+        return np.ones_like(absolute_mag)
+
+    def weight(absolute_mag, condition):
+        return np.array([1.0, np.nan, 3.0])
+
+    with pytest.raises(ValueError, match="weight returned NaN or infinite values."):
         integrate_weighted_conditional_luminosity_function(
             absolute_mag=[-22.0, -21.0, -20.0],
             condition=1.0,

@@ -1,4 +1,4 @@
-"""Unit tests for the ``lfkit.photometry.lf_redshift_density.py`` module."""
+"""Unit tests for the ``lfkit.photometry.lf_redshift_density``."""
 
 import numpy as np
 import pytest
@@ -562,4 +562,71 @@ def test_optional_correction_array_rejects_unbroadcastable_array() -> None:
             np.array([0.1, 0.2, 0.3]),
             np.array([0.1, 0.2]),
             name="k_correction",
+        )
+
+
+def test_api_aliases_cover_public_exports() -> None:
+    """Tests that public redshift-density functions are included in API aliases."""
+    missing_aliases = set(lfrd.__all__) - set(lfrd.__api_aliases__)
+    assert missing_aliases == set()
+
+
+def test_lf_integrated_number_density_rejects_nonfinite_redshift() -> None:
+    """Tests that non-finite redshifts are rejected."""
+    with pytest.raises(ValueError, match="z contains NaN or infinite values"):
+        lfrd.lf_integrated_number_density(
+            [0.1, np.nan],
+            constant_lf,
+            m_lim=M_LIM,
+            m_bright=M_BRIGHT,
+            luminosity_distance_mpc_fn=constant_luminosity_distance,
+        )
+
+
+def test_lf_weighted_redshift_density_rejects_nonfinite_redshift() -> None:
+    """Tests that weighted redshift density rejects non-finite redshifts."""
+    with pytest.raises(ValueError, match="z contains NaN or infinite values"):
+        lfrd.lf_weighted_redshift_density(
+            [0.1, np.inf],
+            constant_lf,
+            m_lim=M_LIM,
+            m_bright=M_BRIGHT,
+            luminosity_distance_mpc_fn=constant_luminosity_distance,
+            volume_weight_fn=constant_volume_weight,
+            normalize=False,
+        )
+
+
+def test_optional_correction_array_accepts_column_broadcast() -> None:
+    """Tests that correction arrays broadcast to multidimensional redshift grids."""
+    z = np.array([[0.1, 0.2], [0.3, 0.4]])
+
+    result = lfrd._optional_correction_array(
+        np.array([[0.5], [1.0]]),
+        z,
+        name="k_correction",
+    )
+
+    expected = np.array([[0.5, 0.5], [1.0, 1.0]])
+    np.testing.assert_allclose(result, expected)
+
+
+def test_lf_weighted_redshift_density_rejects_zero_volume_weight_normalization() -> None:
+    """Tests that normalization rejects zero volume-weight density."""
+
+    def zero_volume_weight(z: np.ndarray) -> np.ndarray:
+        return np.zeros_like(z, dtype=float)
+
+    with pytest.raises(
+        ValueError,
+        match="Cannot normalize LF-weighted redshift density",
+    ):
+        lfrd.lf_weighted_redshift_density(
+            [0.0, 1.0],
+            constant_lf,
+            m_lim=M_LIM,
+            m_bright=M_BRIGHT,
+            luminosity_distance_mpc_fn=constant_luminosity_distance,
+            volume_weight_fn=zero_volume_weight,
+            normalize=True,
         )

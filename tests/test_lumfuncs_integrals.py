@@ -1,4 +1,4 @@
-"""Unit tests for the ``lfkit.photometry.lf_integrals.py`` module."""
+"""Unit tests for the ``lfkit.photometry.lf_integrals``."""
 
 import numpy as np
 import pytest
@@ -814,3 +814,104 @@ def test_api_aliases_cover_public_exports() -> None:
     """Tests that public integral functions are included in API aliases."""
     missing_aliases = set(li.__all__) - set(li.__api_aliases__)
     assert missing_aliases == set()
+
+
+def test_luminosity_weight_rejects_nonfinite_absolute_mag() -> None:
+    """Tests that luminosity weights reject non-finite magnitudes."""
+    with pytest.raises(ValueError, match="absolute_mag contains NaN or infinite values"):
+        li.luminosity_weight([0.0, np.nan, 1.0])
+
+
+def test_luminosity_weight_clips_extreme_values() -> None:
+    """Tests that luminosity weights are clipped to finite numerical bounds."""
+    result = li.luminosity_weight(np.array([-1000.0, 1000.0]))
+
+    np.testing.assert_allclose(result, np.array([1.0e300, 1.0e-300]))
+
+
+def test_lf_weighted_integral_accepts_scalar_weight_output() -> None:
+    """Tests that scalar weight outputs broadcast over the LF grid."""
+
+    def weight_fn(m_abs: np.ndarray, z: np.ndarray) -> float:
+        return 2.0
+
+    result = li.lf_weighted_integral(
+        [0.1, 0.2],
+        constant_lf,
+        m_bright=-24.0,
+        m_faint=-18.0,
+        weight_fn=weight_fn,
+        n_m=64,
+    )
+
+    np.testing.assert_allclose(result, np.array([12.0, 12.0]))
+
+
+def test_selection_weighted_number_density_rejects_negative_selection() -> None:
+    """Tests that negative selection values are rejected."""
+
+    def selection_fn(m_abs: np.ndarray, z: np.ndarray) -> np.ndarray:
+        return -np.ones_like(m_abs, dtype=float)
+
+    with pytest.raises(ValueError, match="weight_fn\\(M, z\\) must be non-negative"):
+        li.selection_weighted_number_density(
+            [0.1, 0.2],
+            constant_lf,
+            m_bright=-24.0,
+            m_faint=-18.0,
+            selection_fn=selection_fn,
+        )
+
+
+def test_magnitude_window_number_density_rejects_duplicate_faint_bounds() -> None:
+    """Tests that absolute and apparent faint bounds cannot both be supplied."""
+    with pytest.raises(
+        ValueError,
+        match="Provide only one of m_faint or apparent_m_faint",
+    ):
+        li.magnitude_window_number_density(
+            0.1,
+            constant_lf,
+            m_bright=-24.0,
+            m_faint=-18.0,
+            apparent_m_faint=22.0,
+        )
+
+
+def test_magnitude_window_density_rejects_nonpositive_luminosity_distance() -> None:
+    """Tests that apparent bounds reject non-positive luminosity distances."""
+
+    def luminosity_distance_mpc_fn(z: np.ndarray) -> np.ndarray:
+        return np.zeros_like(z, dtype=float)
+
+    with pytest.raises(
+        ValueError,
+        match="luminosity_distance_mpc_fn\\(z\\) must return positive values",
+    ):
+        li.magnitude_window_number_density(
+            [0.1, 0.2],
+            constant_lf,
+            apparent_m_bright=18.0,
+            m_faint=-18.0,
+            luminosity_distance_mpc_fn=luminosity_distance_mpc_fn,
+        )
+
+
+def test_magnitude_window_density_rejects_nonfinite_k_correction() -> None:
+    """Tests that non-finite K-corrections are rejected."""
+
+    def luminosity_distance_mpc_fn(z: np.ndarray) -> np.ndarray:
+        return 10.0 * np.ones_like(z, dtype=float)
+
+    def k_correction_fn(z: np.ndarray) -> np.ndarray:
+        return np.full_like(z, np.nan, dtype=float)
+
+    with pytest.raises(ValueError, match="k_correction_fn\\(z\\) returned non-finite values"):
+        li.magnitude_window_number_density(
+            [0.1, 0.2],
+            constant_lf,
+            apparent_m_bright=18.0,
+            m_faint=-18.0,
+            luminosity_distance_mpc_fn=luminosity_distance_mpc_fn,
+            k_correction_fn=k_correction_fn,
+        )

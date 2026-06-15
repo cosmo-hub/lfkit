@@ -1,4 +1,4 @@
-"""Unit tests for ``lfkit.utils.evaluators.py``."""
+"""Unit tests for ``lfkit.utils.evaluators``."""
 
 from __future__ import annotations
 
@@ -672,3 +672,178 @@ def test_evaluate_weight_on_grid_rejects_negative_values() -> None:
             m_grid=m_grid,
             z_grid=z_grid,
         )
+
+
+def test_evaluators_exports_expected_public_names() -> None:
+    """Tests that evaluators exposes the expected public API names."""
+    import lfkit.utils.evaluators as evaluators
+
+    expected = {
+        "evaluate_non_negative_redshift_callable",
+        "evaluate_optional_redshift_callable",
+        "evaluate_positive_redshift_callable",
+        "evaluate_weight_on_grid",
+        "evaluate_lf_on_grid",
+    }
+
+    assert set(evaluators.__all__) == expected
+
+
+def test_evaluate_positive_redshift_callable_converts_list_output() -> None:
+    """Tests that positive callable list output is converted to a float array."""
+    z = np.array([0.0, 0.5, 1.0], dtype=float)
+
+    def fn(z_arr: np.ndarray) -> list[float]:
+        """Return positive values as a list."""
+        _ = z_arr
+        return [1.0, 2.0, 3.0]
+
+    result = evaluate_positive_redshift_callable(
+        fn,
+        z,
+        name="distance",
+    )
+
+    assert result.dtype == np.float64
+    np.testing.assert_allclose(result, np.array([1.0, 2.0, 3.0]))
+
+
+def test_evaluate_non_negative_redshift_callable_converts_list_output() -> None:
+    """Tests that non-negative callable list output is converted to a float array."""
+    z = np.array([0.0, 0.5, 1.0], dtype=float)
+
+    def fn(z_arr: np.ndarray) -> list[float]:
+        """Return non-negative values as a list."""
+        _ = z_arr
+        return [0.0, 1.0, 2.0]
+
+    result = evaluate_non_negative_redshift_callable(
+        fn,
+        z,
+        name="weight",
+    )
+
+    assert result.dtype == np.float64
+    np.testing.assert_allclose(result, np.array([0.0, 1.0, 2.0]))
+
+
+def test_evaluate_lf_on_grid_accepts_zero_values() -> None:
+    """Tests that LF grid evaluation accepts zero values."""
+    m_grid = np.ones((2, 3), dtype=float)
+    z_grid = np.ones((2, 3), dtype=float)
+
+    def lf(m_abs: np.ndarray, z: np.ndarray) -> np.ndarray:
+        """Return zero LF values."""
+        _ = z
+        return np.zeros_like(m_abs, dtype=float)
+
+    result = evaluate_lf_on_grid(
+        lf,
+        m_grid=m_grid,
+        z_grid=z_grid,
+    )
+
+    assert result.dtype == np.float64
+    np.testing.assert_allclose(result, np.zeros_like(m_grid))
+
+
+def test_evaluate_weight_on_grid_accepts_zero_values() -> None:
+    """Tests that weight grid evaluation accepts zero values."""
+    m_grid = np.ones((2, 3), dtype=float)
+    z_grid = np.ones((2, 3), dtype=float)
+
+    def weight_fn(m_abs: np.ndarray, z: np.ndarray) -> np.ndarray:
+        """Return zero weight values."""
+        _ = z
+        return np.zeros_like(m_abs, dtype=float)
+
+    result = evaluate_weight_on_grid(
+        weight_fn,
+        m_grid=m_grid,
+        z_grid=z_grid,
+    )
+
+    assert result.dtype == np.float64
+    np.testing.assert_allclose(result, np.zeros_like(m_grid))
+
+
+def test_evaluate_lf_on_grid_converts_list_output() -> None:
+    """Tests that LF grid list output is converted to a float array."""
+    m_grid = np.ones((2, 2), dtype=float)
+    z_grid = np.ones((2, 2), dtype=float)
+
+    def lf(m_abs: np.ndarray, z: np.ndarray) -> list[list[float]]:
+        """Return LF values as nested lists."""
+        _ = m_abs
+        _ = z
+        return [[1.0, 2.0], [3.0, 4.0]]
+
+    result = evaluate_lf_on_grid(
+        lf,
+        m_grid=m_grid,
+        z_grid=z_grid,
+    )
+
+    assert result.dtype == np.float64
+    np.testing.assert_allclose(result, np.array([[1.0, 2.0], [3.0, 4.0]]))
+
+
+def test_evaluate_weight_on_grid_converts_list_output() -> None:
+    """Tests that weight grid list output is converted to a float array."""
+    m_grid = np.ones((2, 2), dtype=float)
+    z_grid = np.ones((2, 2), dtype=float)
+
+    def weight_fn(m_abs: np.ndarray, z: np.ndarray) -> list[list[float]]:
+        """Return weight values as nested lists."""
+        _ = m_abs
+        _ = z
+        return [[0.1, 0.2], [0.3, 0.4]]
+
+    result = evaluate_weight_on_grid(
+        weight_fn,
+        m_grid=m_grid,
+        z_grid=z_grid,
+    )
+
+    assert result.dtype == np.float64
+    np.testing.assert_allclose(result, np.array([[0.1, 0.2], [0.3, 0.4]]))
+
+
+def test_evaluate_lf_on_grid_passes_grid_arguments() -> None:
+    """Tests that LF grid evaluation passes the magnitude and redshift grids."""
+    m_grid = np.array([[-24.0, -23.0]], dtype=float)
+    z_grid = np.array([[0.1, 0.2]], dtype=float)
+
+    def lf(m_abs: np.ndarray, z: np.ndarray) -> np.ndarray:
+        """Return values depending on both grid arguments."""
+        np.testing.assert_allclose(m_abs, m_grid)
+        np.testing.assert_allclose(z, z_grid)
+        return np.ones_like(m_abs, dtype=float)
+
+    result = evaluate_lf_on_grid(
+        lf,
+        m_grid=m_grid,
+        z_grid=z_grid,
+    )
+
+    np.testing.assert_allclose(result, np.ones_like(m_grid))
+
+
+def test_evaluate_weight_on_grid_passes_grid_arguments() -> None:
+    """Tests that weight grid evaluation passes the magnitude and redshift grids."""
+    m_grid = np.array([[-24.0, -23.0]], dtype=float)
+    z_grid = np.array([[0.1, 0.2]], dtype=float)
+
+    def weight_fn(m_abs: np.ndarray, z: np.ndarray) -> np.ndarray:
+        """Return values depending on both grid arguments."""
+        np.testing.assert_allclose(m_abs, m_grid)
+        np.testing.assert_allclose(z, z_grid)
+        return np.ones_like(m_abs, dtype=float)
+
+    result = evaluate_weight_on_grid(
+        weight_fn,
+        m_grid=m_grid,
+        z_grid=z_grid,
+    )
+
+    np.testing.assert_allclose(result, np.ones_like(m_grid))

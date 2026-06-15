@@ -1,4 +1,4 @@
-"""Unit tests for the ``lfkit.utils.units.py``"""
+"""Unit tests for the ``lfkit.utils.units``."""
 
 from __future__ import annotations
 
@@ -88,3 +88,112 @@ def test_magerr_to_ivar_maggies_matches_propagation_and_masks_bad():
     assert np.allclose(ivar, expected, rtol=0.0, atol=0.0)
     assert ivar[1] == 0.0  # nan sigma_m -> 0 ivar
     assert ivar[2] == 0.0  # zero sigma_m -> 0 ivar
+
+
+def test_h0_conversion_accepts_scalar_like_inputs() -> None:
+    """Tests that H0 conversion accepts NumPy scalar inputs."""
+    h0 = np.float64(100.0)
+    got = h0_km_s_mpc_to_gyr_inv(h0)
+    expected = (100.0 / km_per_mpc()) * sec_per_gyr()
+    assert np.isclose(got, expected, rtol=0.0, atol=0.0)
+
+
+def test_h0_conversion_preserves_sign() -> None:
+    """Tests that H0 conversion is algebraic and preserves sign."""
+    assert h0_km_s_mpc_to_gyr_inv(0.0) == 0.0
+    assert h0_km_s_mpc_to_gyr_inv(-70.0) < 0.0
+
+
+def test_mag_to_maggies_accepts_scalar_input() -> None:
+    """Tests that scalar magnitude input returns scalar-shaped maggies."""
+    got = mag_to_maggies(0.0)
+    assert np.shape(got) == ()
+    assert np.isclose(got, 1.0, rtol=0.0, atol=0.0)
+
+
+def test_maggies_to_mag_accepts_scalar_input() -> None:
+    """Tests that scalar maggie input returns scalar-shaped magnitude."""
+    got = maggies_to_mag(1.0)
+    assert np.shape(got) == ()
+    assert np.isclose(got, 0.0, rtol=0.0, atol=0.0)
+
+
+def test_mag_to_maggies_preserves_array_shape() -> None:
+    """Tests that magnitude-to-maggies conversion preserves input shape."""
+    m = np.array([[0.0, 2.5], [5.0, 7.5]])
+    f = mag_to_maggies(m)
+
+    assert f.shape == m.shape
+    np.testing.assert_allclose(f, 10.0 ** (-0.4 * m))
+
+
+def test_maggies_to_mag_preserves_array_shape() -> None:
+    """Tests that maggies-to-magnitude conversion preserves input shape."""
+    f = np.array([[1.0, 0.1], [0.01, 0.001]])
+    m = maggies_to_mag(f)
+
+    assert m.shape == f.shape
+    np.testing.assert_allclose(m, -2.5 * np.log10(f))
+
+
+def test_magnitude_difference_maps_to_flux_ratio() -> None:
+    """Tests that a 2.5 mag increase lowers maggies by a factor of 10."""
+    f0 = mag_to_maggies(20.0)
+    f1 = mag_to_maggies(22.5)
+
+    np.testing.assert_allclose(f1 / f0, 0.1, rtol=1e-14)
+
+
+def test_maggies_to_mag_custom_floor() -> None:
+    """Tests that a custom floor controls the maximum returned magnitude."""
+    m = maggies_to_mag(np.array([0.0, 1e-20]), floor=1e-10)
+
+    np.testing.assert_allclose(m, np.array([25.0, 25.0]))
+
+
+def test_magerr_to_ivar_maggies_broadcasts_inputs() -> None:
+    """Tests that magerr_to_ivar_maggies supports NumPy broadcasting."""
+    m = np.array([20.0, 21.0, 22.0])
+    sigma_m = 0.1
+
+    ivar = magerr_to_ivar_maggies(m, sigma_m)
+
+    f = mag_to_maggies(m)
+    sigma_f = (0.4 * np.log(10.0)) * f * sigma_m
+    expected = 1.0 / sigma_f**2
+
+    assert ivar.shape == m.shape
+    np.testing.assert_allclose(ivar, expected)
+
+
+def test_magerr_to_ivar_maggies_negative_sigma_is_masked() -> None:
+    """Tests that negative magnitude uncertainties produce zero inverse variance."""
+    ivar = magerr_to_ivar_maggies(
+        np.array([20.0, 21.0]),
+        np.array([-0.1, 0.1]),
+    )
+
+    assert ivar[0] == 0.0
+    assert ivar[1] > 0.0
+
+
+def test_magerr_to_ivar_maggies_infinite_sigma_is_masked() -> None:
+    """Tests that infinite propagated uncertainty produces zero inverse variance."""
+    ivar = magerr_to_ivar_maggies(
+        np.array([20.0, 21.0]),
+        np.array([np.inf, 0.1]),
+    )
+
+    assert ivar[0] == 0.0
+    assert ivar[1] > 0.0
+
+
+def test_magerr_to_ivar_maggies_preserves_shape() -> None:
+    """Tests that inverse-variance conversion preserves broadcasted array shape."""
+    m = np.array([[20.0, 21.0], [22.0, 23.0]])
+    sigma_m = np.full_like(m, 0.1)
+
+    ivar = magerr_to_ivar_maggies(m, sigma_m)
+
+    assert ivar.shape == m.shape
+    assert np.all(ivar > 0.0)

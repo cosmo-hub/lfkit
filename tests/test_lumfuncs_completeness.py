@@ -1,4 +1,4 @@
-"""Unit tests for the ``lfkit.photometry.catalog_completeness.py`` module."""
+"""Unit tests for the ``lfkit.photometry.catalog_completeness``."""
 
 import numpy as np
 import pytest
@@ -530,3 +530,14 @@ def test_absolute_magnitude_limit_rejects_missing_h() -> None:
         match="h was not provided and could not be read from cosmo_obj",
     ):
         cc.absolute_magnitude_limit(object(), [0.1, 0.2], m_lim=24.5)
+
+
+def test_absolute_magnitude_limit_rejects_nonfinite_h() -> None:
+    """Tests that non-finite explicit h is rejected."""
+    with pytest.raises(ValueError, match="h must be finite"):
+        cc.absolute_magnitude_limit(
+            object(),
+            [0.1, 0.2],
+            m_lim=24.5,
+            h=np.inf,
+        )
