@@ -253,3 +253,46 @@ def test_observed_and_missing_number_densities_sum_to_total_density() -> None:
         rtol=1.0e-6,
         atol=1.0e-12,
     )
+
+
+def test_fake_catalog_redshifts_are_physical() -> None:
+    """Tests that fake catalog redshifts are finite and non-negative."""
+    catalog = load_fake_catalog()
+    z = np.asarray(catalog["z"], dtype=float)
+
+    assert np.all(np.isfinite(z))
+    assert np.all(z >= 0.0)
+
+
+def test_fake_catalog_apparent_magnitudes_are_finite() -> None:
+    """Tests that fake catalog apparent magnitudes are finite."""
+    catalog = load_fake_catalog()
+    m_app = np.asarray(catalog["m_app"], dtype=float)
+
+    assert np.all(np.isfinite(m_app))
+
+
+def test_catalog_fraction_accepts_k_and_e_corrections() -> None:
+    """Tests fake-catalog completeness with k/e corrections."""
+    catalog = load_fake_catalog()
+    cosmo = make_cosmology()
+    z = np.asarray(catalog["z"], dtype=float)
+
+    completeness = catalog_fraction(
+        cosmo,
+        z,
+        toy_luminosity_function,
+        m_lim=24.0,
+        m_bright=-24.0,
+        m_faint=-14.0,
+        n_m=256,
+        h=0.7,
+        k_correction=0.1 * z,
+        e_correction=0.05 * z,
+    )
+
+    assert completeness.shape == z.shape
+    assert np.all(np.isfinite(completeness))
+    assert np.all((completeness >= 0.0) & (completeness <= 1.0))
+
+

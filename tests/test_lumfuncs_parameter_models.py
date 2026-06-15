@@ -1,4 +1,4 @@
-"""Unit tests for ``lfkit.photometry.lf_parameter_models.py``."""
+"""Unit tests for ``lfkit.photometry.lf_parameter_models``."""
 
 from __future__ import annotations
 
@@ -465,3 +465,46 @@ def test_evaluate_lf_parameters_rejects_non_finite_redshift() -> None:
             alpha_model="constant",
             alpha_kwargs={"alpha": -1.0},
         )
+
+
+def test_linear_parameter_models_reject_non_finite_redshift() -> None:
+    """Tests that linear parameter models reject non-finite redshift values."""
+    z = np.array([0.0, np.nan, 1.0])
+
+    with pytest.raises(ValueError, match="z contains NaN or infinite values"):
+        phi_star_linear_p(z, phi_0_star=1.0e-3, p=1.0)
+
+    with pytest.raises(ValueError, match="z contains NaN or infinite values"):
+        m_star_linear_q(z, m_0_star=-20.0, q=1.0)
+
+    with pytest.raises(ValueError, match="z contains NaN or infinite values"):
+        alpha_linear(z, alpha_0=-1.0, alpha_1=0.1)
+
+
+def test_evaluate_lf_parameters_propagates_missing_model_kwargs() -> None:
+    """Tests that missing kwargs from selected models raise TypeError."""
+    with pytest.raises(TypeError):
+        evaluate_lf_parameters(
+            np.array([0.0, 0.5]),
+            phi_model="linear_p",
+            phi_kwargs=None,
+            m_star_model="constant",
+            m_star_kwargs={"m_star": -20.0},
+            alpha_model="constant",
+            alpha_kwargs={"alpha": -1.0},
+        )
+
+
+def test_available_lf_parameter_models_includes_registered_custom_model() -> None:
+    """Tests that available model listing includes newly registered models."""
+
+    def custom_phi(z: np.ndarray) -> np.ndarray:
+        return np.ones_like(z, dtype=float)
+
+    register_phi_star_model("zzz_custom_phi_test", custom_phi)
+
+    try:
+        result = available_lf_parameter_models()
+        assert "zzz_custom_phi_test" in result["phi_star"]
+    finally:
+        PHI_STAR_MODELS.pop("zzz_custom_phi_test", None)

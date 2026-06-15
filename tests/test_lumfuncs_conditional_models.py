@@ -1,8 +1,13 @@
-"""Unit tests for ``lfkit.photometry.conditional_lf_models.py``."""
+"""Unit tests for ``lfkit.photometry.conditional_lf_models``."""
 
 import numpy as np
 import pytest
 
+
+from lfkit.luminosity_functions.conditional_models import (
+    __all__,
+    conditionalize_lf_model,
+)
 from lfkit.luminosity_functions.models.composite import two_component_lf
 from lfkit.luminosity_functions.models.schechter import double_schechter, schechter
 from lfkit.luminosity_functions.registry import get_conditional_lf_model
@@ -382,3 +387,101 @@ def test_conditional_two_component_lf_propagates_invalid_modified_component() ->
             lognormal_amplitude=1.0,
             modified_m_star=-20.5,
         )
+
+
+def test_conditionalize_lf_model_preserves_wrapped_model_name() -> None:
+    """Tests that conditional wrappers preserve model metadata."""
+
+    def toy_lf(absolute_mag, amplitude):
+        return amplitude * np.ones_like(absolute_mag, dtype=float)
+
+    conditional_toy_lf = conditionalize_lf_model(toy_lf)
+
+    assert conditional_toy_lf.__name__ == "toy_lf"
+
+
+def test_conditionalize_lf_model_passes_non_callable_kwargs_unchanged() -> None:
+    """Tests that non-callable keyword arguments pass through unchanged."""
+
+    absolute_mag = np.array([-22.0, -21.0, -20.0])
+
+    def toy_lf(absolute_mag, amplitude, offset):
+        return amplitude * np.ones_like(absolute_mag, dtype=float) + offset
+
+    conditional_toy_lf = conditionalize_lf_model(toy_lf)
+
+    result = conditional_toy_lf(
+        absolute_mag=absolute_mag,
+        condition=np.array([0.0, 1.0, 2.0]),
+        amplitude=2.0,
+        offset=3.0,
+    )
+
+    np.testing.assert_allclose(result, np.array([5.0, 5.0, 5.0]))
+    assert result.dtype == np.float64
+
+
+def test_conditionalize_lf_model_rejects_negative_wrapped_output() -> None:
+    """Tests that negative wrapped LF outputs are rejected."""
+
+    def toy_lf(absolute_mag, amplitude):
+        return np.array([1.0, -1.0, 2.0])
+
+    conditional_toy_lf = conditionalize_lf_model(toy_lf)
+
+    with pytest.raises(
+        ValueError,
+        match="toy_lf returned negative values, which are not allowed.",
+    ):
+        conditional_toy_lf(
+            absolute_mag=[-22.0, -21.0, -20.0],
+            condition=[0.0, 1.0, 2.0],
+            amplitude=1.0,
+        )
+
+
+def test_conditionalize_lf_model_rejects_non_finite_wrapped_output() -> None:
+    """Tests that non-finite wrapped LF outputs are rejected."""
+
+    def toy_lf(absolute_mag, amplitude):
+        return np.array([1.0, np.inf, 2.0])
+
+    conditional_toy_lf = conditionalize_lf_model(toy_lf)
+
+    with pytest.raises(ValueError, match="toy_lf contains NaN or infinite values."):
+        conditional_toy_lf(
+            absolute_mag=[-22.0, -21.0, -20.0],
+            condition=[0.0, 1.0, 2.0],
+            amplitude=1.0,
+        )
+
+
+def test_conditional_model_registry_exports_generated_names() -> None:
+    """Tests that generated conditional model names are public exports."""
+
+    assert "conditional_schechter" in __all__
+    assert "conditional_double_schechter" in __all__
+    assert "conditional_lognormal_lf" in __all__
+    assert "conditional_two_component_lf" in __all__
+
+
+def test_conditional_schechter_accepts_scalar_condition_with_callable_parameter() -> None:
+    """Tests callable parameter evaluation for scalar condition input."""
+
+    result = conditional_schechter(
+        absolute_mag=np.array([-22.0, -21.0, -20.0]),
+        condition=2.0,
+        phi_star=lambda x: 1.0e-3 * (1.0 + x),
+        m_star=-21.0,
+        alpha=-1.1,
+    )
+
+    expected = schechter(
+        np.array([-22.0, -21.0, -20.0]),
+        phi_star=3.0e-3,
+        m_star=-21.0,
+        alpha=-1.1,
+    )
+
+    np.testing.assert_allclose(result, expected)
+    assert result.dtype == np.float64

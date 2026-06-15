@@ -21,6 +21,7 @@ from __future__ import annotations
 import numpy as np
 
 from lfkit.utils.types import FloatArray, FloatInput
+from lfkit.utils.integrators import safe_power10
 from lfkit.utils.validators import validate_array
 
 __all__ = (
@@ -61,10 +62,8 @@ def luminosity_ratio(
     """
     m_arr = validate_array(absolute_mag, name="absolute magnitude")
     m_star_arr = validate_array(m_star, name="m_star")
-    x = 10.0 ** (-0.4 * (m_arr - m_star_arr))
 
-    # Clip extreme values to avoid overflow in exp later.
-    x = np.clip(x, 1e-300, 1e300)
+    x = safe_power10(-0.4 * (m_arr - m_star_arr))
 
     return np.asarray(x, dtype=float)
 
@@ -87,8 +86,7 @@ def luminosity_ratio_from_magnitudes(
     mag_1 = validate_array(magnitude, name="magnitude")
     mag_2 = validate_array(ref_magnitude, name="ref_magnitude")
 
-    ratio = 10.0 ** (-0.4 * (mag_1 - mag_2))
-    ratio = np.clip(ratio, 1e-300, 1e300)
+    ratio = safe_power10(-0.4 * (mag_1 - mag_2))
 
     return np.asarray(ratio, dtype=float)
 
@@ -142,8 +140,9 @@ def luminosity_weight_from_magnitude(
         NumPy array proportional to luminosity.
     """
     mag = validate_array(magnitude, name="magnitude")
-    weight = 10.0 ** (-0.4 * (mag - reference_magnitude))
-    weight = np.clip(weight, 1e-300, 1e300)
+
+    weight = safe_power10(-0.4 * (mag - reference_magnitude))
+
     return np.asarray(weight, dtype=float)
 
 

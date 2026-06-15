@@ -18,6 +18,7 @@ from lfkit.utils.validators import validate_array
 __all__ = [
     "integrate_between_variable_bounds",
     "safe_divide",
+    "safe_power10",
 ]
 
 
@@ -170,3 +171,15 @@ def _bound_finite_error_message(name: str) -> str:
         return f"{name} must contain only finite values."
 
     return f"{name} contains NaN or infinite values."
+
+
+def safe_power10(
+    exponent: FloatInput,
+    *,
+    min_exponent: float = -300.0,
+    max_exponent: float = 300.0,
+) -> FloatArray:
+    """Return clipped base-10 powers without overflow warnings."""
+    exponent_arr = validate_array(exponent, name="exponent")
+    clipped = np.clip(exponent_arr, min_exponent, max_exponent)
+    return np.asarray(10.0**clipped, dtype=float)

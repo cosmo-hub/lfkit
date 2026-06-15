@@ -1,4 +1,4 @@
-"""Unit tests for ``lfkit.photometry.luminosity_function.py``."""
+"""Unit tests for ``lfkit.luminosity_functions.models.schechter``."""
 
 import numpy as np
 import pytest
@@ -252,3 +252,224 @@ def test_evolving_schechter_missing_kwargs():
             [0.5],
             phi_model="linear_p",  # requires phi_0_star and p
         )
+
+
+def test_schechter_matches_manual_formula() -> None:
+    """Tests that schechter matches the analytic magnitude-space formula."""
+    m = np.array([-22.0, -21.0, -20.0])
+    phi_star = 1e-3
+    m_star = -20.0
+    alpha = -1.2
+
+    result = schechter(m, phi_star=phi_star, m_star=m_star, alpha=alpha)
+
+    x = luminosity_ratio(m, m_star)
+    expected = 0.4 * np.log(10.0) * phi_star * x ** (alpha + 1.0) * np.exp(-x)
+
+    np.testing.assert_allclose(result, expected)
+
+
+def test_schechter_rejects_nonfinite_phi_star() -> None:
+    """Tests that schechter rejects non-finite phi_star."""
+    with pytest.raises(ValueError, match="phi_star contains NaN or infinite values"):
+        schechter([-20.0], phi_star=np.nan, m_star=-20.0, alpha=-1.0)
+
+
+def test_schechter_rejects_nonfinite_alpha() -> None:
+    """Tests that schechter rejects non-finite alpha."""
+    with pytest.raises(ValueError, match="alpha contains NaN or infinite values"):
+        schechter([-20.0], phi_star=1e-3, m_star=-20.0, alpha=np.inf)
+
+
+def test_schechter_allows_array_parameters() -> None:
+    """Tests that schechter supports array-valued parameters."""
+    m = np.array([-22.0, -21.0, -20.0])
+
+    result = schechter(
+        m,
+        phi_star=np.array([1e-3, 2e-3, 3e-3]),
+        m_star=-20.0,
+        alpha=np.array([-1.2, -1.0, -0.8]),
+    )
+
+    assert result.shape == m.shape
+    assert np.all(np.isfinite(result))
+    assert np.all(result >= 0.0)
+
+
+def test_double_schechter_matches_manual_formula() -> None:
+    """Tests that double_schechter matches the analytic formula."""
+    m = np.array([-22.0, -21.0, -20.0])
+    phi_star = 1e-3
+    m_star = -20.0
+    alpha = -1.2
+    beta = 1.5
+    m_transition = -18.0
+
+    result = double_schechter(
+        m,
+        phi_star=phi_star,
+        m_star=m_star,
+        alpha=alpha,
+        beta=beta,
+        m_transition=m_transition,
+    )
+
+    x = luminosity_ratio(m, m_star)
+    x_t = luminosity_ratio(m_transition, m_star)
+    expected = (
+        0.4
+        * np.log(10.0)
+        * phi_star
+        * x ** (alpha + 1.0)
+        * np.exp(-x)
+        * (1.0 + (x / x_t) ** beta)
+    )
+
+    np.testing.assert_allclose(result, expected)
+
+
+def test_double_schechter_zero_phi_star_warning() -> None:
+    """Tests that double_schechter warns when phi_star is zero."""
+    with pytest.warns(UserWarning):
+        result = double_schechter(
+            [-20.0],
+            phi_star=0.0,
+            m_star=-20.0,
+            alpha=-1.0,
+            beta=1.0,
+            m_transition=-18.0,
+        )
+
+    np.testing.assert_allclose(result, np.array([0.0]))
+
+
+def test_double_schechter_rejects_negative_phi_star() -> None:
+    """Tests that double_schechter rejects negative phi_star."""
+    with pytest.raises(ValueError, match="phi_star must be non-negative"):
+        double_schechter(
+            [-20.0],
+            phi_star=-1e-3,
+            m_star=-20.0,
+            alpha=-1.0,
+            beta=1.0,
+            m_transition=-18.0,
+        )
+
+
+def test_double_schechter_rejects_nonfinite_beta() -> None:
+    """Tests that double_schechter rejects non-finite beta."""
+    with pytest.raises(ValueError, match="beta must be finite"):
+        double_schechter(
+            [-20.0],
+            phi_star=1e-3,
+            m_star=-20.0,
+            alpha=-1.0,
+            beta=np.nan,
+            m_transition=-18.0,
+        )
+
+
+def test_schechter_cumulative_rejects_nonfinite_phi_star() -> None:
+    """Tests that schechter_cumulative rejects non-finite phi_star."""
+    with pytest.raises(ValueError, match="phi_star must be finite"):
+        schechter_cumulative(
+            [-20.0],
+            phi_star=np.inf,
+            m_star=-20.0,
+            alpha=-0.5,
+        )
+
+
+def test_schechter_cumulative_rejects_negative_phi_star() -> None:
+    """Tests that schechter_cumulative rejects negative phi_star."""
+    with pytest.raises(ValueError, match="phi_star must be non-negative"):
+        schechter_cumulative(
+            [-20.0],
+            phi_star=-1e-3,
+            m_star=-20.0,
+            alpha=-0.5,
+        )
+
+
+def test_schechter_cumulative_zero_phi_star_returns_zero() -> None:
+    """Tests that zero phi_star gives zero cumulative density."""
+    result = schechter_cumulative(
+        [-20.0],
+        phi_star=0.0,
+        m_star=-20.0,
+        alpha=-0.5,
+    )
+
+    np.testing.assert_allclose(result, np.array([0.0]))
+
+
+def test_schechter_cumulative_faint_plus_bright_equals_total_gamma() -> None:
+    """Tests that bright and faint cumulative branches sum to total density."""
+    m_lim = np.array([-20.0, -19.0])
+    phi_star = 1e-3
+    alpha = -0.5
+
+    n_bright = schechter_cumulative(
+        m_lim,
+        phi_star=phi_star,
+        m_star=-20.0,
+        alpha=alpha,
+        brighter_than=True,
+    )
+    n_faint = schechter_cumulative(
+        m_lim,
+        phi_star=phi_star,
+        m_star=-20.0,
+        alpha=alpha,
+        brighter_than=False,
+    )
+
+    expected_total = phi_star * np.sqrt(np.pi)
+    np.testing.assert_allclose(n_bright + n_faint, expected_total)
+
+
+def test_schechter_cumulative_evolving_rejects_negative_phi_star() -> None:
+    """Tests that evolving cumulative rejects negative evolved phi_star."""
+    with pytest.raises(ValueError, match="phi_star must be non-negative"):
+        schechter_cumulative_evolving(
+            [-20.0],
+            [0.5],
+            phi_model="constant",
+            phi_kwargs={"phi_star": -1e-3},
+            m_star_model="constant",
+            m_star_kwargs={"m_star": -20.0},
+            alpha_model="constant",
+            alpha_kwargs={"alpha": -0.5},
+        )
+
+
+def test_schechter_cumulative_evolving_rejects_divergent_alpha() -> None:
+    """Tests that evolving cumulative rejects alpha <= -1."""
+    with pytest.raises(ValueError, match="undefined where alpha <= -1"):
+        schechter_cumulative_evolving(
+            [-20.0],
+            [0.5],
+            phi_model="constant",
+            phi_kwargs={"phi_star": 1e-3},
+            m_star_model="constant",
+            m_star_kwargs={"m_star": -20.0},
+            alpha_model="constant",
+            alpha_kwargs={"alpha": -1.0},
+        )
+
+
+def test_double_schechter_accepts_array_phi_star() -> None:
+    """Tests that double_schechter broadcasts array phi_star."""
+
+    result = double_schechter(
+        [-22.0, -21.0],
+        phi_star=np.array([1e-3, 2e-3]),
+        m_star=-20.0,
+        alpha=-1.0,
+        beta=1.0,
+        m_transition=-18.0,
+    )
+
+    assert result.shape == (2,)
+    assert np.all(result >= 0.0)

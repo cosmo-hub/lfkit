@@ -1,4 +1,4 @@
-"""Unit tests for ``lfkit.corrections.color_anchors.py``."""
+"""Unit tests for ``lfkit.corrections.color_anchors``."""
 
 from __future__ import annotations
 

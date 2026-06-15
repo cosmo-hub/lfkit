@@ -1,4 +1,4 @@
-"""Unit tests for ``lfkit.photometry.magnitudes.py``."""
+"""Unit tests for ``lfkit.photometry.magnitudes``."""
 
 from __future__ import annotations
 
@@ -550,3 +550,132 @@ def test_apparent_magnitude_from_luminosity_distance_rejects_nonfinite_distance(
             -4.0,
             np.nan,
         )
+
+
+def test_total_magnitude_correction_preserves_broadcast_shape() -> None:
+    """Tests that total_magnitude_correction returns the broadcasted output shape."""
+    out = total_magnitude_correction(
+        k_correction=np.array([[0.1], [0.2]]),
+        e_correction=np.array([0.0, 0.1, 0.2]),
+    )
+
+    expected = np.array(
+        [
+            [0.1, 0.0, -0.1],
+            [0.2, 0.1, 0.0],
+        ],
+    )
+    assert out.shape == (2, 3)
+    np.testing.assert_allclose(out, expected)
+
+
+def test_absolute_magnitude_from_luminosity_distance_returns_float64_array() -> None:
+    """Tests that apparent-to-absolute conversion returns a float64 array."""
+    out = absolute_magnitude_from_luminosity_distance(
+        np.array([26, 27]),
+        np.array([10, 100]),
+    )
+
+    assert isinstance(out, np.ndarray)
+    assert out.dtype == np.float64
+
+
+def test_apparent_magnitude_from_luminosity_distance_returns_float64_array() -> None:
+    """Tests that absolute-to-apparent conversion returns a float64 array."""
+    out = apparent_magnitude_from_luminosity_distance(
+        np.array([-4, -8]),
+        np.array([10, 100]),
+    )
+
+    assert isinstance(out, np.ndarray)
+    assert out.dtype == np.float64
+
+
+def test_luminosity_distance_formula_matches_known_distance_modulus() -> None:
+    """Tests that luminosity-distance conversions use mu = 5 log10(dL) + 25."""
+    result = absolute_magnitude_from_luminosity_distance(
+        apparent_mag=30.0,
+        luminosity_distance_mpc=100.0,
+    )
+
+    assert result == pytest.approx(-5.0)
+
+
+def test_apparent_magnitude_from_luminosity_distance_matches_known_distance_modulus() -> None:
+    """Tests that absolute-to-apparent conversion uses the expected distance modulus."""
+    result = apparent_magnitude_from_luminosity_distance(
+        absolute_mag=0.0,
+        luminosity_distance_mpc=100.0,
+    )
+
+    assert result == pytest.approx(35.0)
+
+
+def test_absolute_magnitude_supports_scalar_magnitude_with_array_redshift(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Tests that absolute_magnitude broadcasts scalar magnitude over redshift."""
+
+    def mock_distance_modulus(
+        cosmo_obj: object,
+        z: np.ndarray,
+        h: float | None = None,
+    ) -> np.ndarray:
+        """Return a redshift-shaped distance modulus."""
+        _, _ = cosmo_obj, h
+        return np.asarray([40.0, 41.0, 42.0], dtype=float)
+
+    monkeypatch.setattr(magnitudes, "distance_modulus", mock_distance_modulus)
+
+    out = magnitudes.absolute_magnitude(
+        cosmo_obj=object(),
+        z=np.array([0.1, 0.2, 0.3]),
+        apparent_mag=22.0,
+    )
+
+    np.testing.assert_allclose(out, np.array([-18.0, -19.0, -20.0]))
+
+
+def test_apparent_magnitude_supports_scalar_magnitude_with_array_redshift(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """Tests that apparent_magnitude broadcasts scalar magnitude over redshift."""
+
+    def mock_distance_modulus(
+        cosmo_obj: object,
+        z: np.ndarray,
+        h: float | None = None,
+    ) -> np.ndarray:
+        """Return a redshift-shaped distance modulus."""
+        _, _ = cosmo_obj, h
+        return np.asarray([40.0, 41.0, 42.0], dtype=float)
+
+    monkeypatch.setattr(magnitudes, "distance_modulus", mock_distance_modulus)
+
+    out = magnitudes.apparent_magnitude(
+        cosmo_obj=object(),
+        z=np.array([0.1, 0.2, 0.3]),
+        absolute_mag=-20.0,
+    )
+
+    np.testing.assert_allclose(out, np.array([20.0, 21.0, 22.0]))
+
+
+def test_magnitudes_exports_expected_public_names() -> None:
+    """Tests that magnitudes exposes the expected public API names."""
+    expected = {
+        "total_magnitude_correction",
+        "absolute_magnitude",
+        "absolute_magnitude_from_luminosity_distance",
+        "apparent_magnitude",
+        "apparent_magnitude_from_luminosity_distance",
+    }
+
+    assert set(magnitudes.__all__) == expected
+
+
+def test_magnitudes_api_aliases_match_public_functions() -> None:
+    """Tests that magnitudes API aliases point to public functions."""
+    for public_name in magnitudes.__api_aliases__:
+        assert public_name in magnitudes.__all__
+        assert callable(getattr(magnitudes, public_name))

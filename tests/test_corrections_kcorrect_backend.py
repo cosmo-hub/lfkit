@@ -1,4 +1,4 @@
-"""Unit tests for ``lfkit.corrections.kcorrect_backend.py``."""
+"""Unit tests for ``lfkit.corrections.kcorrect_backend``."""
 
 from __future__ import annotations
 
