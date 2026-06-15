@@ -349,11 +349,11 @@
 <span id="lfkit-luminosity-functions-conditional-integrals"></span><h1>lfkit.luminosity_functions.conditional_integrals<a class="headerlink" href="#module-lfkit.luminosity_functions.conditional_integrals" title="Link to this heading"><span>#</span></a></h1>
 <p>Conditional luminosity function integration utilities.</p>
 <p>This module provides numerical helpers for conditional luminosity functions of
-the form <code class="docutils literal notranslate"><span class="pre">Phi(M</span> <span class="pre">|</span> <span class="pre">x)</span></code>, where <code class="docutils literal notranslate"><span class="pre">M</span></code> is absolute magnitude and <code class="docutils literal notranslate"><span class="pre">x</span></code> is an
-external conditioning variable.</p>
-<p>The conditioning variable is intentionally generic. It may represent halo mass,
-environment, galaxy type, richness, stellar mass, or any other quantity. This
-module does not implement HOD or halo-model machinery.</p>
+the form <code class="docutils literal notranslate"><span class="pre">Phi(M</span> <span class="pre">|</span> <span class="pre">x_1,</span> <span class="pre">x_2,</span> <span class="pre">...)</span></code>, where <code class="docutils literal notranslate"><span class="pre">M</span></code> is absolute magnitude and the
+<code class="docutils literal notranslate"><span class="pre">x_i</span></code> are external conditioning variables.</p>
+<p>The conditioning variables are intentionally generic. They may represent halo
+mass, redshift, environment, galaxy type, richness, stellar mass, or any other
+quantities. This module does not implement HOD or halo-model machinery.</p>
 <p>The goal is to support conditional luminosity function evaluation and
 integration while keeping halo model calculations outside LFKit.</p>
 <p class="rubric">Functions</p>

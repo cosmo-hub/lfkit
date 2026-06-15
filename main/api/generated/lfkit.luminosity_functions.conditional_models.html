@@ -350,10 +350,10 @@
 <p>Conditional luminosity function model utilities.</p>
 <p>This module provides generic conditional wrappers around LFKit luminosity
 function models.</p>
-<p>A conditional luminosity function has the form <code class="docutils literal notranslate"><span class="pre">Phi(M</span> <span class="pre">|</span> <span class="pre">x)</span></code>, where <code class="docutils literal notranslate"><span class="pre">M</span></code> is
-absolute magnitude and <code class="docutils literal notranslate"><span class="pre">x</span></code> is an external conditioning variable. Callable
-model parameters are evaluated at <code class="docutils literal notranslate"><span class="pre">x</span></code> before the wrapped luminosity function
-is evaluated.</p>
+<p>A conditional luminosity function has the form <code class="docutils literal notranslate"><span class="pre">Phi(M</span> <span class="pre">|</span> <span class="pre">x_1,</span> <span class="pre">x_2,</span> <span class="pre">...)</span></code>,
+where <code class="docutils literal notranslate"><span class="pre">M</span></code> is absolute magnitude and the <code class="docutils literal notranslate"><span class="pre">x_i</span></code> are external conditioning
+variables. Callable model parameters are evaluated at the supplied conditioning
+variables before the wrapped luminosity function is evaluated.</p>
 <p class="rubric">Functions</p>
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
