@@ -1,12 +1,12 @@
 """Conditional luminosity function integration utilities.
 
 This module provides numerical helpers for conditional luminosity functions of
-the form ``Phi(M | x)``, where ``M`` is absolute magnitude and ``x`` is an
-external conditioning variable.
+the form ``Phi(M | x_1, x_2, ...)``, where ``M`` is absolute magnitude and the
+``x_i`` are external conditioning variables.
 
-The conditioning variable is intentionally generic. It may represent halo mass,
-environment, galaxy type, richness, stellar mass, or any other quantity. This
-module does not implement HOD or halo-model machinery.
+The conditioning variables are intentionally generic. They may represent halo
+mass, redshift, environment, galaxy type, richness, stellar mass, or any other
+quantities. This module does not implement HOD or halo-model machinery.
 
 The goal is to support conditional luminosity function evaluation and
 integration while keeping halo model calculations outside LFKit.
@@ -15,6 +15,7 @@ integration while keeping halo model calculations outside LFKit.
 from __future__ import annotations
 
 from collections.abc import Callable
+from typing import Any
 
 import numpy as np
 
@@ -28,31 +29,46 @@ __all__ = [
 ]
 
 
+def _validate_conditions(conditions: tuple[FloatInput, ...]) -> tuple[FloatArray, ...]:
+    """Return validated conditioning-variable arrays."""
+    if not conditions:
+        raise ValueError("At least one conditioning variable is required.")
+
+    return tuple(
+        validate_array(condition, name=f"condition_{i}")
+        for i, condition in enumerate(conditions)
+    )
+
+
 def evaluate_conditional_luminosity_function(
     absolute_mag: FloatInput,
-    condition: FloatInput,
-    conditional_lf: Callable[[FloatArray, FloatArray], FloatArray],
+    *conditions: FloatInput,
+    conditional_lf: Callable[..., Any],
 ) -> FloatArray:
     """Evaluate a conditional luminosity function.
 
     Args:
         absolute_mag: Absolute magnitude values.
-        condition: Values of the conditioning variable.
-        conditional_lf: Callable returning ``Phi(M | x)`` for absolute
-            magnitude ``M`` and condition ``x``.
+        *conditions: Values of one or more conditioning variables.
+        conditional_lf: Callable returning ``Phi(M | x_1, x_2, ...)`` for
+            absolute magnitude ``M`` and the supplied conditioning variables.
 
     Returns:
         Conditional luminosity function values evaluated at the requested
         absolute magnitudes and conditioning values.
 
     Raises:
-        ValueError: If the inputs contain non-finite values, or if the evaluated
-            conditional luminosity function contains non-finite or negative values.
+        ValueError: If no conditioning variables are supplied, if the inputs
+            contain non-finite values, or if the evaluated conditional luminosity
+            function contains non-finite or negative values.
     """
     absolute_mag_arr = validate_array(absolute_mag, name="absolute_mag")
-    condition_arr = validate_array(condition, name="condition")
+    condition_arrays = _validate_conditions(conditions)
 
-    phi = np.asarray(conditional_lf(absolute_mag_arr, condition_arr), dtype=float)
+    phi = np.asarray(
+        conditional_lf(absolute_mag_arr, *condition_arrays),
+        dtype=float,
+    )
 
     if not np.all(np.isfinite(phi)):
         raise ValueError("conditional_lf returned NaN or infinite values.")
@@ -67,32 +83,32 @@ def evaluate_conditional_luminosity_function(
 
 def integrate_conditional_luminosity_function(
     absolute_mag: FloatInput,
-    condition: FloatInput,
-    conditional_lf: Callable[[FloatArray, FloatArray], FloatArray],
-    *,
+    *conditions: FloatInput,
+    conditional_lf: Callable[..., Any],
     axis: int = -1,
 ) -> FloatArray:
     """Integrate a conditional luminosity function over absolute magnitude.
 
     Args:
         absolute_mag: Absolute magnitude grid.
-        condition: Values of the conditioning variable.
-        conditional_lf: Callable returning ``Phi(M | x)`` for absolute
-            magnitude ``M`` and condition ``x``.
+        *conditions: Values of one or more conditioning variables.
+        conditional_lf: Callable returning ``Phi(M | x_1, x_2, ...)`` for
+            absolute magnitude ``M`` and the supplied conditioning variables.
         axis: Axis corresponding to the absolute magnitude grid.
 
     Returns:
         Conditional luminosity function integrated over absolute magnitude.
 
     Raises:
-        ValueError: If the inputs contain non-finite values, or if the evaluated
-            conditional luminosity function contains non-finite or negative values.
+        ValueError: If no conditioning variables are supplied, if the inputs
+            contain non-finite values, or if the evaluated conditional luminosity
+            function contains non-finite or negative values.
     """
     absolute_mag_arr = validate_array(absolute_mag, name="absolute_mag")
 
     phi = evaluate_conditional_luminosity_function(
-        absolute_mag=absolute_mag_arr,
-        condition=condition,
+        absolute_mag_arr,
+        *conditions,
         conditional_lf=conditional_lf,
     )
 
@@ -104,21 +120,20 @@ def integrate_conditional_luminosity_function(
 
 def integrate_weighted_conditional_luminosity_function(
     absolute_mag: FloatInput,
-    condition: FloatInput,
-    conditional_lf: Callable[[FloatArray, FloatArray], FloatArray],
-    weight: Callable[[FloatArray, FloatArray], FloatArray],
-    *,
+    *conditions: FloatInput,
+    conditional_lf: Callable[..., Any],
+    weight: Callable[..., Any],
     axis: int = -1,
 ) -> FloatArray:
     """Integrate a weighted conditional luminosity function.
 
     Args:
         absolute_mag: Absolute magnitude grid.
-        condition: Values of the conditioning variable.
-        conditional_lf: Callable returning ``Phi(M | x)`` for absolute
-            magnitude ``M`` and condition ``x``.
-        weight: Callable returning weights ``w(M, x)`` for absolute magnitude
-            ``M`` and condition ``x``.
+        *conditions: Values of one or more conditioning variables.
+        conditional_lf: Callable returning ``Phi(M | x_1, x_2, ...)`` for
+            absolute magnitude ``M`` and the supplied conditioning variables.
+        weight: Callable returning weights ``w(M, x_1, x_2, ...)`` for absolute
+            magnitude ``M`` and the supplied conditioning variables.
         axis: Axis corresponding to the absolute magnitude grid.
 
     Returns:
@@ -126,20 +141,24 @@ def integrate_weighted_conditional_luminosity_function(
         magnitude.
 
     Raises:
-        ValueError: If the inputs contain non-finite values, if the evaluated
-            conditional luminosity function contains non-finite or negative values,
-            or if the weights contain non-finite values.
+        ValueError: If no conditioning variables are supplied, if the inputs
+            contain non-finite values, if the evaluated conditional luminosity
+            function contains non-finite or negative values, or if the weights
+            contain non-finite values.
     """
     absolute_mag_arr = validate_array(absolute_mag, name="absolute_mag")
-    condition_arr = validate_array(condition, name="condition")
+    condition_arrays = _validate_conditions(conditions)
 
     phi = evaluate_conditional_luminosity_function(
-        absolute_mag=absolute_mag_arr,
-        condition=condition_arr,
+        absolute_mag_arr,
+        *condition_arrays,
         conditional_lf=conditional_lf,
     )
 
-    weight_arr = np.asarray(weight(absolute_mag_arr, condition_arr), dtype=float)
+    weight_arr = np.asarray(
+        weight(absolute_mag_arr, *condition_arrays),
+        dtype=float,
+    )
 
     if not np.all(np.isfinite(weight_arr)):
         raise ValueError("weight returned NaN or infinite values.")

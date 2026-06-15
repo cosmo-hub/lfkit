@@ -3,10 +3,10 @@
 This module provides generic conditional wrappers around LFKit luminosity
 function models.
 
-A conditional luminosity function has the form ``Phi(M | x)``, where ``M`` is
-absolute magnitude and ``x`` is an external conditioning variable. Callable
-model parameters are evaluated at ``x`` before the wrapped luminosity function
-is evaluated.
+A conditional luminosity function has the form ``Phi(M | x_1, x_2, ...)``,
+where ``M`` is absolute magnitude and the ``x_i`` are external conditioning
+variables. Callable model parameters are evaluated at the supplied conditioning
+variables before the wrapped luminosity function is evaluated.
 """
 
 from __future__ import annotations
@@ -27,40 +27,62 @@ def conditionalize_lf_model(
 ) -> Callable[..., FloatArray]:
     """Return a conditional version of a luminosity function model.
 
-    Callable keyword arguments are interpreted as parameter models and evaluated as
-    functions of ``condition``. Non-callable keyword arguments are passed through
-    unchanged.
+    Callable keyword arguments are interpreted as parameter models and evaluated
+    as functions of the supplied conditioning variables. Non-callable keyword
+    arguments are passed through unchanged.
 
     Args:
         lf_model: Luminosity function model to wrap.
 
     Returns:
         Conditional luminosity function model with signature
-        ``conditional_model(absolute_mag, condition, **kwargs)``.
+        ``conditional_model(absolute_mag, *conditions, **kwargs)``.
     """
 
     @wraps(lf_model)
     def conditional_model(
         absolute_mag: FloatInput,
-        condition: FloatInput,
+        *conditions: FloatInput,
         **kwargs: Any,
     ) -> FloatArray:
-        condition_arr = validate_array(condition, name="condition")
+        absolute_mag_arr = validate_array(absolute_mag, name="absolute_mag")
+        condition_arrays = _validate_conditions(conditions)
 
         evaluated_kwargs: dict[str, Any] = {}
         for name, value in kwargs.items():
             if callable(value):
                 evaluated_kwargs[name] = validate_array(
-                    value(condition_arr),
+                    value(*condition_arrays),
                     name=name,
                 )
             else:
                 evaluated_kwargs[name] = value
 
-        phi = lf_model(absolute_mag, **evaluated_kwargs)
+        phi = lf_model(absolute_mag_arr, **evaluated_kwargs)
         return _validate_lf_output(phi, name=lf_model.__name__)
 
     return conditional_model
+
+
+def _validate_conditions(conditions: tuple[FloatInput, ...]) -> tuple[FloatArray, ...]:
+    """Return validated conditioning variable arrays.
+
+    Args:
+        conditions: Conditioning variable values.
+
+    Returns:
+        Validated conditioning variable arrays.
+
+    Raises:
+        ValueError: If no conditioning variables are supplied.
+    """
+    if not conditions:
+        raise ValueError("At least one conditioning variable is required.")
+
+    return tuple(
+        validate_array(condition, name=f"condition_{i}")
+        for i, condition in enumerate(conditions)
+    )
 
 
 def _conditional_model_name(name: str) -> str:

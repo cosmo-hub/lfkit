@@ -21,10 +21,10 @@ __all__ = ["ConditionalLuminosityFunction"]
 class ConditionalLuminosityFunction(LuminosityFunction):
     """User-facing wrapper for conditional luminosity function models.
 
-    A conditional luminosity function evaluates ``Phi(M | x)``, where ``M`` is
-    absolute magnitude and ``x`` is an external conditioning variable such as
-    redshift, halo mass, environment, richness, stellar mass, or another
-    model-specific quantity.
+    A conditional luminosity function evaluates ``Phi(M | x_1, x_2, ...)``,
+    where ``M`` is absolute magnitude and the ``x_i`` are external conditioning
+    variables such as redshift, halo mass, environment, richness, stellar mass,
+    or other model-specific quantities.
 
     Instances can be created either with the generic constructor or with
     automatically generated model constructors.
@@ -33,34 +33,39 @@ class ConditionalLuminosityFunction(LuminosityFunction):
     def phi(
         self,
         absolute_mag: FloatInput,
-        condition: FloatInput | None = None,
+        *conditions: FloatInput,
     ) -> FloatArray:
         """Evaluate the conditional luminosity function.
 
         Args:
             absolute_mag: Absolute magnitude value or array.
-            condition: Conditioning variable value or array. The meaning of this
-                variable depends on the selected conditional luminosity function model.
+            *conditions: One or more conditioning variable values or arrays. The
+                meaning of each variable depends on the selected conditional
+                luminosity function model.
 
         Returns:
             Conditional luminosity function evaluated at ``absolute_mag`` and
-            ``condition``.
+            the supplied conditioning variables.
 
         Raises:
-            ValueError: If ``condition`` is not provided or the model is not registered
-                as a conditional luminosity function.
+            ValueError: If no conditioning variables are provided, or if the
+                model is not registered as a conditional luminosity function.
         """
         model_spec = get_conditional_lf_model(self.model)
 
-        if condition is None:
+        if not conditions:
             raise ValueError(
-                f"condition is required for conditional luminosity function "
-                f"model '{self.model}'."
+                f"At least one conditioning variable is required for conditional "
+                f"luminosity function model '{self.model}'."
             )
+
+        condition_arrays = tuple(
+            np.asarray(condition_value, dtype=float) for condition_value in conditions
+        )
 
         return model_spec.function(
             np.asarray(absolute_mag, dtype=float),
-            np.asarray(condition, dtype=float),
+            *condition_arrays,
             **self.parameters_dict,
         )
 
@@ -125,7 +130,8 @@ def _make_conditional_constructor(
         
         Examples:
             >>> clf = ConditionalLuminosityFunction.{model_name}(...)
-            >>> phi = clf.phi(absolute_mag=-20.0, condition=0.5)
+            >>> phi = clf.phi(-20.0, 0.5)
+            >>> phi = clf.phi(-20.0, halo_mass, redshift)
         """
 
     return constructor
@@ -138,8 +144,8 @@ def _parameters_from_signature(
 ) -> dict[str, Any]:
     """Build stored parameters from a function signature and user values.
 
-    Independent variables such as ``absolute_mag`` and ``condition`` are not stored
-    as model parameters. They are supplied later when calling
+    Independent variables such as ``absolute_mag`` and conditioning variables are
+    not stored as model parameters. They are supplied later when calling
     :meth:`ConditionalLuminosityFunction.phi`.
 
     Args:
@@ -156,8 +162,20 @@ def _parameters_from_signature(
     """
     payload: dict[str, Any] = {}
 
+    independent_names = {
+        "absolute_mag",
+        "condition",
+        "conditions",
+        "z",
+        "redshift",
+        "x",
+        "halo_mass",
+        "environment",
+        "galaxy_type",
+    }
+
     for name, parameter in signature.parameters.items():
-        if name in {"absolute_mag", "condition", "z", "redshift", "x"}:
+        if name in independent_names:
             continue
 
         if parameter.kind in {
