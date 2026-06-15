@@ -7,6 +7,11 @@ from lfkit.utils.validators import (
     validate_array,
     validate_luminosity_distance,
     validate_magnitude_range,
+    validate_2d_binned_grid,
+    validate_2d_tabulated_grid,
+    validate_binned_grid,
+    validate_strictly_increasing_1d,
+    validate_tabulated_grid,
 )
 
 
@@ -269,3 +274,390 @@ def test_validate_magnitude_range_rejects_negative_infinite_faint_bound() -> Non
     """Tests that negative infinite faint bounds are rejected."""
     with pytest.raises(ValueError, match="m_faint must be finite"):
         validate_magnitude_range(m_bright=-24.0, m_faint=-np.inf)
+
+
+def test_validate_strictly_increasing_1d_accepts_valid_grid() -> None:
+    """Tests that a valid increasing one-dimensional grid is accepted."""
+    result = validate_strictly_increasing_1d([0.0, 1.0, 2.0], name="z")
+
+    np.testing.assert_allclose(result, np.array([0.0, 1.0, 2.0]))
+    assert result.dtype == np.float64
+
+
+def test_validate_strictly_increasing_1d_rejects_multidimensional_input() -> None:
+    """Tests that multidimensional inputs are rejected."""
+    with pytest.raises(ValueError, match="z must be one-dimensional"):
+        validate_strictly_increasing_1d([[0.0, 1.0], [2.0, 3.0]], name="z")
+
+
+def test_validate_strictly_increasing_1d_rejects_too_few_values() -> None:
+    """Tests that grids with too few values are rejected."""
+    with pytest.raises(ValueError, match="z must contain at least 2 values"):
+        validate_strictly_increasing_1d([0.0], name="z")
+
+
+def test_validate_strictly_increasing_1d_respects_custom_min_size() -> None:
+    """Tests that the custom minimum size is enforced."""
+    with pytest.raises(ValueError, match="z must contain at least 3 values"):
+        validate_strictly_increasing_1d([0.0, 1.0], name="z", min_size=3)
+
+
+def test_validate_strictly_increasing_1d_rejects_equal_values() -> None:
+    """Tests that repeated values are rejected."""
+    with pytest.raises(ValueError, match="z must be strictly increasing"):
+        validate_strictly_increasing_1d([0.0, 1.0, 1.0], name="z")
+
+
+def test_validate_strictly_increasing_1d_rejects_decreasing_values() -> None:
+    """Tests that decreasing grids are rejected."""
+    with pytest.raises(ValueError, match="z must be strictly increasing"):
+        validate_strictly_increasing_1d([0.0, 2.0, 1.0], name="z")
+
+
+def test_validate_strictly_increasing_1d_rejects_negative_values_when_disallowed() -> None:
+    """Tests that negative grid values are rejected when requested."""
+    with pytest.raises(ValueError, match="z contains negative values"):
+        validate_strictly_increasing_1d([-1.0, 0.0, 1.0], name="z", allow_negative=False)
+
+
+def test_validate_tabulated_grid_accepts_valid_nonnegative_values() -> None:
+    """Tests that a valid tabulated grid is accepted."""
+    x, y = validate_tabulated_grid(
+        [0.0, 1.0, 2.0],
+        [0.0, 2.0, 4.0],
+        coordinate_name="x",
+        values_name="y",
+    )
+
+    np.testing.assert_allclose(x, np.array([0.0, 1.0, 2.0]))
+    np.testing.assert_allclose(y, np.array([0.0, 2.0, 4.0]))
+
+
+def test_validate_tabulated_grid_rejects_multidimensional_values() -> None:
+    """Tests that tabulated values must be one-dimensional."""
+    with pytest.raises(ValueError, match="y must be one-dimensional"):
+        validate_tabulated_grid(
+            [0.0, 1.0],
+            [[1.0, 2.0]],
+            coordinate_name="x",
+            values_name="y",
+        )
+
+
+def test_validate_tabulated_grid_rejects_length_mismatch() -> None:
+    """Tests that coordinate and value lengths must match."""
+    with pytest.raises(ValueError, match="x and y must have the same length"):
+        validate_tabulated_grid(
+            [0.0, 1.0, 2.0],
+            [1.0, 2.0],
+            coordinate_name="x",
+            values_name="y",
+        )
+
+
+def test_validate_tabulated_grid_rejects_negative_values_by_default() -> None:
+    """Tests that negative tabulated values are rejected by default."""
+    with pytest.raises(ValueError, match="y must be non-negative"):
+        validate_tabulated_grid(
+            [0.0, 1.0, 2.0],
+            [1.0, -1.0, 2.0],
+            coordinate_name="x",
+            values_name="y",
+        )
+
+
+def test_validate_tabulated_grid_rejects_zero_when_positive_values_required() -> None:
+    """Tests that zero values are rejected when positive values are required."""
+    with pytest.raises(ValueError, match="y must be positive"):
+        validate_tabulated_grid(
+            [0.0, 1.0, 2.0],
+            [1.0, 0.0, 2.0],
+            coordinate_name="x",
+            values_name="y",
+            positive_values=True,
+        )
+
+
+def test_validate_tabulated_grid_rejects_negative_coordinate_when_disallowed() -> None:
+    """Tests that negative coordinates are rejected when requested."""
+    with pytest.raises(ValueError, match="x contains negative values"):
+        validate_tabulated_grid(
+            [-1.0, 0.0, 1.0],
+            [1.0, 2.0, 3.0],
+            coordinate_name="x",
+            values_name="y",
+            allow_negative_coordinate=False,
+        )
+
+
+def test_validate_binned_grid_accepts_valid_nonnegative_values() -> None:
+    """Tests that a valid binned grid is accepted."""
+    edges, values = validate_binned_grid(
+        [0.0, 1.0, 2.0],
+        [0.0, 2.0],
+        edges_name="edges",
+        values_name="counts",
+    )
+
+    np.testing.assert_allclose(edges, np.array([0.0, 1.0, 2.0]))
+    np.testing.assert_allclose(values, np.array([0.0, 2.0]))
+
+
+def test_validate_binned_grid_rejects_multidimensional_values() -> None:
+    """Tests that binned values must be one-dimensional."""
+    with pytest.raises(ValueError, match="counts must be one-dimensional"):
+        validate_binned_grid(
+            [0.0, 1.0, 2.0],
+            [[1.0, 2.0]],
+            edges_name="edges",
+            values_name="counts",
+        )
+
+
+def test_validate_binned_grid_rejects_wrong_edge_count() -> None:
+    """Tests that bin edges must have one more value than bin values."""
+    with pytest.raises(
+        ValueError,
+        match="edges must have one more value than counts",
+    ):
+        validate_binned_grid(
+            [0.0, 1.0, 2.0],
+            [1.0, 2.0, 3.0],
+            edges_name="edges",
+            values_name="counts",
+        )
+
+
+def test_validate_binned_grid_rejects_negative_values_by_default() -> None:
+    """Tests that negative binned values are rejected by default."""
+    with pytest.raises(ValueError, match="counts must be non-negative"):
+        validate_binned_grid(
+            [0.0, 1.0, 2.0],
+            [1.0, -1.0],
+            edges_name="edges",
+            values_name="counts",
+        )
+
+
+def test_validate_binned_grid_rejects_zero_when_positive_values_required() -> None:
+    """Tests that zero binned values are rejected when positive values are required."""
+    with pytest.raises(ValueError, match="counts must be positive"):
+        validate_binned_grid(
+            [0.0, 1.0, 2.0],
+            [1.0, 0.0],
+            edges_name="edges",
+            values_name="counts",
+            positive_values=True,
+        )
+
+
+def test_validate_binned_grid_rejects_negative_edges_when_disallowed() -> None:
+    """Tests that negative bin edges are rejected when requested."""
+    with pytest.raises(ValueError, match="edges contains negative values"):
+        validate_binned_grid(
+            [-1.0, 0.0, 1.0],
+            [1.0, 2.0],
+            edges_name="edges",
+            values_name="counts",
+            allow_negative_edges=False,
+        )
+
+
+def test_validate_2d_tabulated_grid_accepts_valid_values() -> None:
+    """Tests that a valid two-dimensional tabulated grid is accepted."""
+    x, y, values = validate_2d_tabulated_grid(
+        [0.0, 1.0, 2.0],
+        [10.0, 20.0],
+        [[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]],
+        x_name="x",
+        y_name="y",
+        values_name="phi",
+    )
+
+    np.testing.assert_allclose(x, np.array([0.0, 1.0, 2.0]))
+    np.testing.assert_allclose(y, np.array([10.0, 20.0]))
+    np.testing.assert_allclose(values, np.array([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]))
+
+
+def test_validate_2d_tabulated_grid_rejects_non_2d_values() -> None:
+    """Tests that tabulated 2D values must be two-dimensional."""
+    with pytest.raises(ValueError, match="phi must be two-dimensional"):
+        validate_2d_tabulated_grid(
+            [0.0, 1.0],
+            [10.0, 20.0],
+            [1.0, 2.0],
+            x_name="x",
+            y_name="y",
+            values_name="phi",
+        )
+
+
+def test_validate_2d_tabulated_grid_rejects_wrong_shape() -> None:
+    """Tests that tabulated 2D values must match y-by-x shape."""
+    with pytest.raises(
+        ValueError,
+        match=r"phi must have shape \(y.size, x.size\)",
+    ):
+        validate_2d_tabulated_grid(
+            [0.0, 1.0, 2.0],
+            [10.0, 20.0],
+            [[1.0, 2.0], [3.0, 4.0]],
+            x_name="x",
+            y_name="y",
+            values_name="phi",
+        )
+
+
+def test_validate_2d_tabulated_grid_rejects_negative_values_by_default() -> None:
+    """Tests that negative tabulated 2D values are rejected by default."""
+    with pytest.raises(ValueError, match="phi must be non-negative"):
+        validate_2d_tabulated_grid(
+            [0.0, 1.0],
+            [10.0, 20.0],
+            [[1.0, -1.0], [2.0, 3.0]],
+            x_name="x",
+            y_name="y",
+            values_name="phi",
+        )
+
+
+def test_validate_2d_tabulated_grid_rejects_zero_when_positive_values_required() -> None:
+    """Tests that zero tabulated 2D values are rejected when positivity is required."""
+    with pytest.raises(ValueError, match="phi must be positive"):
+        validate_2d_tabulated_grid(
+            [0.0, 1.0],
+            [10.0, 20.0],
+            [[1.0, 0.0], [2.0, 3.0]],
+            x_name="x",
+            y_name="y",
+            values_name="phi",
+            positive_values=True,
+        )
+
+
+def test_validate_2d_tabulated_grid_rejects_negative_x_when_disallowed() -> None:
+    """Tests that negative x coordinates are rejected when requested."""
+    with pytest.raises(ValueError, match="x contains negative values"):
+        validate_2d_tabulated_grid(
+            [-1.0, 0.0],
+            [10.0, 20.0],
+            [[1.0, 2.0], [3.0, 4.0]],
+            x_name="x",
+            y_name="y",
+            values_name="phi",
+            allow_negative_x=False,
+        )
+
+
+def test_validate_2d_tabulated_grid_rejects_negative_y_when_disallowed() -> None:
+    """Tests that negative y coordinates are rejected when requested."""
+    with pytest.raises(ValueError, match="y contains negative values"):
+        validate_2d_tabulated_grid(
+            [0.0, 1.0],
+            [-10.0, 20.0],
+            [[1.0, 2.0], [3.0, 4.0]],
+            x_name="x",
+            y_name="y",
+            values_name="phi",
+            allow_negative_y=False,
+        )
+
+
+def test_validate_2d_binned_grid_accepts_valid_values() -> None:
+    """Tests that a valid two-dimensional binned grid is accepted."""
+    x_edges, y_edges, values = validate_2d_binned_grid(
+        [0.0, 1.0, 2.0],
+        [10.0, 20.0, 30.0],
+        [[1.0, 2.0], [3.0, 4.0]],
+        x_edges_name="x_edges",
+        y_edges_name="y_edges",
+        values_name="counts",
+    )
+
+    np.testing.assert_allclose(x_edges, np.array([0.0, 1.0, 2.0]))
+    np.testing.assert_allclose(y_edges, np.array([10.0, 20.0, 30.0]))
+    np.testing.assert_allclose(values, np.array([[1.0, 2.0], [3.0, 4.0]]))
+
+
+def test_validate_2d_binned_grid_rejects_non_2d_values() -> None:
+    """Tests that binned 2D values must be two-dimensional."""
+    with pytest.raises(ValueError, match="counts must be two-dimensional"):
+        validate_2d_binned_grid(
+            [0.0, 1.0, 2.0],
+            [10.0, 20.0, 30.0],
+            [1.0, 2.0],
+            x_edges_name="x_edges",
+            y_edges_name="y_edges",
+            values_name="counts",
+        )
+
+
+def test_validate_2d_binned_grid_rejects_wrong_shape() -> None:
+    """Tests that binned 2D values must match y-bin by x-bin shape."""
+    with pytest.raises(
+        ValueError,
+        match=r"counts must have shape \(y_edges.size - 1, x_edges.size - 1\)",
+    ):
+        validate_2d_binned_grid(
+            [0.0, 1.0, 2.0],
+            [10.0, 20.0, 30.0],
+            [[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]],
+            x_edges_name="x_edges",
+            y_edges_name="y_edges",
+            values_name="counts",
+        )
+
+
+def test_validate_2d_binned_grid_rejects_negative_values_by_default() -> None:
+    """Tests that negative binned 2D values are rejected by default."""
+    with pytest.raises(ValueError, match="counts must be non-negative"):
+        validate_2d_binned_grid(
+            [0.0, 1.0, 2.0],
+            [10.0, 20.0, 30.0],
+            [[1.0, -1.0], [2.0, 3.0]],
+            x_edges_name="x_edges",
+            y_edges_name="y_edges",
+            values_name="counts",
+        )
+
+
+def test_validate_2d_binned_grid_rejects_zero_when_positive_values_required() -> None:
+    """Tests that zero binned 2D values are rejected when positivity is required."""
+    with pytest.raises(ValueError, match="counts must be positive"):
+        validate_2d_binned_grid(
+            [0.0, 1.0, 2.0],
+            [10.0, 20.0, 30.0],
+            [[1.0, 0.0], [2.0, 3.0]],
+            x_edges_name="x_edges",
+            y_edges_name="y_edges",
+            values_name="counts",
+            positive_values=True,
+        )
+
+
+def test_validate_2d_binned_grid_rejects_negative_x_edges_when_disallowed() -> None:
+    """Tests that negative x bin edges are rejected when requested."""
+    with pytest.raises(ValueError, match="x_edges contains negative values"):
+        validate_2d_binned_grid(
+            [-1.0, 0.0, 1.0],
+            [10.0, 20.0, 30.0],
+            [[1.0, 2.0], [3.0, 4.0]],
+            x_edges_name="x_edges",
+            y_edges_name="y_edges",
+            values_name="counts",
+            allow_negative_x_edges=False,
+        )
+
+
+def test_validate_2d_binned_grid_rejects_negative_y_edges_when_disallowed() -> None:
+    """Tests that negative y bin edges are rejected when requested."""
+    with pytest.raises(ValueError, match="y_edges contains negative values"):
+        validate_2d_binned_grid(
+            [0.0, 1.0, 2.0],
+            [-10.0, 20.0, 30.0],
+            [[1.0, 2.0], [3.0, 4.0]],
+            x_edges_name="x_edges",
+            y_edges_name="y_edges",
+            values_name="counts",
+            allow_negative_y_edges=False,
+        )
