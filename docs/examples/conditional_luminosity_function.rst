@@ -387,10 +387,12 @@ The model therefore changes both in amplitude and in shape.
        cmap_range=(0.0, 0.2),
    )
 
-   lf = ConditionalLuminosityFunction.schechter(
+   lf = ConditionalLuminosityFunction.double_schechter(
        phi_star=lambda z: 1.2e-3 * (1.0 + z) ** 0.5,
        m_star=lambda z: -20.3 - 0.5 * (z - 0.1),
        alpha=lambda z: -1.15 - 0.10 * z,
+       beta=lambda z: -0.45 - 0.05 * z,
+       m_transition=lambda z: -19.0 - 0.3 * (z - 0.1),
    )
 
    fig, ax = plt.subplots(figsize=(7.0, 5.0))

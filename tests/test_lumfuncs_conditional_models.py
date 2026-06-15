@@ -3,7 +3,6 @@
 import numpy as np
 import pytest
 
-
 from lfkit.luminosity_functions.conditional_models import (
     __all__,
     conditionalize_lf_model,
@@ -26,8 +25,8 @@ def test_conditional_schechter_matches_schechter_for_scalar_parameters() -> None
     condition = np.array([0.1, 0.2, 0.3])
 
     result = conditional_schechter(
-        absolute_mag=absolute_mag,
-        condition=condition,
+        absolute_mag,
+        condition,
         phi_star=1.0e-3,
         m_star=-21.0,
         alpha=-1.1,
@@ -51,8 +50,8 @@ def test_conditional_schechter_accepts_callable_parameters() -> None:
     condition = np.array([0.0, 1.0, 2.0])
 
     result = conditional_schechter(
-        absolute_mag=absolute_mag,
-        condition=condition,
+        absolute_mag,
+        condition,
         phi_star=lambda x: 1.0e-3 * (1.0 + x),
         m_star=lambda x: -21.0 - 0.1 * x,
         alpha=lambda x: -1.0 - 0.05 * x,
@@ -72,10 +71,10 @@ def test_conditional_schechter_accepts_callable_parameters() -> None:
 def test_conditional_schechter_rejects_non_finite_condition() -> None:
     """Tests that non-finite condition values are rejected."""
 
-    with pytest.raises(ValueError, match="condition contains NaN or infinite values."):
+    with pytest.raises(ValueError, match="condition_0 contains NaN or infinite values."):
         conditional_schechter(
-            absolute_mag=[-22.0, -21.0, -20.0],
-            condition=[0.0, np.nan, 1.0],
+            [-22.0, -21.0, -20.0],
+            [0.0, np.nan, 1.0],
             phi_star=1.0e-3,
             m_star=-21.0,
             alpha=-1.1,
@@ -87,8 +86,8 @@ def test_conditional_schechter_rejects_non_finite_callable_parameter() -> None:
 
     with pytest.raises(ValueError, match="phi_star contains NaN or infinite values."):
         conditional_schechter(
-            absolute_mag=[-22.0, -21.0, -20.0],
-            condition=[0.0, 1.0, 2.0],
+            [-22.0, -21.0, -20.0],
+            [0.0, 1.0, 2.0],
             phi_star=lambda x: np.array([1.0e-3, np.nan, 2.0e-3]),
             m_star=-21.0,
             alpha=-1.1,
@@ -102,8 +101,8 @@ def test_conditional_double_schechter_matches_double_schechter() -> None:
     condition = np.array([0.0, 1.0, 2.0])
 
     result = conditional_double_schechter(
-        absolute_mag=absolute_mag,
-        condition=condition,
+        absolute_mag,
+        condition,
         phi_star=1.0e-3,
         m_star=-21.0,
         alpha=-1.0,
@@ -131,8 +130,8 @@ def test_conditional_double_schechter_accepts_callable_parameters() -> None:
     condition = np.array([0.0, 1.0, 2.0])
 
     result = conditional_double_schechter(
-        absolute_mag=absolute_mag,
-        condition=condition,
+        absolute_mag,
+        condition,
         phi_star=lambda x: 1.0e-3 * (1.0 + x),
         m_star=lambda x: -21.0 - 0.1 * x,
         alpha=-1.0,
@@ -163,8 +162,8 @@ def test_conditional_lognormal_lf_matches_expected_formula() -> None:
     amplitude = np.array([1.0, 2.0, 3.0])
 
     result = conditional_lognormal_lf(
-        absolute_mag=absolute_mag,
-        condition=condition,
+        absolute_mag,
+        condition,
         mean_absolute_mag=mean_absolute_mag,
         sigma_log_luminosity=sigma_log_luminosity,
         amplitude=amplitude,
@@ -189,8 +188,8 @@ def test_conditional_lognormal_lf_accepts_callable_parameters() -> None:
     condition = np.array([0.0, 1.0, 2.0])
 
     result = conditional_lognormal_lf(
-        absolute_mag=absolute_mag,
-        condition=condition,
+        absolute_mag,
+        condition,
         mean_absolute_mag=lambda x: -21.0 - 0.1 * x,
         sigma_log_luminosity=lambda x: 0.2 + 0.01 * x,
         amplitude=lambda x: 1.0 + x,
@@ -217,8 +216,8 @@ def test_conditional_lognormal_lf_rejects_zero_sigma() -> None:
 
     with pytest.raises(ValueError, match="sigma_log_luminosity must be positive."):
         conditional_lognormal_lf(
-            absolute_mag=[-22.0, -21.0, -20.0],
-            condition=[0.0, 1.0, 2.0],
+            [-22.0, -21.0, -20.0],
+            [0.0, 1.0, 2.0],
             mean_absolute_mag=-21.0,
             sigma_log_luminosity=0.0,
             amplitude=1.0,
@@ -230,8 +229,8 @@ def test_conditional_lognormal_lf_rejects_negative_sigma() -> None:
 
     with pytest.raises(ValueError, match="sigma_log_luminosity must be positive."):
         conditional_lognormal_lf(
-            absolute_mag=[-22.0, -21.0, -20.0],
-            condition=[0.0, 1.0, 2.0],
+            [-22.0, -21.0, -20.0],
+            [0.0, 1.0, 2.0],
             mean_absolute_mag=-21.0,
             sigma_log_luminosity=-0.2,
             amplitude=1.0,
@@ -243,8 +242,8 @@ def test_conditional_lognormal_lf_rejects_negative_amplitude() -> None:
 
     with pytest.raises(ValueError, match="amplitude must be non-negative."):
         conditional_lognormal_lf(
-            absolute_mag=[-22.0, -21.0, -20.0],
-            condition=[0.0, 1.0, 2.0],
+            [-22.0, -21.0, -20.0],
+            [0.0, 1.0, 2.0],
             mean_absolute_mag=-21.0,
             sigma_log_luminosity=0.2,
             amplitude=-1.0,
@@ -258,8 +257,8 @@ def test_conditional_two_component_lf_equals_sum_with_explicit_modified_m_star()
     condition = np.array([0.0, 1.0, 2.0])
 
     result = conditional_two_component_lf(
-        absolute_mag=absolute_mag,
-        condition=condition,
+        absolute_mag,
+        condition,
         lognormal_mean_absolute_mag=-21.0,
         lognormal_sigma_log_luminosity=0.2,
         modified_phi_star=1.0e-3,
@@ -291,8 +290,8 @@ def test_conditional_two_component_lf_derives_modified_m_star() -> None:
     modified_luminosity_fraction = np.array([0.5, 0.6, 0.7])
 
     result = conditional_two_component_lf(
-        absolute_mag=absolute_mag,
-        condition=condition,
+        absolute_mag,
+        condition,
         lognormal_mean_absolute_mag=lognormal_mean_absolute_mag,
         lognormal_sigma_log_luminosity=0.2,
         modified_phi_star=1.0e-3,
@@ -325,8 +324,8 @@ def test_conditional_two_component_lf_rejects_zero_luminosity_fraction() -> None
         match="modified_luminosity_fraction must be positive.",
     ):
         conditional_two_component_lf(
-            absolute_mag=[-22.0, -21.0, -20.0],
-            condition=[0.0, 1.0, 2.0],
+            [-22.0, -21.0, -20.0],
+            [0.0, 1.0, 2.0],
             lognormal_mean_absolute_mag=-21.0,
             lognormal_sigma_log_luminosity=0.2,
             modified_phi_star=1.0e-3,
@@ -345,8 +344,8 @@ def test_conditional_two_component_lf_rejects_negative_luminosity_fraction() -> 
         match="modified_luminosity_fraction must be positive.",
     ):
         conditional_two_component_lf(
-            absolute_mag=[-22.0, -21.0, -20.0],
-            condition=[0.0, 1.0, 2.0],
+            [-22.0, -21.0, -20.0],
+            [0.0, 1.0, 2.0],
             lognormal_mean_absolute_mag=-21.0,
             lognormal_sigma_log_luminosity=0.2,
             modified_phi_star=1.0e-3,
@@ -362,8 +361,8 @@ def test_conditional_two_component_lf_propagates_invalid_lognormal_component() -
 
     with pytest.raises(ValueError, match="sigma_log_luminosity must be positive."):
         conditional_two_component_lf(
-            absolute_mag=[-22.0, -21.0, -20.0],
-            condition=[0.0, 1.0, 2.0],
+            [-22.0, -21.0, -20.0],
+            [0.0, 1.0, 2.0],
             lognormal_mean_absolute_mag=-21.0,
             lognormal_sigma_log_luminosity=0.0,
             modified_phi_star=1.0e-3,
@@ -378,8 +377,8 @@ def test_conditional_two_component_lf_propagates_invalid_modified_component() ->
 
     with pytest.raises(ValueError, match="phi_star must be non-negative."):
         conditional_two_component_lf(
-            absolute_mag=[-22.0, -21.0, -20.0],
-            condition=[0.0, 1.0, 2.0],
+            [-22.0, -21.0, -20.0],
+            [0.0, 1.0, 2.0],
             lognormal_mean_absolute_mag=-21.0,
             lognormal_sigma_log_luminosity=0.2,
             modified_phi_star=-1.0e-3,
@@ -411,8 +410,8 @@ def test_conditionalize_lf_model_passes_non_callable_kwargs_unchanged() -> None:
     conditional_toy_lf = conditionalize_lf_model(toy_lf)
 
     result = conditional_toy_lf(
-        absolute_mag=absolute_mag,
-        condition=np.array([0.0, 1.0, 2.0]),
+        absolute_mag,
+        np.array([0.0, 1.0, 2.0]),
         amplitude=2.0,
         offset=3.0,
     )
@@ -434,8 +433,8 @@ def test_conditionalize_lf_model_rejects_negative_wrapped_output() -> None:
         match="toy_lf returned negative values, which are not allowed.",
     ):
         conditional_toy_lf(
-            absolute_mag=[-22.0, -21.0, -20.0],
-            condition=[0.0, 1.0, 2.0],
+            [-22.0, -21.0, -20.0],
+            [0.0, 1.0, 2.0],
             amplitude=1.0,
         )
 
@@ -450,8 +449,8 @@ def test_conditionalize_lf_model_rejects_non_finite_wrapped_output() -> None:
 
     with pytest.raises(ValueError, match="toy_lf contains NaN or infinite values."):
         conditional_toy_lf(
-            absolute_mag=[-22.0, -21.0, -20.0],
-            condition=[0.0, 1.0, 2.0],
+            [-22.0, -21.0, -20.0],
+            [0.0, 1.0, 2.0],
             amplitude=1.0,
         )
 
@@ -470,8 +469,8 @@ def test_conditional_schechter_accepts_scalar_condition_with_callable_parameter(
     """Tests callable parameter evaluation for scalar condition input."""
 
     result = conditional_schechter(
-        absolute_mag=np.array([-22.0, -21.0, -20.0]),
-        condition=2.0,
+        np.array([-22.0, -21.0, -20.0]),
+        2.0,
         phi_star=lambda x: 1.0e-3 * (1.0 + x),
         m_star=-21.0,
         alpha=-1.1,
