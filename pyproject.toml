@@ -194,3 +194,11 @@ commands = [
     "{tox_root}/docs/_build/html/index.html",
   ],
 ]
+
+[tool.tox.env.sync-release-metadata]
+description = "Sync CITATION.cff and README.md release metadata"
+skip_install = true
+deps = ["setuptools-scm>=8"]
+commands = [
+  ["python", "tools/sync_release_metadata.py"],
+]
