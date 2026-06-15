@@ -38,6 +38,9 @@ __all__ = [
     "double_schechter_from_m",
     "schechter_cumulative",
     "schechter_cumulative_evolving",
+    "modified_schechter",
+    "truncated_schechter",
+    "multi_schechter",
 ]
 
 
@@ -673,3 +676,122 @@ def schechter_cumulative_evolving(
 
     n_total = np.asarray(phi_star * total_gamma, dtype=float)
     return np.asarray(n_total - n_brighter, dtype=float)
+
+
+def modified_schechter(
+    absolute_mag: FloatInput,
+    *,
+    phi_star: ParameterValue,
+    m_star: ParameterValue,
+    alpha: ParameterValue,
+    beta: ParameterValue,
+) -> FloatArray:
+    r"""Return a modified Schechter luminosity function in magnitude space."""
+    absolute_mag = validate_array(absolute_mag, name="absolute_mag")
+    phi_star_arr = validate_array(phi_star, name="phi_star")
+    alpha_arr = validate_array(alpha, name="alpha")
+    beta_arr = validate_array(beta, name="beta")
+
+    if np.any(phi_star_arr < 0):
+        raise ValueError("phi_star must be non-negative.")
+
+    if np.any(phi_star_arr == 0):
+        warnings.warn("phi_star is zero; LF will be identically zero.", stacklevel=2)
+
+    if np.any(beta_arr <= 0.0):
+        raise ValueError("beta must be positive.")
+
+    x = luminosity_ratio(absolute_mag, m_star)
+    x = np.clip(x, 1e-300, 1e300)
+
+    prefactor = 0.4 * np.log(10.0) * beta_arr * phi_star_arr
+
+    return np.asarray(
+        prefactor * x ** (alpha_arr + 1.0) * np.exp(-(x**beta_arr)),
+        dtype=float,
+    )
+
+
+def truncated_schechter(
+    absolute_mag: FloatInput,
+    *,
+    phi_star: ParameterValue,
+    m_star: ParameterValue,
+    alpha: ParameterValue,
+    m_bright: float | None = None,
+    m_faint: float | None = None,
+) -> FloatArray:
+    r"""Return a Schechter luminosity function truncated outside magnitude limits."""
+    absolute_mag_arr = validate_array(absolute_mag, name="absolute_mag")
+
+    if (m_bright is not None) and (not np.isfinite(m_bright)):
+        raise ValueError("m_bright must be finite when provided.")
+
+    if (m_faint is not None) and (not np.isfinite(m_faint)):
+        raise ValueError("m_faint must be finite when provided.")
+
+    if (m_bright is not None) and (m_faint is not None) and (m_bright >= m_faint):
+        raise ValueError("m_bright must be less than m_faint.")
+
+    phi = schechter(
+        absolute_mag_arr,
+        phi_star=phi_star,
+        m_star=m_star,
+        alpha=alpha,
+    )
+
+    mask = np.ones_like(absolute_mag_arr, dtype=bool)
+
+    if m_bright is not None:
+        mask &= absolute_mag_arr >= m_bright
+
+    if m_faint is not None:
+        mask &= absolute_mag_arr <= m_faint
+
+    return np.asarray(np.where(mask, phi, 0.0), dtype=float)
+
+
+def multi_schechter(
+    absolute_mag: FloatInput,
+    *,
+    phi_stars: FloatInput,
+    m_stars: FloatInput,
+    alphas: FloatInput,
+) -> FloatArray:
+    r"""Return a sum of Schechter luminosity function components."""
+    absolute_mag_arr = validate_array(absolute_mag, name="absolute_mag")
+    phi_stars_arr = validate_array(phi_stars, name="phi_stars")
+    m_stars_arr = validate_array(m_stars, name="m_stars")
+    alphas_arr = validate_array(alphas, name="alphas")
+
+    if not (phi_stars_arr.shape == m_stars_arr.shape == alphas_arr.shape):
+        raise ValueError("phi_stars, m_stars, and alphas must have matching shapes.")
+
+    if phi_stars_arr.ndim != 1:
+        raise ValueError("phi_stars, m_stars, and alphas must be 1D arrays.")
+
+    if np.any(phi_stars_arr < 0):
+        raise ValueError("phi_stars must be non-negative.")
+
+    if np.any(phi_stars_arr == 0):
+        warnings.warn(
+            "At least one phi_star is zero; that component is identically zero.",
+            stacklevel=2,
+        )
+
+    total = np.zeros_like(absolute_mag_arr, dtype=float)
+
+    for phi_star, m_star, alpha in zip(
+        phi_stars_arr,
+        m_stars_arr,
+        alphas_arr,
+        strict=True,
+    ):
+        total += schechter(
+            absolute_mag_arr,
+            phi_star=phi_star,
+            m_star=m_star,
+            alpha=alpha,
+        )
+
+    return np.asarray(total, dtype=float)

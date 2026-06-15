@@ -320,9 +320,11 @@ def luminosity_weight(
         raise ValueError("m_reference must be finite.")
 
     absolute_mag_arr = validate_array(absolute_mag, name="absolute_mag")
-    weight = 10.0 ** (-0.4 * (absolute_mag_arr - m_reference))
-    weight = np.clip(weight, 1e-300, 1e300)
 
+    exponent = -0.4 * (absolute_mag_arr - m_reference)
+    exponent = np.clip(exponent, -300.0, 300.0)
+
+    weight = 10.0**exponent
     return np.asarray(weight, dtype=float)
 
 
