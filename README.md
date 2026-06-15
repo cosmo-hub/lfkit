@@ -61,7 +61,7 @@ If you use **LFKit** in your research, please cite it.
   title   = {LFKit: Luminosity functions and photometric corrections toolkit},
   author  = {Šarčević, Nikolina},
   year    = {2026},
-  version = {0.1.4},
+  version = {0.5.1.dev0+g8dbb26ee5.d20260615},
   url     = {https://github.com/cosmology-kit/lfkit}
 }
 ```
