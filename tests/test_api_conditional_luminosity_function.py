@@ -7,6 +7,7 @@ import pytest
 
 from lfkit.api.conditional_luminosity_function import ConditionalLuminosityFunction
 from lfkit.api.luminosity_function import LuminosityFunction
+from lfkit.luminosity_functions.registry import CONDITIONAL_LF_MODELS
 
 
 def test_conditional_schechter_constructor_stores_parameters():
@@ -87,9 +88,9 @@ def test_lognormal_constructor_uses_default_amplitude():
     assert lf.meta == {}
 
 
-def test_modified_schechter_constructor_is_not_registered() -> None:
-    """Tests that modified Schechter is not a standalone conditional model."""
-    assert not hasattr(ConditionalLuminosityFunction, "modified_schechter")
+def test_luminosity_cutoff_modifier_is_not_registered() -> None:
+    """Tests that luminosity cutoff modifiers are not registered as conditional LF models."""
+    assert "apply_luminosity_cutoff" not in CONDITIONAL_LF_MODELS
 
 
 def test_two_component_constructor_stores_parameters():
@@ -205,3 +206,25 @@ def test_constructor_rejects_unexpected_parameter():
             alpha=-1.1,
             bad_parameter=123,
         )
+
+
+@pytest.mark.parametrize(
+    "name",
+    [
+        "saunders",
+        "evolving_saunders",
+        "double_saunders",
+        "generalized_saunders",
+        "gamma",
+        "generalized_gamma",
+        "tabulated",
+        "binned",
+        "redshift_tabulated",
+        "redshift_binned",
+        "distance_tabulated",
+        "distance_binned",
+    ],
+)
+def test_available_models_includes_extended_model_families(name: str) -> None:
+    """Tests that extended model families are available as conditional models."""
+    assert name in ConditionalLuminosityFunction.available_models()

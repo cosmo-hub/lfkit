@@ -435,3 +435,29 @@ def test_get_lf_from_m_model_raises_for_unknown_name(
         match="phi_from_m is not defined for luminosity function model 'bad'",
     ):
         registry.get_lf_from_m_model("bad")
+
+
+@pytest.mark.parametrize(
+    "name",
+    [
+        "saunders",
+        "evolving_saunders",
+        "double_saunders",
+        "generalized_saunders",
+    ],
+)
+def test_saunders_models_are_registered(name: str) -> None:
+    """Tests that Saunders models are discovered by the LF registry."""
+    assert name in registry.LF_MODELS
+
+
+@pytest.mark.parametrize(
+    "name",
+    [
+        "gamma",
+        "generalized_gamma",
+    ],
+)
+def test_gamma_models_are_registered(name: str) -> None:
+    """Tests that gamma models are discovered by the LF registry."""
+    assert name in registry.LF_MODELS

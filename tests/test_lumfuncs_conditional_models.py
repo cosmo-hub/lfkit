@@ -461,8 +461,9 @@ def test_conditional_model_registry_exports_generated_names() -> None:
 
     assert "conditional_schechter" in __all__
     assert "conditional_double_schechter" in __all__
-    assert "conditional_lognormal_lf" in __all__
-    assert "conditional_two_component_lf" in __all__
+    assert "conditional_lognormal" in __all__
+    assert "conditional_two_component" in __all__
+    assert "conditional_distance_binned" in __all__
 
 
 def test_conditional_schechter_accepts_scalar_condition_with_callable_parameter() -> None:

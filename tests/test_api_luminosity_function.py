@@ -704,16 +704,82 @@ def _minimal_parameter_payload(model_name, function):
             "alpha_kwargs": {"alpha": -1.1},
         }
 
+    if model_name == "tabulated":
+        return {
+            "magnitude_grid": np.array([-24.0, -22.0, -20.0, -18.0]),
+            "phi_grid": np.array([1.0e-5, 5.0e-4, 1.0e-3, 2.0e-4]),
+        }
+
+    if model_name == "binned":
+        return {
+            "magnitude_bin_edges": np.array([-24.0, -22.0, -20.0, -18.0]),
+            "phi_bin_values": np.array([1.0e-5, 5.0e-4, 1.0e-3]),
+        }
+
+    if model_name == "redshift_tabulated":
+        return {
+            "magnitude_grid": np.array([-24.0, -22.0, -20.0, -18.0]),
+            "redshift_grid": np.array([0.1, 0.5, 1.0]),
+            "phi_grid": np.array(
+                [
+                    [1.0e-5, 5.0e-4, 1.0e-3, 2.0e-4],
+                    [2.0e-5, 6.0e-4, 1.1e-3, 3.0e-4],
+                    [3.0e-5, 7.0e-4, 1.2e-3, 4.0e-4],
+                ]
+            ),
+        }
+
+    if model_name == "redshift_binned":
+        return {
+            "magnitude_bin_edges": np.array([-24.0, -22.0, -20.0, -18.0]),
+            "redshift_bin_edges": np.array([0.1, 0.5, 1.0, 1.5]),
+            "phi_bin_values": np.array(
+                [
+                    [1.0e-5, 5.0e-4, 1.0e-3],
+                    [2.0e-5, 6.0e-4, 1.1e-3],
+                    [3.0e-5, 7.0e-4, 1.2e-3],
+                ]
+            ),
+        }
+
+    if model_name == "distance_tabulated":
+        return {
+            "magnitude_grid": np.array([-24.0, -22.0, -20.0, -18.0]),
+            "distance_grid": np.array([100.0, 500.0, 1000.0]),
+            "comoving_distance": 500.0,
+            "phi_grid": np.array(
+                [
+                    [1.0e-5, 5.0e-4, 1.0e-3, 2.0e-4],
+                    [2.0e-5, 6.0e-4, 1.1e-3, 3.0e-4],
+                    [3.0e-5, 7.0e-4, 1.2e-3, 4.0e-4],
+                ]
+            ),
+        }
+
+    if model_name == "distance_binned":
+        return {
+            "magnitude_bin_edges": np.array([-24.0, -22.0, -20.0, -18.0]),
+            "distance_bin_edges": np.array([100.0, 500.0, 1000.0, 1500.0]),
+            "comoving_distance": 500.0,
+            "phi_bin_values": np.array(
+                [
+                    [1.0e-5, 5.0e-4, 1.0e-3],
+                    [2.0e-5, 6.0e-4, 1.1e-3],
+                    [3.0e-5, 7.0e-4, 1.2e-3],
+                ]
+            ),
+        }
+
     payload = {}
 
     for name, parameter in inspect.signature(function).parameters.items():
-        if name in {"absolute_mag", "z"}:
+        if name in {"absolute_mag", "z", "redshift"}:
             continue
 
         if parameter.default is not inspect.Parameter.empty:
             continue
 
-        if name in {"phi_star", "modified_phi_star"}:
+        if name in {"phi_star", "modified_phi_star", "phi_star_1", "phi_star_2"}:
             payload[name] = 1.0e-3
         elif name == "log_phi_star":
             payload[name] = -3.0
@@ -723,28 +789,42 @@ def _minimal_parameter_payload(model_name, function):
             "mean_absolute_mag",
             "lognormal_mean_absolute_mag",
             "m_transition",
+            "m_star_1",
+            "m_star_2",
         }:
             payload[name] = -20.5
         elif name in {
             "alpha",
-            "beta",
             "alpha_faint",
             "alpha_bright",
             "modified_alpha",
+            "alpha_1",
+            "alpha_2",
         }:
             payload[name] = -1.1
+        elif name == "beta":
+            payload[name] = 1.0
+        elif name == "phi_stars":
+            payload[name] = np.array([1.0e-3, 5.0e-4])
+        elif name == "m_stars":
+            payload[name] = np.array([-20.5, -19.5])
+        elif name == "alphas":
+            payload[name] = np.array([-1.1, -0.5])
         elif name in {
             "sigma_absolute_mag",
             "sigma_log_luminosity",
             "lognormal_sigma_log_luminosity",
+            "sigma",
+            "sigma_1",
+            "sigma_2",
         }:
-            payload[name] = 0.2
+            payload[name] = 0.7
         elif name in {"amplitude", "lognormal_amplitude"}:
             payload[name] = 1.0
         elif name in {"fraction", "modified_luminosity_fraction"}:
             payload[name] = 0.5
         else:
-            pytest.skip(f"No test default for required parameter {name!r}")
+            pytest.fail(f"No test default for required parameter {name!r}")
 
     return payload
 
@@ -795,3 +875,26 @@ def test_registered_luminosity_function_models_expose_generic_integrals(model_na
 
     for name in expected_methods:
         assert callable(getattr(lf.integrals, name))
+
+
+def test_available_models_includes_extended_model_families() -> None:
+    """Tests that available models includes extended model families."""
+    models = LuminosityFunction.available_models()
+
+    expected = [
+        "gamma",
+        "generalized_gamma",
+        "saunders",
+        "evolving_saunders",
+        "double_saunders",
+        "generalized_saunders",
+        "tabulated",
+        "binned",
+        "redshift_tabulated",
+        "redshift_binned",
+        "distance_tabulated",
+        "distance_binned",
+    ]
+
+    for name in expected:
+        assert name in models

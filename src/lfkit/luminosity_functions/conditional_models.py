@@ -72,6 +72,9 @@ def _conditional_model_name(name: str) -> str:
     Returns:
         Conditional model name prefixed with ``"conditional_"``.
     """
+    if name.endswith("_lf"):
+        name = name.removesuffix("_lf")
+
     return f"conditional_{name}"
 
 

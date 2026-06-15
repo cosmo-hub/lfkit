@@ -8,6 +8,9 @@ from lfkit.luminosity_functions.models.schechter import (
     schechter,
     evolving_schechter,
     double_schechter,
+    modified_schechter,
+    truncated_schechter,
+    multi_schechter,
     schechter_cumulative,
     schechter_cumulative_evolving,
 )
@@ -473,3 +476,340 @@ def test_double_schechter_accepts_array_phi_star() -> None:
 
     assert result.shape == (2,)
     assert np.all(result >= 0.0)
+
+
+def test_modified_schechter_matches_schechter_when_beta_is_one() -> None:
+    """Tests that modified_schechter reduces to schechter for beta=1."""
+    m = np.array([-22.0, -21.0, -20.0, -19.0])
+
+    result = modified_schechter(
+        m,
+        phi_star=1e-3,
+        m_star=-20.0,
+        alpha=-1.2,
+        beta=1.0,
+    )
+    expected = schechter(
+        m,
+        phi_star=1e-3,
+        m_star=-20.0,
+        alpha=-1.2,
+    )
+
+    np.testing.assert_allclose(result, expected)
+
+
+def test_modified_schechter_matches_manual_formula() -> None:
+    """Tests that modified_schechter matches the analytic formula."""
+    m = np.array([-22.0, -21.0, -20.0])
+    phi_star = 1e-3
+    m_star = -20.0
+    alpha = -1.2
+    beta = 0.8
+
+    result = modified_schechter(
+        m,
+        phi_star=phi_star,
+        m_star=m_star,
+        alpha=alpha,
+        beta=beta,
+    )
+
+    x = luminosity_ratio(m, m_star)
+    expected = (
+        0.4
+        * np.log(10.0)
+        * beta
+        * phi_star
+        * x ** (alpha + 1.0)
+        * np.exp(-(x**beta))
+    )
+
+    np.testing.assert_allclose(result, expected)
+
+
+def test_modified_schechter_rejects_negative_phi_star() -> None:
+    """Tests that modified_schechter rejects negative phi_star."""
+    with pytest.raises(ValueError, match="phi_star must be non-negative"):
+        modified_schechter(
+            [-20.0],
+            phi_star=-1e-3,
+            m_star=-20.0,
+            alpha=-1.0,
+            beta=1.0,
+        )
+
+
+def test_modified_schechter_zero_phi_star_warning() -> None:
+    """Tests that modified_schechter warns when phi_star is zero."""
+    with pytest.warns(UserWarning):
+        result = modified_schechter(
+            [-20.0],
+            phi_star=0.0,
+            m_star=-20.0,
+            alpha=-1.0,
+            beta=1.0,
+        )
+
+    np.testing.assert_allclose(result, np.array([0.0]))
+
+
+def test_modified_schechter_rejects_nonpositive_beta() -> None:
+    """Tests that modified_schechter rejects beta <= 0."""
+    with pytest.raises(ValueError, match="beta must be positive"):
+        modified_schechter(
+            [-20.0],
+            phi_star=1e-3,
+            m_star=-20.0,
+            alpha=-1.0,
+            beta=0.0,
+        )
+
+
+def test_modified_schechter_rejects_nonfinite_beta() -> None:
+    """Tests that modified_schechter rejects non-finite beta."""
+    with pytest.raises(ValueError, match="beta contains NaN or infinite values"):
+        modified_schechter(
+            [-20.0],
+            phi_star=1e-3,
+            m_star=-20.0,
+            alpha=-1.0,
+            beta=np.inf,
+        )
+
+
+def test_modified_schechter_accepts_array_parameters() -> None:
+    """Tests that modified_schechter supports array-valued parameters."""
+    m = np.array([-22.0, -21.0, -20.0])
+
+    result = modified_schechter(
+        m,
+        phi_star=np.array([1e-3, 2e-3, 3e-3]),
+        m_star=-20.0,
+        alpha=np.array([-1.2, -1.0, -0.8]),
+        beta=np.array([0.8, 1.0, 1.2]),
+    )
+
+    assert result.shape == m.shape
+    assert np.all(np.isfinite(result))
+    assert np.all(result >= 0.0)
+
+
+def test_truncated_schechter_matches_schechter_inside_limits() -> None:
+    """Tests that truncated_schechter matches schechter inside the limits."""
+    m = np.array([-21.0, -20.0, -19.0])
+
+    result = truncated_schechter(
+        m,
+        phi_star=1e-3,
+        m_star=-20.0,
+        alpha=-1.2,
+        m_bright=-22.0,
+        m_faint=-18.0,
+    )
+    expected = schechter(
+        m,
+        phi_star=1e-3,
+        m_star=-20.0,
+        alpha=-1.2,
+    )
+
+    np.testing.assert_allclose(result, expected)
+
+
+def test_truncated_schechter_zeroes_values_outside_limits() -> None:
+    """Tests that truncated_schechter is zero outside the magnitude limits."""
+    m = np.array([-23.0, -21.0, -20.0, -19.0, -17.0])
+
+    result = truncated_schechter(
+        m,
+        phi_star=1e-3,
+        m_star=-20.0,
+        alpha=-1.2,
+        m_bright=-22.0,
+        m_faint=-18.0,
+    )
+
+    assert result[0] == 0.0
+    assert result[-1] == 0.0
+    assert np.all(result[1:-1] > 0.0)
+
+
+def test_truncated_schechter_allows_only_bright_limit() -> None:
+    """Tests that truncated_schechter supports only a bright limit."""
+    m = np.array([-23.0, -22.0, -21.0])
+
+    result = truncated_schechter(
+        m,
+        phi_star=1e-3,
+        m_star=-20.0,
+        alpha=-1.2,
+        m_bright=-22.0,
+    )
+
+    assert result[0] == 0.0
+    assert np.all(result[1:] > 0.0)
+
+
+def test_truncated_schechter_allows_only_faint_limit() -> None:
+    """Tests that truncated_schechter supports only a faint limit."""
+    m = np.array([-21.0, -20.0, -17.0])
+
+    result = truncated_schechter(
+        m,
+        phi_star=1e-3,
+        m_star=-20.0,
+        alpha=-1.2,
+        m_faint=-18.0,
+    )
+
+    assert np.all(result[:2] > 0.0)
+    assert result[-1] == 0.0
+
+
+def test_truncated_schechter_rejects_nonfinite_bright_limit() -> None:
+    """Tests that truncated_schechter rejects non-finite m_bright."""
+    with pytest.raises(ValueError, match="m_bright must be finite"):
+        truncated_schechter(
+            [-20.0],
+            phi_star=1e-3,
+            m_star=-20.0,
+            alpha=-1.2,
+            m_bright=np.nan,
+        )
+
+
+def test_truncated_schechter_rejects_nonfinite_faint_limit() -> None:
+    """Tests that truncated_schechter rejects non-finite m_faint."""
+    with pytest.raises(ValueError, match="m_faint must be finite"):
+        truncated_schechter(
+            [-20.0],
+            phi_star=1e-3,
+            m_star=-20.0,
+            alpha=-1.2,
+            m_faint=np.inf,
+        )
+
+
+def test_truncated_schechter_rejects_reversed_limits() -> None:
+    """Tests that truncated_schechter rejects m_bright >= m_faint."""
+    with pytest.raises(ValueError, match="m_bright must be less than m_faint"):
+        truncated_schechter(
+            [-20.0],
+            phi_star=1e-3,
+            m_star=-20.0,
+            alpha=-1.2,
+            m_bright=-18.0,
+            m_faint=-22.0,
+        )
+
+
+def test_truncated_schechter_propagates_schechter_validation() -> None:
+    """Tests that truncated_schechter propagates base Schechter validation."""
+    with pytest.raises(ValueError, match="phi_star must be non-negative"):
+        truncated_schechter(
+            [-20.0],
+            phi_star=-1e-3,
+            m_star=-20.0,
+            alpha=-1.2,
+            m_bright=-22.0,
+            m_faint=-18.0,
+        )
+
+
+def test_multi_schechter_matches_sum_of_components() -> None:
+    """Tests that multi_schechter equals the sum of individual components."""
+    m = np.array([-22.0, -21.0, -20.0])
+
+    result = multi_schechter(
+        m,
+        phi_stars=np.array([1e-3, 2e-3]),
+        m_stars=np.array([-20.0, -19.5]),
+        alphas=np.array([-1.2, -0.5]),
+    )
+
+    expected = (
+        schechter(m, phi_star=1e-3, m_star=-20.0, alpha=-1.2)
+        + schechter(m, phi_star=2e-3, m_star=-19.5, alpha=-0.5)
+    )
+
+    np.testing.assert_allclose(result, expected)
+
+
+def test_multi_schechter_single_component_matches_schechter() -> None:
+    """Tests that one-component multi_schechter matches schechter."""
+    m = np.array([-22.0, -21.0, -20.0])
+
+    result = multi_schechter(
+        m,
+        phi_stars=np.array([1e-3]),
+        m_stars=np.array([-20.0]),
+        alphas=np.array([-1.2]),
+    )
+    expected = schechter(m, phi_star=1e-3, m_star=-20.0, alpha=-1.2)
+
+    np.testing.assert_allclose(result, expected)
+
+
+def test_multi_schechter_rejects_mismatched_component_shapes() -> None:
+    """Tests that multi_schechter rejects mismatched component arrays."""
+    with pytest.raises(
+        ValueError,
+        match="phi_stars, m_stars, and alphas must have matching shapes",
+    ):
+        multi_schechter(
+            [-20.0],
+            phi_stars=np.array([1e-3, 2e-3]),
+            m_stars=np.array([-20.0]),
+            alphas=np.array([-1.2, -0.5]),
+        )
+
+
+def test_multi_schechter_rejects_non_1d_component_arrays() -> None:
+    """Tests that multi_schechter rejects non-1D component arrays."""
+    with pytest.raises(
+        ValueError,
+        match="phi_stars, m_stars, and alphas must be 1D arrays",
+    ):
+        multi_schechter(
+            [-20.0],
+            phi_stars=np.array([[1e-3, 2e-3]]),
+            m_stars=np.array([[-20.0, -19.5]]),
+            alphas=np.array([[-1.2, -0.5]]),
+        )
+
+
+def test_multi_schechter_rejects_negative_phi_stars() -> None:
+    """Tests that multi_schechter rejects negative component normalizations."""
+    with pytest.raises(ValueError, match="phi_stars must be non-negative"):
+        multi_schechter(
+            [-20.0],
+            phi_stars=np.array([1e-3, -2e-3]),
+            m_stars=np.array([-20.0, -19.5]),
+            alphas=np.array([-1.2, -0.5]),
+        )
+
+
+def test_multi_schechter_zero_phi_star_component_warning() -> None:
+    """Tests that multi_schechter warns when a component has zero normalization."""
+    with pytest.warns(UserWarning):
+        result = multi_schechter(
+            [-20.0],
+            phi_stars=np.array([1e-3, 0.0]),
+            m_stars=np.array([-20.0, -19.5]),
+            alphas=np.array([-1.2, -0.5]),
+        )
+
+    expected = schechter([-20.0], phi_star=1e-3, m_star=-20.0, alpha=-1.2)
+    np.testing.assert_allclose(result, expected)
+
+
+def test_multi_schechter_rejects_nonfinite_component_values() -> None:
+    """Tests that multi_schechter rejects non-finite component arrays."""
+    with pytest.raises(ValueError, match="m_stars contains NaN or infinite values"):
+        multi_schechter(
+            [-20.0],
+            phi_stars=np.array([1e-3]),
+            m_stars=np.array([np.nan]),
+            alphas=np.array([-1.2]),
+        )
