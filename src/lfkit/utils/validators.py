@@ -54,17 +54,22 @@ def validate_luminosity_distance(
 
 def validate_magnitude_range(
     *,
-    m_bright: float,
-    m_faint: float,
+    m_bright: FloatInput,
+    m_faint: FloatInput,
 ) -> None:
     """Validate bright and faint magnitude bounds."""
-    if not np.isfinite(m_bright):
+    m_bright_arr, m_faint_arr = np.broadcast_arrays(
+        np.asarray(m_bright, dtype=float),
+        np.asarray(m_faint, dtype=float),
+    )
+
+    if not np.all(np.isfinite(m_bright_arr)):
         raise ValueError("m_bright must be finite.")
 
-    if not np.isfinite(m_faint):
+    if not np.all(np.isfinite(m_faint_arr)):
         raise ValueError("m_faint must be finite.")
 
-    if m_faint <= m_bright:
+    if np.any(m_faint_arr <= m_bright_arr):
         raise ValueError("m_faint must be larger than m_bright.")
 
 
