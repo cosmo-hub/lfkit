@@ -236,6 +236,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../magnitude_integrals.html"> Magnitude integrals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../magnitudes_and_luminosities.html"> Magnitudes and luminosities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../redshift_density.html"> LF-weighted redshift density</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fractions.html"> Luminosity function fractions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../catalog_completeness.html"> Catalog completeness</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../kcorrect_examples.html">kcorrect examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../poggianti_examples.html">Poggianti (1997) examples</a></li>
@@ -267,6 +268,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../api/generated/lfkit.luminosity_functions.completeness.html">lfkit.luminosity_functions.completeness</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/generated/lfkit.luminosity_functions.conditional_integrals.html">lfkit.luminosity_functions.conditional_integrals</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/generated/lfkit.luminosity_functions.conditional_models.html">lfkit.luminosity_functions.conditional_models</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/generated/lfkit.luminosity_functions.fractions.html">lfkit.luminosity_functions.fractions</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../api/generated/lfkit.luminosity_functions.integrals.html">lfkit.luminosity_functions.integrals</a></li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="../../api/generated/lfkit.luminosity_functions.models.html">lfkit.luminosity_functions.models</a><input aria-label="Toggle navigation of lfkit.luminosity_functions.models" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../api/generated/lfkit.luminosity_functions.models.composite.html">lfkit.luminosity_functions.models.composite</a></li>
@@ -417,7 +419,7 @@ luminosity distance using the LFKit magnitude converters.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../../_downloads/e5454289e221f40db2a644ce38d92d44/schechter_models-1.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../../_downloads/8827e8246c3ee01eb45dfe977dbf9124/schechter_models-1.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../../_images/schechter_models-1.png"><img alt="../../_images/schechter_models-1.png" class="plot-directive" src="../../_images/schechter_models-1.png" style="width: 560px;" />
 </a>
@@ -472,7 +474,7 @@ faint magnitudes.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../../_downloads/01b35bb493e97bbed03bea8c09c5d0a5/schechter_models-2.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../../_downloads/99b4d052521d1a8fb368ac8c5e4a3e09/schechter_models-2.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../../_images/schechter_models-2.png"><img alt="../../_images/schechter_models-2.png" class="plot-directive" src="../../_images/schechter_models-2.png" style="width: 520px;" />
 </a>
@@ -540,7 +542,7 @@ population.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../../_downloads/764771580faf653868435970f70b3cb1/schechter_models-3.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../../_downloads/576856e638938275284c9ef29edb4eba/schechter_models-3.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../../_images/schechter_models-3.png"><img alt="../../_images/schechter_models-3.png" class="plot-directive" src="../../_images/schechter_models-3.png" style="width: 520px;" />
 </a>
@@ -598,7 +600,7 @@ on redshift through LFKit’s registered parameter models.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>(<a class="reference download internal" download="" href="../../_downloads/066b9d314293b7ba48442c5669a1dc11/schechter_models-4.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
+<p>(<a class="reference download internal" download="" href="../../_downloads/6b71a5a0e3219811bd021baafedae8f7/schechter_models-4.png"><code class="xref download docutils literal notranslate"><span class="pre">png</span></code></a>)</p>
 <figure class="align-default">
 <a class="plot-directive reference internal image-reference" href="../../_images/schechter_models-4.png"><img alt="../../_images/schechter_models-4.png" class="plot-directive" src="../../_images/schechter_models-4.png" style="width: 520px;" />
 </a>

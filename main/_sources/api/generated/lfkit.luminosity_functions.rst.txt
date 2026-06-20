@@ -13,6 +13,7 @@ lfkit.luminosity\_functions
    completeness
    conditional_integrals
    conditional_models
+   fractions
    integrals
    models
    parameter_models
