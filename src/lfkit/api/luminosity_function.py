@@ -9,6 +9,7 @@ import numpy as np
 
 from lfkit.api._namespaces import (
     LFCompletenessAPI,
+    LFFractionsAPI,
     LFIntegralsAPI,
     LFLuminositiesAPI,
     LFMagnitudesAPI,
@@ -77,6 +78,7 @@ class LuminosityFunction:
         self.integrals = LFIntegralsAPI(self)
         self.redshift_density = LFRedshiftDensityAPI(self)
         self.completeness = LFCompletenessAPI(self)
+        self.fractions = LFFractionsAPI(self)
         self.luminosities = LFLuminositiesAPI()
         self.magnitudes = LFMagnitudesAPI()
 

@@ -1,4 +1,4 @@
-"""Unit tests for the ``lfkit.photometry.lf_integrals``."""
+"""Unit tests for the ``lfkit.luminosity_functions.lf_integrals``."""
 
 import numpy as np
 import pytest

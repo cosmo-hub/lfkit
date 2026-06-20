@@ -6,7 +6,10 @@ from collections.abc import Callable
 from functools import wraps
 from typing import Any
 
+import numpy as np
+
 from lfkit.luminosity_functions import completeness as lf_completeness
+from lfkit.luminosity_functions import fractions as lf_fractions
 from lfkit.luminosity_functions import integrals as lf_integrals
 from lfkit.luminosity_functions import redshift_density as lf_redshift_density
 from lfkit.photometry import luminosities as photo_luminosities
@@ -49,6 +52,38 @@ class LFRedshiftDensityAPI:
         self.lf = lf
 
 
+class LFFractionsAPI:
+    """Grouped API for luminosity function population fractions.
+
+    Args:
+        lf: Luminosity function object whose callable form is used as the
+            numerator luminosity function.
+    """
+
+    def __init__(self, lf) -> None:
+        self.lf = lf
+
+    def blue_fraction(
+        self,
+        z,
+        total_lf,
+        *,
+        m_bright,
+        m_faint,
+        n_m=512,
+    ):
+        """Return one minus the parent luminosity function fraction."""
+        red_fraction = self.red_fraction(
+            z,
+            total_lf,
+            m_bright=m_bright,
+            m_faint=m_faint,
+            n_m=n_m,
+        )
+
+        return np.asarray(1.0 - red_fraction, dtype=float)
+
+
 class LFMagnitudesAPI:
     """Grouped API for apparent magnitude and absolute magnitude conversions."""
 
@@ -82,6 +117,12 @@ _API_NAMESPACES = {
         "module": photo_luminosities,
         "bound_to_lf": False,
     },
+    LFFractionsAPI: {
+        "module": lf_fractions,
+        "bound_to_lf": True,
+        "lf_arg_position": 1,
+        "coerce_lf_args": {2},
+    },
 }
 
 
@@ -90,6 +131,7 @@ def expose_lf_function(
     *,
     lf_arg_position: int | None = None,
     lf_arg_name: str | None = None,
+    coerce_lf_args: set[int] | None = None,
 ) -> Callable[..., Any]:
     """Expose a low level luminosity function helper as a bound API method.
 
@@ -100,6 +142,8 @@ def expose_lf_function(
             argument is inserted.
         lf_arg_name: Keyword name used to pass the luminosity function callable.
             If provided, this takes priority over ``lf_arg_position``.
+        coerce_lf_args: Optional positional argument indices that should be
+            converted from luminosity function objects to callables.
 
     Returns:
         Bound method that injects ``self.lf._as_callable()`` before calling
@@ -114,11 +158,16 @@ def expose_lf_function(
             kwargs[lf_arg_name] = lf_callable
             return function(*args, **kwargs)
 
-        if lf_arg_position is None:
-            return function(*args, **kwargs)
-
         args_list = list(args)
-        args_list.insert(lf_arg_position, lf_callable)
+
+        if lf_arg_position is not None:
+            args_list.insert(lf_arg_position, lf_callable)
+
+        if coerce_lf_args is not None:
+            for index in coerce_lf_args:
+                if index < len(args_list):
+                    args_list[index] = _as_lf_callable(args_list[index])
+
         return function(*args_list, **kwargs)
 
     return method
@@ -164,6 +213,9 @@ def _attach_api_methods() -> None:
         for function_name, function in _public_functions(module).items():
             method_name = _method_name(module, function_name)
 
+            if method_name in api_cls.__dict__:
+                continue
+
             if not bound_to_lf or function_name in static_functions:
                 setattr(api_cls, method_name, staticmethod(function))
                 continue
@@ -175,8 +227,18 @@ def _attach_api_methods() -> None:
                     function,
                     lf_arg_position=spec.get("lf_arg_position"),
                     lf_arg_name=spec.get("lf_arg_name"),
+                    coerce_lf_args=spec.get("coerce_lf_args"),
                 ),
             )
 
 
 _attach_api_methods()
+
+
+def _as_lf_callable(lf):
+    """Return a luminosity function object or callable as ``lf(M, z)``."""
+
+    if hasattr(lf, "_as_callable"):
+        return lf._as_callable()
+
+    return lf

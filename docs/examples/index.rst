@@ -23,6 +23,7 @@ redshift-density trends, and magnitude or luminosity conversions.
    magnitude_integrals
    magnitudes_and_luminosities
    redshift_density
+   fractions
    catalog_completeness
    kcorrect_examples
    poggianti_examples

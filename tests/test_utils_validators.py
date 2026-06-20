@@ -661,3 +661,43 @@ def test_validate_2d_binned_grid_rejects_negative_y_edges_when_disallowed() -> N
             values_name="counts",
             allow_negative_y_edges=False,
         )
+
+
+def test_validate_magnitude_range_accepts_array_bounds() -> None:
+    """Tests that array magnitude bounds are accepted."""
+    validate_magnitude_range(
+        m_bright=np.array([-24.0, -23.0, -22.0]),
+        m_faint=np.array([-20.0, -19.0, -18.0]),
+    )
+
+
+def test_validate_magnitude_range_accepts_broadcast_bounds() -> None:
+    """Tests that scalar and array magnitude bounds can be broadcast."""
+    validate_magnitude_range(
+        m_bright=-24.0,
+        m_faint=np.array([-22.0, -20.0, -18.0]),
+    )
+
+
+def test_validate_magnitude_range_rejects_array_reversed_bounds() -> None:
+    """Tests that any invalid array magnitude pair is rejected."""
+    with pytest.raises(ValueError, match="m_faint must be larger than m_bright"):
+        validate_magnitude_range(
+            m_bright=np.array([-24.0, -18.0, -22.0]),
+            m_faint=np.array([-20.0, -23.0, -18.0]),
+        )
+
+
+def test_validate_magnitude_range_rejects_array_nonfinite_bounds() -> None:
+    """Tests that non finite array magnitude bounds are rejected."""
+    with pytest.raises(ValueError, match="m_bright must be finite"):
+        validate_magnitude_range(
+            m_bright=np.array([-24.0, np.nan]),
+            m_faint=np.array([-20.0, -18.0]),
+        )
+
+    with pytest.raises(ValueError, match="m_faint must be finite"):
+        validate_magnitude_range(
+            m_bright=np.array([-24.0, -23.0]),
+            m_faint=np.array([-20.0, np.inf]),
+        )
