@@ -49,6 +49,7 @@ def test_luminosity_function_initializes_grouped_api_namespaces():
     assert hasattr(lf, "integrals")
     assert hasattr(lf, "redshift_density")
     assert hasattr(lf, "completeness")
+    assert hasattr(lf, "fractions")
     assert hasattr(lf, "luminosities")
     assert hasattr(lf, "magnitudes")
 
@@ -898,3 +899,127 @@ def test_available_models_includes_extended_model_families() -> None:
 
     for name in expected:
         assert name in models
+
+
+def _make_registered_lf(model_name):
+    """Return a luminosity function instance for one registered model."""
+    model_spec = LF_MODELS[model_name]
+
+    return getattr(LuminosityFunction, model_name)(
+        **_minimal_parameter_payload(model_name, model_spec.function)
+    )
+
+
+@pytest.mark.parametrize("model_name", sorted(LF_MODELS))
+def test_fractions_namespace_delegates_to_bound_lf_callable(model_name):
+    """Tests that fractions delegate to registered LF callables."""
+    red_lf = _make_registered_lf(model_name)
+    all_lf = _make_registered_lf(model_name)
+
+    result = red_lf.fractions.fraction(
+        0.5,
+        all_lf,
+        m_bright=-24.0,
+        m_faint=-18.0,
+        n_m=32,
+    )
+
+    assert np.asarray(result).shape == ()
+    assert np.isfinite(result)
+    assert 0.0 <= float(result) <= 1.0
+    assert np.allclose(result, 1.0)
+
+
+@pytest.mark.parametrize("model_name", sorted(LF_MODELS))
+def test_fractions_namespace_accepts_callable_denominator_lf(model_name):
+    """Tests that fractions accept callable denominator LF models."""
+    red_lf = _make_registered_lf(model_name)
+
+    def all_lf(absolute_mag, redshift):
+        return 2.0 * red_lf.phi(absolute_mag, z=redshift)
+
+    result = red_lf.fractions.fraction(
+        0.5,
+        all_lf,
+        m_bright=-24.0,
+        m_faint=-18.0,
+        n_m=32,
+    )
+
+    assert np.asarray(result).shape == ()
+    assert np.isfinite(result)
+    assert 0.0 <= float(result) <= 1.0
+    assert np.allclose(result, 0.5)
+
+
+def test_fractions_namespace_exposes_expected_methods():
+    """Tests that fractions namespace exposes expected methods."""
+    lf = LuminosityFunction.schechter(
+        phi_star=1.0e-3,
+        m_star=-20.5,
+        alpha=-1.1,
+    )
+
+    expected_methods = [
+        "fraction",
+        "red_fraction",
+        "blue_fraction",
+    ]
+
+    for name in expected_methods:
+        assert callable(getattr(lf.fractions, name))
+
+
+@pytest.mark.parametrize("model_name", sorted(LF_MODELS))
+def test_luminosity_function_fractions_namespace_uses_parent_lf(model_name):
+    """Tests that fractions namespace stores the parent LF."""
+    lf = _make_registered_lf(model_name)
+
+    assert lf.fractions.lf is lf
+
+
+@pytest.mark.parametrize("model_name", sorted(LF_MODELS))
+def test_blue_fraction_is_complement_of_red_fraction(model_name):
+    """Tests that blue fraction is the complement of red fraction."""
+    model_spec = LF_MODELS[model_name]
+    red_lf = getattr(LuminosityFunction, model_name)(
+        **_minimal_parameter_payload(model_name, model_spec.function)
+    )
+    all_lf = getattr(LuminosityFunction, model_name)(
+        **_minimal_parameter_payload(model_name, model_spec.function)
+    )
+
+    red_fraction = red_lf.fractions.red_fraction(
+        0.5,
+        all_lf,
+        m_bright=-24.0,
+        m_faint=-18.0,
+        n_m=32,
+    )
+    blue_fraction = red_lf.fractions.blue_fraction(
+        0.5,
+        all_lf,
+        m_bright=-24.0,
+        m_faint=-18.0,
+        n_m=32,
+    )
+
+    assert np.allclose(blue_fraction, 1.0 - red_fraction)
+
+
+def test_fractions_namespace_rejects_invalid_magnitude_range() -> None:
+    """Tests that the fractions namespace validates magnitude bounds."""
+    lf = LuminosityFunction.schechter(
+        phi_star=1.0e-3,
+        m_star=-20.5,
+        alpha=-1.1,
+    )
+
+    with pytest.raises(ValueError, match="m_faint must be larger than m_bright"):
+        lf.fractions.fraction(
+            0.5,
+            lf,
+            m_bright=-18.0,
+            m_faint=-24.0,
+            n_m=32,
+        )

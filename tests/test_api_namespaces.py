@@ -8,10 +8,12 @@ import numpy as np
 
 from lfkit.api._namespaces import (
     LFCompletenessAPI,
+    LFFractionsAPI,
     LFIntegralsAPI,
     LFLuminositiesAPI,
     LFMagnitudesAPI,
     LFRedshiftDensityAPI,
+    _as_lf_callable,
     _method_name,
     _public_functions,
     expose_lf_function,
@@ -280,3 +282,143 @@ def test_luminosity_namespace_has_expected_methods():
 
     for name in expected_methods:
         assert callable(getattr(LFLuminositiesAPI, name))
+
+
+def test_fractions_namespace_stores_parent_lf():
+    """Tests that fractions namespace stores the parent LF."""
+    lf = DummyLF()
+    api = LFFractionsAPI(lf)
+
+    assert api.lf is lf
+
+
+def test_as_lf_callable_converts_lf_object_to_callable():
+    """Tests that LF objects are converted to luminosity function callables."""
+    lf = DummyLF()
+
+    result = _as_lf_callable(lf)
+
+    assert callable(result)
+    assert result(2.0, 0.5) == 3.0
+
+
+def test_as_lf_callable_preserves_plain_callable():
+    """Tests that plain callables are returned unchanged."""
+
+    def lf_callable(absolute_mag, redshift=None):
+        return np.asarray(absolute_mag) + 2.0
+
+    result = _as_lf_callable(lf_callable)
+
+    assert result is lf_callable
+    assert result(2.0, 0.5) == 4.0
+
+
+def test_expose_lf_function_coerces_lf_args_from_lf_objects():
+    """Tests that selected LF positional arguments are coerced to callables."""
+    calls = {}
+
+    def low_level(x, numerator_lf, denominator_lf, z):
+        calls["numerator_value"] = numerator_lf(x, z)
+        calls["denominator_value"] = denominator_lf(x, z)
+        return calls["numerator_value"] / calls["denominator_value"]
+
+    class DenominatorLF:
+        """Minimal denominator LF object."""
+
+        def _as_callable(self):
+            """Return a simple denominator luminosity function callable."""
+            return lambda absolute_mag, redshift=None: np.asarray(absolute_mag) + 5.0
+
+    method = expose_lf_function(
+        low_level,
+        lf_arg_position=1,
+        coerce_lf_args={2},
+    )
+    api = DummyBoundAPI()
+
+    result = method(api, 2.0, DenominatorLF(), 0.5)
+
+    assert result == 3.0 / 7.0
+    assert calls["numerator_value"] == 3.0
+    assert calls["denominator_value"] == 7.0
+
+
+def test_expose_lf_function_coerces_lf_args_from_plain_callables():
+    """Tests that selected callable LF arguments remain usable."""
+
+    def low_level(x, numerator_lf, denominator_lf, z):
+        return numerator_lf(x, z) / denominator_lf(x, z)
+
+    def denominator_lf(absolute_mag, redshift=None):
+        return np.asarray(absolute_mag) + 6.0
+
+    method = expose_lf_function(
+        low_level,
+        lf_arg_position=1,
+        coerce_lf_args={2},
+    )
+    api = DummyBoundAPI()
+
+    result = method(api, 2.0, denominator_lf, 0.5)
+
+    assert result == 3.0 / 8.0
+
+
+def test_expose_lf_function_ignores_missing_coerce_indices():
+    """Tests that out of range LF coercion indices are ignored."""
+
+    def low_level(x, lf_callable):
+        return lf_callable(x)
+
+    method = expose_lf_function(
+        low_level,
+        lf_arg_position=1,
+        coerce_lf_args={10},
+    )
+    api = DummyBoundAPI()
+
+    result = method(api, 2.0)
+
+    assert result == 3.0
+
+
+def test_fractions_namespace_has_expected_methods():
+    """Tests that fractions namespace exposes expected methods."""
+    expected_methods = [
+        "fraction",
+        "red_fraction",
+        "blue_fraction",
+    ]
+
+    for name in expected_methods:
+        assert callable(getattr(LFFractionsAPI, name))
+
+
+def test_fractions_namespace_blue_fraction_uses_red_fraction_complement() -> None:
+    """Tests that the custom blue fraction method returns one minus red fraction."""
+
+    class DummyFractionsAPI(LFFractionsAPI):
+        def red_fraction(
+            self,
+            z,
+            total_lf,
+            *,
+            m_bright,
+            m_faint,
+            n_m=512,
+        ):
+            return np.asarray([0.25, 0.5, 0.75])
+
+    api = DummyFractionsAPI(DummyLF())
+
+    result = api.blue_fraction(
+        np.array([0.1, 0.5, 1.0]),
+        DummyLF(),
+        m_bright=-24.0,
+        m_faint=-18.0,
+        n_m=32,
+    )
+
+    np.testing.assert_allclose(result, np.array([0.75, 0.5, 0.25]))
+    assert result.dtype == float
