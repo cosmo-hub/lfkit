@@ -6,6 +6,7 @@ from collections.abc import Callable, Sequence
 from typing import Any, get_args, get_origin
 
 import numpy as np
+from numpy.typing import NDArray
 
 import lfkit.utils.types as lf_types
 
@@ -25,10 +26,9 @@ def test_types_exports_expected_public_names() -> None:
     assert set(lf_types.__all__) == expected
 
 
-def test_float_array_alias_points_to_numpy_ndarray() -> None:
-    """Tests that FloatArray aliases a NumPy ndarray type."""
-    assert get_origin(lf_types.FloatArray) is np.ndarray
-    assert "float64" in str(lf_types.FloatArray)
+def test_float_array_alias_is_float64_ndarray() -> None:
+    """Tests that FloatArray is a NumPy float64 array typing alias."""
+    assert lf_types.FloatArray == NDArray[np.float64]
 
 
 def test_float_input_includes_expected_user_input_forms() -> None:
