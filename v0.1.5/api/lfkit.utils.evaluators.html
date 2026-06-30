@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=dfcaa7d2" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=03637586" />
     
     
 
@@ -298,12 +298,16 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="../_sources/api/lfkit.utils.evaluators.rst.txt" title="View this page">
+  <a class="muted-link" href="https://github.com/cosmo-hub/lfkit/blob/main/docs/api/lfkit.utils.evaluators.rst?plain=true" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
-</div>
-<div class="theme-toggle-container theme-toggle-content">
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/cosmo-hub/lfkit/edit/main/docs/api/lfkit.utils.evaluators.rst" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
               <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
@@ -326,13 +330,13 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>lf</strong> (<em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>)</p></li>
-<li><p><strong>m_grid</strong> (<em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>)</p></li>
-<li><p><strong>z_grid</strong> (<em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>lf</strong> (<em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>m_grid</strong> (<em>NDArray</em><em>[</em><em>float64</em><em>]</em>)</p></li>
+<li><p><strong>z_grid</strong> (<em>NDArray</em><em>[</em><em>float64</em><em>]</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
+<dd class="field-even"><p>NDArray[<em>float64</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -344,8 +348,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>fn</strong> (<em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>) – Callable to evaluate.</p></li>
-<li><p><strong>z</strong> (<em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Redshift array passed to the callable.</p></li>
+<li><p><strong>fn</strong> (<em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Callable to evaluate.</p></li>
+<li><p><strong>z</strong> (<em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Redshift array passed to the callable.</p></li>
 <li><p><strong>name</strong> (<em>str</em>) – Name used in error messages.</p></li>
 </ul>
 </dd>
@@ -353,7 +357,7 @@
 <dd class="field-even"><p>Non-negative callable values with the same shape as <code class="docutils literal notranslate"><span class="pre">z</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
+<dd class="field-odd"><p>NDArray[<em>float64</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -365,8 +369,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>fn</strong> (<em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Callable to evaluate. If None, None is returned.</p></li>
-<li><p><strong>z</strong> (<em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Redshift array passed to the callable.</p></li>
+<li><p><strong>fn</strong> (<em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Callable to evaluate. If None, None is returned.</p></li>
+<li><p><strong>z</strong> (<em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Redshift array passed to the callable.</p></li>
 <li><p><strong>name</strong> (<em>str</em>) – Name used in error messages.</p></li>
 </ul>
 </dd>
@@ -374,7 +378,7 @@
 <dd class="field-even"><p>Callable values with the same shape as <code class="docutils literal notranslate"><span class="pre">z</span></code>, or None.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]] | None</p>
+<dd class="field-odd"><p>NDArray[<em>float64</em>] | None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -386,8 +390,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>fn</strong> (<em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>) – Callable to evaluate.</p></li>
-<li><p><strong>z</strong> (<em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Redshift array passed to the callable.</p></li>
+<li><p><strong>fn</strong> (<em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Callable to evaluate.</p></li>
+<li><p><strong>z</strong> (<em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Redshift array passed to the callable.</p></li>
 <li><p><strong>name</strong> (<em>str</em>) – Name used in error messages.</p></li>
 </ul>
 </dd>
@@ -395,7 +399,7 @@
 <dd class="field-even"><p>Positive callable values with the same shape as <code class="docutils literal notranslate"><span class="pre">z</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
+<dd class="field-odd"><p>NDArray[<em>float64</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -407,13 +411,13 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>weight_fn</strong> (<em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>)</p></li>
-<li><p><strong>m_grid</strong> (<em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>)</p></li>
-<li><p><strong>z_grid</strong> (<em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>weight_fn</strong> (<em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>m_grid</strong> (<em>NDArray</em><em>[</em><em>float64</em><em>]</em>)</p></li>
+<li><p><strong>z_grid</strong> (<em>NDArray</em><em>[</em><em>float64</em><em>]</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
+<dd class="field-even"><p>NDArray[<em>float64</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -457,7 +461,32 @@
             
           </div>
           <div class="right-details">
-            
+            <div class="icons">
+              <a class="muted-link lfkit-github-icon" href="https://github.com/cosmo-hub/lfkit" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0"
+                     viewBox="0 0 16 16">
+                     style="color: #FE5019;">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54
+                    2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+                    0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49
+                    -2.69-.94-.09-.23-.48-.94-.82-1.13
+                    -.28-.15-.68-.52-.01-.53.63-.01 1.08.58
+                    1.23.82.72 1.21 1.87.87 2.33.66
+                    .07-.52.28-.87.51-1.07-1.78-.2-3.64-.89
+                    -3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2
+                    -.36-1.02.08-2.12 0 0 .67-.21 2.2.82
+                    A7.65 7.65 0 0 1 8 3.87c.68 0 1.36.09
+                    2 .26 1.53-1.04 2.2-.82 2.2-.82.44
+                    1.1.16 1.92.08 2.12.51.56.82 1.27.82
+                    2.15 0 3.07-1.87 3.75-3.65 3.95.29
+                    .25.54.73.54 1.48 0 1.07-.01 1.93-.01
+                    2.2 0 .21.15.46.55.38A8.013 8.013
+                    0 0 0 16 8c0-4.42-3.58-8-8-8z">
+                    </path>
+                </svg>
+            </a>
+              
+            </div>
           </div>
         </div>
         

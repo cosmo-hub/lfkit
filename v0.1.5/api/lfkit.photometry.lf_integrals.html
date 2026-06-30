@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=dfcaa7d2" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=03637586" />
     
     
 
@@ -298,12 +298,16 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="../_sources/api/lfkit.photometry.lf_integrals.rst.txt" title="View this page">
+  <a class="muted-link" href="https://github.com/cosmo-hub/lfkit/blob/main/docs/api/lfkit.photometry.lf_integrals.rst?plain=true" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
-</div>
-<div class="theme-toggle-container theme-toggle-content">
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/cosmo-hub/lfkit/edit/main/docs/api/lfkit.photometry.lf_integrals.rst" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
               <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
@@ -352,11 +356,11 @@ integrals can all call this module instead of duplicating magnitude-grid logic.<
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Redshift value or array-like of redshift values.</p></li>
-<li><p><strong>lf</strong> (<em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>) – Luminosity-function callable with signature <code class="docutils literal notranslate"><span class="pre">lf(M,</span> <span class="pre">z)</span></code>.</p></li>
-<li><p><strong>m_threshold</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Absolute-magnitude threshold. May be scalar or array-like.</p></li>
-<li><p><strong>m_bright</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Bright absolute-magnitude bound. May be scalar or array-like.</p></li>
-<li><p><strong>m_faint</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Faint absolute-magnitude bound. May be scalar or array-like.</p></li>
+<li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Redshift value or array-like of redshift values.</p></li>
+<li><p><strong>lf</strong> (<em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Luminosity-function callable with signature <code class="docutils literal notranslate"><span class="pre">lf(M,</span> <span class="pre">z)</span></code>.</p></li>
+<li><p><strong>m_threshold</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Absolute-magnitude threshold. May be scalar or array-like.</p></li>
+<li><p><strong>m_bright</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Bright absolute-magnitude bound. May be scalar or array-like.</p></li>
+<li><p><strong>m_faint</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Faint absolute-magnitude bound. May be scalar or array-like.</p></li>
 <li><p><strong>brighter_than</strong> (<em>bool</em>) – If True, integrate galaxies brighter than the threshold.
 If False, integrate galaxies fainter than the threshold.</p></li>
 <li><p><strong>n_m</strong> (<em>int</em>) – Number of magnitude-grid points used for the integral.</p></li>
@@ -366,7 +370,7 @@ If False, integrate galaxies fainter than the threshold.</p></li>
 <dd class="field-even"><p>NumPy array of cumulative number densities evaluated at <code class="docutils literal notranslate"><span class="pre">z</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
+<dd class="field-odd"><p>NDArray[<em>float64</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -391,10 +395,10 @@ L(M)\,\phi(M, z)\,dM,\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Redshift value or array-like of redshift values.</p></li>
-<li><p><strong>lf</strong> (<em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>) – Luminosity-function callable with signature <code class="docutils literal notranslate"><span class="pre">lf(M,</span> <span class="pre">z)</span></code>.</p></li>
-<li><p><strong>m_bright</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Bright absolute-magnitude bound. May be scalar or array-like.</p></li>
-<li><p><strong>m_faint</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Faint absolute-magnitude bound. May be scalar or array-like.</p></li>
+<li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Redshift value or array-like of redshift values.</p></li>
+<li><p><strong>lf</strong> (<em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Luminosity-function callable with signature <code class="docutils literal notranslate"><span class="pre">lf(M,</span> <span class="pre">z)</span></code>.</p></li>
+<li><p><strong>m_bright</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Bright absolute-magnitude bound. May be scalar or array-like.</p></li>
+<li><p><strong>m_faint</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Faint absolute-magnitude bound. May be scalar or array-like.</p></li>
 <li><p><strong>m_reference</strong> (<em>float</em>) – Reference absolute magnitude defining the luminosity unit.</p></li>
 <li><p><strong>n_m</strong> (<em>int</em>) – Number of magnitude-grid points used for the integral.</p></li>
 </ul>
@@ -404,7 +408,7 @@ L(M)\,\phi(M, z)\,dM,\]</div>
 luminosity.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
+<dd class="field-odd"><p>NDArray[<em>float64</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -423,10 +427,10 @@ luminosity.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Redshift value or array-like of redshift values.</p></li>
-<li><p><strong>lf</strong> (<em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>) – Luminosity-function callable with signature <code class="docutils literal notranslate"><span class="pre">lf(M,</span> <span class="pre">z)</span></code>.</p></li>
-<li><p><strong>m_bright</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Bright absolute-magnitude bound. May be scalar or array-like.</p></li>
-<li><p><strong>m_faint</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Faint absolute-magnitude bound. May be scalar or array-like.</p></li>
+<li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Redshift value or array-like of redshift values.</p></li>
+<li><p><strong>lf</strong> (<em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Luminosity-function callable with signature <code class="docutils literal notranslate"><span class="pre">lf(M,</span> <span class="pre">z)</span></code>.</p></li>
+<li><p><strong>m_bright</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Bright absolute-magnitude bound. May be scalar or array-like.</p></li>
+<li><p><strong>m_faint</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Faint absolute-magnitude bound. May be scalar or array-like.</p></li>
 <li><p><strong>n_m</strong> (<em>int</em>) – Number of magnitude-grid points used for the integral.</p></li>
 </ul>
 </dd>
@@ -434,7 +438,7 @@ luminosity.</p>
 <dd class="field-even"><p>NumPy array of number densities evaluated at <code class="docutils literal notranslate"><span class="pre">z</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
+<dd class="field-odd"><p>NDArray[<em>float64</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -452,11 +456,11 @@ luminosity.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Redshift value or array-like of redshift values.</p></li>
-<li><p><strong>lf</strong> (<em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>) – Luminosity-function callable with signature <code class="docutils literal notranslate"><span class="pre">lf(M,</span> <span class="pre">z)</span></code>.</p></li>
-<li><p><strong>m_bright</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Bright absolute-magnitude bound. May be scalar or array-like.</p></li>
-<li><p><strong>m_faint</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Faint absolute-magnitude bound. May be scalar or array-like.</p></li>
-<li><p><strong>weight_fn</strong> (<em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>) – Weight callable with signature <code class="docutils literal notranslate"><span class="pre">weight_fn(M,</span> <span class="pre">z)</span></code>. Its
+<li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Redshift value or array-like of redshift values.</p></li>
+<li><p><strong>lf</strong> (<em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Luminosity-function callable with signature <code class="docutils literal notranslate"><span class="pre">lf(M,</span> <span class="pre">z)</span></code>.</p></li>
+<li><p><strong>m_bright</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Bright absolute-magnitude bound. May be scalar or array-like.</p></li>
+<li><p><strong>m_faint</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Faint absolute-magnitude bound. May be scalar or array-like.</p></li>
+<li><p><strong>weight_fn</strong> (<em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Weight callable with signature <code class="docutils literal notranslate"><span class="pre">weight_fn(M,</span> <span class="pre">z)</span></code>. Its
 return values must be broadcastable to the magnitude-redshift grid.</p></li>
 <li><p><strong>n_m</strong> (<em>int</em>) – Number of magnitude-grid points used for the integral.</p></li>
 </ul>
@@ -465,7 +469,7 @@ return values must be broadcastable to the magnitude-redshift grid.</p></li>
 <dd class="field-even"><p>NumPy array of weighted LF integrals evaluated at <code class="docutils literal notranslate"><span class="pre">z</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
+<dd class="field-odd"><p>NDArray[<em>float64</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -487,16 +491,16 @@ to the calling analysis.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Redshift value or array-like of redshift values.</p></li>
-<li><p><strong>lf</strong> (<em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>) – Luminosity-function callable with signature <code class="docutils literal notranslate"><span class="pre">lf(M,</span> <span class="pre">z)</span></code>.</p></li>
-<li><p><strong>m_bright</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Bright absolute-magnitude bound.</p></li>
-<li><p><strong>m_faint</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Faint absolute-magnitude bound.</p></li>
-<li><p><strong>apparent_m_bright</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Bright apparent-magnitude bound.</p></li>
-<li><p><strong>apparent_m_faint</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Faint apparent-magnitude bound.</p></li>
-<li><p><strong>luminosity_distance_mpc_fn</strong> (<em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Callable returning luminosity distance in
+<li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Redshift value or array-like of redshift values.</p></li>
+<li><p><strong>lf</strong> (<em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Luminosity-function callable with signature <code class="docutils literal notranslate"><span class="pre">lf(M,</span> <span class="pre">z)</span></code>.</p></li>
+<li><p><strong>m_bright</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>] </em><em>| </em><em>None</em>) – Bright absolute-magnitude bound.</p></li>
+<li><p><strong>m_faint</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>] </em><em>| </em><em>None</em>) – Faint absolute-magnitude bound.</p></li>
+<li><p><strong>apparent_m_bright</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>] </em><em>| </em><em>None</em>) – Bright apparent-magnitude bound.</p></li>
+<li><p><strong>apparent_m_faint</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>] </em><em>| </em><em>None</em>) – Faint apparent-magnitude bound.</p></li>
+<li><p><strong>luminosity_distance_mpc_fn</strong> (<em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Callable returning luminosity distance in
 Mpc. Required when either apparent-magnitude bound is supplied.</p></li>
-<li><p><strong>k_correction_fn</strong> (<em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Optional K-correction callable evaluated at <code class="docutils literal notranslate"><span class="pre">z</span></code>.</p></li>
-<li><p><strong>e_correction_fn</strong> (<em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Optional E-correction callable evaluated at <code class="docutils literal notranslate"><span class="pre">z</span></code>.</p></li>
+<li><p><strong>k_correction_fn</strong> (<em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Optional K-correction callable evaluated at <code class="docutils literal notranslate"><span class="pre">z</span></code>.</p></li>
+<li><p><strong>e_correction_fn</strong> (<em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Optional E-correction callable evaluated at <code class="docutils literal notranslate"><span class="pre">z</span></code>.</p></li>
 <li><p><strong>n_m</strong> (<em>int</em>) – Number of magnitude-grid points used for the integral.</p></li>
 </ul>
 </dd>
@@ -509,7 +513,7 @@ Mpc. Required when either apparent-magnitude bound is supplied.</p></li>
     bound is supplied without a luminosity-distance callable.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
+<dd class="field-even"><p>NDArray[<em>float64</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -530,10 +534,10 @@ Mpc. Required when either apparent-magnitude bound is supplied.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Redshift value or array-like of redshift values.</p></li>
-<li><p><strong>lf</strong> (<em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>) – Luminosity-function callable with signature <code class="docutils literal notranslate"><span class="pre">lf(M,</span> <span class="pre">z)</span></code>.</p></li>
-<li><p><strong>m_bright</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Bright absolute-magnitude bound. May be scalar or array-like.</p></li>
-<li><p><strong>m_faint</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Faint absolute-magnitude bound. May be scalar or array-like.</p></li>
+<li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Redshift value or array-like of redshift values.</p></li>
+<li><p><strong>lf</strong> (<em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Luminosity-function callable with signature <code class="docutils literal notranslate"><span class="pre">lf(M,</span> <span class="pre">z)</span></code>.</p></li>
+<li><p><strong>m_bright</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Bright absolute-magnitude bound. May be scalar or array-like.</p></li>
+<li><p><strong>m_faint</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Faint absolute-magnitude bound. May be scalar or array-like.</p></li>
 <li><p><strong>m_reference</strong> (<em>float</em>) – Reference absolute magnitude defining the luminosity unit.</p></li>
 <li><p><strong>n_m</strong> (<em>int</em>) – Number of magnitude-grid points used for the integral.</p></li>
 </ul>
@@ -543,7 +547,7 @@ Mpc. Required when either apparent-magnitude bound is supplied.</p></li>
 number density is zero.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
+<dd class="field-odd"><p>NDArray[<em>float64</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -562,11 +566,11 @@ S(M, z)\,\phi(M, z)\,dM.\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Redshift value or array-like of redshift values.</p></li>
-<li><p><strong>lf</strong> (<em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>) – Luminosity-function callable with signature <code class="docutils literal notranslate"><span class="pre">lf(M,</span> <span class="pre">z)</span></code>.</p></li>
-<li><p><strong>m_bright</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Bright absolute-magnitude bound. May be scalar or array-like.</p></li>
-<li><p><strong>m_faint</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Faint absolute-magnitude bound. May be scalar or array-like.</p></li>
-<li><p><strong>selection_fn</strong> (<em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>) – Selection callable with signature <code class="docutils literal notranslate"><span class="pre">selection_fn(M,</span> <span class="pre">z)</span></code>.
+<li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Redshift value or array-like of redshift values.</p></li>
+<li><p><strong>lf</strong> (<em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Luminosity-function callable with signature <code class="docutils literal notranslate"><span class="pre">lf(M,</span> <span class="pre">z)</span></code>.</p></li>
+<li><p><strong>m_bright</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Bright absolute-magnitude bound. May be scalar or array-like.</p></li>
+<li><p><strong>m_faint</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Faint absolute-magnitude bound. May be scalar or array-like.</p></li>
+<li><p><strong>selection_fn</strong> (<em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Selection callable with signature <code class="docutils literal notranslate"><span class="pre">selection_fn(M,</span> <span class="pre">z)</span></code>.
 Values should usually lie between 0 and 1, although this function
 only requires finite non-negative values.</p></li>
 <li><p><strong>n_m</strong> (<em>int</em>) – Number of magnitude-grid points used for the integral.</p></li>
@@ -576,7 +580,7 @@ only requires finite non-negative values.</p></li>
 <dd class="field-even"><p>NumPy array of selection-weighted number densities evaluated at <code class="docutils literal notranslate"><span class="pre">z</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
+<dd class="field-odd"><p>NDArray[<em>float64</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -620,7 +624,32 @@ only requires finite non-negative values.</p></li>
             
           </div>
           <div class="right-details">
-            
+            <div class="icons">
+              <a class="muted-link lfkit-github-icon" href="https://github.com/cosmo-hub/lfkit" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0"
+                     viewBox="0 0 16 16">
+                     style="color: #FE5019;">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54
+                    2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+                    0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49
+                    -2.69-.94-.09-.23-.48-.94-.82-1.13
+                    -.28-.15-.68-.52-.01-.53.63-.01 1.08.58
+                    1.23.82.72 1.21 1.87.87 2.33.66
+                    .07-.52.28-.87.51-1.07-1.78-.2-3.64-.89
+                    -3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2
+                    -.36-1.02.08-2.12 0 0 .67-.21 2.2.82
+                    A7.65 7.65 0 0 1 8 3.87c.68 0 1.36.09
+                    2 .26 1.53-1.04 2.2-.82 2.2-.82.44
+                    1.1.16 1.92.08 2.12.51.56.82 1.27.82
+                    2.15 0 3.07-1.87 3.75-3.65 3.95.29
+                    .25.54.73.54 1.48 0 1.07-.01 1.93-.01
+                    2.2 0 .21.15.46.55.38A8.013 8.013
+                    0 0 0 16 8c0-4.42-3.58-8-8-8z">
+                    </path>
+                </svg>
+            </a>
+              
+            </div>
           </div>
         </div>
         

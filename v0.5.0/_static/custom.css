@@ -140,3 +140,15 @@ h3:hover .headerlink {
 .sidebar-tree a {
   padding: 0.15rem 0;
 }
+
+/* ==========================================================================
+   LFKit — Footer icons
+   ========================================================================== */
+
+.lfkit-github-icon svg {
+  color: #FE5019;  /* LFKit red */
+}
+
+.lfkit-github-icon:hover svg {
+  color: #28A8C8;  /* LFKit blue */
+}

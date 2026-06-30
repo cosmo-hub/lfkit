@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=dfcaa7d2" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=03637586" />
     
     
 
@@ -298,12 +298,16 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="../_sources/api/lfkit.photometry.luminosities.rst.txt" title="View this page">
+  <a class="muted-link" href="https://github.com/cosmo-hub/lfkit/blob/main/docs/api/lfkit.photometry.luminosities.rst?plain=true" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
-</div>
-<div class="theme-toggle-container theme-toggle-content">
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/cosmo-hub/lfkit/edit/main/docs/api/lfkit.photometry.luminosities.rst" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
               <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
@@ -342,7 +346,7 @@ as long as they are defined in the same photometric system.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>magnitude</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Magnitude value(s).</p></li>
+<li><p><strong>magnitude</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Magnitude value(s).</p></li>
 <li><p><strong>reference_magnitude</strong> (<em>float</em>) – Reference magnitude <code class="docutils literal notranslate"><span class="pre">m_ref</span></code>.</p></li>
 <li><p><strong>reference_luminosity</strong> (<em>float</em>) – Reference luminosity <code class="docutils literal notranslate"><span class="pre">L_ref</span></code>.</p></li>
 </ul>
@@ -355,7 +359,7 @@ as long as they are defined in the same photometric system.</p>
 <dd class="field-odd"><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">reference_luminosity</span></code> is not strictly positive.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
+<dd class="field-even"><p>NDArray[<em>float64</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -372,15 +376,15 @@ as long as they are defined in the same photometric system.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>absolute_mag</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Absolute magnitude value(s).</p></li>
-<li><p><strong>m_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Characteristic magnitude value(s).</p></li>
+<li><p><strong>absolute_mag</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Absolute magnitude value(s).</p></li>
+<li><p><strong>m_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Characteristic magnitude value(s).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>NumPy array of luminosity ratios <code class="docutils literal notranslate"><span class="pre">L</span> <span class="pre">/</span> <span class="pre">L_star</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
+<dd class="field-odd"><p>NDArray[<em>float64</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -393,15 +397,15 @@ as long as they are defined in the same photometric system.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>magnitude</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Magnitude value(s).</p></li>
-<li><p><strong>ref_magnitude</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Reference magnitude value(s).</p></li>
+<li><p><strong>magnitude</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Magnitude value(s).</p></li>
+<li><p><strong>ref_magnitude</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Reference magnitude value(s).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>NumPy array of luminosity ratios <span class="math notranslate nohighlight">\(L / L_{\mathrm{ref}}\)</span>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
+<dd class="field-odd"><p>NDArray[<em>float64</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -418,7 +422,7 @@ as long as they are defined in the same photometric system.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>magnitude</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Magnitude value(s).</p></li>
+<li><p><strong>magnitude</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Magnitude value(s).</p></li>
 <li><p><strong>reference_magnitude</strong> (<em>float</em>) – Reference zero-point magnitude for the
 proportionality constant.</p></li>
 </ul>
@@ -427,7 +431,7 @@ proportionality constant.</p></li>
 <dd class="field-even"><p>NumPy array proportional to luminosity.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
+<dd class="field-odd"><p>NDArray[<em>float64</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -443,7 +447,7 @@ proportionality constant.</p></li>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ratio</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Luminosity ratio value(s) <code class="docutils literal notranslate"><span class="pre">L1</span> <span class="pre">/</span> <span class="pre">L2</span></code>.</p>
+<dd class="field-odd"><p><strong>ratio</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Luminosity ratio value(s) <code class="docutils literal notranslate"><span class="pre">L1</span> <span class="pre">/</span> <span class="pre">L2</span></code>.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>NumPy array of magnitude differences <code class="docutils literal notranslate"><span class="pre">m1</span> <span class="pre">-</span> <span class="pre">m2</span></code>.</p>
@@ -452,7 +456,7 @@ proportionality constant.</p></li>
 <dd class="field-odd"><p><strong>ValueError</strong> – If any luminosity ratio is not strictly positive.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
+<dd class="field-even"><p>NDArray[<em>float64</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -492,7 +496,7 @@ proportionality constant.</p></li>
 <dd class="field-odd"><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">l_star</span></code> is not strictly positive or <code class="docutils literal notranslate"><span class="pre">alpha</span> <span class="pre">&lt;=</span> <span class="pre">-1</span></code>.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
+<dd class="field-even"><p>NDArray[<em>float64</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -510,7 +514,7 @@ proportionality constant.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>luminosity_min</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Lower luminosity threshold(s).</p></li>
+<li><p><strong>luminosity_min</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Lower luminosity threshold(s).</p></li>
 <li><p><strong>phi_star</strong> (<em>float</em>) – Schechter normalization.</p></li>
 <li><p><strong>l_star</strong> (<em>float</em>) – Characteristic luminosity <code class="docutils literal notranslate"><span class="pre">L_star</span></code>.</p></li>
 <li><p><strong>alpha</strong> (<em>float</em>) – Faint-end slope.</p></li>
@@ -524,7 +528,7 @@ proportionality constant.</p></li>
     positive, or <code class="docutils literal notranslate"><span class="pre">alpha</span> <span class="pre">&lt;=</span> <span class="pre">-1</span></code>.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
+<dd class="field-even"><p>NDArray[<em>float64</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -611,7 +615,7 @@ proportionality constant.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>luminosity_min</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Lower luminosity threshold(s).</p></li>
+<li><p><strong>luminosity_min</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Lower luminosity threshold(s).</p></li>
 <li><p><strong>l_star</strong> (<em>float</em>) – Characteristic luminosity <code class="docutils literal notranslate"><span class="pre">L_star</span></code>.</p></li>
 <li><p><strong>alpha</strong> (<em>float</em>) – Faint-end slope.</p></li>
 </ul>
@@ -624,7 +628,7 @@ proportionality constant.</p></li>
     threshold is negative, or <code class="docutils literal notranslate"><span class="pre">alpha</span> <span class="pre">&lt;=</span> <span class="pre">-1</span></code>.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
+<dd class="field-even"><p>NDArray[<em>float64</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -668,7 +672,32 @@ proportionality constant.</p></li>
             
           </div>
           <div class="right-details">
-            
+            <div class="icons">
+              <a class="muted-link lfkit-github-icon" href="https://github.com/cosmo-hub/lfkit" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0"
+                     viewBox="0 0 16 16">
+                     style="color: #FE5019;">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54
+                    2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+                    0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49
+                    -2.69-.94-.09-.23-.48-.94-.82-1.13
+                    -.28-.15-.68-.52-.01-.53.63-.01 1.08.58
+                    1.23.82.72 1.21 1.87.87 2.33.66
+                    .07-.52.28-.87.51-1.07-1.78-.2-3.64-.89
+                    -3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2
+                    -.36-1.02.08-2.12 0 0 .67-.21 2.2.82
+                    A7.65 7.65 0 0 1 8 3.87c.68 0 1.36.09
+                    2 .26 1.53-1.04 2.2-.82 2.2-.82.44
+                    1.1.16 1.92.08 2.12.51.56.82 1.27.82
+                    2.15 0 3.07-1.87 3.75-3.65 3.95.29
+                    .25.54.73.54 1.48 0 1.07-.01 1.93-.01
+                    2.2 0 .21.15.46.55.38A8.013 8.013
+                    0 0 0 16 8c0-4.42-3.58-8-8-8z">
+                    </path>
+                </svg>
+            </a>
+              
+            </div>
           </div>
         </div>
         

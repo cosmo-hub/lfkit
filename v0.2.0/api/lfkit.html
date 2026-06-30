@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
-    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=dfcaa7d2" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=03637586" />
     
     
 
@@ -305,12 +305,16 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="../_sources/api/lfkit.rst.txt" title="View this page">
+  <a class="muted-link" href="https://github.com/cosmo-hub/lfkit/blob/main/docs/api/lfkit.rst?plain=true" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
-</div>
-<div class="theme-toggle-container theme-toggle-content">
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/cosmo-hub/lfkit/edit/main/docs/api/lfkit.rst" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
               <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
@@ -372,11 +376,11 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>phi_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>)</p></li>
-<li><p><strong>m_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>phi_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>m_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>)</p></li>
 <li><p><strong>alpha</strong> (<em>float</em>)</p></li>
 <li><p><strong>beta</strong> (<em>float</em>)</p></li>
-<li><p><strong>m_transition</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>m_transition</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>)</p></li>
 <li><p><strong>meta</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>object</em><em>] </em><em>| </em><em>None</em>)</p></li>
 </ul>
 </dd>
@@ -394,11 +398,11 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>phi_model</strong> (<em>str</em>)</p></li>
-<li><p><strong>phi_kwargs</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>phi_kwargs</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>None</em>)</p></li>
 <li><p><strong>m_star_model</strong> (<em>str</em>)</p></li>
-<li><p><strong>m_star_kwargs</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>m_star_kwargs</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>None</em>)</p></li>
 <li><p><strong>alpha_model</strong> (<em>str</em>)</p></li>
-<li><p><strong>alpha_kwargs</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>alpha_kwargs</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>None</em>)</p></li>
 <li><p><strong>meta</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>object</em><em>] </em><em>| </em><em>None</em>)</p></li>
 </ul>
 </dd>
@@ -415,9 +419,9 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>mean_absolute_mag</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>)</p></li>
-<li><p><strong>sigma_log_luminosity</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>)</p></li>
-<li><p><strong>amplitude</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>mean_absolute_mag</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>sigma_log_luminosity</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>amplitude</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>)</p></li>
 <li><p><strong>meta</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>object</em><em>] </em><em>| </em><em>None</em>)</p></li>
 </ul>
 </dd>
@@ -434,9 +438,9 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>phi_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>)</p></li>
-<li><p><strong>m_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>)</p></li>
-<li><p><strong>alpha</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>phi_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>m_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>alpha</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>)</p></li>
 <li><p><strong>meta</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>object</em><em>] </em><em>| </em><em>None</em>)</p></li>
 </ul>
 </dd>
@@ -453,9 +457,9 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>phi_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>)</p></li>
-<li><p><strong>m_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>)</p></li>
-<li><p><strong>alpha</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>phi_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>m_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>alpha</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>)</p></li>
 <li><p><strong>meta</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>object</em><em>] </em><em>| </em><em>None</em>)</p></li>
 </ul>
 </dd>
@@ -472,13 +476,13 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>lognormal_mean_absolute_mag</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>)</p></li>
-<li><p><strong>lognormal_sigma_log_luminosity</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>)</p></li>
-<li><p><strong>modified_phi_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>)</p></li>
-<li><p><strong>modified_alpha</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>)</p></li>
-<li><p><strong>lognormal_amplitude</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>)</p></li>
-<li><p><strong>modified_m_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>] </em><em>| </em><em>None</em>)</p></li>
-<li><p><strong>modified_luminosity_fraction</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>lognormal_mean_absolute_mag</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>lognormal_sigma_log_luminosity</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>modified_phi_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>modified_alpha</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>lognormal_amplitude</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>modified_m_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>None</em>)</p></li>
+<li><p><strong>modified_luminosity_fraction</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>] </em><em>| </em><em>Callable</em><em>[</em><em>[</em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>)</p></li>
 <li><p><strong>meta</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>object</em><em>] </em><em>| </em><em>None</em>)</p></li>
 </ul>
 </dd>
@@ -696,11 +700,11 @@ tabulated redshift range.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>phi_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Normalization of the luminosity function.</p></li>
-<li><p><strong>m_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Characteristic absolute magnitude.</p></li>
+<li><p><strong>phi_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Normalization of the luminosity function.</p></li>
+<li><p><strong>m_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Characteristic absolute magnitude.</p></li>
 <li><p><strong>alpha</strong> (<em>float</em>) – Bright-end or main Schechter slope.</p></li>
 <li><p><strong>beta</strong> (<em>float</em>) – Additional slope controlling the second power-law component.</p></li>
-<li><p><strong>m_transition</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Transition magnitude for the second component.</p></li>
+<li><p><strong>m_transition</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Transition magnitude for the second component.</p></li>
 <li><p><strong>meta</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>object</em><em>] </em><em>| </em><em>None</em>) – Optional metadata describing the LF source or calibration.</p></li>
 </ul>
 </dd>
@@ -721,11 +725,11 @@ tabulated redshift range.</p></li>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>phi_model</strong> (<em>str</em>) – Parameter model used for the normalization evolution.</p></li>
-<li><p><strong>phi_kwargs</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Keyword arguments for the normalization model.</p></li>
+<li><p><strong>phi_kwargs</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Keyword arguments for the normalization model.</p></li>
 <li><p><strong>m_star_model</strong> (<em>str</em>) – Parameter model used for characteristic-magnitude evolution.</p></li>
-<li><p><strong>m_star_kwargs</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Keyword arguments for the characteristic-magnitude model.</p></li>
+<li><p><strong>m_star_kwargs</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Keyword arguments for the characteristic-magnitude model.</p></li>
 <li><p><strong>alpha_model</strong> (<em>str</em>) – Parameter model used for faint-end-slope evolution.</p></li>
-<li><p><strong>alpha_kwargs</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Keyword arguments for the faint-end-slope model.</p></li>
+<li><p><strong>alpha_kwargs</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Keyword arguments for the faint-end-slope model.</p></li>
 <li><p><strong>meta</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>object</em><em>] </em><em>| </em><em>None</em>) – Optional metadata describing the LF source or calibration.</p></li>
 </ul>
 </dd>
@@ -744,13 +748,13 @@ tabulated redshift range.</p></li>
 <dd><p>Evaluate evolving Schechter parameters at redshift.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Redshift values where the evolving LF parameters are evaluated.</p>
+<dd class="field-odd"><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Redshift values where the evolving LF parameters are evaluated.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Tuple containing <code class="docutils literal notranslate"><span class="pre">phi_star(z)</span></code>, <code class="docutils literal notranslate"><span class="pre">m_star(z)</span></code>, and <code class="docutils literal notranslate"><span class="pre">alpha(z)</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple[<em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]], <em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]], <em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]]</p>
+<dd class="field-odd"><p>tuple[NDArray[<em>float64</em>], NDArray[<em>float64</em>], NDArray[<em>float64</em>]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -762,8 +766,8 @@ tabulated redshift range.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>absolute_mag</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Absolute magnitude values where the LF is evaluated.</p></li>
-<li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>] </em><em>| </em><em>None</em>) – Redshift or conditional-coordinate values. Required for evolving
+<li><p><strong>absolute_mag</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Absolute magnitude values where the LF is evaluated.</p></li>
+<li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>] </em><em>| </em><em>None</em>) – Redshift or conditional-coordinate values. Required for evolving
 and conditional models.</p></li>
 </ul>
 </dd>
@@ -771,7 +775,7 @@ and conditional models.</p></li>
 <dd class="field-even"><p>Luminosity-function values evaluated at the input magnitudes.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
+<dd class="field-odd"><p>NDArray[<em>float64</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -787,8 +791,8 @@ k- and e-correction model.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>cosmo_obj</strong> (<em>Any</em>) – Cosmology object used for distance-modulus conversion.</p></li>
-<li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Redshift values.</p></li>
-<li><p><strong>apparent_mag</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Apparent magnitude values.</p></li>
+<li><p><strong>z</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Redshift values.</p></li>
+<li><p><strong>apparent_mag</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Apparent magnitude values.</p></li>
 <li><p><strong>h</strong> (<em>float</em><em> | </em><em>None</em>) – Optional reduced Hubble parameter used in the magnitude conversion.</p></li>
 <li><p><strong>corrections</strong> (<em>object</em><em> | </em><em>None</em>) – Optional object providing k-correction and e-correction values.</p></li>
 </ul>
@@ -797,7 +801,7 @@ k- and e-correction model.</p>
 <dd class="field-even"><p>Luminosity-function values evaluated from apparent magnitudes.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>ndarray</em>[tuple[<em>Any</em>, …], <em>dtype</em>[<em>float64</em>]]</p>
+<dd class="field-odd"><p>NDArray[<em>float64</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -810,7 +814,7 @@ k- and e-correction model.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<em>str</em>) – Name used to identify the model.</p></li>
-<li><p><strong>model</strong> (<em>Callable</em><em>[</em><em>[</em><em>...</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>) – Callable evaluating <code class="docutils literal notranslate"><span class="pre">alpha(z)</span></code>.</p></li>
+<li><p><strong>model</strong> (<em>Callable</em><em>[</em><em>[</em><em>...</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Callable evaluating <code class="docutils literal notranslate"><span class="pre">alpha(z)</span></code>.</p></li>
 <li><p><strong>overwrite</strong> (<em>bool</em>) – If True, replace an existing model with the same name.</p></li>
 </ul>
 </dd>
@@ -828,7 +832,7 @@ k- and e-correction model.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<em>str</em>) – Name used to identify the model.</p></li>
-<li><p><strong>model</strong> (<em>Callable</em><em>[</em><em>[</em><em>...</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>) – Callable evaluating <code class="docutils literal notranslate"><span class="pre">M_star(z)</span></code>.</p></li>
+<li><p><strong>model</strong> (<em>Callable</em><em>[</em><em>[</em><em>...</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Callable evaluating <code class="docutils literal notranslate"><span class="pre">M_star(z)</span></code>.</p></li>
 <li><p><strong>overwrite</strong> (<em>bool</em>) – If True, replace an existing model with the same name.</p></li>
 </ul>
 </dd>
@@ -846,7 +850,7 @@ k- and e-correction model.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<em>str</em>) – Name used to identify the model.</p></li>
-<li><p><strong>model</strong> (<em>Callable</em><em>[</em><em>[</em><em>...</em><em>]</em><em>, </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>) – Callable evaluating <code class="docutils literal notranslate"><span class="pre">phi_star(z)</span></code>.</p></li>
+<li><p><strong>model</strong> (<em>Callable</em><em>[</em><em>[</em><em>...</em><em>]</em><em>, </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Callable evaluating <code class="docutils literal notranslate"><span class="pre">phi_star(z)</span></code>.</p></li>
 <li><p><strong>overwrite</strong> (<em>bool</em>) – If True, replace an existing model with the same name.</p></li>
 </ul>
 </dd>
@@ -863,9 +867,9 @@ k- and e-correction model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>phi_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Normalization of the luminosity function.</p></li>
-<li><p><strong>m_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Characteristic absolute magnitude.</p></li>
-<li><p><strong>alpha</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>ndarray</em><em>[</em><em>tuple</em><em>[</em><em>Any</em><em>, </em><em>...</em><em>]</em><em>, </em><em>dtype</em><em>[</em><em>float64</em><em>]</em><em>]</em>) – Faint-end slope.</p></li>
+<li><p><strong>phi_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Normalization of the luminosity function.</p></li>
+<li><p><strong>m_star</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Characteristic absolute magnitude.</p></li>
+<li><p><strong>alpha</strong> (<em>float</em><em> | </em><em>Sequence</em><em>[</em><em>float</em><em>] </em><em>| </em><em>NDArray</em><em>[</em><em>float64</em><em>]</em>) – Faint-end slope.</p></li>
 <li><p><strong>meta</strong> (<em>Mapping</em><em>[</em><em>str</em><em>, </em><em>object</em><em>] </em><em>| </em><em>None</em>) – Optional metadata describing the LF source or calibration.</p></li>
 </ul>
 </dd>
@@ -920,7 +924,32 @@ k- and e-correction model.</p>
             
           </div>
           <div class="right-details">
-            
+            <div class="icons">
+              <a class="muted-link lfkit-github-icon" href="https://github.com/cosmo-hub/lfkit" aria-label="GitHub">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0"
+                     viewBox="0 0 16 16">
+                     style="color: #FE5019;">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54
+                    2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+                    0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49
+                    -2.69-.94-.09-.23-.48-.94-.82-1.13
+                    -.28-.15-.68-.52-.01-.53.63-.01 1.08.58
+                    1.23.82.72 1.21 1.87.87 2.33.66
+                    .07-.52.28-.87.51-1.07-1.78-.2-3.64-.89
+                    -3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2
+                    -.36-1.02.08-2.12 0 0 .67-.21 2.2.82
+                    A7.65 7.65 0 0 1 8 3.87c.68 0 1.36.09
+                    2 .26 1.53-1.04 2.2-.82 2.2-.82.44
+                    1.1.16 1.92.08 2.12.51.56.82 1.27.82
+                    2.15 0 3.07-1.87 3.75-3.65 3.95.29
+                    .25.54.73.54 1.48 0 1.07-.01 1.93-.01
+                    2.2 0 .21.15.46.55.38A8.013 8.013
+                    0 0 0 16 8c0-4.42-3.58-8-8-8z">
+                    </path>
+                </svg>
+            </a>
+              
+            </div>
           </div>
         </div>
         
